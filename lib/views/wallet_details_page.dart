@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/api_calls/base_wallet_api.dart';
-import 'package:flutter_app/data/model/balances.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/paginated_list.dart';
 import 'package:flutter_app/global.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/utils/strings.dart';
@@ -21,7 +22,7 @@ class WalletDetailsPage extends StatefulWidget {
 }
 
 class _WalletDetailsPageState extends State<WalletDetailsPage> {
-  BalancesModel? model;
+  PaginatedList<Balance>? model;
   bool _isSendMoneyLoading = false;
   bool _isLoading = false;
   String _amount = '';
@@ -89,7 +90,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                children: model!.balances.map((e) => _buildCard(e, context)).toList(),
+                children: model!.list.map((e) => _buildCard(e, context)).toList(),
               ),
             ),
           if (_isSendMoneyLoading)
@@ -116,14 +117,14 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
     );
   }
 
-  Card _buildCard(Balances e, BuildContext context) {
+  Card _buildCard(Balance e, BuildContext context) {
     return Card(
       elevation: 4,
       child: ListTile(
-        title: Text(e.denom),
-        subtitle: Text(e.amount),
-        leading: icons[model!.balances.indexOf(
-          model!.balances.firstWhere((element) => element == e),
+        title: Text(e.denom.text),
+        subtitle: Text(e.amount.displayText),
+        leading: icons[model!.list.indexOf(
+          model!.list.firstWhere((element) => element == e),
         )],
         trailing: ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -140,7 +141,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
     );
   }
 
-  Future showMoneyTransferBottomSheet(BuildContext context, Balances e) async {
+  Future showMoneyTransferBottomSheet(BuildContext context, Balance e) async {
     showModalBottomSheet(
       context: context,
       builder: (context) => SafeArea(
@@ -190,13 +191,13 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
     );
   }
 
-  Future _sendMoney(Balances e) async {
+  Future _sendMoney(Balance e) async {
     _isSendMoneyLoading = true;
     setState(() {});
     try {
       api = widget.wallet.walletType == WalletType.Cosmos ? cosmosApi : ethApi;
       await api!.sendAmount(
-        denom: e.denom,
+        denom: e.denom.text,
         amount: _amount,
         toAddress: _toAddress,
         fromAddress: widget.wallet.walletDetails.walletAddress,

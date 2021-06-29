@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/api_calls/base_wallet_api.dart';
-import 'package:flutter_app/global.dart';
-import 'package:flutter_app/data/model/balances.dart';
+import 'package:flutter_app/data/model/balances_json.dart';
 import 'package:flutter_app/data/model/cosmos_wallet.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/transaction.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/paginated_list.dart';
+import 'package:flutter_app/global.dart';
 import 'package:sacco/models/transactions/std_msg.dart';
 import 'package:sacco/tx_builder.dart';
 import 'package:sacco/tx_sender.dart';
@@ -31,11 +33,11 @@ class CosmosApi extends BaseWalletApi {
   }
 
   @override
-  Future<BalancesModel> getWalletBalances(String walletAddress) async {
+  Future<PaginatedList<Balance>> getWalletBalances(String walletAddress) async {
     final uri = Uri.parse('${baseEnv.baseApiUrl}/cosmos/bank/v1beta1/balances/$walletAddress');
     final response = await client.get(uri);
     final map = jsonDecode(response.body) as Map<String, dynamic>;
-    return BalancesModel.fromJson(map);
+    return PaginatedBalancesJson.fromJson(map).toDomain();
   }
 
   @override

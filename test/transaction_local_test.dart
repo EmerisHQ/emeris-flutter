@@ -34,7 +34,7 @@ void main() {
       final balances = await api.getWalletBalances(address);
       debugPrint(globalCache.wallets[0].walletDetails.walletAlias);
 
-      for (final element in balances.balances) {
+      for (final element in balances.list) {
         debugPrint('${element.denom} ${element.amount}');
       }
     },
@@ -48,7 +48,7 @@ void main() {
       final balances = await api.getWalletBalances(address);
       debugPrint(globalCache.wallets[1].walletDetails.walletAlias);
 
-      for (final element in balances.balances) {
+      for (final element in balances.list) {
         debugPrint('${element.denom} ${element.amount}');
       }
     },
@@ -74,7 +74,7 @@ void main() {
       final address = globalCache.wallets[0].walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
 
-      for (final element in balances.balances) {
+      for (final element in balances.list) {
         debugPrint('${element.denom} ${element.amount}');
       }
     },
@@ -87,7 +87,7 @@ void main() {
       final address = globalCache.wallets[1].walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
 
-      for (final element in balances.balances) {
+      for (final element in balances.list) {
         debugPrint('${element.denom} ${element.amount}');
       }
     },
