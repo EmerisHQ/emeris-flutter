@@ -44,6 +44,11 @@ dependencies:
   wallet_core:
     git:
       url: https://github.com/wal33d006/wallet_core.git
+  transaction_signing_gateway:
+    git:
+      url: git@github.com:tendermint/flutter.git
+      path: packages/transaction_signing_gateway
+      ref: main
 
 
   # The following adds the Cupertino Icons font to your application.

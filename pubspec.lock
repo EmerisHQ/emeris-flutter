@@ -637,6 +637,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
+  transaction_signing_gateway:
+    dependency: "direct main"
+    description:
+      path: "packages/transaction_signing_gateway"
+      ref: main
+      resolved-ref: c58a100c73b1c519cae4157aac68a2a56126dee9
+      url: "git@github.com:tendermint/flutter.git"
+    source: git
+    version: "0.0.1"
   typed_data:
     dependency: transitive
     description:
@@ -711,4 +720,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.26.0-17.6.pre"
+  flutter: ">=2.0.5"
