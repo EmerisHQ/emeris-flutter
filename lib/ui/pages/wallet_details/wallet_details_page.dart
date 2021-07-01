@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/domain/entities/send_money_data.dart';
+import 'package:flutter_app/domain/entities/wallet_balances.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
+import 'package:flutter_app/ui/pages/wallet_details/widgets/send_money_bottom_sheet.dart';
 import 'package:flutter_app/ui/widgets/content_empty_loading_switcher.dart';
 import 'package:flutter_app/ui/widgets/emeris_app_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
@@ -68,15 +71,51 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                         .map(
                           (e) => BalanceCard(
                             data: e,
+                            isSendMoneyLoading: model.isSendMoneyLoading,
+                            onTransferPressed: () {
+                              showMoneyTransferBottomSheet(context, e);
+                            },
                           ),
                         )
                         .toList(),
                   ),
                 ),
+                if (model.isSendMoneyLoading)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Center(
+                      child: Text(
+                        strings.sendingMoney,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
               ],
             ),
             isLoading: model.isLoading,
           ),
+        ),
+      ),
+    );
+  }
+
+  Future showMoneyTransferBottomSheet(BuildContext context, WalletBalancesData e) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+        child: SendMoney(
+          denom: e.denom,
+          onMoneySend: (amount, toAddress) {
+            presenter.navigator.appNavigator.close(context);
+            presenter.sendMoney(
+              SendMoneyData(
+                  amount: amount,
+                  denom: e.denom,
+                  walletType: widget.initialParams.wallet.walletType,
+                  fromAddress: widget.initialParams.wallet.walletDetails.walletAddress,
+                  toAddress: toAddress),
+            );
+          },
         ),
       ),
     );

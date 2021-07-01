@@ -1,5 +1,6 @@
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
@@ -30,6 +31,9 @@ void _configureUseCases() {
   getIt.registerFactory<GetBalancesUseCase>(
     () => GetBalancesUseCase(),
   );
+  getIt.registerFactory<SendMoneyUseCase>(
+    () => SendMoneyUseCase(),
+  );
 }
 
 void _configureMvp() {
@@ -37,7 +41,7 @@ void _configureMvp() {
     (_model, _) => WalletsListPresenter(_model!, getIt(), getIt()),
   );
   getIt.registerFactoryParam<WalletDetailsPresenter, WalletDetailsPresentationModel, dynamic>(
-    (_model, _) => WalletDetailsPresenter(_model!, getIt(), getIt()),
+    (_model, _) => WalletDetailsPresenter(_model!, getIt(), getIt(), getIt()),
   );
   getIt.registerFactory<WalletsListNavigator>(
     () => WalletsListNavigator(getIt()),
