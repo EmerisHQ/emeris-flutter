@@ -12,6 +12,10 @@ class ImportWalletUseCase {
         mnemonicString: walletFormData.mnemonic,
         walletAlias: walletFormData.alias,
       );
+      ethApi.importWallet(
+        mnemonicString: walletFormData.mnemonic,
+        walletAlias: walletFormData.alias,
+      );
     } catch (e) {
       logError(e);
       return left(const AddWalletFailure.unknown());

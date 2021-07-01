@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/navigation/error_dialog_route.dart';
+import 'package:flutter_app/navigation/no_routes.dart';
+import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_page.dart';
+
+class WalletDetailsNavigator with NoRoutes, ErrorDialogRoute {
+  @override
+  late BuildContext context;
+  @override
+  final AppNavigator appNavigator;
+
+  WalletDetailsNavigator(this.appNavigator);
+}
+
+abstract class WalletDetailsRoute {
+  BuildContext get context;
+
+  AppNavigator get appNavigator;
+
+  factory WalletDetailsRoute._() => throw UnsupportedError("This class is meant to be mixed in");
+
+  Future<void> openWalletDetails(EmerisWallet wallet) => appNavigator.push(
+        context,
+        materialRoute(
+          WalletDetailsPage(
+            initialParams: WalletDetailsInitialParams(wallet),
+          ),
+        ),
+      );
+}
