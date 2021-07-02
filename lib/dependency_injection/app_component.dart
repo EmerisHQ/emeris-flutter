@@ -54,7 +54,7 @@ void _configureMvp() {
     () => WalletsListNavigator(getIt()),
   );
   getIt.registerFactoryParam<WalletDetailsPresenter, WalletDetailsPresentationModel, dynamic>(
-    (_model, _) => WalletDetailsPresenter(_model!, getIt(), getIt(), getIt()),
+    (_model, _) => WalletDetailsPresenter(_model!, getIt(), getIt()),
   );
   getIt.registerFactory<WalletDetailsNavigator>(
     () => WalletDetailsNavigator(getIt()),
