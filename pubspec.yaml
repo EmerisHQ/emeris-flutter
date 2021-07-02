@@ -41,6 +41,7 @@ dependencies:
   dartz: ^0.10.0-nullsafety.2
   mobx: ^2.0.1
   flutter_mobx: ^2.0.0
+  decimal: ^1.2.0
   wallet_core:
     git:
       url: https://github.com/wal33d006/wallet_core.git
