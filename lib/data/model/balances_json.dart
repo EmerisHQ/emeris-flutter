@@ -4,7 +4,6 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/paginated_list.dart';
 
-@Deprecated("use Balance class in domain entities instead")
 class PaginatedBalancesJson {
   late List<BalanceJson> balances;
   late EmerisPagination pagination;
