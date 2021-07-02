@@ -6,7 +6,9 @@ import 'package:flutter_app/data/model/balances_json.dart';
 import 'package:flutter_app/data/model/cosmos_wallet.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/transaction.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/paginated_list.dart';
 import 'package:flutter_app/global.dart';
 import 'package:sacco/models/transactions/std_msg.dart';
@@ -44,13 +46,13 @@ class CosmosApi extends BaseWalletApi {
   Future<void> sendAmount({
     required String fromAddress,
     required String toAddress,
-    required String denom,
-    required String amount,
+    required Denom denom,
+    required Amount amount,
   }) async {
     final message = StdMsg(
       type: 'cosmos-sdk/MsgSend',
       value: Transaction(fromAddress: fromAddress, toAddress: toAddress, amount: [
-        Amount(denom: denom, amount: amount),
+        TransactionAmount(denom: denom.text, amount: amount.displayText),
       ]).toJson(),
     );
     final stdTx = TxBuilder.buildStdTx(stdMsgs: [message]);

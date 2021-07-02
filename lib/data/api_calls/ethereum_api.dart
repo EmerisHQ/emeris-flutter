@@ -55,8 +55,12 @@ class EthereumApi extends BaseWalletApi {
   }
 
   @override
-  Future<void> sendAmount(
-      {required String fromAddress, required String toAddress, required String denom, required String amount}) async {
+  Future<void> sendAmount({
+    required String fromAddress,
+    required String toAddress,
+    required Denom denom,
+    required Amount amount,
+  }) async {
     final apiUrl = baseEnv.baseEthUrl; //Replace with your API
 
     final httpClient = Client();

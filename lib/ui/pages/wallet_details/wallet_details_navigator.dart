@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
+import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_page.dart';
 
-class WalletDetailsNavigator with NoRoutes, ErrorDialogRoute {
+class WalletDetailsNavigator with NoRoutes, ErrorDialogRoute, WalletDetailsRoute {
   @override
   late BuildContext context;
   @override
@@ -31,4 +34,15 @@ abstract class WalletDetailsRoute {
           ),
         ),
       );
+
+  Future<void> openSendMoneySheet(SendMoneyInitialParams initialParams) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+        child: SendMoneySheet(
+          initialParams: initialParams,
+        ),
+      ),
+    );
+  }
 }

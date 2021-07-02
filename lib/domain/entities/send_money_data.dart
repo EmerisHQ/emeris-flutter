@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
 
 class SendMoneyData extends Equatable {
   final WalletType walletType;
-  final String denom;
-  final String amount;
+  final Denom denom;
+  final Amount amount;
   final String toAddress;
   final String fromAddress;
 

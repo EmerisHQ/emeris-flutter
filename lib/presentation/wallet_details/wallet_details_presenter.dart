@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/entities/send_money_data.dart';
-import 'package:flutter_app/domain/entities/wallet_balances.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/model/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
+import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/utils/utils.dart';
@@ -29,17 +29,10 @@ class WalletDetailsPresenter {
 
   Future<void> getWalletBalances(EmerisWallet walletData) async {
     _model.getWalletBalancesFuture = _getBalancesUseCase.execute(walletData: walletData).observableDoOn(
-      (fail) => navigator.showError(fail.displayableFailure()),
-      (success) {
-        _model.balanceList = success;
-      },
-    );
-  }
-
-  Future<void> sendMoney(SendMoneyData data) async {
-    _model.sendMoneyFuture = _sendMoneyUseCase.execute(sendMoneyData: data).observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
-          (success) => doNothing(),
+          (balances) => _model.balanceList = balances,
         );
   }
+
+  void transferTapped(SendMoneyInitialParams initialParams) => navigator.openSendMoneySheet(initialParams);
 }

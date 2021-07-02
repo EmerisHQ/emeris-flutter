@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/entities/wallet_balances.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/utils/app_theme.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class BalanceCard extends StatelessWidget {
-  final WalletBalancesData data;
+  final Balance data;
   final VoidCallback onTransferPressed;
   final bool isSendMoneyLoading;
 
@@ -26,21 +27,17 @@ class BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: AppTheme.elevationS,
       child: ListTile(
-        title: Text(data.denom),
-        subtitle: Text(data.amount),
+        title: Text(data.denom.text),
+        subtitle: Text(data.amount.displayText),
         // TODO: Fix this during refactor
         leading: icons[Random().nextInt(2)],
         trailing: ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
           ),
-          onPressed: isSendMoneyLoading
-              ? null
-              : () {
-                  onTransferPressed();
-                },
+          onPressed: isSendMoneyLoading ? null : () => onTransferPressed(),
           child: Text(strings.transfer),
         ),
       ),
