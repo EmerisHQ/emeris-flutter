@@ -11,6 +11,6 @@ class EmerisPagination implements Pagination {
   });
 
   EmerisPagination.fromJson(Map<String, dynamic> json)
-      : nextKey = json['next_key'] as String,
+      : nextKey = (json['next_key'] ?? "") as String,
         total = json['total'] as String;
 }
