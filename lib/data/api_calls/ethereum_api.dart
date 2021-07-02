@@ -1,10 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter_app/data/api_calls/base_wallet_api.dart';
-import 'package:flutter_app/global.dart';
-import 'package:flutter_app/data/model/balances.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/ethereum_pagination.dart';
 import 'package:flutter_app/data/model/ethereum_wallet.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
+import 'package:flutter_app/domain/entities/paginated_list.dart';
+import 'package:flutter_app/global.dart';
 import 'package:http/http.dart';
 import 'package:wallet_core/wallet_core.dart';
 
@@ -12,7 +16,7 @@ class EthereumApi extends BaseWalletApi {
   String? privateKey;
 
   @override
-  Future<BalancesModel> getWalletBalances(String walletAddress) async {
+  Future<PaginatedList<Balance>> getWalletBalances(String walletAddress) async {
     final apiUrl = baseEnv.baseEthUrl;
 
     final httpClient = Client();
@@ -22,12 +26,15 @@ class EthereumApi extends BaseWalletApi {
       EthereumAddress.fromHex(walletAddress),
     );
 
-    return BalancesModel(balances: [
-      Balances(
-        denom: 'Eth',
-        amount: balance.getValueInUnit(EtherUnit.ether).toString(),
-      ),
-    ], pagination: Pagination(total: '1'));
+    return PaginatedList(
+      list: [
+        Balance(
+          denom: const Denom('ETH'),
+          amount: Amount.fromString(balance.getValueInUnit(EtherUnit.ether).toString()),
+        ),
+      ],
+      pagination: EthereumPagination(),
+    );
   }
 
   @override

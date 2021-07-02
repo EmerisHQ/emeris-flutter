@@ -191,7 +191,7 @@ packages:
     source: hosted
     version: "0.10.0-nullsafety.2"
   decimal:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: decimal
       url: "https://pub.dartlang.org"
