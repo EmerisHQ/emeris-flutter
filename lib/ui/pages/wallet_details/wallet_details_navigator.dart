@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
