@@ -51,6 +51,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: 1.0.3
 
+dependency_overrides:
+  pointycastle: 3.0.1 #newer version has problems with web version of app
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
