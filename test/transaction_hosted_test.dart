@@ -88,14 +88,18 @@ void main() {
     }
   });
 
-  test('Make a transaction from Alice to Bob', () async {
-    await api.sendAmount(
-      fromAddress: globalCache.wallets[0].walletDetails.walletAddress,
-      toAddress: globalCache.wallets[1].walletDetails.walletAddress,
-      amount: Amount.fromString('10'),
-      denom: const Denom('uphoton'),
-    );
-  });
+  test(
+    'Make a transaction from Alice to Bob',
+    () async {
+      await api.sendAmount(
+        fromAddress: globalCache.wallets[0].walletDetails.walletAddress,
+        toAddress: globalCache.wallets[1].walletDetails.walletAddress,
+        amount: Amount.fromString('10'),
+        denom: const Denom('uphoton'),
+      );
+    },
+    skip: true,
+  );
 
   test('Get first wallet balances', () async {
     final wallet = globalCache.wallets[0];
