@@ -1,12 +1,18 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/model/failures/add_wallet_failure.dart';
 import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
 import 'package:mobx/mobx.dart';
 
-abstract class SendMoneyViewModel {}
+abstract class SendMoneyViewModel {
+  Denom get denom;
+}
 
 class SendMoneyPresentationModel with SendMoneyPresentationModelBase implements SendMoneyViewModel {
   final SendMoneyInitialParams initialParams;
+
+  @override
+  Denom get denom => initialParams.denom;
 
   SendMoneyPresentationModel(
     this.initialParams,

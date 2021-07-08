@@ -35,7 +35,7 @@ class BalanceCard extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
           ),
-          onPressed: () => onTransferPressed!(),
+          onPressed: onTransferPressed,
           child: Text(strings.transfer),
         ),
       ),

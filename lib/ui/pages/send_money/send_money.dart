@@ -81,7 +81,7 @@ class _SendMoneySheetState extends State<SendMoneySheet> {
             presenter.sendMoney(
               SendMoneyData(
                 balance: Balance(
-                  denom: widget.initialParams.denom,
+                  denom: presenter.viewModel.denom,
                   amount: Amount(amount.value),
                 ),
                 walletType: widget.initialParams.walletType,
