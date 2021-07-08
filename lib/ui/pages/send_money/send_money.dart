@@ -49,7 +49,7 @@ class _SendMoneySheetState extends State<SendMoneySheet> {
       children: [
         const Padding(padding: EdgeInsets.only(top: 16)),
         Text(
-          strings.sendDenom(widget.initialParams.denom.text),
+          strings.sendDenom(presenter.viewModel.denom.text),
           style: Theme.of(context).textTheme.headline6,
         ),
         ListTile(
