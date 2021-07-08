@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/send_money_data.dart';
 import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/presentation/send_money/send_money_presentation_model.dart';
@@ -79,8 +81,10 @@ class _SendMoneySheetState extends State<SendMoneySheet> {
             presenter.navigator.appNavigator.close(context);
             presenter.sendMoney(
               SendMoneyData(
-                amount: amount,
-                denom: widget.initialParams.denom,
+                balance: Balance(
+                  denom: widget.initialParams.denom,
+                  amount: Amount(amount.value),
+                ),
                 walletType: widget.initialParams.walletType,
                 fromAddress: widget.initialParams.walletAddress,
                 toAddress: _toAddress,

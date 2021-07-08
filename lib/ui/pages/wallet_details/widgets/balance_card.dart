@@ -7,13 +7,11 @@ import 'package:flutter_app/utils/strings.dart';
 
 class BalanceCard extends StatelessWidget {
   final Balance data;
-  final VoidCallback onTransferPressed;
-  final bool isSendMoneyLoading;
+  final VoidCallback? onTransferPressed;
 
   const BalanceCard({
     required this.data,
     required this.onTransferPressed,
-    required this.isSendMoneyLoading,
   });
 
   // TODO: Remove these icons during refactor
@@ -37,7 +35,7 @@ class BalanceCard extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
           ),
-          onPressed: isSendMoneyLoading ? null : () => onTransferPressed(),
+          onPressed: () => onTransferPressed!(),
           child: Text(strings.transfer),
         ),
       ),

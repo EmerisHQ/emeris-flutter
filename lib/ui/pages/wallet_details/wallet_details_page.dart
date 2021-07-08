@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/domain/entities/paginated_list.dart';
 import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
@@ -65,21 +66,17 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    children: model.balanceList
+                    children: model.balanceList.list
                         .map(
                           (balance) => BalanceCard(
                             data: balance,
-                            isSendMoneyLoading: model.isSendMoneyLoading,
-                            onTransferPressed: () {
-                              presenter.transferTapped(
-                                SendMoneyInitialParams(
-                                  walletAddress: widget.initialParams.wallet.walletDetails.walletAddress,
-                                  walletType: widget.initialParams.wallet.walletType,
-                                  denom: balance.denom,
-                                ),
-                              );
-//                              showMoneyTransferBottomSheet(context, e);
-                            },
+                            onTransferPressed: model.isSendMoneyLoading
+                                ? null
+                                : () {
+                                    presenter.transferTapped(
+                                      balance: balance,
+                                    );
+                                  },
                           ),
                         )
                         .toList(),
@@ -103,26 +100,4 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
       ),
     );
   }
-
-//  Future showMoneyTransferBottomSheet(BuildContext context, Balance e) async {
-//    showModalBottomSheet(
-//      context: context,
-//      builder: (context) => SafeArea(
-//        child: SendMoneySheet(
-//          denom: e.denom,
-//          onMoneySend: (amount, toAddress) {
-//            presenter.navigator.appNavigator.close(context);
-//            presenter.sendMoney(
-//              SendMoneyData(
-//                  amount: amount,
-//                  denom: e.denom,
-//                  walletType: widget.initialParams.wallet.walletType,
-//                  fromAddress: widget.initialParams.wallet.walletDetails.walletAddress,
-//                  toAddress: toAddress),
-//            );
-//          },
-//        ),
-//      ),
-//    );
-//  }
 }

@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/data/model/balance_pagination.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/paginated_list.dart';
 import 'package:flutter_app/domain/model/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
@@ -31,5 +33,11 @@ class WalletDetailsPresenter {
         );
   }
 
-  void transferTapped(SendMoneyInitialParams initialParams) => navigator.openSendMoneySheet(initialParams);
+  void transferTapped({required Balance balance}) => navigator.openSendMoneySheet(
+        SendMoneyInitialParams(
+          walletAddress: _model.initialParams.wallet.walletDetails.walletAddress,
+          walletType: _model.initialParams.wallet.walletType,
+          denom: balance.denom,
+        ),
+      );
 }

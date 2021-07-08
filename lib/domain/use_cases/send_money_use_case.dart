@@ -11,8 +11,7 @@ class SendMoneyUseCase {
     try {
       final api = sendMoneyData.walletType == WalletType.Cosmos ? cosmosApi : ethApi;
       await api.sendAmount(
-        denom: sendMoneyData.denom,
-        amount: sendMoneyData.amount,
+        balance: sendMoneyData.balance,
         fromAddress: sendMoneyData.fromAddress,
         toAddress: sendMoneyData.toAddress,
       );
