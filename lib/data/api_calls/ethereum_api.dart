@@ -55,8 +55,11 @@ class EthereumApi extends BaseWalletApi {
   }
 
   @override
-  Future<void> sendAmount(
-      {required String fromAddress, required String toAddress, required String denom, required String amount}) async {
+  Future<void> sendAmount({
+    required String fromAddress,
+    required String toAddress,
+    required Balance balance,
+  }) async {
     final apiUrl = baseEnv.baseEthUrl; //Replace with your API
 
     final httpClient = Client();
@@ -70,7 +73,7 @@ class EthereumApi extends BaseWalletApi {
         to: EthereumAddress.fromHex(toAddress),
         gasPrice: EtherAmount.inWei(BigInt.one),
         maxGas: 100000,
-        value: EtherAmount.fromUnitAndValue(EtherUnit.ether, amount),
+        value: EtherAmount.fromUnitAndValue(EtherUnit.ether, balance.amount),
       ),
     );
   }

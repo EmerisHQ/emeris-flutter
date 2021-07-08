@@ -1,18 +1,18 @@
 class Transaction {
   late String fromAddress;
   late String toAddress;
-  late List<Amount> amount;
+  late List<TransactionAmount> amount;
 
   Transaction({required this.fromAddress, required this.toAddress, required this.amount});
 
   Transaction.fromJson(Map<String, dynamic> json) {
     fromAddress = json['from_address'] as String;
     toAddress = json['to_address'] as String;
-    amount = <Amount>[];
+    amount = <TransactionAmount>[];
     if (json['amount'] != null) {
-      amount = <Amount>[];
+      amount = <TransactionAmount>[];
       json['amount'].forEach((Map<String, dynamic> v) {
-        amount.add(Amount.fromJson(v));
+        amount.add(TransactionAmount.fromJson(v));
       });
     }
   }
@@ -26,13 +26,13 @@ class Transaction {
   }
 }
 
-class Amount {
+class TransactionAmount {
   late String denom;
   late String amount;
 
-  Amount({required this.denom, required this.amount});
+  TransactionAmount({required this.denom, required this.amount});
 
-  Amount.fromJson(Map<String, dynamic> json) {
+  TransactionAmount.fromJson(Map<String, dynamic> json) {
     denom = json['denom'] as String;
     amount = json['amount'] as String;
   }

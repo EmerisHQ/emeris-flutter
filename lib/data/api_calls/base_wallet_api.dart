@@ -9,7 +9,6 @@ abstract class BaseWalletApi {
   Future<void> sendAmount({
     required String fromAddress,
     required String toAddress,
-    required String denom,
-    required String amount,
+    required Balance balance,
   });
 }

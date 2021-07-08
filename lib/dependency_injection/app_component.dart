@@ -1,10 +1,17 @@
+import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
 import 'package:flutter_app/presentation/routing/routing_presenter.dart';
+import 'package:flutter_app/presentation/send_money/send_money_presentation_model.dart';
+import 'package:flutter_app/presentation/send_money/send_money_presenter.dart';
+import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +38,12 @@ void _configureUseCases() {
   getIt.registerFactory<ImportWalletUseCase>(
     () => ImportWalletUseCase(),
   );
+  getIt.registerFactory<GetBalancesUseCase>(
+    () => GetBalancesUseCase(),
+  );
+  getIt.registerFactory<SendMoneyUseCase>(
+    () => SendMoneyUseCase(),
+  );
 }
 
 void _configureMvp() {
@@ -40,7 +53,18 @@ void _configureMvp() {
   getIt.registerFactory<WalletsListNavigator>(
     () => WalletsListNavigator(getIt()),
   );
-
+  getIt.registerFactoryParam<WalletDetailsPresenter, WalletDetailsPresentationModel, dynamic>(
+    (_model, _) => WalletDetailsPresenter(_model!, getIt(), getIt()),
+  );
+  getIt.registerFactory<WalletDetailsNavigator>(
+    () => WalletDetailsNavigator(getIt()),
+  );
+  getIt.registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
+    (_model, _) => SendMoneyPresenter(_model!, getIt(), getIt()),
+  );
+  getIt.registerFactory<SendMoneyNavigator>(
+    () => SendMoneyNavigator(getIt()),
+  );
   getIt.registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
     (_model, _) => RoutingPresenter(_model!, getIt(), getIt()),
   );

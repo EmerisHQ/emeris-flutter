@@ -51,3 +51,5 @@ extension AsyncEither<L, R> on Future<Either<L, R>> {
         (r) => r,
       );
 }
+
+bool isFutureInProgress(ObservableFuture? future) => future != null && future.status == FutureStatus.pending;

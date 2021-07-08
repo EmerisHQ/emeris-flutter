@@ -44,13 +44,12 @@ class CosmosApi extends BaseWalletApi {
   Future<void> sendAmount({
     required String fromAddress,
     required String toAddress,
-    required String denom,
-    required String amount,
+    required Balance balance,
   }) async {
     final message = StdMsg(
       type: 'cosmos-sdk/MsgSend',
       value: Transaction(fromAddress: fromAddress, toAddress: toAddress, amount: [
-        Amount(denom: denom, amount: amount),
+        TransactionAmount(denom: balance.denom.text, amount: balance.amount.displayText),
       ]).toJson(),
     );
     final stdTx = TxBuilder.buildStdTx(stdMsgs: [message]);
@@ -63,7 +62,7 @@ class CosmosApi extends BaseWalletApi {
     final result = await TxSender.broadcastStdTx(
       wallet: wallet,
       stdTx: signedStdTx,
-      mode: 'block',
+      mode: 'BROADCAST_MODE_SYNC',
     );
 
     if (result.success) {
