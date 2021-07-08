@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/domain/entities/paginated_list.dart';
-import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
