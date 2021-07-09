@@ -1,6 +1,7 @@
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/paginated_list.dart';
 
+@Deprecated("Use WalletCredentialsRepository instead")
 abstract class BaseWalletApi {
   void importWallet({required String mnemonicString, required String walletAlias});
 

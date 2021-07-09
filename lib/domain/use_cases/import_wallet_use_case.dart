@@ -1,25 +1,19 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
-import 'package:flutter_app/domain/model/failures/add_wallet_failure.dart';
-import 'package:flutter_app/global.dart';
-import 'package:flutter_app/utils/logger.dart';
+import 'package:flutter_app/domain/repositories/wallet_credentials_repository.dart';
+import 'package:flutter_app/domain/stores/wallets_store.dart';
+import 'package:flutter_app/domain/utils/future_either.dart';
 
 class ImportWalletUseCase {
-  Future<Either<AddWalletFailure, Unit>> execute({required ImportWalletFormData walletFormData}) async {
-    //TODO create fully-fledged wallet manager/repository for this
-    try {
-      cosmosApi.importWallet(
-        mnemonicString: walletFormData.mnemonic,
-        walletAlias: walletFormData.alias,
-      );
-      ethApi.importWallet(
-        mnemonicString: walletFormData.mnemonic,
-        walletAlias: walletFormData.alias,
-      );
-    } catch (e) {
-      logError(e);
-      return left(const AddWalletFailure.unknown());
-    }
-    return right(unit);
-  }
+  final WalletCredentialsRepository _walletCredentialsRepository;
+  final WalletsStore _walletsStore;
+
+  ImportWalletUseCase(this._walletCredentialsRepository, this._walletsStore);
+
+  Future<Either<AddWalletFailure, Unit>> execute({required ImportWalletFormData walletFormData}) async =>
+      _walletCredentialsRepository.importWallet(walletFormData).map((info) {
+        _walletsStore.wallets.add(info);
+        return right(unit);
+      });
 }

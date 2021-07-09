@@ -6,12 +6,14 @@ import 'package:sacco/network_info.dart';
 
 final Client client = Client();
 
+@Deprecated("dont use it")
 class GlobalCache {
   List<EmerisWallet> wallets;
 
   GlobalCache({required this.wallets});
 }
 
+@Deprecated("dont use it")
 final globalCache = GlobalCache(wallets: []);
 
 class BaseEnv {

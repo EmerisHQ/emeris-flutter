@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/utils/strings.dart';
 
@@ -51,7 +52,12 @@ class _AddWalletBottomSheetState extends State<AddWalletBottomSheet> {
             ),
           ),
           ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(ImportWalletFormData(mnemonic: _mnemonic, alias: _alias)),
+            onPressed: () => Navigator.of(context).pop(ImportWalletFormData(
+              mnemonic: _mnemonic,
+              alias: _alias,
+              password: '', //TODO
+              walletType: WalletType.Cosmos, //TODO
+            )),
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
             ),
