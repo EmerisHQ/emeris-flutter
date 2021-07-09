@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/emeris/emeris_wallet_credentials_repository.dart';
 import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:flutter_app/data/ethereum/ethereum_wallet_handler.dart';
 import 'package:flutter_app/data/sacco/sacco_credentials_serializer.dart';
 import 'package:flutter_app/data/sacco/sacco_transaction_signer.dart';
 import 'package:flutter_app/data/sacco/sacco_wallet_handler.dart';
+import 'package:flutter_app/data/web/web_key_info_storage.dart';
 import 'package:flutter_app/domain/repositories/wallet_credentials_repository.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
@@ -46,10 +48,12 @@ void _configureTransactionSigningGateway() {
     () => MobileTransactionSummaryUI(),
   );
   getIt.registerFactory<KeyInfoStorage>(
-    () => MobileKeyInfoStorage(serializers: [
-      SaccoCredentialsSerializer(),
-      EthereumCredentialsSerializer(),
-    ]),
+    () => kIsWeb
+        ? WebKeyInfoStorage()
+        : MobileKeyInfoStorage(serializers: [
+            SaccoCredentialsSerializer(),
+            EthereumCredentialsSerializer(),
+          ]),
   );
   getIt.registerFactory<TransactionSigningGateway>(
     () => TransactionSigningGateway(

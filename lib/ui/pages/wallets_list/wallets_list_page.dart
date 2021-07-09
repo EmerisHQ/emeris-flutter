@@ -46,6 +46,7 @@ class _WalletsListPageState extends State<WalletsListPage> {
 
   @override
   Widget build(BuildContext context) {
+    //ignore: deprecated_member_use_from_same_package
     list = globalCache.wallets;
     return Scaffold(
       // Not translating this.

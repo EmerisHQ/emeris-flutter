@@ -1,6 +1,6 @@
 import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
-import 'package:wallet_core/wallet_core.dart' as walletCore;
+import 'package:wallet_core/wallet_core.dart' as core;
 
 class EthereumPrivateWalletCredentials implements PrivateWalletCredentials {
   @override
@@ -15,7 +15,7 @@ class EthereumPrivateWalletCredentials implements PrivateWalletCredentials {
   final String walletCoreJson;
   final String walletCorePassword;
 
-  walletCore.Wallet get wallet => walletCore.Wallet.fromJson(walletCoreJson, walletCorePassword);
+  core.Wallet get wallet => core.Wallet.fromJson(walletCoreJson, walletCorePassword);
 
   EthereumPrivateWalletCredentials({
     required this.chainId,

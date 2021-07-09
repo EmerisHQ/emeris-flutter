@@ -13,7 +13,7 @@ class GlobalCache {
   GlobalCache({required this.wallets});
 }
 
-@Deprecated("dont use it")
+@Deprecated("will be migrated to global mobx stores")
 final globalCache = GlobalCache(wallets: []);
 
 class BaseEnv {
@@ -43,7 +43,9 @@ class BaseEnv {
 
 final BaseEnv baseEnv = BaseEnv();
 
+//ignore: deprecated_member_use_from_same_package
 final CosmosApi cosmosApi = CosmosApi();
+//ignore: deprecated_member_use_from_same_package
 final EthereumApi ethApi = EthereumApi();
 
 abstract class SharedPreferencesKeys {

@@ -7,6 +7,7 @@ import 'package:flutter_app/global.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  //ignore: deprecated_member_use_from_same_package
   final api = CosmosApi();
 
   const port = String.fromEnvironment('PORT', defaultValue: '1317');
@@ -33,8 +34,10 @@ void main() {
   test(
     'Get Alice wallet balances',
     () async {
+      //ignore: deprecated_member_use_from_same_package
       final address = globalCache.wallets[0].walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
+      //ignore: deprecated_member_use_from_same_package
       debugPrint(globalCache.wallets[0].walletDetails.walletAlias);
 
       for (final element in balances.list) {
@@ -47,8 +50,10 @@ void main() {
   test(
     'Get Bob wallet balances',
     () async {
+      //ignore: deprecated_member_use_from_same_package
       final address = globalCache.wallets[1].walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
+      //ignore: deprecated_member_use_from_same_package
       debugPrint(globalCache.wallets[1].walletDetails.walletAlias);
 
       for (final element in balances.list) {
@@ -62,7 +67,9 @@ void main() {
     'Make a transaction from Alice to Bob',
     () async {
       await api.sendAmount(
+        //ignore: deprecated_member_use_from_same_package
         fromAddress: globalCache.wallets[0].walletDetails.walletAddress,
+        //ignore: deprecated_member_use_from_same_package
         toAddress: globalCache.wallets[1].walletDetails.walletAddress,
         balance: Balance(
           amount: Amount.fromString('10'),
@@ -76,6 +83,7 @@ void main() {
   test(
     'Get Alice wallet balances',
     () async {
+      //ignore: deprecated_member_use_from_same_package
       final address = globalCache.wallets[0].walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
 
@@ -89,6 +97,7 @@ void main() {
   test(
     'Get Bob wallet balances',
     () async {
+      //ignore: deprecated_member_use_from_same_package
       final address = globalCache.wallets[1].walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
 
