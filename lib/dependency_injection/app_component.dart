@@ -1,16 +1,26 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app/data/emeris/emeris_wallet_credentials_repository.dart';
+import 'package:flutter_app/data/api_calls/cosmos_wallet_api.dart';
+import 'package:flutter_app/data/api_calls/ethereum_wallet_api.dart';
+import 'package:flutter_app/data/api_calls/wallet_api.dart';
+import 'package:flutter_app/data/emeris/emeris_balances_repository.dart';
+import 'package:flutter_app/data/emeris/emeris_transactions_repository.dart';
+import 'package:flutter_app/data/emeris/emeris_wallets_repository.dart';
 import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
-import 'package:flutter_app/data/ethereum/ethereum_wallet_handler.dart';
+import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
+import 'package:flutter_app/data/http/dio_builder.dart';
 import 'package:flutter_app/data/sacco/sacco_credentials_serializer.dart';
 import 'package:flutter_app/data/sacco/sacco_transaction_signer.dart';
-import 'package:flutter_app/data/sacco/sacco_wallet_handler.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
-import 'package:flutter_app/domain/repositories/wallet_credentials_repository.dart';
+import 'package:flutter_app/domain/repositories/balances_repository.dart';
+import 'package:flutter_app/domain/repositories/transactions_repository.dart';
+import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
+import 'package:flutter_app/domain/utils/wallet_password_retriever.dart';
+import 'package:flutter_app/global.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
 import 'package:flutter_app/presentation/routing/routing_presenter.dart';
@@ -23,18 +33,22 @@ import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_password_retriever/user_prompt_wallet_password_retriever.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/key_info_storage.dart';
 import 'package:transaction_signing_gateway/mobile/mobile_key_info_storage.dart';
 import 'package:transaction_signing_gateway/transaction_summary_ui.dart';
+import 'package:wallet_core/wallet_core.dart';
 
 final getIt = GetIt.instance;
 
 /// registers all the dependencies in dependency graph in get_it package
-void configureDependencies() {
+void configureDependencies(BaseEnv baseEnv) {
+  getIt.registerSingleton<BaseEnv>(baseEnv);
   _configureGeneralDependencies();
   _configureTransactionSigningGateway();
   _configureRepositories();
@@ -61,14 +75,28 @@ void _configureTransactionSigningGateway() {
       infoStorage: getIt(),
       signers: [
         SaccoTransactionSigner(),
+        EthereumTransactionSigner(getIt()),
       ],
     ),
   );
 }
 
 void _configureRepositories() {
-  getIt.registerFactory<WalletCredentialsRepository>(
-    () => EmerisWalletCredentialsRepository(getIt(), getIt()),
+  getIt.registerFactory<List<WalletApi>>(
+    () => [
+      CosmosWalletApi(getIt(), getIt(), getIt()),
+      EthereumWalletApi(getIt(), getIt()),
+    ],
+  );
+
+  getIt.registerFactory<TransactionsRepository>(
+    () => EmerisTransactionsRepository(getIt()),
+  );
+  getIt.registerFactory<WalletsRepository>(
+    () => EmerisWalletsRepository(getIt()),
+  );
+  getIt.registerFactory<BalancesRepository>(
+    () => EmerisBalancesRepository(getIt()),
   );
 }
 
@@ -79,11 +107,18 @@ void _configureStores() {
 }
 
 void _configureGeneralDependencies() {
-  getIt.registerFactory<SaccoWalletHandler>(
-    () => SaccoWalletHandler(getIt()),
+  getIt.registerFactory<Web3Client>(
+    () => Web3Client(getIt<BaseEnv>().baseEthUrl, Client()),
   );
-  getIt.registerFactory<EthereumWalletHandler>(
-    () => EthereumWalletHandler(getIt()),
+  getIt.registerLazySingleton<WalletPasswordRetriever>(
+    () => UserPromptWalletPasswordRetriever(getIt()),
+  );
+
+  getIt.registerFactory<DioBuilder>(
+    () => DioBuilder(),
+  );
+  getIt.registerFactory<Dio>(
+    () => getIt<DioBuilder>().build(),
   );
 
   getIt.registerFactory<AppNavigator>(
@@ -99,10 +134,10 @@ void _configureUseCases() {
     () => ImportWalletUseCase(getIt(), getIt()),
   );
   getIt.registerFactory<GetBalancesUseCase>(
-    () => GetBalancesUseCase(),
+    () => GetBalancesUseCase(getIt()),
   );
   getIt.registerFactory<SendMoneyUseCase>(
-    () => SendMoneyUseCase(),
+    () => SendMoneyUseCase(getIt(), getIt()),
   );
 }
 

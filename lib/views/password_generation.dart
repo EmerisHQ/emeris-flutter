@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/global.dart';
+import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
+import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/helpers/mnemonic_encryptor.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_page.dart';
@@ -60,15 +63,21 @@ class _PasswordGenerationPageState extends State<PasswordGenerationPage> {
               }
             : () async {
                 final mnemonic = await MnemonicEncryptor.decryptMnemonic(passwordController.text);
-                cosmosApi.importWallet(
-                  mnemonicString: mnemonic,
-                  walletAlias: 'First wallet',
-                );
 
-                ethApi.importWallet(
-                  mnemonicString: mnemonic,
-                  walletAlias: 'Another wallet',
-                );
+                await getIt<ImportWalletUseCase>().execute(
+                    walletFormData: ImportWalletFormData(
+                  mnemonic: mnemonic,
+                  alias: "First wallet",
+                  password: passwordController.text,
+                  walletType: WalletType.Cosmos,
+                ));
+                await getIt<ImportWalletUseCase>().execute(
+                    walletFormData: ImportWalletFormData(
+                  mnemonic: mnemonic,
+                  alias: "Another wallet",
+                  password: passwordController.text,
+                  walletType: WalletType.Eth,
+                ));
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const WalletsListPage(initialParams: WalletsListInitialParams()),
@@ -82,15 +91,21 @@ class _PasswordGenerationPageState extends State<PasswordGenerationPage> {
 
   Future<void> encryptMnemonic(BuildContext context) async {
     await MnemonicEncryptor.encryptMnemonic(widget.mnemonic!, passwordController.text);
-    cosmosApi.importWallet(
-      mnemonicString: widget.mnemonic!,
-      walletAlias: 'First wallet',
-    );
 
-    ethApi.importWallet(
-      mnemonicString: widget.mnemonic!,
-      walletAlias: 'Another wallet',
-    );
+    await getIt<ImportWalletUseCase>().execute(
+        walletFormData: ImportWalletFormData(
+      mnemonic: widget.mnemonic!,
+      alias: "First wallet",
+      password: passwordController.text,
+      walletType: WalletType.Cosmos,
+    ));
+    await getIt<ImportWalletUseCase>().execute(
+        walletFormData: ImportWalletFormData(
+      mnemonic: widget.mnemonic!,
+      alias: "Another wallet",
+      password: passwordController.text,
+      walletType: WalletType.Eth,
+    ));
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const WalletsListPage(initialParams: WalletsListInitialParams()),

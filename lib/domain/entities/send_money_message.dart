@@ -1,14 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/transaction_message.dart';
 
-class SendMoneyData extends Equatable {
+class SendMoneyMessage extends Equatable implements TransactionMessage {
   final WalletType walletType;
   final Balance balance;
   final String toAddress;
   final String fromAddress;
 
-  const SendMoneyData({
+  const SendMoneyMessage({
     required this.balance,
     required this.walletType,
     required this.fromAddress,

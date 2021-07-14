@@ -1,24 +1,33 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
-import 'package:flutter_app/domain/entities/send_money_data.dart';
-import 'package:flutter_app/global.dart';
-import 'package:flutter_app/utils/logger.dart';
+import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/send_money_message.dart';
+import 'package:flutter_app/domain/entities/transaction.dart';
+import 'package:flutter_app/domain/entities/transaction_hash.dart';
+import 'package:flutter_app/domain/entities/wallet_identifier.dart';
+import 'package:flutter_app/domain/repositories/transactions_repository.dart';
+import 'package:flutter_app/domain/utils/future_either.dart';
+import 'package:flutter_app/domain/utils/wallet_password_retriever.dart';
 
 class SendMoneyUseCase {
-  Future<Either<AddWalletFailure, Unit>> execute({required SendMoneyData sendMoneyData}) async {
-    //TODO create fully-fledged wallet manager/repository for this
-    try {
-      final api = sendMoneyData.walletType == WalletType.Cosmos ? cosmosApi : ethApi;
-      await api.sendAmount(
-        balance: sendMoneyData.balance,
-        fromAddress: sendMoneyData.fromAddress,
-        toAddress: sendMoneyData.toAddress,
-      );
-      return right(unit);
-    } catch (e) {
-      logError(e);
-      return left(const AddWalletFailure.unknown());
-    }
-  }
+  final TransactionsRepository _transactionsRepository;
+  final WalletPasswordRetriever _walletPasswordRetriever;
+
+  SendMoneyUseCase(this._transactionsRepository, this._walletPasswordRetriever);
+
+  Future<Either<GeneralFailure, TransactionHash>> execute({
+    required WalletIdentifier walletIdentifier,
+    required SendMoneyMessage sendMoneyData,
+  }) async =>
+      _walletPasswordRetriever
+          .getWalletPassword(walletIdentifier) //
+          .flatMap(
+            (password) => _transactionsRepository.signAndBroadcast(
+              walletIdentifier: walletIdentifier.byUpdatingPassword(password),
+              transaction: Transaction(
+                walletType: sendMoneyData.walletType,
+                messages: [sendMoneyData],
+                transactionType: TransactionType.sendMoney,
+              ),
+            ),
+          );
 }

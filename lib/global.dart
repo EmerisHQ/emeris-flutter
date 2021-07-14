@@ -1,21 +1,6 @@
-import 'package:flutter_app/data/api_calls/cosmos_api.dart';
-import 'package:flutter_app/data/api_calls/ethereum_api.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:http/http.dart';
 import 'package:sacco/network_info.dart';
 
-final Client client = Client();
-
-@Deprecated("dont use it")
-class GlobalCache {
-  List<EmerisWallet> wallets;
-
-  GlobalCache({required this.wallets});
-}
-
-@Deprecated("will be migrated to global mobx stores")
-final globalCache = GlobalCache(wallets: []);
-
+//TODO refactor this to an interface
 class BaseEnv {
   late NetworkInfo _networkInfo;
   String? _apiProtocol;
@@ -40,13 +25,6 @@ class BaseEnv {
 
   String get baseEthUrl => _baseEthUrl;
 }
-
-final BaseEnv baseEnv = BaseEnv();
-
-//ignore: deprecated_member_use_from_same_package
-final CosmosApi cosmosApi = CosmosApi();
-//ignore: deprecated_member_use_from_same_package
-final EthereumApi ethApi = EthereumApi();
 
 abstract class SharedPreferencesKeys {
   static const isWalletCreated = 'IS_APP_INSTALLED';

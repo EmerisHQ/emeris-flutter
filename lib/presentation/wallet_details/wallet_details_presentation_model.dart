@@ -15,7 +15,7 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
     this.initialParams,
   );
 
-  ObservableFuture<Either<AddWalletFailure, PaginatedList<Balance>>>? get getWalletBalancesFuture =>
+  ObservableFuture<Either<GeneralFailure, PaginatedList<Balance>>>? get getWalletBalancesFuture =>
       _getWalletBalancesFuture.value;
 
   ObservableFuture<Either<AddWalletFailure, Unit>>? get sendMoneyFuture => _sendMoneyFuture.value;
@@ -31,7 +31,7 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
 }
 
 abstract class WalletDetailsPresentationModelBase {
-  final Observable<ObservableFuture<Either<AddWalletFailure, PaginatedList<Balance>>>?> _getWalletBalancesFuture =
+  final Observable<ObservableFuture<Either<GeneralFailure, PaginatedList<Balance>>>?> _getWalletBalancesFuture =
       Observable(null);
 
   final Observable<ObservableFuture<Either<AddWalletFailure, Unit>>?> _sendMoneyFuture = Observable(null);
@@ -39,7 +39,7 @@ abstract class WalletDetailsPresentationModelBase {
   set sendMoneyFuture(ObservableFuture<Either<AddWalletFailure, Unit>>? value) =>
       Action(() => _sendMoneyFuture.value = value)();
 
-  set getWalletBalancesFuture(ObservableFuture<Either<AddWalletFailure, PaginatedList<Balance>>>? value) =>
+  set getWalletBalancesFuture(ObservableFuture<Either<GeneralFailure, PaginatedList<Balance>>>? value) =>
       Action(() => _getWalletBalancesFuture.value = value)();
 
   final Observable<PaginatedList<Balance>> _balanceList =

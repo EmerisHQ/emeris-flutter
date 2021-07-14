@@ -6,6 +6,7 @@ import 'package:flutter_app/global.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@Deprecated("Use TransactionSigningGateway trough a use case instead")
 abstract class MnemonicEncryptor {
   static Future<void> encryptMnemonic(String mnemonic, String password) async {
     final encrypter = _generateEncrypter(password);

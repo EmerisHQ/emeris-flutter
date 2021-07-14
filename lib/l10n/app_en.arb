@@ -88,5 +88,16 @@
   "importWallet": "Import a wallet",
   "@importWallet": {
     "description": "Import wallet button text"
-  }
+  },
+  "noWalletSelectedTitle": "No Wallet",
+  "@noWalletSelectedTitle": {
+    "description": "no wallet error title"
+  },
+  "noWalletSelectedMessage": "You have to import or create wallet first in order to do that",
+  "@noWalletSelectedMessage": {
+    "description": "no wallet error message"
+  },
+  "okAction": "Ok",
+  "verifyPasswordErrorTitle": "Invalid Password",
+  "verifyPasswordErrorMessage": "You've provided an invalid password, please try again"
 }
