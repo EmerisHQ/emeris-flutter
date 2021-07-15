@@ -62,6 +62,7 @@ class _PasswordGenerationPageState extends State<PasswordGenerationPage> {
                 await encryptMnemonic(context);
               }
             : () async {
+                //ignore: deprecated_member_use_from_same_package
                 final mnemonic = await MnemonicEncryptor.decryptMnemonic(passwordController.text);
 
                 await getIt<ImportWalletUseCase>().execute(
@@ -90,6 +91,7 @@ class _PasswordGenerationPageState extends State<PasswordGenerationPage> {
   }
 
   Future<void> encryptMnemonic(BuildContext context) async {
+    //ignore: deprecated_member_use_from_same_package
     await MnemonicEncryptor.encryptMnemonic(widget.mnemonic!, passwordController.text);
 
     await getIt<ImportWalletUseCase>().execute(
