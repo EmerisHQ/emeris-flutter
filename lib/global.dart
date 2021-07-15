@@ -6,12 +6,14 @@ import 'package:sacco/network_info.dart';
 
 final Client client = Client();
 
+@Deprecated("dont use it")
 class GlobalCache {
   List<EmerisWallet> wallets;
 
   GlobalCache({required this.wallets});
 }
 
+@Deprecated("will be migrated to global mobx stores")
 final globalCache = GlobalCache(wallets: []);
 
 class BaseEnv {
@@ -41,7 +43,9 @@ class BaseEnv {
 
 final BaseEnv baseEnv = BaseEnv();
 
+//ignore: deprecated_member_use_from_same_package
 final CosmosApi cosmosApi = CosmosApi();
+//ignore: deprecated_member_use_from_same_package
 final EthereumApi ethApi = EthereumApi();
 
 abstract class SharedPreferencesKeys {

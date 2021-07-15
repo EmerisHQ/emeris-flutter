@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group("Transaction hosted test", () {
+    //ignore: deprecated_member_use_from_same_package
     final api = CosmosApi();
     final faucetApi = FaucetApi();
 
@@ -34,6 +35,7 @@ void main() {
     });
 
     test('Get first wallet balances', () async {
+      //ignore: deprecated_member_use_from_same_package
       final wallet = globalCache.wallets[0];
       final address = wallet.walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
@@ -44,6 +46,7 @@ void main() {
     });
 
     test('Get second wallet balances', () async {
+      //ignore: deprecated_member_use_from_same_package
       final wallet = globalCache.wallets[1];
       final address = wallet.walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
@@ -55,6 +58,7 @@ void main() {
     });
 
     test('Get free tokens for Alice', () async {
+      //ignore: deprecated_member_use_from_same_package
       final wallet = globalCache.wallets[0];
       final address = wallet.walletDetails.walletAddress;
       debugPrint('Getting free tokens for Alice');
@@ -62,6 +66,7 @@ void main() {
     });
 
     test('Get free tokens for Bob', () async {
+      //ignore: deprecated_member_use_from_same_package
       final wallet = globalCache.wallets[1];
       final address = wallet.walletDetails.walletAddress;
       debugPrint('Getting free tokens for Bob');
@@ -69,6 +74,7 @@ void main() {
     });
 
     test('Get first wallet balances', () async {
+      //ignore: deprecated_member_use_from_same_package
       final wallet = globalCache.wallets[0];
       final address = wallet.walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
@@ -80,6 +86,7 @@ void main() {
     });
 
     test('Get second wallet balances', () async {
+      //ignore: deprecated_member_use_from_same_package
       final wallet = globalCache.wallets[1];
       final address = wallet.walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
@@ -92,7 +99,9 @@ void main() {
 
     test('Make a transaction from Alice to Bob', () async {
       await api.sendAmount(
+        //ignore: deprecated_member_use_from_same_package
         fromAddress: globalCache.wallets[0].walletDetails.walletAddress,
+        //ignore: deprecated_member_use_from_same_package
         toAddress: globalCache.wallets[1].walletDetails.walletAddress,
         balance: Balance(
           amount: Amount.fromString('10'),
@@ -102,6 +111,7 @@ void main() {
     }, skip: true);
 
     test('Get first wallet balances', () async {
+      //ignore: deprecated_member_use_from_same_package
       final wallet = globalCache.wallets[0];
       final address = wallet.walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);
@@ -112,6 +122,7 @@ void main() {
     });
 
     test('Get second wallet balances', () async {
+      //ignore: deprecated_member_use_from_same_package
       final wallet = globalCache.wallets[1];
       final address = wallet.walletDetails.walletAddress;
       final balances = await api.getWalletBalances(address);

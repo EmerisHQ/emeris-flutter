@@ -2,16 +2,15 @@ import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:web3dart/web3dart.dart';
 
-class EthereumWallet implements EmerisWallet {
+class EthereumWallet extends EmerisWallet {
   final Wallet wallet;
-  @override
-  final WalletDetails walletDetails;
 
-  EthereumWallet({
-    required this.walletDetails,
+  @override
+  const EthereumWallet({
+    required WalletDetails walletDetails,
     required this.wallet,
-  });
-
-  @override
-  WalletType get walletType => WalletType.Eth;
+  }) : super(
+          walletDetails: walletDetails,
+          walletType: WalletType.Eth,
+        );
 }

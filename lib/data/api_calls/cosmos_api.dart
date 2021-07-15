@@ -15,6 +15,7 @@ import 'package:sacco/tx_sender.dart';
 import 'package:sacco/tx_signer.dart';
 import 'package:sacco/wallet.dart' as sacco;
 
+@Deprecated("Use walletCredentialsRepository instead")
 class CosmosApi extends BaseWalletApi {
   @override
   void importWallet({required String mnemonicString, required String walletAlias}) {

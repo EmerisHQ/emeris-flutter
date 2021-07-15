@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/send_money_data.dart';
-import 'package:flutter_app/domain/model/failures/add_wallet_failure.dart';
 import 'package:flutter_app/global.dart';
 import 'package:flutter_app/utils/logger.dart';
 

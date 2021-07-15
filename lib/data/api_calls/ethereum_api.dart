@@ -12,6 +12,7 @@ import 'package:flutter_app/global.dart';
 import 'package:http/http.dart';
 import 'package:wallet_core/wallet_core.dart';
 
+@Deprecated("Use walletCredentialsRepository instead")
 class EthereumApi extends BaseWalletApi {
   String? privateKey;
 

@@ -4,6 +4,7 @@ on: [pull_request]
 
 jobs:
   build:
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -26,4 +27,5 @@ jobs:
 #      run: flutter build ios
 
     - name: build Android app
+      timeout-minutes: 10
       run: flutter build appbundle
