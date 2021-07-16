@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/global.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
@@ -31,14 +29,12 @@ class _WalletsListPageState extends State<WalletsListPage> {
 
   WalletsListViewModel get model => presenter.viewModel;
 
-  List<EmerisWallet> list = [];
-
   @override
   void initState() {
     super.initState();
     presenter = widget.presenter ??
         getIt(
-          param1: WalletsListPresentationModel(widget.initialParams),
+          param1: WalletsListPresentationModel(getIt(), widget.initialParams),
           param2: getIt<WalletsListNavigator>(),
         );
     presenter.navigator.context = context;
@@ -47,7 +43,6 @@ class _WalletsListPageState extends State<WalletsListPage> {
   @override
   Widget build(BuildContext context) {
     //ignore: deprecated_member_use_from_same_package
-    list = globalCache.wallets;
     return Scaffold(
       // Not translating this.
       appBar: const EmerisAppBar(
@@ -57,11 +52,11 @@ class _WalletsListPageState extends State<WalletsListPage> {
           emptyChild: EmptyListMessage(
             message: strings.walletListEmptyText,
           ),
-          isEmpty: list.isEmpty,
+          isEmpty: model.isEmpty,
           contentChild: Padding(
             padding: const EdgeInsets.all(8.0),
             child: WalletsListView(
-              list: list,
+              list: model.wallets,
               walletClicked: (wallet) => presenter.walletClicked(wallet),
             ),
           )),

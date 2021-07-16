@@ -24,4 +24,9 @@ class AddWalletFailure {
         return DisplayableFailure.commonError();
     }
   }
+
+  @override
+  String toString() {
+    return 'AddWalletFailure{cause: $cause}';
+  }
 }

@@ -9,8 +9,8 @@ void main() {
 
   const ethUrl = String.fromEnvironment('BASE_ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
 
-  baseEnv.setEnv(lcdUrl, port, ethUrl);
-  configureDependencies();
+  final baseEnv = BaseEnv()..setEnv(lcdUrl, port, ethUrl);
+  configureDependencies(baseEnv);
   runApp(EmerisApp());
 }
 
