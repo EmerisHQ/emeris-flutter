@@ -18,6 +18,7 @@ import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/global.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
+import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
 
 class CosmosWalletApi implements WalletApi {
   final TransactionSigningGateway _signingGateway;
@@ -55,9 +56,11 @@ class CosmosWalletApi implements WalletApi {
     return _signingGateway
         .signTransaction(
           transaction: saccoTx,
-          walletId: walletIdentifier.walletId,
-          chainId: walletIdentifier.chainId,
-          password: password,
+          walletLookupKey: WalletLookupKey(
+            walletId: walletIdentifier.walletId,
+            chainId: walletIdentifier.chainId,
+            password: password,
+          ),
         )
         .leftMap((signingFailure) => left(GeneralFailure.unknown("$signingFailure")))
         .flatMap(

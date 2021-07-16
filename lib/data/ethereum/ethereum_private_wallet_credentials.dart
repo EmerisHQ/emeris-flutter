@@ -7,20 +7,19 @@ class EthereumPrivateWalletCredentials implements PrivateWalletCredentials {
   String get serializerIdentifier => EthereumCredentialsSerializer.id;
 
   @override
-  String chainId;
+  final WalletPublicInfo publicInfo;
+
   @override
   final String mnemonic;
-  @override
-  final String walletId;
+
   final String walletCoreJson;
   final String walletCorePassword;
 
   core.Wallet get wallet => core.Wallet.fromJson(walletCoreJson, walletCorePassword);
 
   EthereumPrivateWalletCredentials({
-    required this.chainId,
     required this.mnemonic,
-    required this.walletId,
+    required this.publicInfo,
     required this.walletCoreJson,
     required this.walletCorePassword,
   });

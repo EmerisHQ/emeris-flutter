@@ -655,8 +655,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/transaction_signing_gateway"
-      ref: "feature/key_info_storage_implementation"
-      resolved-ref: "8a1adcbd8db667a45c1bab48dc26534ffa64d7f7"
+      ref: "feature/wallets-list"
+      resolved-ref: "79832025c2dc376c6de19efbd335ad2eefdd9b88"
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"

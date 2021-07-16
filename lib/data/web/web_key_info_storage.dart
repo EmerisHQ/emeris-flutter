@@ -1,7 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:transaction_signing_gateway/key_info_storage.dart';
 import 'package:transaction_signing_gateway/model/credentials_storage_failure.dart';
 import 'package:transaction_signing_gateway/model/private_wallet_credentials.dart';
+import 'package:transaction_signing_gateway/model/transaction_signing_failure.dart';
+import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
+import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 
 /// Dumb version of the keyInfoStorage, that keeps wallets in the memory. If needed, we can come
 /// up with something more sophisticated for web later on
@@ -10,8 +14,8 @@ class WebKeyInfoStorage implements KeyInfoStorage {
 
   @override
   Future<Either<CredentialsStorageFailure, PrivateWalletCredentials>> getPrivateCredentials(
-      {required String chainId, required String walletId, required String password}) async {
-    final creds = _credentialsMap[walletId];
+      WalletLookupKey walletLookupKey) async {
+    final creds = _credentialsMap[walletLookupKey.walletId];
     if (creds == null) {
       return left(const CredentialsStorageFailure("Credentials not found"));
     } else {
@@ -22,7 +26,17 @@ class WebKeyInfoStorage implements KeyInfoStorage {
   @override
   Future<Either<CredentialsStorageFailure, Unit>> savePrivateCredentials(
       {required PrivateWalletCredentials walletCredentials, required String password}) async {
-    _credentialsMap[walletCredentials.walletId] = walletCredentials;
+    _credentialsMap[walletCredentials.publicInfo.walletId] = walletCredentials;
     return right(unit);
   }
+
+  @override
+  Future<Either<CredentialsStorageFailure, List<WalletPublicInfo>>> getWalletsList() async =>
+      right(_credentialsMap.entries.map((entry) => entry.value.publicInfo).toList());
+
+  @override
+  Future<Either<TransactionSigningFailure, bool>> verifyLookupKey(WalletLookupKey walletLookupKey) =>
+      getPrivateCredentials(walletLookupKey) //
+          .map((creds) => right(true))
+          .leftMap((fail) => right(false));
 }

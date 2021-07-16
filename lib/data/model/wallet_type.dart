@@ -12,4 +12,9 @@ extension WalletTypeString on WalletType {
         return "cosmos";
     }
   }
+
+  static WalletType? fromString(String? string) => WalletType.values.cast<WalletType?>().firstWhere(
+        (element) => element?.stringVal.toLowerCase() == string?.trim().toLowerCase(),
+        orElse: () => null,
+      );
 }

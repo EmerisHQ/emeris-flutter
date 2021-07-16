@@ -11,8 +11,7 @@ class AppNavigator {
 
   void close(BuildContext context) => closeWithResult(context, null);
 
-  void closeWithResult<T>(BuildContext context, T result) =>
-      _navigator(context).canPop() ? _navigator(context).pop(result) : result;
+  void closeWithResult<T>(BuildContext context, T result) => _navigator(context).pop(result);
 
   void popUntilRoot(BuildContext context) => _navigator(context).popUntil((route) => route.isFirst);
 }

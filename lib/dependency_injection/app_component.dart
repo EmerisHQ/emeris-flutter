@@ -93,7 +93,7 @@ void _configureRepositories() {
     () => EmerisTransactionsRepository(getIt()),
   );
   getIt.registerFactory<WalletsRepository>(
-    () => EmerisWalletsRepository(getIt()),
+    () => EmerisWalletsRepository(getIt(), getIt()),
   );
   getIt.registerFactory<BalancesRepository>(
     () => EmerisBalancesRepository(getIt()),
