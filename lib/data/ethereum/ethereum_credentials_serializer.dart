@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/ethereum/ethereum_private_wallet_credentials.dart';
-import 'package:flutter_app/utils/logger.dart';
+import 'package:emeris_app/data/ethereum/ethereum_private_wallet_credentials.dart';
+import 'package:emeris_app/utils/logger.dart';
 import 'package:transaction_signing_gateway/model/credentials_storage_failure.dart';
 import 'package:transaction_signing_gateway/model/private_wallet_credentials.dart';
 import 'package:transaction_signing_gateway/model/private_wallet_credentials_serializer.dart';

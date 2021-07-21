@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:emeris_app/data/model/wallet_type.dart';
 
 class ImportWalletFormData extends Equatable {
   final String mnemonic;

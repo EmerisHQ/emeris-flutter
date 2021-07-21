@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/utils/logger.dart';
+import 'package:emeris_app/utils/logger.dart';
 import 'package:mobx/mobx.dart';
 
 /// does... nothing ;)

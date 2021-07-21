@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/utils/strings.dart';
+import 'package:emeris_app/data/model/emeris_wallet.dart';
+import 'package:emeris_app/data/model/wallet_type.dart';
+import 'package:emeris_app/utils/strings.dart';
 
 class BalanceHeading extends StatelessWidget {
   final EmerisWallet wallet;

@@ -1,4 +1,4 @@
-import 'package:flutter_app/domain/entities/pagination.dart';
+import 'package:emeris_app/domain/entities/pagination.dart';
 
 class EmerisPagination implements Pagination {
   @override

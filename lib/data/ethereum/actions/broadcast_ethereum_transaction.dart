@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/ethereum/ethereum_transaction.dart';
-import 'package:flutter_app/domain/entities/failures/general_failure.dart';
-import 'package:flutter_app/domain/entities/transaction_hash.dart';
-import 'package:flutter_app/utils/logger.dart';
+import 'package:emeris_app/data/ethereum/ethereum_transaction.dart';
+import 'package:emeris_app/domain/entities/failures/general_failure.dart';
+import 'package:emeris_app/domain/entities/transaction_hash.dart';
+import 'package:emeris_app/utils/logger.dart';
 import 'package:wallet_core/wallet_core.dart';
 
 Future<Either<GeneralFailure, TransactionHash>> broadcastEthereumTransaction(

@@ -1,4 +1,4 @@
-import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:emeris_app/data/model/emeris_wallet.dart';
 import 'package:mobx/mobx.dart';
 
 class WalletsStore with _WalletStoreBase {

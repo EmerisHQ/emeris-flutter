@@ -1,4 +1,4 @@
-import 'package:flutter_app/domain/entities/send_money_message.dart';
+import 'package:emeris_app/domain/entities/send_money_message.dart';
 import 'package:sacco/models/export.dart';
 
 class SaccoSendMoneyMessage {

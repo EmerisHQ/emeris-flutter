@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/domain/utils/future_either.dart';
+import 'package:emeris_app/domain/utils/future_either.dart';
 import 'package:transaction_signing_gateway/key_info_storage.dart';
 import 'package:transaction_signing_gateway/model/credentials_storage_failure.dart';
 import 'package:transaction_signing_gateway/model/private_wallet_credentials.dart';

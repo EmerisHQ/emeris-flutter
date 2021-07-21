@@ -1,5 +1,5 @@
-import 'package:flutter_app/data/sacco/sacco_credentials_serializer.dart';
-import 'package:flutter_app/data/sacco/sacco_private_wallet_credentials.dart';
+import 'package:emeris_app/data/sacco/sacco_credentials_serializer.dart';
+import 'package:emeris_app/data/sacco/sacco_private_wallet_credentials.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sacco/sacco.dart' as sacco;
 import 'package:transaction_signing_gateway/model/wallet_public_info.dart';

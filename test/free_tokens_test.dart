@@ -1,4 +1,4 @@
-import 'package:flutter_app/data/api_calls/faucet_api.dart';
+import 'package:emeris_app/data/api_calls/faucet_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

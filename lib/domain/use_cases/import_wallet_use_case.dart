@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
-import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
-import 'package:flutter_app/domain/repositories/wallets_repository.dart';
-import 'package:flutter_app/domain/stores/wallets_store.dart';
-import 'package:flutter_app/domain/utils/future_either.dart';
+import 'package:emeris_app/domain/entities/failures/add_wallet_failure.dart';
+import 'package:emeris_app/domain/entities/import_wallet_form_data.dart';
+import 'package:emeris_app/domain/repositories/wallets_repository.dart';
+import 'package:emeris_app/domain/stores/wallets_store.dart';
+import 'package:emeris_app/domain/utils/future_either.dart';
 
 class ImportWalletUseCase {
   final WalletsRepository _walletCredentialsRepository;

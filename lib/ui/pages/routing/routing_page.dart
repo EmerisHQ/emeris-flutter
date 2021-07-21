@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
-import 'package:flutter_app/presentation/routing/routing_presenter.dart';
-import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
+import 'package:emeris_app/dependency_injection/app_component.dart';
+import 'package:emeris_app/presentation/routing/routing_presentation_model.dart';
+import 'package:emeris_app/presentation/routing/routing_presenter.dart';
+import 'package:emeris_app/ui/pages/routing/routing_navigator.dart';
 
 class RoutingPage extends StatefulWidget {
   final RoutingPresenter? presenter;

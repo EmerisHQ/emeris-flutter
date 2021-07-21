@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_app/data/sacco/sacco_credentials_serializer.dart';
+import 'package:emeris_app/data/sacco/sacco_credentials_serializer.dart';
 import 'package:sacco/sacco.dart' as sacco;
 import 'package:transaction_signing_gateway/model/private_wallet_credentials.dart';
 import 'package:transaction_signing_gateway/model/wallet_public_info.dart';

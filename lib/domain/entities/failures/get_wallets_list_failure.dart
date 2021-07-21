@@ -1,4 +1,4 @@
-import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
+import 'package:emeris_app/domain/entities/failures/displayable_failure.dart';
 
 enum _GetWalletsListFailureType {
   Unknown,

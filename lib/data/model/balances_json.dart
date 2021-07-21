@@ -1,8 +1,8 @@
-import 'package:flutter_app/data/model/emeris_pagination.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/paginated_list.dart';
+import 'package:emeris_app/data/model/emeris_pagination.dart';
+import 'package:emeris_app/domain/entities/amount.dart';
+import 'package:emeris_app/domain/entities/balance.dart';
+import 'package:emeris_app/domain/entities/denom.dart';
+import 'package:emeris_app/domain/entities/paginated_list.dart';
 
 class PaginatedBalancesJson {
   late List<BalanceJson> balances;

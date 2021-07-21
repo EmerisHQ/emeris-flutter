@@ -1,5 +1,5 @@
-import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:emeris_app/data/model/emeris_wallet.dart';
+import 'package:emeris_app/data/model/wallet_type.dart';
 import 'package:sacco/sacco.dart';
 
 class CosmosWallet extends EmerisWallet {

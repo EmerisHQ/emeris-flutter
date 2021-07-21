@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
-import 'package:flutter_app/utils/strings.dart';
+import 'package:emeris_app/data/model/wallet_type.dart';
+import 'package:emeris_app/domain/entities/import_wallet_form_data.dart';
+import 'package:emeris_app/utils/strings.dart';
 
 abstract class AddWalletRoute {
   BuildContext get context;

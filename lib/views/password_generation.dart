@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
-import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
-import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_page.dart';
-import 'package:flutter_app/utils/strings.dart';
+import 'package:emeris_app/data/model/wallet_type.dart';
+import 'package:emeris_app/dependency_injection/app_component.dart';
+import 'package:emeris_app/domain/entities/import_wallet_form_data.dart';
+import 'package:emeris_app/domain/use_cases/import_wallet_use_case.dart';
+import 'package:emeris_app/presentation/wallets_list/wallets_list_initial_params.dart';
+import 'package:emeris_app/ui/pages/wallets_list/wallets_list_page.dart';
+import 'package:emeris_app/utils/strings.dart';
 
 class PasswordGenerationPage extends StatefulWidget {
   final String mnemonic;

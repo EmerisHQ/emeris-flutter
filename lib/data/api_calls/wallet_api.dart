@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
-import 'package:flutter_app/domain/entities/failures/general_failure.dart';
-import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
-import 'package:flutter_app/domain/entities/paginated_list.dart';
-import 'package:flutter_app/domain/entities/transaction.dart';
-import 'package:flutter_app/domain/entities/transaction_hash.dart';
-import 'package:flutter_app/domain/entities/wallet_identifier.dart';
+import 'package:emeris_app/data/model/emeris_wallet.dart';
+import 'package:emeris_app/data/model/wallet_type.dart';
+import 'package:emeris_app/domain/entities/balance.dart';
+import 'package:emeris_app/domain/entities/failures/add_wallet_failure.dart';
+import 'package:emeris_app/domain/entities/failures/general_failure.dart';
+import 'package:emeris_app/domain/entities/import_wallet_form_data.dart';
+import 'package:emeris_app/domain/entities/paginated_list.dart';
+import 'package:emeris_app/domain/entities/transaction.dart';
+import 'package:emeris_app/domain/entities/transaction_hash.dart';
+import 'package:emeris_app/domain/entities/wallet_identifier.dart';
 
 abstract class WalletApi {
   WalletType get walletType;
