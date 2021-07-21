@@ -21,14 +21,14 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   asn1lib:
     dependency: transitive
     description:
       name: asn1lib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.2"
   async:
     dependency: transitive
     description:
@@ -42,7 +42,7 @@ packages:
       name: bech32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.2.1"
   bip32:
     dependency: transitive
     description:
@@ -77,7 +77,7 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   build_config:
     dependency: transitive
     description:
@@ -98,7 +98,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.0.6"
+    version: "8.1.1"
   characters:
     dependency: transitive
     description:
@@ -126,7 +126,7 @@ packages:
       name: cli_util
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.3"
   clipboard:
     dependency: "direct main"
     description:
@@ -147,7 +147,7 @@ packages:
       name: code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.1.0"
   collection:
     dependency: transitive
     description:
@@ -161,7 +161,7 @@ packages:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   crypto:
     dependency: transitive
     description:
@@ -182,7 +182,7 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   dartz:
     dependency: "direct main"
     description:
@@ -196,7 +196,7 @@ packages:
       name: decimal
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.3.0"
   dio:
     dependency: "direct main"
     description:
@@ -238,7 +238,7 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.1"
+    version: "6.1.2"
   fixnum:
     dependency: transitive
     description:
@@ -447,7 +447,7 @@ packages:
       name: normalize
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.4"
+    version: "0.5.5"
   package_config:
     dependency: transitive
     description:
@@ -489,7 +489,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.11.0"
+    version: "1.11.1"
   platform:
     dependency: transitive
     description:
@@ -503,7 +503,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   pointycastle:
     dependency: "direct overridden"
     description:
@@ -558,7 +558,7 @@ packages:
     description:
       path: "."
       ref: account-url-fix
-      resolved-ref: ddc376353cb8929becb72a0bfca52f69fc3e7e79
+      resolved-ref: "6a4a6e26ced17931cf840201513c01c5ebb40217"
       url: "https://github.com/wal33d006/sacco.dart.git"
     source: git
     version: "0.2.0"
@@ -655,8 +655,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/transaction_signing_gateway"
-      ref: "feature/wallets-list"
-      resolved-ref: "79832025c2dc376c6de19efbd335ad2eefdd9b88"
+      ref: main
+      resolved-ref: "73b42d449b0543c74fab896dbaecc40f66243ae7"
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -717,7 +717,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.5"
+    version: "2.2.5"
   xdg_directories:
     dependency: transitive
     description:
@@ -733,5 +733,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.12.0 <3.0.0"
+  dart: ">=2.13.0 <3.0.0"
   flutter: ">=2.0.5"
