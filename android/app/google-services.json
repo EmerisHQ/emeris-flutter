@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "336481090944",
+    "project_id": "emeris-5d513",
+    "storage_bucket": "emeris-5d513.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336481090944:android:820a03b2e42e37ac139565",
+        "android_client_info": {
+          "package_name": "com.emeris"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "336481090944-u75tn3sqm6ov1i4620ppknatno2j8te6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emeris",
+            "certificate_hash": "ae5bbdb09e24d13bc70ccbb2ac13754df69fe4f8"
+          }
+        },
+        {
+          "client_id": "336481090944-b3qpjnpn91vjrefchnnst9rk8qbgcfcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7nJFCGCHCa6Wkv8DuMSDI1iLdvXv6_ps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "336481090944-b3qpjnpn91vjrefchnnst9rk8qbgcfcl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

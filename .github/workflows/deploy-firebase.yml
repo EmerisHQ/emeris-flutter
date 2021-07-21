@@ -1,0 +1,78 @@
+name: Deploy to Firebase
+
+on:
+  push #:
+#    branches: [ main ]
+
+env:
+  RUBY_VERSION: '2.7'
+  FLUTTER_VERSION: '2.2.2'
+  IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
+  ANDROID_FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+# This makes sure any newer commits to the same pr cancels the already running jobs
+concurrency:
+  group: ${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy_android:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+      - name: pub get
+        run: flutter pub get
+
+
+      - name: build Android Profile + Release
+        run: |
+          flutter build appbundle
+          flutter build apk --profile --build-number $GITHUB_RUN_NUMBER
+
+      - name: set up ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+
+      - name: set up fastlane
+        working-directory: ./ios
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: deploy firebase Android
+        working-directory: ./android
+        run: |
+          bundle exec fastlane deploy_firebase
+
+  deploy_ios:
+    timeout-minutes: 20
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: pub get
+        run: flutter pub get
+
+      - name: build iOS Profile with Flutter
+        run: |
+          flutter build ios --profile --no-codesign --build-number $GITHUB_RUN_NUMBER
+
+      - name: build iOS ipa file
+        working-directory: ./ios
+        run: |
+          bundle exec fastlane build_development
+
+      - name: deploy firebase iOS
+        working-directory: ./ios
+        run: |
+          bundle exec fastlane deploy_firebase

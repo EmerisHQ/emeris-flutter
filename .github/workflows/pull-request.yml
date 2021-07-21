@@ -4,6 +4,7 @@ on: [pull_request]
 
 env:
   FLUTTER_VERSION: '2.2.2'
+
 jobs:
   test:
     timeout-minutes: 20
