@@ -18,9 +18,12 @@ class WalletsListNavigator with NoRoutes, AddWalletRoute, ErrorDialogRoute, Wall
 }
 
 abstract class WalletsListRoute {
-  Future<void> openWalletsList(WalletsListInitialParams initialParams) async => materialRoute(
-        const WalletsListPage(
-          initialParams: WalletsListInitialParams(),
+  Future<void> openWalletsList(WalletsListInitialParams initialParams) async => appNavigator.push(
+        context,
+        materialRoute(
+          const WalletsListPage(
+            initialParams: WalletsListInitialParams(),
+          ),
         ),
       );
 

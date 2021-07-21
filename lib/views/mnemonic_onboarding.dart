@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/global.dart';
 import 'package:flutter_app/helpers/mnemonic_generator.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_app/views/password_generation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class MnemonicOnboardingRoute {
   AppNavigator get appNavigator;
@@ -27,7 +25,6 @@ class _MnemonicOnboardingState extends State<MnemonicOnboarding> {
   @override
   void initState() {
     super.initState();
-    _getSharedPreferences();
   }
 
   @override
@@ -107,17 +104,5 @@ class _MnemonicOnboardingState extends State<MnemonicOnboarding> {
       ),
       selectedColor: Theme.of(context).primaryColorDark,
     );
-  }
-
-  Future<void> _getSharedPreferences() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isWalletCreated = prefs.getBool(SharedPreferencesKeys.isWalletCreated);
-    if (isWalletCreated != null) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const PasswordGenerationPage(),
-        ),
-      );
-    }
   }
 }

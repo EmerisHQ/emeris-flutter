@@ -3,15 +3,14 @@ import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
-import 'package:flutter_app/helpers/mnemonic_encryptor.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_page.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class PasswordGenerationPage extends StatefulWidget {
-  final String? mnemonic;
+  final String mnemonic;
 
-  const PasswordGenerationPage({this.mnemonic});
+  const PasswordGenerationPage({required this.mnemonic});
 
   @override
   _PasswordGenerationPageState createState() => _PasswordGenerationPageState();
@@ -57,60 +56,28 @@ class _PasswordGenerationPageState extends State<PasswordGenerationPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: widget.mnemonic != null
-            ? () async {
-                await encryptMnemonic(context);
-              }
-            : () async {
-                //ignore: deprecated_member_use_from_same_package
-                final mnemonic = await MnemonicEncryptor.decryptMnemonic(passwordController.text);
-
-                await getIt<ImportWalletUseCase>().execute(
-                    walletFormData: ImportWalletFormData(
-                  mnemonic: mnemonic,
-                  alias: "First wallet",
-                  password: passwordController.text,
-                  walletType: WalletType.Cosmos,
-                ));
-                await getIt<ImportWalletUseCase>().execute(
-                    walletFormData: ImportWalletFormData(
-                  mnemonic: mnemonic,
-                  alias: "Another wallet",
-                  password: passwordController.text,
-                  walletType: WalletType.Eth,
-                ));
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const WalletsListPage(initialParams: WalletsListInitialParams()),
-                  ),
-                );
-              },
+        onPressed: () async {
+          await getIt<ImportWalletUseCase>().execute(
+              walletFormData: ImportWalletFormData(
+            mnemonic: widget.mnemonic,
+            name: "First wallet",
+            password: passwordController.text,
+            walletType: WalletType.Cosmos,
+          ));
+          await getIt<ImportWalletUseCase>().execute(
+              walletFormData: ImportWalletFormData(
+            mnemonic: widget.mnemonic,
+            name: "Another wallet",
+            password: passwordController.text,
+            walletType: WalletType.Eth,
+          ));
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const WalletsListPage(initialParams: WalletsListInitialParams()),
+            ),
+          );
+        },
         child: const Icon(Icons.arrow_forward),
-      ),
-    );
-  }
-
-  Future<void> encryptMnemonic(BuildContext context) async {
-    //ignore: deprecated_member_use_from_same_package
-    await MnemonicEncryptor.encryptMnemonic(widget.mnemonic!, passwordController.text);
-
-    await getIt<ImportWalletUseCase>().execute(
-        walletFormData: ImportWalletFormData(
-      mnemonic: widget.mnemonic!,
-      alias: "First wallet",
-      password: passwordController.text,
-      walletType: WalletType.Cosmos,
-    ));
-    await getIt<ImportWalletUseCase>().execute(
-        walletFormData: ImportWalletFormData(
-      mnemonic: widget.mnemonic!,
-      alias: "Another wallet",
-      password: passwordController.text,
-      walletType: WalletType.Eth,
-    ));
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const WalletsListPage(initialParams: WalletsListInitialParams()),
       ),
     );
   }

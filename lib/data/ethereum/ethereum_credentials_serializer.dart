@@ -4,13 +4,16 @@ import 'package:flutter_app/utils/logger.dart';
 import 'package:transaction_signing_gateway/model/credentials_storage_failure.dart';
 import 'package:transaction_signing_gateway/model/private_wallet_credentials.dart';
 import 'package:transaction_signing_gateway/model/private_wallet_credentials_serializer.dart';
+import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 
 class EthereumCredentialsSerializer implements PrivateWalletCredentialsSerializer {
   static const id = "EthereumPrivateWalletCredentialsSerializer";
 
   static const _chainIdKey = "chainId";
   static const _mnemonicKey = "mnemonic";
-  static const walletIdKey = "walletId";
+  static const _publicAddressKey = "publicAddress";
+  static const _nameKey = "name";
+  static const _walletIdKey = "walletId";
   static const _walletCoreJsonKey = "walletCoreJson";
   static const _walletCorePasswordKey = "walletCorePassword";
 
@@ -18,9 +21,13 @@ class EthereumCredentialsSerializer implements PrivateWalletCredentialsSerialize
   Either<CredentialsStorageFailure, PrivateWalletCredentials> fromJson(Map<String, dynamic> json) {
     try {
       return right(EthereumPrivateWalletCredentials(
-        chainId: json[_chainIdKey] as String? ?? "",
+        publicInfo: WalletPublicInfo(
+          chainId: json[_chainIdKey] as String? ?? "",
+          publicAddress: json[_publicAddressKey] as String? ?? "",
+          walletId: json[_walletIdKey] as String? ?? "",
+          name: json[_nameKey] as String? ?? "",
+        ),
         mnemonic: json[_mnemonicKey] as String? ?? "",
-        walletId: json[walletIdKey] as String? ?? "",
         walletCoreJson: json[_walletCoreJsonKey] as String? ?? "",
         walletCorePassword: json[_walletCorePasswordKey] as String? ?? "",
       ));
@@ -40,9 +47,11 @@ class EthereumCredentialsSerializer implements PrivateWalletCredentialsSerialize
           "Passed credentials are not of type $EthereumPrivateWalletCredentials. actual: $credentials"));
     }
     return right({
-      _chainIdKey: credentials.chainId,
+      _chainIdKey: credentials.publicInfo.chainId,
       _mnemonicKey: credentials.mnemonic,
-      walletIdKey: credentials.walletId,
+      _walletIdKey: credentials.publicInfo.walletId,
+      _nameKey: credentials.publicInfo.name,
+      _publicAddressKey: credentials.publicInfo.publicAddress,
       _walletCoreJsonKey: credentials.walletCoreJson,
       _walletCorePasswordKey: credentials.walletCorePassword,
     });

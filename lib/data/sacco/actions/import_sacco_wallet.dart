@@ -8,6 +8,7 @@ import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/global.dart';
 import 'package:sacco/sacco.dart' as sacco;
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
+import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 import 'package:uuid/uuid.dart';
 
 Future<Either<AddWalletFailure, EmerisWallet>> importSaccoWallet(
@@ -15,18 +16,22 @@ Future<Either<AddWalletFailure, EmerisWallet>> importSaccoWallet(
   BaseEnv baseEnv,
   ImportWalletFormData walletFormData,
 ) async {
-  final creds = SaccoPrivateWalletCredentials(
-    chainId: walletFormData.walletType.stringVal,
-    mnemonic: walletFormData.mnemonic,
-    walletId: const Uuid().v4(),
-    networkInfo: baseEnv.networkInfo,
-  );
   final sacco.Wallet wallet;
   try {
     wallet = sacco.Wallet.derive(walletFormData.mnemonic.split(" "), baseEnv.networkInfo);
   } catch (e) {
     return left(AddWalletFailure.invalidMnemonic(e));
   }
+  final creds = SaccoPrivateWalletCredentials(
+    publicInfo: WalletPublicInfo(
+      chainId: walletFormData.walletType.stringVal,
+      walletId: const Uuid().v4(),
+      name: walletFormData.name,
+      publicAddress: wallet.bech32Address,
+    ),
+    mnemonic: walletFormData.mnemonic,
+    networkInfo: baseEnv.networkInfo,
+  );
   final result = await signingGateway.storeWalletCredentials(
     credentials: creds,
     password: walletFormData.password,
@@ -36,10 +41,10 @@ Future<Either<AddWalletFailure, EmerisWallet>> importSaccoWallet(
     (r) => right(EmerisWallet(
       walletDetails: WalletDetails(
         walletIdentifier: WalletIdentifier(
-          walletId: creds.walletId,
-          chainId: creds.chainId,
+          walletId: creds.publicInfo.walletId,
+          chainId: creds.publicInfo.chainId,
         ),
-        walletAlias: walletFormData.alias,
+        walletAlias: walletFormData.name,
         walletAddress: wallet.bech32Address,
       ),
       walletType: walletFormData.walletType,

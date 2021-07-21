@@ -2,20 +2,25 @@ import 'package:flutter_app/data/sacco/sacco_credentials_serializer.dart';
 import 'package:flutter_app/data/sacco/sacco_private_wallet_credentials.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sacco/sacco.dart' as sacco;
+import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 
 void main() {
   group("Sacco Serializer tests", () {
     final serializer = SaccoCredentialsSerializer();
     final credentials = SaccoPrivateWalletCredentials(
-      chainId: "chainId",
       mnemonic: "mnemonic",
-      walletId: "walletId",
       networkInfo: sacco.NetworkInfo(
         bech32Hrp: "bech32Hrp",
         lcdUrl: Uri.parse("https://google.com/"),
         name: "name",
         iconUrl: "iconUrl",
         defaultTokenDenom: "defaultTokenDenom",
+      ),
+      publicInfo: const WalletPublicInfo(
+        chainId: "chainId",
+        walletId: "walletId",
+        name: 'name',
+        publicAddress: 'cosmos124maqmcqv8tquy764ktz7cu0gxnzfw54k9cmz5',
       ),
     );
 

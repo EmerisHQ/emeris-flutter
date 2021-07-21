@@ -54,7 +54,7 @@ class _AddWalletBottomSheetState extends State<AddWalletBottomSheet> {
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(ImportWalletFormData(
               mnemonic: _mnemonic,
-              alias: _alias,
+              name: _alias,
               password: '', //TODO
               walletType: WalletType.Cosmos, //TODO
             )),

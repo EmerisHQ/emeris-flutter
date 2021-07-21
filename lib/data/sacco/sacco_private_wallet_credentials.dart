@@ -2,23 +2,20 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/sacco/sacco_credentials_serializer.dart';
 import 'package:sacco/sacco.dart' as sacco;
 import 'package:transaction_signing_gateway/model/private_wallet_credentials.dart';
+import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 
 class SaccoPrivateWalletCredentials extends Equatable implements PrivateWalletCredentials {
-  @override
-  final String chainId;
-
   @override
   final String mnemonic;
 
   @override
-  final String walletId;
+  final WalletPublicInfo publicInfo;
 
   final sacco.NetworkInfo networkInfo;
 
   const SaccoPrivateWalletCredentials({
-    required this.chainId,
     required this.mnemonic,
-    required this.walletId,
+    required this.publicInfo,
     required this.networkInfo,
   });
 
@@ -32,9 +29,8 @@ class SaccoPrivateWalletCredentials extends Equatable implements PrivateWalletCr
 
   @override
   List<Object?> get props => [
-        chainId,
+        publicInfo,
         mnemonic,
-        walletId,
         networkInfo.bech32Hrp,
         networkInfo.lcdUrl,
         networkInfo.name,

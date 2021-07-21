@@ -26,7 +26,7 @@ class _RoutingPageState extends State<RoutingPage> {
     super.initState();
     presenter = widget.presenter ??
         getIt(
-          param1: RoutingPresentationModel(),
+          param1: RoutingPresentationModel(getIt()),
           param2: getIt<RoutingNavigator>(),
         );
     presenter.navigator.context = context;
