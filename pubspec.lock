@@ -654,11 +654,9 @@ packages:
   transaction_signing_gateway:
     dependency: "direct main"
     description:
-      path: "packages/transaction_signing_gateway"
-      ref: main
-      resolved-ref: "73b42d449b0543c74fab896dbaecc40f66243ae7"
-      url: "https://github.com/tendermint/flutter.git"
-    source: git
+      path: "../flutter-public/packages/transaction_signing_gateway"
+      relative: true
+    source: path
     version: "0.0.1"
   typed_data:
     dependency: transitive
