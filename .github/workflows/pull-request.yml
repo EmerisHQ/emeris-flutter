@@ -1,6 +1,6 @@
 name: Pull Request Worfklow
 
-on: [pull_request]
+on: [ pull_request ]
 
 env:
   FLUTTER_VERSION: '2.2.2'
@@ -10,39 +10,44 @@ jobs:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-    - name: pub get
-      run: flutter pub get
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+      - name: pub get
+        run: flutter pub get
 
-    - name: check codestyle
-      run: find lib test -name "*.dart" -not -name "*.g.dart" -not -name "*.freezed.dart" -not -name "*.gen.dart" -exec dartfmt -l 120 --dry-run --set-exit-if-changed {} +;
+      - name: check codestyle
+        run: find lib test -name "*.dart" -not -name "*.g.dart" -not -name "*.freezed.dart" -not -name "*.gen.dart" -exec dartfmt -l 120 --dry-run --set-exit-if-changed {} +;
 
-    - name: dart analysis
-      run: flutter analyze
+      - name: dart analysis
+        run: flutter analyze
 
-    - name: tests
-      run: flutter test
+      - name: tests
+        run: flutter test
 
   build-android:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-    - name: build Android app
-      timeout-minutes: 10
-      run: flutter build appbundle
-# TODO reenable it when proper development team is set up in app store connect
-#  build-ios:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@v2
-#    - uses: subosito/flutter-action@v1
-#      with:
-#        flutter-version: ${{ env.FLUTTER_VERSION }}
-#    - name: build Android app
-#      run: flutter build appbundle
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+      - name: build Android app bundle
+        timeout-minutes: 10
+        run: flutter build appbundle
+
+
+  build-ios:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+        # we build release version in Flutter and ipa file in fastlane, since flutter does not generate ipa file,
+        # which is needed for firebase app distribution
+      - name: build iOS Profile with Flutter
+        working-directory: ./ios
+        run: |
+          flutter build ios --profile --no-codesign --build-number $GITHUB_RUN_NUMBER
