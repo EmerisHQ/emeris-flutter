@@ -1,5 +1,5 @@
-import 'package:emeris_app/data/model/emeris_wallet.dart';
-import 'package:emeris_app/data/model/wallet_type.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:web3dart/web3dart.dart';
 
 class EthereumWallet extends EmerisWallet {

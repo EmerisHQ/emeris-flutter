@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:emeris_app/domain/entities/balance.dart';
-import 'package:emeris_app/utils/app_theme.dart';
-import 'package:emeris_app/utils/strings.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/utils/app_theme.dart';
+import 'package:flutter_app/utils/strings.dart';
 
 class BalanceCard extends StatelessWidget {
   final Balance data;

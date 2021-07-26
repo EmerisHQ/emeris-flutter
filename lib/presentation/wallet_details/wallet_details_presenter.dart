@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
-import 'package:emeris_app/data/model/balance_pagination.dart';
-import 'package:emeris_app/data/model/emeris_wallet.dart';
-import 'package:emeris_app/domain/entities/balance.dart';
-import 'package:emeris_app/domain/entities/failures/add_wallet_failure.dart';
-import 'package:emeris_app/domain/entities/failures/general_failure.dart';
-import 'package:emeris_app/domain/entities/paginated_list.dart';
-import 'package:emeris_app/domain/use_cases/get_balances_use_case.dart';
-import 'package:emeris_app/presentation/send_money/send_money_initial_params.dart';
-import 'package:emeris_app/presentation/wallet_details/wallet_details_initial_params.dart';
-import 'package:emeris_app/ui/pages/wallet_details/wallet_details_navigator.dart';
-import 'package:emeris_app/utils/utils.dart';
+import 'package:flutter_app/data/model/balance_pagination.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
+import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/paginated_list.dart';
+import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
+import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
+import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
+import 'package:flutter_app/utils/utils.dart';
 import 'package:mobx/mobx.dart';
 
 part 'wallet_details_presentation_model.dart';

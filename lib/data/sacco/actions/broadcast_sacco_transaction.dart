@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
-import 'package:emeris_app/data/sacco/sacco_transaction.dart';
-import 'package:emeris_app/domain/entities/failures/general_failure.dart';
-import 'package:emeris_app/domain/entities/transaction_hash.dart';
-import 'package:emeris_app/global.dart';
-import 'package:emeris_app/utils/logger.dart';
+import 'package:flutter_app/data/sacco/sacco_transaction.dart';
+import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/transaction_hash.dart';
+import 'package:flutter_app/global.dart';
+import 'package:flutter_app/utils/logger.dart';
 import 'package:sacco/tx_sender.dart';
 import 'package:sacco/wallet.dart';
 

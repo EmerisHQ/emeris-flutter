@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:emeris_app/dependency_injection/app_component.dart';
-import 'package:emeris_app/presentation/wallets_list/wallets_list_initial_params.dart';
-import 'package:emeris_app/presentation/wallets_list/wallets_list_presentation_model.dart';
-import 'package:emeris_app/presentation/wallets_list/wallets_list_presenter.dart';
-import 'package:emeris_app/ui/pages/wallets_list/wallets_list_navigator.dart';
-import 'package:emeris_app/ui/pages/wallets_list/widgets/wallets_list_view.dart';
-import 'package:emeris_app/ui/widgets/content_empty_loading_switcher.dart';
-import 'package:emeris_app/ui/widgets/emeris_app_bar.dart';
-import 'package:emeris_app/ui/widgets/empty_list_message.dart';
-import 'package:emeris_app/utils/strings.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
+import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
+import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
+import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
+import 'package:flutter_app/ui/pages/wallets_list/widgets/wallets_list_view.dart';
+import 'package:flutter_app/ui/widgets/content_empty_loading_switcher.dart';
+import 'package:flutter_app/ui/widgets/emeris_app_bar.dart';
+import 'package:flutter_app/ui/widgets/empty_list_message.dart';
+import 'package:flutter_app/utils/strings.dart';
 
 class WalletsListPage extends StatefulWidget {
   final WalletsListInitialParams initialParams;

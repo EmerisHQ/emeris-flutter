@@ -1,6 +1,6 @@
-import 'package:emeris_app/data/model/emeris_wallet.dart';
-import 'package:emeris_app/domain/stores/wallets_store.dart';
-import 'package:emeris_app/presentation/wallets_list/wallets_list_initial_params.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/domain/stores/wallets_store.dart';
+import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
 
 abstract class WalletsListViewModel {
   bool get isEmpty;

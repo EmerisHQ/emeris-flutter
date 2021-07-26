@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:emeris_app/domain/entities/denom.dart';
-import 'package:emeris_app/domain/entities/failures/general_failure.dart';
-import 'package:emeris_app/domain/entities/transaction_hash.dart';
-import 'package:emeris_app/domain/entities/wallet_identifier.dart';
-import 'package:emeris_app/domain/stores/wallets_store.dart';
-import 'package:emeris_app/presentation/send_money/send_money_initial_params.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
+import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/transaction_hash.dart';
+import 'package:flutter_app/domain/entities/wallet_identifier.dart';
+import 'package:flutter_app/domain/stores/wallets_store.dart';
+import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
 import 'package:mobx/mobx.dart';
 
 abstract class SendMoneyViewModel {

@@ -1,8 +1,8 @@
-import 'package:emeris_app/data/model/emeris_wallet.dart';
-import 'package:emeris_app/domain/use_cases/import_wallet_use_case.dart';
-import 'package:emeris_app/presentation/wallets_list/wallets_list_presentation_model.dart';
-import 'package:emeris_app/ui/pages/wallets_list/wallets_list_navigator.dart';
-import 'package:emeris_app/utils/utils.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
+import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
+import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
+import 'package:flutter_app/utils/utils.dart';
 
 class WalletsListPresenter {
   final ImportWalletUseCase _addWalletUseCase;

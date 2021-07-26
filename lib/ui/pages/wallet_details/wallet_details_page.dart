@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:emeris_app/dependency_injection/app_component.dart';
-import 'package:emeris_app/presentation/wallet_details/wallet_details_initial_params.dart';
-import 'package:emeris_app/presentation/wallet_details/wallet_details_presenter.dart';
-import 'package:emeris_app/ui/pages/wallet_details/wallet_details_navigator.dart';
-import 'package:emeris_app/ui/pages/wallet_details/widgets/balance_card.dart';
-import 'package:emeris_app/ui/pages/wallet_details/widgets/balance_heading.dart';
-import 'package:emeris_app/ui/widgets/content_empty_loading_switcher.dart';
-import 'package:emeris_app/ui/widgets/emeris_app_bar.dart';
-import 'package:emeris_app/utils/strings.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
+import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
+import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
+import 'package:flutter_app/ui/widgets/content_empty_loading_switcher.dart';
+import 'package:flutter_app/ui/widgets/emeris_app_bar.dart';
+import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class WalletDetailsPage extends StatefulWidget {

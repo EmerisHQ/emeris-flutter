@@ -1,4 +1,4 @@
-import 'package:emeris_app/domain/entities/failures/displayable_failure.dart';
+import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
 
 enum AddWalletFailureType {
   Unknown,

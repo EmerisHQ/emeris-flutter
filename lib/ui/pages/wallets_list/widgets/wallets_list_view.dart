@@ -1,7 +1,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
-import 'package:emeris_app/data/model/emeris_wallet.dart';
-import 'package:emeris_app/data/model/wallet_type.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/wallet_type.dart';
 
 class WalletsListView extends StatelessWidget {
   final List<EmerisWallet> list;

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:emeris_app/data/sacco/sacco_private_wallet_credentials.dart';
-import 'package:emeris_app/data/sacco/sacco_transaction.dart';
-import 'package:emeris_app/utils/logger.dart';
+import 'package:flutter_app/data/sacco/sacco_private_wallet_credentials.dart';
+import 'package:flutter_app/data/sacco/sacco_transaction.dart';
+import 'package:flutter_app/utils/logger.dart';
 import 'package:sacco/tx_signer.dart';
 import 'package:transaction_signing_gateway/model/private_wallet_credentials.dart';
 import 'package:transaction_signing_gateway/model/signed_transaction.dart';

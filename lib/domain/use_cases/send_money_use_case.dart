@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:emeris_app/domain/entities/failures/general_failure.dart';
-import 'package:emeris_app/domain/entities/send_money_message.dart';
-import 'package:emeris_app/domain/entities/transaction.dart';
-import 'package:emeris_app/domain/entities/transaction_hash.dart';
-import 'package:emeris_app/domain/entities/wallet_identifier.dart';
-import 'package:emeris_app/domain/repositories/transactions_repository.dart';
-import 'package:emeris_app/domain/utils/future_either.dart';
-import 'package:emeris_app/domain/utils/wallet_password_retriever.dart';
+import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/send_money_message.dart';
+import 'package:flutter_app/domain/entities/transaction.dart';
+import 'package:flutter_app/domain/entities/transaction_hash.dart';
+import 'package:flutter_app/domain/entities/wallet_identifier.dart';
+import 'package:flutter_app/domain/repositories/transactions_repository.dart';
+import 'package:flutter_app/domain/utils/future_either.dart';
+import 'package:flutter_app/domain/utils/wallet_password_retriever.dart';
 
 class SendMoneyUseCase {
   final TransactionsRepository _transactionsRepository;

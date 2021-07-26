@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:emeris_app/navigation/app_navigator.dart';
-import 'package:emeris_app/navigation/error_dialog_route.dart';
-import 'package:emeris_app/navigation/no_routes.dart';
-import 'package:emeris_app/presentation/send_money/send_money_initial_params.dart';
-import 'package:emeris_app/ui/pages/send_money/send_money.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/navigation/error_dialog_route.dart';
+import 'package:flutter_app/navigation/no_routes.dart';
+import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money.dart';
 
 class SendMoneyNavigator with NoRoutes, ErrorDialogRoute {
   @override

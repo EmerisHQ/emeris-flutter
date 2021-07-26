@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:emeris_app/navigation/app_navigator.dart';
-import 'package:emeris_app/ui/pages/routing/routing_page.dart';
-import 'package:emeris_app/utils/app_theme.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/ui/pages/routing/routing_page.dart';
+import 'package:flutter_app/utils/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:emeris_app/domain/entities/failures/displayable_failure.dart';
+import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
 
 abstract class ErrorDialogRoute<T> {
   BuildContext get context;

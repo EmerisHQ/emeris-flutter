@@ -1,4 +1,4 @@
-import 'package:emeris_app/utils/app_theme.dart';
+import 'package:flutter_app/utils/app_theme.dart';
 
 class LongDuration extends Duration {
   const LongDuration() : super(milliseconds: AppTheme.longDuration);

@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:emeris_app/data/model/emeris_wallet.dart';
-import 'package:emeris_app/domain/entities/balance.dart';
-import 'package:emeris_app/domain/entities/failures/general_failure.dart';
-import 'package:emeris_app/domain/entities/paginated_list.dart';
-import 'package:emeris_app/domain/repositories/balances_repository.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/paginated_list.dart';
+import 'package:flutter_app/domain/repositories/balances_repository.dart';
 
 class GetBalancesUseCase {
   final BalancesRepository _balancesRepository;

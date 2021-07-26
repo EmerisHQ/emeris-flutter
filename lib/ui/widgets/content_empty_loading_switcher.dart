@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:emeris_app/ui/widgets/content_loading_indicator.dart';
-import 'package:emeris_app/utils/durations.dart';
+import 'package:flutter_app/ui/widgets/content_loading_indicator.dart';
+import 'package:flutter_app/utils/durations.dart';
 
 class ContentLoadingEmptyViewSwitcher extends StatelessWidget {
   final bool isLoading;

@@ -1,6 +1,6 @@
-import 'package:emeris_app/data/sacco/messages/sacco_send_money_message.dart';
-import 'package:emeris_app/domain/entities/send_money_message.dart';
-import 'package:emeris_app/domain/entities/transaction.dart';
+import 'package:flutter_app/data/sacco/messages/sacco_send_money_message.dart';
+import 'package:flutter_app/domain/entities/send_money_message.dart';
+import 'package:flutter_app/domain/entities/transaction.dart';
 import 'package:sacco/sacco.dart' as sacco;
 import 'package:transaction_signing_gateway/model/signed_transaction.dart';
 import 'package:transaction_signing_gateway/model/unsigned_transaction.dart';

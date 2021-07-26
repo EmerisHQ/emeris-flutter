@@ -1,7 +1,7 @@
-import 'package:emeris_app/domain/repositories/wallets_repository.dart';
-import 'package:emeris_app/domain/stores/wallets_store.dart';
-import 'package:emeris_app/navigation/app_navigator.dart';
-import 'package:emeris_app/utils/strings.dart';
+import 'package:flutter_app/domain/repositories/wallets_repository.dart';
+import 'package:flutter_app/domain/stores/wallets_store.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/utils/strings.dart';
 
 class AppInitializer {
   final WalletsRepository _walletCredentialsRepository;

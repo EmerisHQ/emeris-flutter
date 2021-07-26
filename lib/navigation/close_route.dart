@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:emeris_app/navigation/app_navigator.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
 
 abstract class CloseRoute<T> {
   BuildContext get context;

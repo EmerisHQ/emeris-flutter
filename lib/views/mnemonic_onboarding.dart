@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:emeris_app/helpers/mnemonic_generator.dart';
-import 'package:emeris_app/navigation/app_navigator.dart';
-import 'package:emeris_app/utils/strings.dart';
-import 'package:emeris_app/views/password_generation.dart';
+import 'package:flutter_app/helpers/mnemonic_generator.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/utils/strings.dart';
+import 'package:flutter_app/views/password_generation.dart';
 
 abstract class MnemonicOnboardingRoute {
   AppNavigator get appNavigator;

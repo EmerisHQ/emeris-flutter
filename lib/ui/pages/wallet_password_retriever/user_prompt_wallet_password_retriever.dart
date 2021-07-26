@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart' hide State;
 import 'package:flutter/material.dart';
-import 'package:emeris_app/domain/entities/failures/general_failure.dart';
-import 'package:emeris_app/domain/entities/wallet_identifier.dart';
-import 'package:emeris_app/domain/use_cases/verify_wallet_password_use_case.dart';
-import 'package:emeris_app/domain/utils/wallet_password_retriever.dart';
-import 'package:emeris_app/navigation/app_navigator.dart';
-import 'package:emeris_app/utils/strings.dart';
+import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/wallet_identifier.dart';
+import 'package:flutter_app/domain/use_cases/verify_wallet_password_use_case.dart';
+import 'package:flutter_app/domain/utils/wallet_password_retriever.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/utils/strings.dart';
 
 class UserPromptWalletPasswordRetriever implements WalletPasswordRetriever {
   final Map<String, String> _passwords = {};

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:emeris_app/app_widget.dart';
-import 'package:emeris_app/dependency_injection/app_component.dart';
-import 'package:emeris_app/global.dart';
+import 'package:flutter_app/app_widget.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/global.dart';
 
 void main() {
   const port = String.fromEnvironment('PORT', defaultValue: '1317');
