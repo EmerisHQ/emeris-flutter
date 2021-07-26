@@ -4,7 +4,7 @@ import 'package:flutter_app/domain/entities/transaction.dart';
 import 'package:sacco/sacco.dart' as sacco;
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 
-SaccoTransaction? fromDomain(Transaction transaction) {
+SaccoTransaction? saccoFromfromDomain(Transaction transaction) {
   switch (transaction.transactionType) {
     case TransactionType.sendMoney:
       final messages = transaction.messages

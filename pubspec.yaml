@@ -49,11 +49,10 @@ dependencies:
   equatable: 2.0.3
   uuid: 3.0.4
   transaction_signing_gateway:
-    path: ../flutter-public/packages/transaction_signing_gateway/
-  #    git:
-#      url: https://github.com/tendermint/flutter.git
-#      path: packages/transaction_signing_gateway
-#      ref: main
+    git:
+      url: https://github.com/tendermint/flutter.git
+      path: packages/transaction_signing_gateway
+      ref: main
 
 
   # The following adds the Cupertino Icons font to your application.

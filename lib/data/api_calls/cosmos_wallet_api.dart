@@ -19,6 +19,7 @@ import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/global.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
+import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 
 class CosmosWalletApi implements WalletApi {
   final TransactionSigningGateway _signingGateway;
@@ -45,7 +46,7 @@ class CosmosWalletApi implements WalletApi {
     required WalletIdentifier walletIdentifier,
     required Transaction transaction,
   }) async {
-    final saccoTx = SaccoTransaction.fromDomain(transaction);
+    final saccoTx = saccoFromfromDomain(transaction);
     if (saccoTx == null) {
       return left(GeneralFailure.unknown("Could not create Sacco transaction from $transaction"));
     }
