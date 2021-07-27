@@ -9,8 +9,6 @@ import 'package:flutter_app/data/emeris/emeris_wallets_repository.dart';
 import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
 import 'package:flutter_app/data/http/dio_builder.dart';
-import 'package:flutter_app/data/sacco/sacco_credentials_serializer.dart';
-import 'package:flutter_app/data/sacco/sacco_transaction_signer.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
 import 'package:flutter_app/domain/repositories/balances_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
@@ -41,6 +39,7 @@ import 'package:http/http.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/key_info_storage.dart';
 import 'package:transaction_signing_gateway/mobile/mobile_key_info_storage.dart';
+import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/transaction_summary_ui.dart';
 import 'package:wallet_core/wallet_core.dart';
 

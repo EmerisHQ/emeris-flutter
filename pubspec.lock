@@ -656,7 +656,7 @@ packages:
     description:
       path: "packages/transaction_signing_gateway"
       ref: main
-      resolved-ref: "73b42d449b0543c74fab896dbaecc40f66243ae7"
+      resolved-ref: c0e7a606c15d17a987e363377288e3c8abec1f6e
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
