@@ -1,5 +1,6 @@
 import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
+import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 
@@ -20,7 +21,7 @@ class RoutingPresenter {
     await _appInitializer.init();
     navigator.close();
     if (_model.wallets.isEmpty) {
-      navigator.openMnemonicOnboarding();
+      navigator.openMnemonicOnboarding(const MnemonicOnboardingInitialParams());
     } else {
       navigator.openWalletsList(const WalletsListInitialParams());
     }

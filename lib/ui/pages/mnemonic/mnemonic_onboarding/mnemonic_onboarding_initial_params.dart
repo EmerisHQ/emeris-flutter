@@ -1,0 +1,3 @@
+class MnemonicOnboardingInitialParams {
+  const MnemonicOnboardingInitialParams();
+}

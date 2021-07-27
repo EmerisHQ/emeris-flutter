@@ -1,6 +1,6 @@
 #set( $ClassName = ${StringUtils.removeAndHump(${NAME}, "_")})
 
-import 'package:flutter_app/domain/model/failures/displayable_failure.dart';
+import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
 
 enum _${ClassName}FailureType {
   Unknown,
