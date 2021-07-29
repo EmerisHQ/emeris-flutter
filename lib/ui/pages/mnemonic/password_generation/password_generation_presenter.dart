@@ -18,12 +18,7 @@ class PasswordGenerationPresenter {
 
   PasswordGenerationViewModel get viewModel => _model;
 
-  void togglePasswordVisibilityClicked() {
-    // onTap: () {
-    //   isPasswordVisible = !model.isPasswordVisible;
-    //   setState(() {});
-    // }
-  }
+  void togglePasswordVisibilityClicked() => _model.isPasswordVisible = !_model.isPasswordVisible;
 
   Future<void> importWalletClicked() async {
     await _importWalletUseCase.execute(
