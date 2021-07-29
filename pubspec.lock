@@ -702,8 +702,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/transaction_signing_gateway"
-      ref: "feature/alan-transaction-signing"
-      resolved-ref: ba76e61317a32852198e15fd60f094637c45c5b6
+      ref: main
+      resolved-ref: d8b8ba9cf384b00f480561c93a8985add6572846
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
