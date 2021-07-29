@@ -2,10 +2,10 @@
 #set( $parentPackage = "#if(${PARENT.isEmpty()})#else${PARENT}/#end")
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/presentation/${parentPackage}${NAME}/${NAME}_presenter.dart';
-import 'package:flutter_app/presentation/${parentPackage}${NAME}/${NAME}_initial_params.dart';
+import 'package:flutter_app/ui/pages/${parentPackage}${NAME}/${NAME}_presenter.dart';
+import 'package:flutter_app/ui/pages/${parentPackage}${NAME}/${NAME}_initial_params.dart';
 import 'package:flutter_app/ui/pages/${parentPackage}${NAME}/${NAME}_navigator.dart';
-import 'package:flutter_app/presentation/${parentPackage}${NAME}/${NAME}_presentation_model.dart';
+import 'package:flutter_app/ui/pages/${parentPackage}${NAME}/${NAME}_presentation_model.dart';
 
 class ${ClassName}Page extends StatefulWidget {
   final ${ClassName}InitialParams initialParams;

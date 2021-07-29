@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/widgets/content_loading_indicator.dart';
 import 'package:flutter_app/utils/durations.dart';
 
-class ContentLoadingEmptyViewSwitcher extends StatelessWidget {
+class ContentStateSwitcher extends StatelessWidget {
   final bool isLoading;
   final bool isEmpty;
   final Widget loadingChild;
   final Widget emptyChild;
   final Widget contentChild;
 
-  const ContentLoadingEmptyViewSwitcher({
+  const ContentStateSwitcher({
     Key? key,
     this.isLoading = false,
     this.isEmpty = false,

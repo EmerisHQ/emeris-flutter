@@ -5,7 +5,7 @@ import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/widgets/wallets_list_view.dart';
-import 'package:flutter_app/ui/widgets/content_empty_loading_switcher.dart';
+import 'package:flutter_app/ui/widgets/content_state_switcher.dart';
 import 'package:flutter_app/ui/widgets/emeris_app_bar.dart';
 import 'package:flutter_app/ui/widgets/empty_list_message.dart';
 import 'package:flutter_app/utils/strings.dart';
@@ -48,7 +48,7 @@ class _WalletsListPageState extends State<WalletsListPage> {
       appBar: const EmerisAppBar(
         title: 'Tendermint 1.0.2',
       ),
-      body: ContentLoadingEmptyViewSwitcher(
+      body: ContentStateSwitcher(
           emptyChild: EmptyListMessage(
             message: strings.walletListEmptyText,
           ),

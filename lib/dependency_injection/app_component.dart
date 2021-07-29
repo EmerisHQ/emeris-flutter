@@ -14,6 +14,7 @@ import 'package:flutter_app/domain/repositories/balances_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
+import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
@@ -27,6 +28,9 @@ import 'package:flutter_app/presentation/send_money/send_money_presenter.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
+import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_navigator.dart';
+import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presentation_model.dart';
+import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
@@ -138,6 +142,9 @@ void _configureUseCases() {
   getIt.registerFactory<SendMoneyUseCase>(
     () => SendMoneyUseCase(getIt(), getIt()),
   );
+  getIt.registerFactory<GenerateMnemonicUseCase>(
+    () => GenerateMnemonicUseCase(),
+  );
 }
 
 void _configureMvp() {
@@ -164,5 +171,11 @@ void _configureMvp() {
   );
   getIt.registerFactory<RoutingNavigator>(
     () => RoutingNavigator(getIt()),
+  );
+  getIt.registerFactoryParam<MnemonicOnboardingPresenter, MnemonicOnboardingPresentationModel, dynamic>(
+    (_model, _) => MnemonicOnboardingPresenter(_model!, getIt(), getIt()),
+  );
+  getIt.registerFactory<MnemonicOnboardingNavigator>(
+    () => MnemonicOnboardingNavigator(getIt()),
   );
 }

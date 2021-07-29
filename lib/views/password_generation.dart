@@ -7,6 +7,16 @@ import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_param
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_page.dart';
 import 'package:flutter_app/utils/strings.dart';
 
+abstract class PasswordGenerationRoute {
+  BuildContext get context;
+
+  Future<void> openPasswordGenerationPage(String mnemonic) => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PasswordGenerationPage(mnemonic: mnemonic),
+        ),
+      );
+}
+
 class PasswordGenerationPage extends StatefulWidget {
   final String mnemonic;
 

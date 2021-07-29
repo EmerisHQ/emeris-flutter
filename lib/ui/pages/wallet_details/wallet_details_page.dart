@@ -5,7 +5,7 @@ import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
-import 'package:flutter_app/ui/widgets/content_empty_loading_switcher.dart';
+import 'package:flutter_app/ui/widgets/content_state_switcher.dart';
 import 'package:flutter_app/ui/widgets/emeris_app_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -49,7 +49,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
       ),
       body: Center(
         child: Observer(
-          builder: (context) => ContentLoadingEmptyViewSwitcher(
+          builder: (context) => ContentStateSwitcher(
             contentChild: Column(
               children: [
                 ListTile(
