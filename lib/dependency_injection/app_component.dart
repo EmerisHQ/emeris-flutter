@@ -68,7 +68,7 @@ void _configureTransactionSigningGateway() {
     () => kIsWeb
         ? WebKeyInfoStorage()
         : MobileKeyInfoStorage(serializers: [
-            SaccoCredentialsSerializer(),
+            AlanCredentialsSerializer(),
             EthereumCredentialsSerializer(),
           ]),
   );
@@ -77,7 +77,7 @@ void _configureTransactionSigningGateway() {
       transactionSummaryUI: getIt(),
       infoStorage: getIt(),
       signers: [
-        SaccoTransactionSigner(),
+        AlanTransactionSigner(),
         EthereumTransactionSigner(getIt()),
       ],
     ),

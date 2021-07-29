@@ -25,10 +25,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  sacco:
-    git:
-      url: https://github.com/wal33d006/sacco.dart.git
-      ref: account-url-fix
   http: 0.13.3
   intl: 0.17.0
   clipboard: 0.1.3
@@ -43,6 +39,7 @@ dependencies:
   decimal: 1.3.0
   flutter_mobx: 2.0.0
   dio: 4.0.0
+  alan: 0.40.2+1
   wallet_core:
     git:
       url: https://github.com/wal33d006/wallet_core.git
@@ -52,7 +49,7 @@ dependencies:
     git:
       url: https://github.com/tendermint/flutter.git
       path: packages/transaction_signing_gateway
-      ref: main
+      ref: feature/alan-transaction-signing
 
 
   # The following adds the Cupertino Icons font to your application.
