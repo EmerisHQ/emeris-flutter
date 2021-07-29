@@ -5,7 +5,7 @@ import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_page.dart';
-import 'package:flutter_app/views/password_generation.dart';
+import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_navigator.dart';
 
 class MnemonicOnboardingNavigator with NoRoutes, ErrorDialogRoute, PasswordGenerationRoute {
   @override

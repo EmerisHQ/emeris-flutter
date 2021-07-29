@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
+import 'package:flutter_app/utils/strings.dart';
 
 abstract class ErrorDialogRoute<T> {
   BuildContext get context;
@@ -26,6 +27,12 @@ class ErrorDialog extends StatelessWidget {
     return AlertDialog(
       title: Text(failure.title),
       content: Text(failure.message),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(strings.okAction),
+        )
+      ],
     );
   }
 }

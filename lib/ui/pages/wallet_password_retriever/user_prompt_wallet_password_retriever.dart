@@ -55,6 +55,12 @@ class _PasswordUserPromptDialogState extends State<PasswordUserPromptDialog> {
   }
 
   @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       content: TextField(
