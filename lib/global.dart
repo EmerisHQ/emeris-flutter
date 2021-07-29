@@ -1,21 +1,24 @@
-import 'package:sacco/network_info.dart';
+import 'package:alan/alan.dart';
 
 //TODO refactor this to an interface
 class BaseEnv {
   late NetworkInfo _networkInfo;
-  String? _apiProtocol;
   late String _baseApiUrl;
   late String _baseEthUrl;
 
-  void setEnv(String lcdUrl, String port, String ethUrl) {
-    final isLocal = lcdUrl == 'localhost';
-    _apiProtocol = isLocal ? 'http' : 'https';
-    final fullLcdUrl = '$_apiProtocol://$lcdUrl:$port';
+  void setEnv({
+    required String lcdUrl,
+    required String grpcUrl,
+    required String lcdPort,
+    required String grpcPort,
+    required String ethUrl,
+  }) {
     _networkInfo = NetworkInfo(
       bech32Hrp: 'cosmos',
-      lcdUrl: Uri.parse(fullLcdUrl),
+      lcdInfo: LCDInfo(host: lcdUrl, port: int.parse(lcdPort)),
+      grpcInfo: GRPCInfo(host: grpcUrl, port: int.parse(grpcPort)),
     );
-    _baseApiUrl = fullLcdUrl;
+    _baseApiUrl = "$lcdUrl:$lcdPort";
     _baseEthUrl = ethUrl;
   }
 

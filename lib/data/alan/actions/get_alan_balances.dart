@@ -6,7 +6,7 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/paginated_list.dart';
 import 'package:flutter_app/global.dart';
 
-Future<Either<GeneralFailure, PaginatedList<Balance>>> getSaccoBalances(
+Future<Either<GeneralFailure, PaginatedList<Balance>>> getAlanBalances(
     BaseEnv baseEnv, Dio dio, String walletAddress) async {
   final uri = '${baseEnv.baseApiUrl}/cosmos/bank/v1beta1/balances/$walletAddress';
   final response = await dio.get(uri);

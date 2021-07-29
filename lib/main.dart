@@ -4,12 +4,20 @@ import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/global.dart';
 
 void main() {
-  const port = String.fromEnvironment('PORT', defaultValue: '1317');
-  const lcdUrl = String.fromEnvironment('BASE_LCD_URL', defaultValue: 'localhost');
+  const lcdPort = String.fromEnvironment('LCD_PORT', defaultValue: '1317');
+  const grpcPort = String.fromEnvironment('GRPC_PORT', defaultValue: '9091');
+  const lcdUrl = String.fromEnvironment('LCD_URL', defaultValue: 'localhost');
+  const grpcUrl = String.fromEnvironment('GRPC_URL', defaultValue: 'localhost');
+  const ethUrl = String.fromEnvironment('ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
 
-  const ethUrl = String.fromEnvironment('BASE_ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
-
-  final baseEnv = BaseEnv()..setEnv(lcdUrl, port, ethUrl);
+  final baseEnv = BaseEnv()
+    ..setEnv(
+      lcdUrl: lcdUrl,
+      grpcUrl: grpcUrl,
+      lcdPort: lcdPort,
+      grpcPort: grpcPort,
+      ethUrl: ethUrl,
+    );
   configureDependencies(baseEnv);
   runApp(EmerisApp());
 }

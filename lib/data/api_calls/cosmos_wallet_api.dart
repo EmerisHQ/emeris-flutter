@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_app/data/alan/actions/broadcast_alan_transaction.dart';
+import 'package:flutter_app/data/alan/actions/get_alan_balances.dart';
+import 'package:flutter_app/data/alan/actions/import_alan_wallet.dart';
+import 'package:flutter_app/data/alan/alan_transaction.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/data/sacco/actions/broadcast_sacco_transaction.dart';
-import 'package:flutter_app/data/sacco/actions/get_sacco_balances.dart';
-import 'package:flutter_app/data/sacco/actions/import_sacco_wallet.dart';
-import 'package:flutter_app/data/sacco/sacco_transaction.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
@@ -33,22 +33,22 @@ class CosmosWalletApi implements WalletApi {
 
   @override
   Future<Either<GeneralFailure, PaginatedList<Balance>>> getWalletBalances(String walletAddress) async =>
-      getSaccoBalances(_baseEnv, _dio, walletAddress);
+      getAlanBalances(_baseEnv, _dio, walletAddress);
 
   @override
   Future<Either<AddWalletFailure, EmerisWallet>> importWallet(
     ImportWalletFormData walletFormData,
   ) =>
-      importSaccoWallet(_signingGateway, _baseEnv, walletFormData);
+      importAlanWallet(_signingGateway, _baseEnv, walletFormData);
 
   @override
   Future<Either<GeneralFailure, TransactionHash>> signAndBroadcast({
     required WalletIdentifier walletIdentifier,
     required Transaction transaction,
   }) async {
-    final saccoTx = saccoFromfromDomain(transaction);
+    final saccoTx = alanFromDomain(transaction);
     if (saccoTx == null) {
-      return left(GeneralFailure.unknown("Could not create Sacco transaction from $transaction"));
+      return left(GeneralFailure.unknown("Could not create Alan transaction from $transaction"));
     }
     final password = walletIdentifier.password;
     if (password == null) {
@@ -65,7 +65,7 @@ class CosmosWalletApi implements WalletApi {
         )
         .leftMap((signingFailure) => left(GeneralFailure.unknown("$signingFailure")))
         .flatMap(
-          (transaction) => broadcastSaccoTransaction(_baseEnv, transaction as SaccoTransaction),
+          (transaction) => broadcastAlanTransaction(_baseEnv, transaction as SignedAlanTransaction),
         );
   }
 }
