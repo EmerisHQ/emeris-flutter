@@ -1,8 +1,8 @@
 import 'dart:math';
 
+import 'package:cosmos_ui_components/cosmos_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/utils/app_theme.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class BalanceCard extends StatelessWidget {
@@ -25,7 +25,7 @@ class BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: AppTheme.elevationS,
+      elevation: CosmosAppTheme.elevationS,
       child: ListTile(
         title: Text(data.denom.text),
         subtitle: Text(data.amount.displayText),

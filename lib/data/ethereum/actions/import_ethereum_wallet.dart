@@ -8,7 +8,7 @@ import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
-import 'package:flutter_app/utils/logger.dart';
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 import 'package:uuid/uuid.dart';
