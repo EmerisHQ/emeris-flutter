@@ -1,3 +1,4 @@
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
@@ -8,8 +9,6 @@ import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/model/failures/verify_wallet_password_failure.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
-import 'package:flutter_app/domain/utils/future_either.dart';
-import 'package:flutter_app/utils/logger.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
 import 'package:transaction_signing_gateway/model/wallet_public_info.dart';

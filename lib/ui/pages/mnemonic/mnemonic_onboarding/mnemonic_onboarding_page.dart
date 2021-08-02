@@ -1,14 +1,12 @@
+import 'package:cosmos_ui_components/cosmos_app_theme.dart';
+import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presenter.dart';
-import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/widgets/mnemonic_choice_chip.dart';
-import 'package:flutter_app/ui/widgets/content_state_switcher.dart';
-import 'package:flutter_app/utils/app_theme.dart';
 import 'package:flutter_app/utils/strings.dart';
-import 'package:flutter_app/utils/utils.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class MnemonicOnboardingPage extends StatefulWidget {
@@ -44,16 +42,19 @@ class _MnemonicOnboardingPageState extends State<MnemonicOnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CosmosAppBar(
+        title: strings.enterMnemonic,
+      ),
       body: SafeArea(
         child: Observer(
           builder: (context) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingM),
+            padding: const EdgeInsets.symmetric(horizontal: CosmosAppTheme.spacingM),
             child: ContentStateSwitcher(
               isEmpty: model.mnemonic.isEmpty,
               emptyChild: Center(
-                child: ElevatedButton(
-                  onPressed: presenter.generateMnemonicClicked,
-                  child: Text(strings.createNewWallet),
+                child: CosmosElevatedButton(
+                  onTap: presenter.generateMnemonicClicked,
+                  text: strings.createNewWallet,
                 ),
               ),
               contentChild: Center(
@@ -61,29 +62,16 @@ class _MnemonicOnboardingPageState extends State<MnemonicOnboardingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    GridView.count(
-                      crossAxisCount: (MediaQuery.of(context).size.width * 0.005).ceil(),
-                      shrinkWrap: true,
-                      childAspectRatio: 5,
-                      children: model.mnemonicWords //
-                          .mapIndexed((index, word) => MnemonicChoiceChip(index: index, word: word))
-                          .toList(),
-                    ),
-                    const SizedBox(height: AppTheme.spacingM),
+                    CosmosMnemonicWordsGrid(mnemonicWords: model.mnemonicWords),
+                    const SizedBox(height: CosmosAppTheme.spacingM),
                     Text(
                       strings.mnemonicHelperText,
                       textAlign: TextAlign.center,
                     ),
-                    ElevatedButton(
-                      onPressed: presenter.onProceedClicked,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(strings.proceed),
-                          const SizedBox(width: AppTheme.spacingS),
-                          const Icon(Icons.arrow_forward),
-                        ],
-                      ),
+                    CosmosElevatedButton(
+                      onTap: presenter.onProceedClicked,
+                      text: strings.proceed,
+                      suffixIcon: const Icon(Icons.arrow_forward),
                     )
                   ],
                 ),
