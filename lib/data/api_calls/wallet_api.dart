@@ -7,8 +7,8 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/paginated_list.dart';
 import 'package:flutter_app/domain/entities/transaction.dart';
-import 'package:flutter_app/domain/entities/transaction_hash.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
+import 'package:transaction_signing_gateway/model/transaction_hash.dart';
 
 abstract class WalletApi {
   WalletType get walletType;

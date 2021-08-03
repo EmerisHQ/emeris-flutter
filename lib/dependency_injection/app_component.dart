@@ -40,6 +40,7 @@ import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
+import 'package:transaction_signing_gateway/alan/alan_transaction_broadcaster.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/key_info_storage.dart';
 import 'package:transaction_signing_gateway/mobile/mobile_key_info_storage.dart';
@@ -79,6 +80,9 @@ void _configureTransactionSigningGateway() {
       signers: [
         AlanTransactionSigner(),
         EthereumTransactionSigner(getIt()),
+      ],
+      broadcasters: [
+        AlanTransactionBroadcaster(),
       ],
     ),
   );

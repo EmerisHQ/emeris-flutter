@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_app/data/alan/actions/broadcast_alan_transaction.dart';
 import 'package:flutter_app/data/alan/actions/get_alan_balances.dart';
 import 'package:flutter_app/data/alan/actions/import_alan_wallet.dart';
 import 'package:flutter_app/data/alan/alan_transaction.dart';
@@ -13,11 +12,11 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/paginated_list.dart';
 import 'package:flutter_app/domain/entities/transaction.dart';
-import 'package:flutter_app/domain/entities/transaction_hash.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/global.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
+import 'package:transaction_signing_gateway/model/transaction_hash.dart';
 import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 
@@ -54,18 +53,28 @@ class CosmosWalletApi implements WalletApi {
     if (password == null) {
       return left(const GeneralFailure.unknown("There was no password provided"));
     }
+    var walletLookupKey = WalletLookupKey(
+      walletId: walletIdentifier.walletId,
+      chainId: walletIdentifier.chainId,
+      password: password,
+    );
     return _signingGateway
         .signTransaction(
           transaction: saccoTx,
-          walletLookupKey: WalletLookupKey(
-            walletId: walletIdentifier.walletId,
-            chainId: walletIdentifier.chainId,
-            password: password,
-          ),
+          walletLookupKey: walletLookupKey,
         )
         .leftMap((signingFailure) => left(GeneralFailure.unknown("$signingFailure")))
         .flatMap(
-          (transaction) => broadcastAlanTransaction(_baseEnv, transaction as SignedAlanTransaction),
+          (transaction) => _signingGateway
+              .broadcastTransaction(
+                walletLookupKey: walletLookupKey,
+                transaction: transaction as SignedAlanTransaction,
+              )
+              .leftMap(
+                (broadcastingFailure) => left(
+                  GeneralFailure.unknown("$broadcastingFailure"),
+                ),
+              ),
         );
   }
 }
