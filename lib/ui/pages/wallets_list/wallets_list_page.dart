@@ -1,3 +1,4 @@
+import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
@@ -5,9 +6,6 @@ import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/widgets/wallets_list_view.dart';
-import 'package:cosmos_ui_components/cosmos_ui_components.dart';
-import 'package:flutter_app/ui/widgets/emeris_app_bar.dart';
-import 'package:flutter_app/ui/widgets/empty_list_message.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class WalletsListPage extends StatefulWidget {
@@ -45,8 +43,8 @@ class _WalletsListPageState extends State<WalletsListPage> {
     //ignore: deprecated_member_use_from_same_package
     return Scaffold(
       // Not translating this.
-      appBar: const EmerisAppBar(
-        title: 'Tendermint 1.0.2',
+      appBar: CosmosAppBar(
+        title: strings.appTitle,
       ),
       body: ContentStateSwitcher(
           emptyChild: EmptyListMessage(
