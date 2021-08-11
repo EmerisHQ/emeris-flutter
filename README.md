@@ -33,3 +33,35 @@ This is a sample application for Ethereum based blockchain and Cosmos SDK blockc
 - Clone this repository using `git clone https://github.com/tendermint/flutter.git`
 - To run it on your `localhost` environment, you will just have to run `main.dart` file in your project. That can be done directly by clicking on the play button in your IDE, or by running `flutter run` from the root of your project. This will run the app on any device or simulator connected to your system. 
 - To run it on the Cosmos Hub Testnet, run `flutter run --dart-define=BASE_LCD_URL=api.testnet.cosmos.network --dart-define=PORT=443 --dart-define=BASE_ETH_URL=https://ropsten.infura.io/v3/96ac5dcb92d545b6a7ffc3d8af21fde0`, or add additional arguments `--dart-define=BASE_LCD_URL=api.testnet.cosmos.network --dart-define=PORT=443 --dart-define=BASE_ETH_URL=https://ropsten.infura.io/v3/96ac5dcb92d545b6a7ffc3d8af21fde0` inside your IDE's configuration for `main.dart` and click on play button.
+
+
+## Architecture
+The app follows clean architecture principles and is divided into 4 modules:
+![modules diagram](docs/modules.png)
+![modules diagram](docs/modules_details.png)
+
+#### UI
+UI Module contains flutter widgets, animations, Routes, Pages and all the code that is taking care of how things look like. This module contains no logic at all, it only takes care of **HOW** things look like.
+
+#### Presentation
+Home for `Presenter` and `PresentationModel` classes.
+
+Presenters decide **WHEN** to display things. They take care of triggering business logic from the `domain` module as well as updating the Presentation Model with relevant data that is then used by the UI. 
+
+PresentationModel is storing the data and exposes it to the UI trough the `ViewModel` interfaces. This makes sure the UI is able to access the data in read-only manner and all internals relevant to presentation is not visible.
+
+#### Domain
+`UseCase`, `Repository` and entity classes.
+
+Contains business logic of the application. It decides **WHAT** should be done upon user's interaction with the app. All the logic is encapsulated into the `UseCase` classes that communicate with the outer world trough Repositories. 
+
+Repository interfaces are specified inside the `domain` module and are implemented by the `data` module. All the data that `domain` operates on is encapsulated into domain entity classes.
+
+#### Data
+Takes care of communicating with outer world and interact with third party libraries. Here we specify the REST Apis interactions, database access, SharedPrefs or external sensor access. All the data is then translated to domain entities that are agnostic of the libraries and technologies used in order to access them.
+
+### Example
+
+Below you can find a diagram showing the flow of control for a basic scenario of a login page:
+
+![example diagram](docs/example.png)
