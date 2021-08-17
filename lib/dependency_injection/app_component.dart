@@ -153,31 +153,31 @@ void _configureUseCases() {
 
 void _configureMvp() {
   getIt.registerFactoryParam<WalletsListPresenter, WalletsListPresentationModel, dynamic>(
-    (_model, _) => WalletsListPresenter(_model!, getIt(), getIt()),
+    (_model, _) => WalletsListPresenter(_model, getIt(), getIt()),
   );
   getIt.registerFactory<WalletsListNavigator>(
     () => WalletsListNavigator(getIt()),
   );
   getIt.registerFactoryParam<WalletDetailsPresenter, WalletDetailsPresentationModel, dynamic>(
-    (_model, _) => WalletDetailsPresenter(_model!, getIt(), getIt()),
+    (_model, _) => WalletDetailsPresenter(_model, getIt(), getIt()),
   );
   getIt.registerFactory<WalletDetailsNavigator>(
     () => WalletDetailsNavigator(getIt()),
   );
   getIt.registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
-    (_model, _) => SendMoneyPresenter(_model!, getIt(), getIt()),
+    (_model, _) => SendMoneyPresenter(_model, getIt(), getIt()),
   );
   getIt.registerFactory<SendMoneyNavigator>(
     () => SendMoneyNavigator(getIt()),
   );
   getIt.registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
-    (_model, _) => RoutingPresenter(_model!, getIt(), getIt()),
+    (_model, _) => RoutingPresenter(_model, getIt(), getIt()),
   );
   getIt.registerFactory<RoutingNavigator>(
     () => RoutingNavigator(getIt()),
   );
   getIt.registerFactoryParam<MnemonicOnboardingPresenter, MnemonicOnboardingPresentationModel, dynamic>(
-    (_model, _) => MnemonicOnboardingPresenter(_model!, getIt(), getIt()),
+    (_model, _) => MnemonicOnboardingPresenter(_model, getIt(), getIt()),
   );
   getIt.registerFactory<MnemonicOnboardingNavigator>(
     () => MnemonicOnboardingNavigator(getIt()),
