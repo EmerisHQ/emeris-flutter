@@ -13,6 +13,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      darkTheme: CosmosAppTheme.buildDarkAppTheme(),
       theme: CosmosAppTheme.buildAppTheme(),
       home: const RoutingPage(),
       navigatorKey: AppNavigator.navigatorKey,
