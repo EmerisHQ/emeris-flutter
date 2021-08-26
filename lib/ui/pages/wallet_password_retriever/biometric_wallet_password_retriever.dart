@@ -4,12 +4,12 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/utils/wallet_password_retriever.dart';
 
-class BiometricPasswordRetriever implements WalletPasswordRetriever {
+class BiometricWalletPasswordRetriever implements WalletPasswordRetriever {
   BiometricStorage storage = BiometricStorage();
   PromptInfo promptInfo;
   final _passwordKey = '_password';
 
-  BiometricPasswordRetriever({this.promptInfo = PromptInfo.defaultValues});
+  BiometricWalletPasswordRetriever({this.promptInfo = PromptInfo.defaultValues});
 
   @override
   Future<Either<GeneralFailure, String>> getWalletPassword(WalletIdentifier walletIdentifier) async {
