@@ -35,7 +35,7 @@ import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
-import 'package:flutter_app/ui/pages/wallet_password_retriever/biometric_password_retriever.dart';
+import 'package:flutter_app/ui/pages/wallet_password_retriever/biometric_wallet_password_retriever.dart';
 import 'package:flutter_app/ui/pages/wallet_password_retriever/user_prompt_wallet_password_retriever.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
@@ -121,7 +121,7 @@ void _configureGeneralDependencies() {
   getIt.registerLazySingleton<List<WalletPasswordRetriever>>(
     () => [
       UserPromptWalletPasswordRetriever(getIt()),
-      BiometricPasswordRetriever(),
+      BiometricWalletPasswordRetriever(),
     ],
   );
 
