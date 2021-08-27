@@ -175,7 +175,7 @@ void _configureMvp() {
     (_model, _) => PasswordGenerationPresenter(_model, getIt(), getIt()),
   );
   getIt.registerFactory<PasswordGenerationNavigator>(
-        () => PasswordGenerationNavigator(getIt()),
+    () => PasswordGenerationNavigator(getIt()),
   );
   getIt.registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
     (_model, _) => SendMoneyPresenter(_model, getIt(), getIt()),
