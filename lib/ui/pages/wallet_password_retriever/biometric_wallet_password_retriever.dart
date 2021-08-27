@@ -17,8 +17,8 @@ class BiometricWalletPasswordRetriever implements WalletPasswordRetriever {
       final store = await storage.getStorage(walletIdentifier.walletId + _passwordKey, promptInfo: promptInfo);
       final data = await store.read();
       return right(data!);
-    } catch (ex) {
-      return left(const GeneralFailure.unknown('Could not get password'));
+    } catch (ex, stack) {
+      return left(GeneralFailure.unknown('Could not get password', ex, stack));
     }
   }
 
@@ -27,7 +27,7 @@ class BiometricWalletPasswordRetriever implements WalletPasswordRetriever {
     if (response == CanAuthenticateResponse.success) {
       return right(true);
     } else {
-      return left(const GeneralFailure.unknown('Biometric not available'));
+      return left(GeneralFailure.unknown('Biometric not available'));
     }
   }
 
@@ -36,8 +36,8 @@ class BiometricWalletPasswordRetriever implements WalletPasswordRetriever {
       final store = await storage.getStorage(walletIdentifier.walletId + _passwordKey, promptInfo: promptInfo);
       await store.write(walletIdentifier.password!);
       return right(null);
-    } catch (ex) {
-      return left(const GeneralFailure.unknown('Could not store password'));
+    } catch (ex, stack) {
+      return left(GeneralFailure.unknown('Could not store password', ex, stack));
     }
   }
 
@@ -45,7 +45,7 @@ class BiometricWalletPasswordRetriever implements WalletPasswordRetriever {
     final store = await storage.getStorage(walletIdentifier.walletId + _passwordKey, promptInfo: promptInfo);
     final data = await store.read();
     if (data == null) {
-      return left(const GeneralFailure.unknown('Password not found'));
+      return left(GeneralFailure.unknown('Password not found'));
     } else {
       return right(true);
     }
