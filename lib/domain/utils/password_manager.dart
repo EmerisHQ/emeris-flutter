@@ -1,4 +1,3 @@
-import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
@@ -27,9 +26,8 @@ class PasswordManager {
         }
       }
       return _userPromptRetriever.getWalletPassword(walletIdentifier);
-    } catch (ex) {
-      logError(ex);
-      return left(GeneralFailure.unknown(ex.toString()));
+    } catch (ex, stack) {
+      return left(GeneralFailure.unknown('cannot retrieve password', ex, stack));
     }
   }
 }

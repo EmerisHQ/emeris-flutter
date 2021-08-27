@@ -18,6 +18,7 @@ import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
+import 'package:flutter_app/domain/utils/password_manager.dart';
 import 'package:flutter_app/domain/utils/wallet_password_retriever.dart';
 import 'package:flutter_app/global.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -128,6 +129,13 @@ void _configureGeneralDependencies() {
     ],
   );
 
+  getIt.registerLazySingleton<PasswordManager>(
+    () => PasswordManager(
+      BiometricWalletPasswordRetriever(),
+      UserPromptWalletPasswordRetriever(getIt()),
+    ),
+  );
+
   getIt.registerFactory<DioBuilder>(
     () => DioBuilder(),
   );
@@ -151,7 +159,7 @@ void _configureUseCases() {
     () => GetBalancesUseCase(getIt()),
   );
   getIt.registerFactory<SendMoneyUseCase>(
-    () => SendMoneyUseCase(getIt(), getIt(), getIt()),
+    () => SendMoneyUseCase(getIt(), getIt()),
   );
   getIt.registerFactory<GenerateMnemonicUseCase>(
     () => GenerateMnemonicUseCase(),
