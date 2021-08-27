@@ -51,7 +51,7 @@ class CosmosWalletApi implements WalletApi {
     }
     final password = walletIdentifier.password;
     if (password == null) {
-      return left(const GeneralFailure.unknown("There was no password provided"));
+      return left(GeneralFailure.unknown("There was no password provided"));
     }
     final walletLookupKey = WalletLookupKey(
       walletId: walletIdentifier.walletId,
