@@ -31,6 +31,9 @@ import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dar
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presenter.dart';
+import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_navigator.dart';
+import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_presentation_model.dart';
+import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
@@ -148,7 +151,7 @@ void _configureUseCases() {
     () => GetBalancesUseCase(getIt()),
   );
   getIt.registerFactory<SendMoneyUseCase>(
-    () => SendMoneyUseCase(getIt(), getIt()),
+    () => SendMoneyUseCase(getIt(), getIt(), getIt()),
   );
   getIt.registerFactory<GenerateMnemonicUseCase>(
     () => GenerateMnemonicUseCase(),
@@ -167,6 +170,12 @@ void _configureMvp() {
   );
   getIt.registerFactory<WalletDetailsNavigator>(
     () => WalletDetailsNavigator(getIt()),
+  );
+  getIt.registerFactoryParam<PasswordGenerationPresenter, PasswordGenerationPresentationModel, dynamic>(
+    (_model, _) => PasswordGenerationPresenter(_model, getIt(), getIt()),
+  );
+  getIt.registerFactory<PasswordGenerationNavigator>(
+        () => PasswordGenerationNavigator(getIt()),
   );
   getIt.registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
     (_model, _) => SendMoneyPresenter(_model, getIt(), getIt()),
