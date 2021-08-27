@@ -19,7 +19,6 @@ import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
 import 'package:flutter_app/domain/utils/password_manager.dart';
-import 'package:flutter_app/domain/utils/wallet_password_retriever.dart';
 import 'package:flutter_app/global.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
@@ -121,12 +120,6 @@ void _configureStores() {
 void _configureGeneralDependencies() {
   getIt.registerFactory<Web3Client>(
     () => Web3Client(getIt<BaseEnv>().baseEthUrl, Client()),
-  );
-  getIt.registerLazySingleton<List<WalletPasswordRetriever>>(
-    () => [
-      UserPromptWalletPasswordRetriever(getIt()),
-      BiometricWalletPasswordRetriever(),
-    ],
   );
 
   getIt.registerLazySingleton<PasswordManager>(
