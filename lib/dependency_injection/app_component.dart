@@ -18,7 +18,7 @@ import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
-import 'package:flutter_app/domain/utils/wallet_password_retriever.dart';
+import 'package:flutter_app/domain/utils/password_manager.dart';
 import 'package:flutter_app/global.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
@@ -31,6 +31,9 @@ import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dar
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presenter.dart';
+import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_navigator.dart';
+import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_presentation_model.dart';
+import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
@@ -118,11 +121,12 @@ void _configureGeneralDependencies() {
   getIt.registerFactory<Web3Client>(
     () => Web3Client(getIt<BaseEnv>().baseEthUrl, Client()),
   );
-  getIt.registerLazySingleton<List<WalletPasswordRetriever>>(
-    () => [
-      UserPromptWalletPasswordRetriever(getIt()),
+
+  getIt.registerLazySingleton<PasswordManager>(
+    () => PasswordManager(
       BiometricWalletPasswordRetriever(),
-    ],
+      UserPromptWalletPasswordRetriever(getIt()),
+    ),
   );
 
   getIt.registerFactory<DioBuilder>(
@@ -167,6 +171,12 @@ void _configureMvp() {
   );
   getIt.registerFactory<WalletDetailsNavigator>(
     () => WalletDetailsNavigator(getIt()),
+  );
+  getIt.registerFactoryParam<PasswordGenerationPresenter, PasswordGenerationPresentationModel, dynamic>(
+    (_model, _) => PasswordGenerationPresenter(_model, getIt(), getIt()),
+  );
+  getIt.registerFactory<PasswordGenerationNavigator>(
+    () => PasswordGenerationNavigator(getIt()),
   );
   getIt.registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
     (_model, _) => SendMoneyPresenter(_model, getIt(), getIt()),

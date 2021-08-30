@@ -30,6 +30,7 @@ class _PasswordGenerationPageState extends State<PasswordGenerationPage> {
   @override
   void initState() {
     super.initState();
+    _passwordController = TextEditingController();
     presenter = widget.presenter ??
         getIt(
           param1: PasswordGenerationPresentationModel(widget.initialParams),
