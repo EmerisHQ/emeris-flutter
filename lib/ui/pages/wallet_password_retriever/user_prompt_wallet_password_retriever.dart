@@ -27,7 +27,7 @@ class UserPromptWalletPasswordRetriever implements WalletPasswordRetriever {
         _passwords[walletIdentifier.walletId] = password!;
         return _storeAndReturn(walletIdentifier, password);
       } else {
-        return left(GeneralFailure.unknown("User did not provide the password"));
+        return left(GeneralFailure.unknown("User did not provide the password", "Password not provided"));
       }
     }
   }

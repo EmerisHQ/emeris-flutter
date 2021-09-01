@@ -12,16 +12,16 @@ class PasswordManager {
 
   Future<Either<GeneralFailure, String>> retrievePassword(WalletIdentifier walletIdentifier) async {
     try {
-      final hasBiometricPassword = (await _biometricRetriever.hasPassword(walletIdentifier)).fold(
-        (fail) => throw fail,
-        (has) => has,
+      final canAuth = (await _biometricRetriever.canAuthenticate(walletIdentifier)).fold(
+        (fail) => false,
+        (can) => can,
       );
-      if (hasBiometricPassword) {
-        final canAuth = (await _biometricRetriever.canAuthenticate(walletIdentifier)).fold(
-          (fail) => throw fail,
-          (can) => can,
+      if (canAuth) {
+        final hasBiometricPassword = (await _biometricRetriever.hasPassword(walletIdentifier)).fold(
+          (fail) => false,
+          (has) => has,
         );
-        if (canAuth) {
+        if (hasBiometricPassword) {
           return _biometricRetriever.getWalletPassword(walletIdentifier);
         }
       }
