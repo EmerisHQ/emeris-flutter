@@ -1,3 +1,4 @@
+import 'package:biometric_storage/biometric_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/api_calls/cosmos_wallet_api.dart';
@@ -124,7 +125,7 @@ void _configureGeneralDependencies() {
 
   getIt.registerLazySingleton<PasswordManager>(
     () => PasswordManager(
-      BiometricWalletPasswordRetriever(),
+      BiometricWalletPasswordRetriever(BiometricStorage()),
       UserPromptWalletPasswordRetriever(getIt()),
     ),
   );
