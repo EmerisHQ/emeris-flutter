@@ -25,11 +25,7 @@ class BiometricWalletPasswordRetriever implements WalletPasswordRetriever {
   Future<Either<GeneralFailure, bool>> canAuthenticate(WalletIdentifier walletIdentifier) async {
     try {
       final response = await storage.canAuthenticate();
-      if (response == CanAuthenticateResponse.success) {
-        return right(true);
-      } else {
-        return right(false);
-      }
+      return right(response == CanAuthenticateResponse.success);
     } catch (ex, stack) {
       return left(GeneralFailure.unknown(ex.toString(), stack));
     }

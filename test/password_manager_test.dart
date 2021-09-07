@@ -1,6 +1,4 @@
 import 'package:biometric_storage/biometric_storage.dart';
-import 'package:dartz/dartz.dart';
-import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/utils/password_manager.dart';
 import 'package:flutter_app/ui/pages/wallet_password_retriever/biometric_wallet_password_retriever.dart';
@@ -16,13 +14,11 @@ void main() {
   const walletIdentifier = WalletIdentifier(walletId: walletId, chainId: chainId);
   late BiometricStorageMock biometricStorageMock;
   late BiometricStorageFileMock biometricStorageFileMock;
-  const _passwordKey = '_password';
-  final name = walletIdentifier.walletId + _passwordKey;
 
   test("Biometric was not available and user didn't provide any password returns failure", () async {
     when(() => biometricStorageMock.canAuthenticate()).thenAnswer((_) async => CanAuthenticateResponse.statusUnknown);
 
-    when(() => biometricStorageMock.getStorage(name)).thenAnswer((_) async => biometricStorageFileMock);
+    when(() => biometricStorageMock.getStorage(any())).thenAnswer((_) async => biometricStorageFileMock);
 
     when(() => biometricStorageFileMock.read()).thenAnswer((_) async => null);
 
@@ -31,14 +27,12 @@ void main() {
       UserPromptWalletPasswordRetrieverMock(),
     );
 
-    final password = await manager
-        .retrievePassword(walletIdentifier)
-        .onError((error, stackTrace) => left(GeneralFailure.unknown(error.toString(), stackTrace)));
+    final password = await manager.retrievePassword(walletIdentifier);
 
     expect(password.isLeft(), true);
 
     verify(() => biometricStorageMock.canAuthenticate());
-    verifyNever(() => biometricStorageMock.getStorage(name));
+    verifyNever(() => biometricStorageMock.getStorage(any()));
     verifyNever(() => biometricStorageFileMock.read());
   });
 
@@ -47,7 +41,7 @@ void main() {
       () async {
     when(() => biometricStorageMock.canAuthenticate()).thenAnswer((_) async => CanAuthenticateResponse.success);
 
-    when(() => biometricStorageMock.getStorage(name)).thenAnswer((_) async => biometricStorageFileMock);
+    when(() => biometricStorageMock.getStorage(any())).thenAnswer((_) async => biometricStorageFileMock);
 
     when(() => biometricStorageFileMock.read()).thenAnswer((_) async => null);
 
@@ -56,21 +50,19 @@ void main() {
       UserPromptWalletPasswordRetrieverMock(),
     );
 
-    final password = await manager
-        .retrievePassword(walletIdentifier)
-        .onError((error, stackTrace) => left(GeneralFailure.unknown(error.toString(), stackTrace)));
+    final password = await manager.retrievePassword(walletIdentifier);
 
     expect(password.isLeft(), true);
 
     verify(() => biometricStorageMock.canAuthenticate());
-    verify(() => biometricStorageMock.getStorage(name));
+    verify(() => biometricStorageMock.getStorage(any()));
     verify(() => biometricStorageFileMock.read());
   });
 
   test("Biometric was available and biometric had saved password returns success", () async {
     when(() => biometricStorageMock.canAuthenticate()).thenAnswer((_) async => CanAuthenticateResponse.success);
 
-    when(() => biometricStorageMock.getStorage(name)).thenAnswer((_) async => biometricStorageFileMock);
+    when(() => biometricStorageMock.getStorage(any())).thenAnswer((_) async => biometricStorageFileMock);
 
     when(() => biometricStorageFileMock.read()).thenAnswer((_) async => "Sample");
 
@@ -79,21 +71,19 @@ void main() {
       UserPromptWalletPasswordRetrieverMock(),
     );
 
-    final password = await manager
-        .retrievePassword(walletIdentifier)
-        .onError((error, stackTrace) => left(GeneralFailure.unknown(error.toString(), stackTrace)));
+    final password = await manager.retrievePassword(walletIdentifier);
 
     expect(password.isRight(), true);
 
     verify(() => biometricStorageMock.canAuthenticate());
-    verify(() => biometricStorageMock.getStorage(name));
+    verify(() => biometricStorageMock.getStorage(any()));
     verify(() => biometricStorageFileMock.read());
   });
 
   test("Biometric was not available and user entered a password returns success", () async {
     when(() => biometricStorageMock.canAuthenticate()).thenAnswer((_) async => CanAuthenticateResponse.statusUnknown);
 
-    when(() => biometricStorageMock.getStorage(name)).thenAnswer((_) async => biometricStorageFileMock);
+    when(() => biometricStorageMock.getStorage(any())).thenAnswer((_) async => biometricStorageFileMock);
 
     when(() => biometricStorageFileMock.read()).thenAnswer((_) async => "Sample");
 
@@ -102,14 +92,12 @@ void main() {
       UserPromptWalletPasswordRetrieverMock(isPasswordEntered: true),
     );
 
-    final password = await manager
-        .retrievePassword(walletIdentifier)
-        .onError((error, stackTrace) => left(GeneralFailure.unknown(error.toString(), stackTrace)));
+    final password = await manager.retrievePassword(walletIdentifier);
 
     expect(password.isRight(), true);
 
     verify(() => biometricStorageMock.canAuthenticate());
-    verifyNever(() => biometricStorageMock.getStorage(name));
+    verifyNever(() => biometricStorageMock.getStorage(any()));
     verifyNever(() => biometricStorageFileMock.read());
   });
 
