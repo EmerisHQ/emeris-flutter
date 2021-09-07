@@ -90,33 +90,28 @@ void main() {
     verify(() => biometricStorageFileMock.read());
   });
 
-  test(
-    "Biometric was not available and user entered a password returns success",
-    () async {
-      when(() => biometricStorageMock.canAuthenticate()).thenAnswer((_) async => CanAuthenticateResponse.statusUnknown);
+  test("Biometric was not available and user entered a password returns success", () async {
+    when(() => biometricStorageMock.canAuthenticate()).thenAnswer((_) async => CanAuthenticateResponse.statusUnknown);
 
-      when(() => biometricStorageMock.getStorage(name)).thenAnswer((_) async => biometricStorageFileMock);
+    when(() => biometricStorageMock.getStorage(name)).thenAnswer((_) async => biometricStorageFileMock);
 
-      when(() => biometricStorageFileMock.read()).thenAnswer((_) async => "Sample");
+    when(() => biometricStorageFileMock.read()).thenAnswer((_) async => "Sample");
 
-      final manager = PasswordManager(
-        BiometricWalletPasswordRetriever(biometricStorageMock),
-        UserPromptWalletPasswordRetrieverMock(isPasswordEntered: true),
-      );
+    final manager = PasswordManager(
+      BiometricWalletPasswordRetriever(biometricStorageMock),
+      UserPromptWalletPasswordRetrieverMock(isPasswordEntered: true),
+    );
 
-      final password = await manager
-          .retrievePassword(walletIdentifier)
-          .onError((error, stackTrace) => left(GeneralFailure.unknown(error.toString(), stackTrace)));
+    final password = await manager
+        .retrievePassword(walletIdentifier)
+        .onError((error, stackTrace) => left(GeneralFailure.unknown(error.toString(), stackTrace)));
 
-      expect(password.isRight(), true);
+    expect(password.isRight(), true);
 
-      verify(() => biometricStorageMock.canAuthenticate());
-      verifyNever(() => biometricStorageMock.getStorage(name));
-      verifyNever(() => biometricStorageFileMock.read());
-    },
-    // TODO: To fix the logic first so that the test passes. Till then we skip this test
-    skip: true,
-  );
+    verify(() => biometricStorageMock.canAuthenticate());
+    verifyNever(() => biometricStorageMock.getStorage(name));
+    verifyNever(() => biometricStorageFileMock.read());
+  });
 
   setUp(() {
     biometricStorageMock = BiometricStorageMock();
