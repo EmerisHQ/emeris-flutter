@@ -14,7 +14,7 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 Future<ChainAmount> redeem({required Balance balance, required String chainName}) async {
   // TODO: Will be picked up from dependency injection
   final ibcApi = IbcApi();
-  var steps = <StepData>[];
+  final steps = <StepData>[];
   late VerifyTrace verifyTrace;
   Either<GeneralFailure, VerifyTraceJson> verifiedTrace;
 
@@ -23,7 +23,7 @@ Future<ChainAmount> redeem({required Balance balance, required String chainName}
   } else {
     try {
       verifiedTrace = await ibcApi.verifyTrace(chainName, balance.denom.text.split('/')[1]);
-    } catch (ex, stack) {
+    } catch (ex) {
       throw GeneralFailure.unknown('Trace not verified');
     }
 
