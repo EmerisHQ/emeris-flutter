@@ -71,7 +71,8 @@ String getDenomHash(String path, String baseDenom, {int hopeToRemove = 0}) {
   return 'ibc/${sha256.convert(utf8.encode(newPath)).toString().toUpperCase()}';
 }
 
-Future<String> getBaseDenom(String denom, String chainName) async {
+Future<String> getBaseDenom(String denom, String? chainName) async {
+  final finalChainName = chainName ?? 'cosmos-hub';
   // TODO: To be picked up by dependency injection
   final ibcApi = IbcApi();
   final verifiedDenoms = await ibcApi.getVerifiedDenoms();
@@ -100,7 +101,7 @@ Future<String> getBaseDenom(String denom, String chainName) async {
   }
 
   VerifyTrace? verifyTrace;
-  final traceEither = await ibcApi.verifyTrace(chainName, denomHash);
+  final traceEither = await ibcApi.verifyTrace(finalChainName, denomHash);
   traceEither.fold<Future?>((l) => null, (r) {
     verifyTrace = r.verifyTrace;
   });
