@@ -17,6 +17,5 @@ class IbcApi {
     final uri = Uri.parse('https://dev.demeris.io/v1/verified_denoms');
     final response = await Client().get(uri);
     return right(VerifiedDenomsJson.fromJson(jsonDecode(response.body) as Map<String, dynamic>));
-
   }
 }
