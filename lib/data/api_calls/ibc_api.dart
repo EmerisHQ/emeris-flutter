@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/data/model/get_primary_channel_json.dart';
 import 'package:flutter_app/data/model/verified_denoms_json.dart';
 import 'package:flutter_app/data/model/verify_trace.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
@@ -17,5 +18,12 @@ class IbcApi {
     final uri = Uri.parse('https://dev.demeris.io/v1/verified_denoms');
     final response = await Client().get(uri);
     return right(VerifiedDenomsJson.fromJson(jsonDecode(response.body) as Map<String, dynamic>));
+  }
+
+  Future<Either<GeneralFailure, GetPrimaryChannelJson>> getPrimaryChannel(
+      {required String chainName, required String destinationChanName}) async {
+    final uri = Uri.parse('https://dev.demeris.io/v1/chain/$chainName/primary_channel/$destinationChanName');
+    final response = await Client().get(uri);
+    return right(GetPrimaryChannelJson.fromJson(jsonDecode(response.body) as Map<String, dynamic>));
   }
 }
