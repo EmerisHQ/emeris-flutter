@@ -1,63 +1,70 @@
 import 'dart:convert';
 
+import 'package:cosmos_utils/extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_app/data/api_calls/ibc_api.dart';
-import 'package:flutter_app/data/model/verified_denoms_json.dart';
+import 'package:flutter_app/data/model/trace_json.dart';
+import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/failures/general_failure.dart';
-import 'package:flutter_app/global.dart';
+import 'package:flutter_app/domain/entities/failures/redeem_failure.dart';
+import 'package:flutter_app/domain/utils/future_either.dart';
 
 // TODO: Create a class for this
 
-Future<ChainAmount> redeem({required Balance balance, required String chainId}) async {
+Future<Either<RedeemFailure, ChainAmount>> redeem({required Balance balance, required String chainId}) async {
   // TODO: Will be picked up from dependency injection
   final ibcApi = IbcApi(Dio());
-  final steps = <StepData>[];
-  late VerifyTraceJson verifyTrace;
-  Either<GeneralFailure, VerifyTraceJson> verifiedTrace;
 
   if (isNative(balance.denom.text)) {
-    return ChainAmount(output: Output(balance: balance, chainId: chainId));
+    return right(ChainAmount(output: Output(balance: balance, chainId: chainId)));
   } else {
-    verifiedTrace = await ibcApi.verifyTrace(chainId, balance.denom.text.split('/')[1]);
-
-    verifiedTrace.fold<Future?>((l) => null, (r) async {
-      verifyTrace = r;
-      for (var i = 0; i < verifyTrace.trace.length - 1; i++) {
-        final hop = verifyTrace.trace[i];
-        steps.add(
-          StepData(
-            balance: Balance(
-              amount: balance.amount,
-              denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
-            ),
-            baseDenom: Denom(
-              await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName),
-            ),
-            fromChain: hop.chainName,
-            toChain: hop.counterpartyName,
-            through: hop.channel,
-          ),
+    return ibcApi
+        .verifyTrace(chainId, balance.denom.text.split('/')[1])
+        .mapError((fail) => RedeemFailure.verifyTraceError(fail))
+        .flatMap(
+      (verifyTraces) async {
+        final stepFutures = verifyTraces.trace.mapIndexed(
+          (hop, trace) async => _buildStep(balance, verifyTraces, hop, trace),
         );
-      }
-    });
-
-    return ChainAmount(
-      output: Output(
-        balance: Balance(
-          amount: balance.amount,
-          denom: Denom(
-            verifyTrace.baseDenom,
-          ),
-        ),
-        chainId: verifyTrace.trace[verifyTrace.trace.length - 1].counterpartyName,
-      ),
+        final steps = await Future.wait(stepFutures);
+        return right(verifyTraces.toChainAmount(balance, steps));
+      },
     );
   }
+}
+
+Future<StepData> _buildStep(Balance balance, VerifyTraceJson verifyTrace, int i, TraceJson hop) async {
+  return StepData(
+    balance: Balance(
+      amount: balance.amount,
+      denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
+    ),
+    baseDenom: Denom(
+      await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName),
+    ),
+    fromChain: hop.chainName,
+    toChain: hop.counterpartyName,
+    through: hop.channel,
+  );
+}
+
+extension ChainAmountOnTrace on VerifyTraceJson {
+  ChainAmount toChainAmount(Balance balance, List<StepData> steps) => ChainAmount(
+        steps: steps,
+        output: Output(
+          balance: Balance(
+            amount: balance.amount,
+            denom: Denom(
+              baseDenom,
+            ),
+          ),
+          chainId: trace[trace.length - 1].counterpartyName,
+        ),
+      );
 }
 
 String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
@@ -68,7 +75,8 @@ String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
 }
 
 Future<String> getBaseDenom(String denom, String? chainId) async {
-  final finalChainName = chainId ?? ChainIds.cosmosHubChainId;
+  const cosmosHubChainId = 'cosmos-hub';
+  final finalChainName = chainId ?? cosmosHubChainId;
   // TODO: To be picked up by dependency injection in order to keep the state
   final ibcApi = IbcApi(Dio());
   final verifiedDenoms = await ibcApi.getVerifiedDenoms();
