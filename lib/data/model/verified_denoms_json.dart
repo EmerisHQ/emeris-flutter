@@ -1,26 +1,4 @@
-class VerifiedDenomsJson {
-  late List<VerifiedDenoms> verifiedDenoms;
-
-  VerifiedDenomsJson({required this.verifiedDenoms});
-
-  VerifiedDenomsJson.fromJson(Map<String, dynamic> json) {
-    if (json['verified_denoms'] != null) {
-      verifiedDenoms = <VerifiedDenoms>[];
-      json['verified_denoms'].forEach((v) {
-        verifiedDenoms.add(VerifiedDenoms.fromJson(v as Map<String, dynamic>));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['verified_denoms'] = verifiedDenoms.map((v) => v.toJson()).toList();
-
-    return data;
-  }
-}
-
-class VerifiedDenoms {
+class VerifiedDenomJson {
   late String name;
   late String displayName;
   late String logo;
@@ -29,13 +7,13 @@ class VerifiedDenoms {
   late bool stakable;
   late String ticker;
   late bool feeToken;
-  late GasPriceLevels gasPriceLevels;
+  late GasPriceLevelsJson gasPriceLevels;
   late bool fetchPrice;
   late bool relayerDenom;
   late int minimumThreshRelayerBalance;
   late String chainName;
 
-  VerifiedDenoms(
+  VerifiedDenomJson(
       {required this.name,
       required this.displayName,
       required this.logo,
@@ -50,7 +28,7 @@ class VerifiedDenoms {
       required this.minimumThreshRelayerBalance,
       required this.chainName});
 
-  VerifiedDenoms.fromJson(Map<String, dynamic> json) {
+  VerifiedDenomJson.fromJson(Map<String, dynamic> json) {
     name = json['name'] as String? ?? '';
     displayName = json['display_name'] as String? ?? '';
     logo = json['logo'] as String? ?? '';
@@ -60,7 +38,7 @@ class VerifiedDenoms {
     ticker = json['ticker'] as String? ?? '';
     feeToken = json['fee_token'] as bool? ?? false;
     if (json['gas_price_levels'] != null) {
-      gasPriceLevels = GasPriceLevels.fromJson(json['gas_price_levels'] as Map<String, dynamic>);
+      gasPriceLevels = GasPriceLevelsJson.fromJson(json['gas_price_levels'] as Map<String, dynamic>);
     }
     fetchPrice = json['fetch_price'] as bool;
     relayerDenom = json['relayer_denom'] as bool;
@@ -87,14 +65,14 @@ class VerifiedDenoms {
   }
 }
 
-class GasPriceLevels {
+class GasPriceLevelsJson {
   late double low;
   late double average;
   late double high;
 
-  GasPriceLevels({required this.low, required this.average, required this.high});
+  GasPriceLevelsJson({required this.low, required this.average, required this.high});
 
-  GasPriceLevels.fromJson(Map<String, dynamic> json) {
+  GasPriceLevelsJson.fromJson(Map<String, dynamic> json) {
     low = double.tryParse(json['low'].toString()) ?? 0.0;
     average = double.tryParse(json['average'].toString()) ?? 0.0;
     high = double.tryParse(json['high'].toString()) ?? 0.0;

@@ -34,3 +34,7 @@ abstract class SharedPreferencesKeys {
 
   static const encryptedMnemonic = 'ENCRYPTED_MNEMONIC';
 }
+
+abstract class ChainIds {
+  static const cosmosHubChainId = 'cosmos-hub';
+}
