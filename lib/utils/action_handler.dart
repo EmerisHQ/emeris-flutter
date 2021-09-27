@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cosmos_utils/extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_app/data/api_calls/ibc_api.dart';
 import 'package:flutter_app/data/model/trace_json.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
@@ -13,43 +12,44 @@ import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/redeem_failure.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 
-// TODO: Create a class for this
+class ActionHandler {
+  final IbcApi _ibcApi;
 
-Future<Either<RedeemFailure, ChainAmount>> redeem({required Balance balance, required String chainId}) async {
-  // TODO: Will be picked up from dependency injection
-  final ibcApi = IbcApi(Dio());
+  ActionHandler(this._ibcApi);
 
-  if (isNative(balance.denom.text)) {
-    return right(ChainAmount(output: Output(balance: balance, chainId: chainId)));
-  } else {
-    return ibcApi
-        .verifyTrace(chainId, balance.denom.text.split('/')[1])
-        .mapError((fail) => RedeemFailure.verifyTraceError(fail))
-        .flatMap(
-      (verifyTraces) async {
-        final stepFutures = verifyTraces.trace.mapIndexed(
-          (hop, trace) async => _buildStep(balance, verifyTraces, hop, trace),
-        );
-        final steps = await Future.wait(stepFutures);
-        return right(verifyTraces.toChainAmount(balance, steps));
-      },
+  Future<Either<RedeemFailure, ChainAmount>> redeem({required Balance balance, required String chainId}) async {
+    if (isNative(balance.denom.text)) {
+      return right(ChainAmount(output: Output(balance: balance, chainId: chainId)));
+    } else {
+      return _ibcApi
+          .verifyTrace(chainId, balance.denom.text.split('/')[1])
+          .mapError((fail) => RedeemFailure.verifyTraceError(fail))
+          .flatMap(
+        (verifyTraces) async {
+          final stepFutures = verifyTraces.trace.mapIndexed(
+            (hop, trace) async => _buildStep(balance, verifyTraces, hop, trace),
+          );
+          final steps = await Future.wait(stepFutures);
+          return right(verifyTraces.toChainAmount(balance, steps));
+        },
+      );
+    }
+  }
+
+  Future<StepData> _buildStep(Balance balance, VerifyTraceJson verifyTrace, int i, TraceJson hop) async {
+    return StepData(
+      balance: Balance(
+        amount: balance.amount,
+        denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
+      ),
+      baseDenom: Denom(
+        await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _ibcApi),
+      ),
+      fromChain: hop.chainName,
+      toChain: hop.counterpartyName,
+      through: hop.channel,
     );
   }
-}
-
-Future<StepData> _buildStep(Balance balance, VerifyTraceJson verifyTrace, int i, TraceJson hop) async {
-  return StepData(
-    balance: Balance(
-      amount: balance.amount,
-      denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
-    ),
-    baseDenom: Denom(
-      await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName),
-    ),
-    fromChain: hop.chainName,
-    toChain: hop.counterpartyName,
-    through: hop.channel,
-  );
 }
 
 extension ChainAmountOnTrace on VerifyTraceJson {
@@ -74,11 +74,9 @@ String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
   return 'ibc/${sha256.convert(utf8.encode(newPath)).toString().toUpperCase()}';
 }
 
-Future<String> getBaseDenom(String denom, String? chainId) async {
+Future<String> getBaseDenom(String denom, String? chainId, IbcApi ibcApi) async {
   const cosmosHubChainId = 'cosmos-hub';
   final finalChainName = chainId ?? cosmosHubChainId;
-  // TODO: To be picked up by dependency injection in order to keep the state
-  final ibcApi = IbcApi(Dio());
   final verifiedDenoms = await ibcApi.getVerifiedDenoms();
 
   verifiedDenoms.fold<Future?>((l) => null, (r) async {
