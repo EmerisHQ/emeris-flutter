@@ -26,15 +26,4 @@ class VerifyTraceJson {
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['ibc_denom'] = ibcDenom;
-    data['base_denom'] = baseDenom;
-    data['verified'] = verified;
-    data['path'] = path;
-    data['trace'] = trace.map((v) => v.toJson()).toList();
-
-    return data;
-  }
 }

@@ -12,13 +12,4 @@ class TraceJson {
     chainName = json['chain_name'] as String;
     counterpartyName = json['counterparty_name'] as String;
   }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['channel'] = channel;
-    data['port'] = port;
-    data['chain_name'] = chainName;
-    data['counterparty_name'] = counterpartyName;
-    return data;
-  }
 }
