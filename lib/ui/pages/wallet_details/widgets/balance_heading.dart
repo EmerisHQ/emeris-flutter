@@ -23,8 +23,9 @@ class BalanceHeading extends StatelessWidget {
             margin: const EdgeInsets.only(left: 8),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(
-                color: wallet.walletType == WalletType.Eth ? Colors.deepPurple : Colors.blueGrey,
-                borderRadius: BorderRadius.circular(20)),
+              color: wallet.walletType == WalletType.Eth ? Colors.deepPurple : Colors.blueGrey,
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Text(
               wallet.walletType.toString().split('.')[1],
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),

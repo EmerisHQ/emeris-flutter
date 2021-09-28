@@ -38,16 +38,18 @@ Future<Either<AddWalletFailure, EmerisWallet>> importAlanWallet(
   );
   return result.fold(
     (l) => left(AddWalletFailure.storeError(l)),
-    (r) => right(EmerisWallet(
-      walletDetails: WalletDetails(
-        walletIdentifier: WalletIdentifier(
-          walletId: creds.publicInfo.walletId,
-          chainId: creds.publicInfo.chainId,
+    (r) => right(
+      EmerisWallet(
+        walletDetails: WalletDetails(
+          walletIdentifier: WalletIdentifier(
+            walletId: creds.publicInfo.walletId,
+            chainId: creds.publicInfo.chainId,
+          ),
+          walletAlias: walletFormData.name,
+          walletAddress: wallet.bech32Address,
         ),
-        walletAlias: walletFormData.name,
-        walletAddress: wallet.bech32Address,
+        walletType: walletFormData.walletType,
       ),
-      walletType: walletFormData.walletType,
-    )),
+    ),
   );
 }

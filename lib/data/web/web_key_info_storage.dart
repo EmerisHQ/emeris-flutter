@@ -14,7 +14,8 @@ class WebKeyInfoStorage implements KeyInfoStorage {
 
   @override
   Future<Either<CredentialsStorageFailure, PrivateWalletCredentials>> getPrivateCredentials(
-      WalletLookupKey walletLookupKey) async {
+    WalletLookupKey walletLookupKey,
+  ) async {
     final creds = _credentialsMap[walletLookupKey.walletId];
     if (creds == null) {
       return left(const CredentialsStorageFailure("Credentials not found"));
@@ -24,8 +25,10 @@ class WebKeyInfoStorage implements KeyInfoStorage {
   }
 
   @override
-  Future<Either<CredentialsStorageFailure, Unit>> savePrivateCredentials(
-      {required PrivateWalletCredentials walletCredentials, required String password}) async {
+  Future<Either<CredentialsStorageFailure, Unit>> savePrivateCredentials({
+    required PrivateWalletCredentials walletCredentials,
+    required String password,
+  }) async {
     _credentialsMap[walletCredentials.publicInfo.walletId] = walletCredentials;
     return right(unit);
   }
