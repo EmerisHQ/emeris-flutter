@@ -28,11 +28,15 @@ class ActionHandler {
           .mapError((fail) => RedeemFailure.verifyTraceError(fail))
           .flatMap(
         (verifyTraces) async {
-          final stepFutures = verifyTraces.trace.mapIndexed(
-            (hop, trace) async => _buildStep(balance, verifyTraces, hop, trace),
-          );
-          final steps = await Future.wait(stepFutures);
-          return right(verifyTraces.toChainAmount(balance, steps));
+          try {
+            final stepFutures = verifyTraces.trace.mapIndexed(
+              (hop, trace) async => _buildStep(balance, verifyTraces, hop, trace),
+            );
+            final steps = await Future.wait(stepFutures);
+            return right(verifyTraces.toChainAmount(balance, steps));
+          } catch (ex) {
+            return left(RedeemFailure.verifyTraceError(ex));
+          }
         },
       );
     }
@@ -81,7 +85,7 @@ Future<String> getBaseDenom(String denom, String? chainId, IbcApi ibcApi) async 
   final finalChainName = chainId ?? cosmosHubChainId;
   final verifiedDenoms = await ibcApi.getVerifiedDenoms();
 
-  verifiedDenoms.fold<Future?>((l) => null, (r) async {
+  verifiedDenoms.fold<Future?>((l) => throw 'Could not get verified denoms', (r) async {
     VerifiedDenomJson? denomFound;
     try {
       denomFound = r.firstWhere((element) => element.name == denom);
