@@ -72,7 +72,7 @@ void main() {
   );
 
   test(
-    'Redeem test when trace is not verified but denoms list API gives an error',
+    'Redeem test when trace is verified but denoms list API gives an error',
     () async {
       when(() => ibcApiMock.verifyTrace(chainId, hash)).thenAnswer((_) async => right(VerifyTraceJson.fromJson(
           (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>)));
