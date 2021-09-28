@@ -31,8 +31,10 @@ class IbcApi {
     }
   }
 
-  Future<Either<GeneralFailure, PrimaryChannelJson>> getPrimaryChannel(
-      {required String chainId, required String destinationChanName}) async {
+  Future<Either<GeneralFailure, PrimaryChannelJson>> getPrimaryChannel({
+    required String chainId,
+    required String destinationChanName,
+  }) async {
     try {
       final response = await _dio.get('https://dev.demeris.io/v1/chain/$chainId/primary_channel/$destinationChanName');
       return right(PrimaryChannelJson.fromJson((response.data as Map)['primary_channel'] as Map<String, dynamic>));

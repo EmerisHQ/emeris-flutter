@@ -15,20 +15,21 @@ class VerifiedDenomJson {
   late int minimumThreshRelayerBalance;
   late String chainName;
 
-  VerifiedDenomJson(
-      {required this.name,
-      required this.displayName,
-      required this.logo,
-      required this.precision,
-      required this.verified,
-      required this.stakable,
-      required this.ticker,
-      required this.feeToken,
-      required this.gasPriceLevels,
-      required this.fetchPrice,
-      required this.relayerDenom,
-      required this.minimumThreshRelayerBalance,
-      required this.chainName});
+  VerifiedDenomJson({
+    required this.name,
+    required this.displayName,
+    required this.logo,
+    required this.precision,
+    required this.verified,
+    required this.stakable,
+    required this.ticker,
+    required this.feeToken,
+    required this.gasPriceLevels,
+    required this.fetchPrice,
+    required this.relayerDenom,
+    required this.minimumThreshRelayerBalance,
+    required this.chainName,
+  });
 
   VerifiedDenomJson.fromJson(Map<String, dynamic> json) {
     name = json['name'] as String? ?? '';

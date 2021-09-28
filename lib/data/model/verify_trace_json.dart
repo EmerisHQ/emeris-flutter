@@ -7,12 +7,13 @@ class VerifyTraceJson {
   late String path;
   late List<TraceJson> trace;
 
-  VerifyTraceJson(
-      {required this.ibcDenom,
-      required this.baseDenom,
-      required this.verified,
-      required this.path,
-      required this.trace});
+  VerifyTraceJson({
+    required this.ibcDenom,
+    required this.baseDenom,
+    required this.verified,
+    required this.path,
+    required this.trace,
+  });
 
   VerifyTraceJson.fromJson(Map<String, dynamic> json) {
     ibcDenom = json['ibc_denom'] as String;
