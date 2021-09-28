@@ -11,11 +11,13 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/redeem_failure.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
+import 'package:flutter_app/ibc/model/chain_amount.dart';
+import 'package:flutter_app/ibc/model/step.dart';
 
 class ActionHandler {
   final IbcApi _ibcApi;
 
-  ActionHandler(this._ibcApi);
+  const ActionHandler(this._ibcApi);
 
   Future<Either<RedeemFailure, ChainAmount>> redeem({required Balance balance, required String chainId}) async {
     if (isNative(balance.denom.text)) {
@@ -116,42 +118,4 @@ Future<String> getBaseDenom(String denom, String? chainId, IbcApi ibcApi) async 
 
 bool isNative(String denom) {
   return denom.indexOf('ibc/') == 0;
-}
-
-class ChainAmount {
-  final List steps;
-  final Output output;
-
-  ChainAmount({required this.output, this.steps = const []});
-}
-
-class Output {
-  final Balance balance;
-  final String chainId;
-
-  Output({required this.balance, required this.chainId});
-}
-
-class Step {
-  final String name;
-  final String status;
-  final StepData data;
-
-  Step({required this.name, required this.data, required this.status});
-}
-
-class StepData {
-  final Balance balance;
-  final Denom baseDenom;
-  final String fromChain;
-  final String toChain;
-  final String through;
-
-  StepData({
-    required this.balance,
-    required this.baseDenom,
-    required this.fromChain,
-    required this.through,
-    required this.toChain,
-  });
 }
