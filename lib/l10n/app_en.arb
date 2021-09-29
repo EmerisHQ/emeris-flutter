@@ -85,10 +85,6 @@
   "@walletListEmptyText": {
     "description": "Empty text for wallet listing"
   },
-  "importWallet": "Import a wallet",
-  "@importWallet": {
-    "description": "Import wallet button text"
-  },
   "noWalletSelectedTitle": "No Wallet",
   "@noWalletSelectedTitle": {
     "description": "no wallet error title"
@@ -99,5 +95,13 @@
   },
   "okAction": "Ok",
   "verifyPasswordErrorTitle": "Invalid Password",
-  "verifyPasswordErrorMessage": "You've provided an invalid password, please try again"
+  "verifyPasswordErrorMessage": "You've provided an invalid password, please try again",
+  "welcomeToEmerisTitle": "Welcome to Emeris",
+  "splashLargeTitle": "Experience the power of cross-chain DeFi",
+  "createWalletAction": "Create Wallet",
+  "importWalletAction": "Import Wallet",
+  "passcodeTitle": "Enter your passcode",
+  "confirmPasscodeTitle": "Confirm passcode",
+  "passcodeMatchFailureTitle": "Invalid Passcode",
+  "passcodeMatchFailureMessage": "The passcodes you've entered don't match"
 }

@@ -60,8 +60,10 @@ class _WalletsListPageState extends State<WalletsListPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => presenter.addWalletClicked(),
-        label: Text(strings.importWallet),
+        onPressed: presenter.addWalletClicked,
+        label: Text(
+          strings.importWalletAction,
+        ),
       ),
     );
   }

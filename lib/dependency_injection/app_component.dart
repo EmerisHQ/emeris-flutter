@@ -29,12 +29,18 @@ import 'package:flutter_app/presentation/send_money/send_money_presenter.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
-import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_navigator.dart';
-import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presentation_model.dart';
-import 'package:flutter_app/ui/pages/mnemonic/mnemonic_onboarding/mnemonic_onboarding_presenter.dart';
+import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_navigator.dart';
+import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presentation_model.dart';
+import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presenter.dart';
 import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_navigator.dart';
 import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_presentation_model.dart';
 import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_presenter.dart';
+import 'package:flutter_app/ui/pages/onboarding/onboarding_navigator.dart';
+import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
+import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
+import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
+import 'package:flutter_app/ui/pages/passcode/passcode_presentation_model.dart';
+import 'package:flutter_app/ui/pages/passcode/passcode_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
@@ -193,10 +199,22 @@ void _configureMvp() {
   getIt.registerFactory<RoutingNavigator>(
     () => RoutingNavigator(getIt()),
   );
-  getIt.registerFactoryParam<MnemonicOnboardingPresenter, MnemonicOnboardingPresentationModel, dynamic>(
-    (_model, _) => MnemonicOnboardingPresenter(_model, getIt(), getIt()),
+  getIt.registerFactoryParam<OnboardingPresenter, OnboardingPresentationModel, dynamic>(
+    (_model, _) => OnboardingPresenter(_model, getIt(), getIt(), getIt(), getIt()),
   );
-  getIt.registerFactory<MnemonicOnboardingNavigator>(
-    () => MnemonicOnboardingNavigator(getIt()),
+  getIt.registerFactory<OnboardingNavigator>(
+    () => OnboardingNavigator(getIt()),
+  );
+  getIt.registerFactoryParam<WalletNamePresenter, WalletNamePresentationModel, dynamic>(
+    (_model, _) => WalletNamePresenter(_model, getIt()),
+  );
+  getIt.registerFactory<WalletNameNavigator>(
+    () => WalletNameNavigator(getIt()),
+  );
+  getIt.registerFactoryParam<PasscodePresenter, PasscodePresentationModel, dynamic>(
+    (_model, _) => PasscodePresenter(_model, getIt()),
+  );
+  getIt.registerFactory<PasscodeNavigator>(
+    () => PasscodeNavigator(getIt()),
   );
 }
