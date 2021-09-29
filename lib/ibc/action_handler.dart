@@ -19,25 +19,37 @@ class ActionHandler {
 
   const ActionHandler(this._ibcApi);
 
+  /// This function has multiple steps to redeem the IBC token
+  /// First: If the IBC denom is native, directly return the [ChainAmount] with the same values
+  /// Second: If it's not native, it is verified by an API call
+  /// Third: Once the verified traces are received, we add the redemption steps
   Future<Either<RedeemFailure, ChainAmount>> redeem({required Balance balance, required String chainId}) async {
+    // If IBC token is native, do nothing
     if (isNative(balance.denom.text)) {
       return right(ChainAmount(output: Output(balance: balance, chainId: chainId)));
     } else {
+      // Else get the trace for this IBC denom
       return _ibcApi
           .verifyTrace(chainId, balance.denom.text.split('/')[1])
           .mapError((fail) => RedeemFailure.verifyTraceError(fail))
           .flatMap(
         (verifyTraces) async {
-          final stepFutures = verifyTraces.trace.mapIndexed(
-            (hop, trace) async => _buildStep(balance, verifyTraces, hop, trace),
-          );
-          final steps = await Future.wait(stepFutures);
-          return right(verifyTraces.toChainAmount(balance, steps));
+          try {
+            // Once we get the verified trace, we add redemption steps
+            final stepFutures = verifyTraces.trace.mapIndexed(
+              (hop, trace) async => _buildStep(balance, verifyTraces, hop, trace),
+            );
+            final steps = await Future.wait(stepFutures);
+            return right(verifyTraces.toChainAmount(balance, steps));
+          } catch (ex) {
+            return left(RedeemFailure.verifyTraceError(ex));
+          }
         },
       );
     }
   }
 
+  /// This step is built for each [TraceJson] returned by the verifyTrace API
   Future<StepData> _buildStep(Balance balance, VerifyTraceJson verifyTrace, int i, TraceJson hop) async {
     return StepData(
       balance: Balance(
@@ -81,7 +93,7 @@ Future<String> getBaseDenom(String denom, String? chainId, IbcApi ibcApi) async 
   final finalChainName = chainId ?? cosmosHubChainId;
   final verifiedDenoms = await ibcApi.getVerifiedDenoms();
 
-  verifiedDenoms.fold<Future?>((l) => null, (r) async {
+  verifiedDenoms.fold<Future?>((l) => throw 'Could not get verified denoms', (r) async {
     VerifiedDenomJson? denomFound;
     try {
       denomFound = r.firstWhere((element) => element.name == denom);
