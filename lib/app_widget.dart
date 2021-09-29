@@ -17,9 +17,10 @@ class AppWidget extends StatelessWidget {
       darkTheme: CosmosAppTheme.buildDarkAppTheme(),
       theme: CosmosAppTheme.buildAppTheme(),
       home: const RoutingPage(
-          initialParams: RoutingInitialParams(
-        initializeApp: true,
-      )),
+        initialParams: RoutingInitialParams(
+          initializeApp: true,
+        ),
+      ),
       navigatorKey: AppNavigator.navigatorKey,
       localizationsDelegates: const [
         AppLocalizations.delegate,

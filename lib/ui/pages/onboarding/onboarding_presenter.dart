@@ -34,9 +34,11 @@ class OnboardingPresenter {
     if (name == null) {
       return;
     }
-    final passcode = await navigator.openPasscode(const PasscodeInitialParams(
-      requirePasscodeConfirmation: true,
-    ));
+    final passcode = await navigator.openPasscode(
+      const PasscodeInitialParams(
+        requirePasscodeConfirmation: true,
+      ),
+    );
     if (passcode == null) {
       return;
     }
@@ -46,12 +48,13 @@ class OnboardingPresenter {
     }
     _model.importWalletFuture = _importWalletUseCase
         .execute(
-            walletFormData: ImportWalletFormData(
-      mnemonic: mnemonic,
-      name: name,
-      password: passcode.value,
-      walletType: WalletType.Cosmos,
-    ))
+      walletFormData: ImportWalletFormData(
+        mnemonic: mnemonic,
+        name: name,
+        password: passcode.value,
+        walletType: WalletType.Cosmos,
+      ),
+    )
         .observableDoOn(
       (fail) => navigator.showError(fail.displayableFailure()),
       (success) {

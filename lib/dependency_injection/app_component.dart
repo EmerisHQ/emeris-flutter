@@ -170,7 +170,7 @@ void _configureUseCases() {
 
 void _configureMvp() {
   getIt.registerFactoryParam<WalletsListPresenter, WalletsListPresentationModel, dynamic>(
-    (_model, _) => WalletsListPresenter(_model, getIt(), getIt()),
+    (_model, _) => WalletsListPresenter(_model, getIt()),
   );
   getIt.registerFactory<WalletsListNavigator>(
     () => WalletsListNavigator(getIt()),

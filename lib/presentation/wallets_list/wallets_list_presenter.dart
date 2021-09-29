@@ -1,17 +1,13 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 
 class WalletsListPresenter {
-  final ImportWalletUseCase _addWalletUseCase;
-
   WalletsListPresenter(
     this._model,
     this.navigator,
-    this._addWalletUseCase,
   );
 
   final WalletsListPresentationModel _model;
