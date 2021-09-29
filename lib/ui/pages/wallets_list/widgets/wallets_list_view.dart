@@ -18,7 +18,7 @@ class WalletsListView extends StatelessWidget {
       children: list
           .map(
             (wallet) => WalletListItem(
-              alias: wallet.walletDetails.walletAlias.toString(),
+              alias: wallet.walletDetails.walletAlias,
               address: wallet.walletDetails.walletAddress,
               walletType: wallet.walletType,
               onClicked: () => walletClicked(wallet),

@@ -52,12 +52,14 @@ class _AddWalletBottomSheetState extends State<AddWalletBottomSheet> {
             ),
           ),
           ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(ImportWalletFormData(
-              mnemonic: _mnemonic,
-              name: _alias,
-              password: '', //TODO
-              walletType: WalletType.Cosmos, //TODO
-            )),
+            onPressed: () => Navigator.of(context).pop(
+              ImportWalletFormData(
+                mnemonic: _mnemonic,
+                name: _alias,
+                password: '', //TODO
+                walletType: WalletType.Cosmos, //TODO
+              ),
+            ),
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
             ),

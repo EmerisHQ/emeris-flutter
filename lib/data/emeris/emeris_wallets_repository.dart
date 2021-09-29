@@ -22,9 +22,13 @@ class EmerisWalletsRepository implements WalletsRepository {
   @override
   Future<Either<AddWalletFailure, EmerisWallet>> importWallet(ImportWalletFormData walletFormData) async {
     return WalletApi.forType(_walletApis, walletFormData.walletType)?.importWallet(walletFormData) ??
-        Future.value(left(AddWalletFailure.unknown(
-          cause: "Could not find wallet api for ${walletFormData.walletType}",
-        )));
+        Future.value(
+          left(
+            AddWalletFailure.unknown(
+              cause: "Could not find wallet api for ${walletFormData.walletType}",
+            ),
+          ),
+        );
   }
 
   @override

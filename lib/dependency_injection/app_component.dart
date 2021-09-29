@@ -73,10 +73,12 @@ void _configureTransactionSigningGateway() {
   getIt.registerFactory<KeyInfoStorage>(
     () => kIsWeb
         ? WebKeyInfoStorage()
-        : MobileKeyInfoStorage(serializers: [
-            AlanCredentialsSerializer(),
-            EthereumCredentialsSerializer(),
-          ]),
+        : MobileKeyInfoStorage(
+            serializers: [
+              AlanCredentialsSerializer(),
+              EthereumCredentialsSerializer(),
+            ],
+          ),
   );
   getIt.registerFactory<TransactionSigningGateway>(
     () => TransactionSigningGateway(

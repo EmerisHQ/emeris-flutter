@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter_app/data/ethereum/ethereum_private_wallet_credentials.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
-import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 import 'package:uuid/uuid.dart';
@@ -47,16 +47,18 @@ Future<Either<AddWalletFailure, EmerisWallet>> importEthereumWallet(
 
   return result.fold(
     (l) => left(AddWalletFailure.storeError(l)),
-    (r) => right(EmerisWallet(
-      walletDetails: WalletDetails(
-        walletIdentifier: WalletIdentifier(
-          chainId: creds.publicInfo.chainId,
-          walletId: creds.publicInfo.walletId,
+    (r) => right(
+      EmerisWallet(
+        walletDetails: WalletDetails(
+          walletIdentifier: WalletIdentifier(
+            chainId: creds.publicInfo.chainId,
+            walletId: creds.publicInfo.walletId,
+          ),
+          walletAlias: walletFormData.name,
+          walletAddress: wallet.privateKey.address.hex,
         ),
-        walletAlias: walletFormData.name,
-        walletAddress: wallet.privateKey.address.hex,
+        walletType: walletFormData.walletType,
       ),
-      walletType: walletFormData.walletType,
-    )),
+    ),
   );
 }
