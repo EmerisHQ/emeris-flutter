@@ -30,15 +30,21 @@ void main() {
   test(
     'Redeem test returning successful response',
     () async {
-      when(() => ibcApiMock.verifyTrace(chainId, hash)).thenAnswer((_) async => right(VerifyTraceJson.fromJson(
-          (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>)));
+      when(() => ibcApiMock.verifyTrace(chainId, hash)).thenAnswer(
+        (_) async => right(
+          VerifyTraceJson.fromJson(
+              (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>),
+        ),
+      );
 
-      when(() => ibcApiMock.getVerifiedDenoms()).thenAnswer((_) async {
-        final list = jsonDecode(verifiedDenoms)['verified_denoms'] as List;
-        return right(
-          list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>)).toList(),
-        );
-      });
+      when(() => ibcApiMock.getVerifiedDenoms()).thenAnswer(
+        (_) async {
+          final list = jsonDecode(verifiedDenoms)['verified_denoms'] as List;
+          return right(
+            list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>)).toList(),
+          );
+        },
+      );
 
       final response = await actionHandler.redeem(
           balance: Balance(
@@ -55,18 +61,22 @@ void main() {
       when(() => ibcApiMock.verifyTrace(chainId, hash))
           .thenAnswer((_) async => left(GeneralFailure.unknown('Could not verify trace')));
 
-      when(() => ibcApiMock.getVerifiedDenoms()).thenAnswer((_) async {
-        final list = jsonDecode(verifiedDenoms)['verified_denoms'] as List;
-        return right(
-          list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>)).toList(),
-        );
-      });
+      when(() => ibcApiMock.getVerifiedDenoms()).thenAnswer(
+        (_) async {
+          final list = jsonDecode(verifiedDenoms)['verified_denoms'] as List;
+          return right(
+            list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>)).toList(),
+          );
+        },
+      );
 
       final response = await actionHandler.redeem(
-          balance: Balance(
-              denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
-              amount: Amount.fromInt(100)),
-          chainId: 'cosmos-hub');
+        balance: Balance(
+          denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
+          amount: Amount.fromInt(100),
+        ),
+        chainId: 'cosmos-hub',
+      );
       expect(response.isLeft(), true);
     },
   );
@@ -74,11 +84,18 @@ void main() {
   test(
     'Redeem test when trace is verified but denoms list API gives an error',
     () async {
-      when(() => ibcApiMock.verifyTrace(chainId, hash)).thenAnswer((_) async => right(VerifyTraceJson.fromJson(
-          (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>)));
+      when(() => ibcApiMock.verifyTrace(chainId, hash)).thenAnswer(
+        (_) async => right(
+          VerifyTraceJson.fromJson(
+              (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>),
+        ),
+      );
 
-      when(() => ibcApiMock.getVerifiedDenoms())
-          .thenAnswer((_) async => left(GeneralFailure.unknown('Could not fetch verified denoms')));
+      when(() => ibcApiMock.getVerifiedDenoms()).thenAnswer(
+        (_) async => left(
+          GeneralFailure.unknown('Could not fetch verified denoms'),
+        ),
+      );
 
       final response = await actionHandler.redeem(
           balance: Balance(
