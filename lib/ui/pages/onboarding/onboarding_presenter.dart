@@ -66,15 +66,16 @@ class OnboardingPresenter {
 
   Future<String?> _openNamePage() async {
     String? name;
-    if (_walletsStore.wallets.isEmpty) {
-      name = "";
-    } else {
-      name = await navigator.openWalletName(const WalletNameInitialParams());
-    }
+    // if (_walletsStore.wallets.isEmpty) {
+    //   name = "";
+    // } else {
+    name = await navigator.openWalletName(const WalletNameInitialParams());
+    // }
     return name;
   }
 
-  Future<String?> _generateMnemonic() async => _generateMnemonicUseCase.execute().asyncFold<String?>(
+  Future<String?> _generateMnemonic() async =>
+      _model.generateMnemonicFuture = _generateMnemonicUseCase.execute().observableAsyncFold<String?>(
         (fail) {
           navigator.showError(fail.displayableFailure());
           return null;

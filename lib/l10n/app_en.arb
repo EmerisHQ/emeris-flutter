@@ -103,5 +103,11 @@
   "passcodeTitle": "Enter your passcode",
   "confirmPasscodeTitle": "Confirm passcode",
   "passcodeMatchFailureTitle": "Invalid Passcode",
-  "passcodeMatchFailureMessage": "The passcodes you've entered don't match"
+  "passcodeMatchFailureMessage": "The passcodes you've entered don't match",
+  "nameYourWalletTitle": "Name your wallet",
+  "nameYourWalletMessage": "If you have multiple wallets, this will help you find the right one",
+  "continueAction": "Continue",
+  "walletNameHint": "Wallet name",
+  "importingWalletProgressMessage": "Importing wallet...",
+  "generatingMnemonicProgressMessage": "Generating mnemonic..."
 }

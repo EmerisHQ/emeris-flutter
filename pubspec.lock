@@ -186,18 +186,18 @@ packages:
   cosmos_ui_components:
     dependency: "direct main"
     description:
-      path: "../flutter-public/packages/cosmos_ui_components"
-      relative: true
-    source: path
+      path: "packages/cosmos_ui_components"
+      ref: "feature/utils-improvements"
+      resolved-ref: "72317e827453a34ef12b75ef0e2db054393d1466"
+      url: "https://github.com/tendermint/flutter.git"
+    source: git
     version: "0.0.1"
   cosmos_utils:
     dependency: "direct main"
     description:
-      path: "packages/cosmos_utils"
-      ref: main
-      resolved-ref: "55dfda7821c0e933091ff53c7a5f62af6840d283"
-      url: "https://github.com/tendermint/flutter.git"
-    source: git
+      path: "../flutter-public/packages/cosmos_utils"
+      relative: true
+    source: path
     version: "0.0.1"
   coverage:
     dependency: transitive
@@ -233,7 +233,7 @@ packages:
       name: dartz
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0-nullsafety.2"
+    version: "0.10.0"
   decimal:
     dependency: "direct main"
     description:
@@ -254,7 +254,7 @@ packages:
       name: encrypt
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "5.0.1"
   equatable:
     dependency: "direct main"
     description:
@@ -851,8 +851,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/transaction_signing_gateway"
-      ref: main
-      resolved-ref: "55dfda7821c0e933091ff53c7a5f62af6840d283"
+      ref: "feature/utils-improvements"
+      resolved-ref: "72317e827453a34ef12b75ef0e2db054393d1466"
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"

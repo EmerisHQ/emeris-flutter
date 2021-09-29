@@ -5,6 +5,8 @@ import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_initial_
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_navigator.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presenter.dart';
+import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
+import 'package:flutter_app/utils/strings.dart';
 
 class WalletNamePage extends StatefulWidget {
   final WalletNameInitialParams initialParams;
@@ -39,15 +41,37 @@ class _WalletNamePageState extends State<WalletNamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text("WalletName Page"),
-            CosmosElevatedButton(text: "name", onTap: presenter.onTapSubmit),
-          ],
-        ),
+      appBar: const EmerisLogoAppBar(),
+      body: CustomScrollView(
+        slivers: [
+          SliverFillRemaining(
+            child: Padding(
+              padding: const EdgeInsets.all(CosmosAppTheme.spacingL),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    strings.nameYourWalletTitle,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  const SizedBox(height: CosmosAppTheme.spacingL),
+                  Text(strings.nameYourWalletMessage),
+                  const SizedBox(height: CosmosAppTheme.spacingXL),
+                  TextFormField(
+                    autofocus: true,
+                    onChanged: presenter.onChanged,
+                    decoration: InputDecoration(
+                      hintText: strings.walletNameHint,
+                    ),
+                  ),
+                  const Spacer(),
+                  CosmosElevatedButton(text: strings.continueAction, onTap: presenter.onTapSubmit),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

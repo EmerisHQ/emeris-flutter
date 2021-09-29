@@ -34,24 +34,32 @@ dependencies:
     git:
       url: https://github.com/tendermint/flutter.git
       path: packages/transaction_signing_gateway
-      ref: main
+      ref: feature/utils-improvements
   cosmos_ui_components:
-    path: ../flutter-public/packages/cosmos_ui_components/
-  #    git:
-  #      url: https://github.com/tendermint/flutter.git
-  #      path: packages/cosmos_ui_components
-  #      ref: main
+    git:
+      url: https://github.com/tendermint/flutter.git
+      path: packages/cosmos_ui_components
+      ref: feature/utils-improvements
 
   cosmos_utils:
     git:
       url: https://github.com/tendermint/flutter.git
       path: packages/cosmos_utils
-      ref: main
+      ref: feature/utils-improvements
 
   cupertino_icons: 1.0.3
 
 dependency_overrides:
   pointycastle: 3.0.1 #newer version has problems with web version of app
+
+## convenient overrides for development to reference packages on local disk, just uncomment following lines and make sure
+## it points to the location of the checked out tendermint/flutter repository
+#  cosmos_utils:
+#    path: ../flutter-public/packages/cosmos_utils
+#  transaction_signing_gateway:
+#    path: ../flutter-public/packages/transaction_signing_gateway
+#  cosmos_ui_components:
+#    path: ../flutter-public/packages/transaction_signing_gateway
 
 dev_dependencies:
   flutter_test:

@@ -13,4 +13,8 @@ class WalletNamePresenter {
   WalletNameViewModel get viewModel => _model;
 
   void onTapSubmit() => navigator.closeWithResult("wallet name"); // TODO
+
+  void onChanged(String value) {
+    _model.name = value;
+  }
 }
