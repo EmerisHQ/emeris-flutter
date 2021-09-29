@@ -33,7 +33,8 @@ void main() {
       when(() => ibcApiMock.verifyTrace(chainId, hash)).thenAnswer(
         (_) async => right(
           VerifyTraceJson.fromJson(
-              (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>),
+            (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>,
+          ),
         ),
       );
 
@@ -47,10 +48,12 @@ void main() {
       );
 
       final response = await actionHandler.redeem(
-          balance: Balance(
-              denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
-              amount: Amount.fromInt(100)),
-          chainId: 'cosmos-hub');
+        balance: Balance(
+          denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
+          amount: Amount.fromInt(100),
+        ),
+        chainId: 'cosmos-hub',
+      );
       expect(response.isRight(), true);
     },
   );
@@ -87,7 +90,8 @@ void main() {
       when(() => ibcApiMock.verifyTrace(chainId, hash)).thenAnswer(
         (_) async => right(
           VerifyTraceJson.fromJson(
-              (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>),
+            (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>,
+          ),
         ),
       );
 
@@ -98,10 +102,12 @@ void main() {
       );
 
       final response = await actionHandler.redeem(
-          balance: Balance(
-              denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
-              amount: Amount.fromInt(100)),
-          chainId: 'cosmos-hub');
+        balance: Balance(
+          denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
+          amount: Amount.fromInt(100),
+        ),
+        chainId: 'cosmos-hub',
+      );
       expect(response.isLeft(), true);
     },
   );
