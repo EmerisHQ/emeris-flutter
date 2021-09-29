@@ -20,7 +20,9 @@ class EmerisTransactionsRepository implements TransactionsRepository {
         transaction: transaction,
         walletIdentifier: walletIdentifier,
       ) ??
-      Future.value(left(
-        GeneralFailure.unknown("Could not find wallet api for ${transaction.walletType}"),
-      ));
+      Future.value(
+        left(
+          GeneralFailure.unknown("Could not find wallet api for ${transaction.walletType}"),
+        ),
+      );
 }

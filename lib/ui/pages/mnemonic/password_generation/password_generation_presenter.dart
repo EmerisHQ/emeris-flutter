@@ -22,19 +22,21 @@ class PasswordGenerationPresenter {
 
   Future<void> importWalletClicked() async {
     await _importWalletUseCase.execute(
-        walletFormData: ImportWalletFormData(
-      mnemonic: _model.mnemonic,
-      name: "First wallet", // TODO
-      password: _model.password,
-      walletType: WalletType.Cosmos,
-    ));
+      walletFormData: ImportWalletFormData(
+        mnemonic: _model.mnemonic,
+        name: "First wallet", // TODO
+        password: _model.password,
+        walletType: WalletType.Cosmos,
+      ),
+    );
     await _importWalletUseCase.execute(
-        walletFormData: ImportWalletFormData(
-      mnemonic: _model.mnemonic,
-      name: "Another wallet", // TODO
-      password: _model.password,
-      walletType: WalletType.Eth,
-    ));
+      walletFormData: ImportWalletFormData(
+        mnemonic: _model.mnemonic,
+        name: "Another wallet", // TODO
+        password: _model.password,
+        walletType: WalletType.Eth,
+      ),
+    );
     navigator.openWalletsList(const WalletsListInitialParams());
   }
 

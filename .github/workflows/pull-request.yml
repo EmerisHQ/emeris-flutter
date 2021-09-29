@@ -7,10 +7,13 @@ jobs:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
+    - uses: amannn/action-semantic-pull-request@v3.4.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/checkout@v2
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: '2.2.2'
+        flutter-version: '2.5.1'
     - name: pub get
       run: flutter pub get
 

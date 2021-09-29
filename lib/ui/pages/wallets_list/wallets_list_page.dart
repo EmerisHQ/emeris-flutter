@@ -47,17 +47,18 @@ class _WalletsListPageState extends State<WalletsListPage> {
         title: strings.appTitle,
       ),
       body: ContentStateSwitcher(
-          emptyChild: EmptyListMessage(
-            message: strings.walletListEmptyText,
+        emptyChild: EmptyListMessage(
+          message: strings.walletListEmptyText,
+        ),
+        isEmpty: model.isEmpty,
+        contentChild: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: WalletsListView(
+            list: model.wallets,
+            walletClicked: (wallet) => presenter.walletClicked(wallet),
           ),
-          isEmpty: model.isEmpty,
-          contentChild: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: WalletsListView(
-              list: model.wallets,
-              walletClicked: (wallet) => presenter.walletClicked(wallet),
-            ),
-          )),
+        ),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => presenter.addWalletClicked(),
         label: Text(strings.importWallet),

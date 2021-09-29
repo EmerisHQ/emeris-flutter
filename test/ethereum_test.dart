@@ -12,7 +12,8 @@ void main() {
     () async {
       final rng = Random.secure();
       final privateKey = Web3.privateKeyFromMnemonic(
-          'tiny kitchen artefact label morning axis disorder buffalo fiscal keen valid taxi');
+        'tiny kitchen artefact label morning axis disorder buffalo fiscal keen valid taxi',
+      );
       final privateEthCredentials = EthPrivateKey.fromHex(privateKey);
       final wallet = Wallet.createNew(privateEthCredentials, 'Hello', rng);
       debugPrint(wallet.toJson());
