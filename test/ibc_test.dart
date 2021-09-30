@@ -28,11 +28,20 @@ void main() {
     const destinationChainName = 'akash';
     final response = await ibcApi.getPrimaryChannel(
       chainId: chainName,
-      destinationChanName: destinationChainName,
+      destinationChainId: destinationChainName,
     );
     response.fold(
       (fail) => throw fail,
       (json) => expect(json.counterParty, destinationChainName),
+    );
+  });
+
+  test('Get chain details', () async {
+    const chainName = 'cosmos-hub';
+    final response = await ibcApi.getChainDetails(chainName);
+    response.fold(
+      (fail) => throw fail,
+      (json) => expect(json.chainName, chainName),
     );
   });
 }
