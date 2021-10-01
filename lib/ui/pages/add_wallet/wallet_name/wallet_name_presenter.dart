@@ -12,7 +12,7 @@ class WalletNamePresenter {
 
   WalletNameViewModel get viewModel => _model;
 
-  void onTapSubmit() => navigator.closeWithResult("wallet name"); // TODO
+  void onTapSubmit() => navigator.closeWithResult(_model.name);
 
   // ignore: use_setters_to_change_properties
   void onChanged(String value) => _model.name = value;
