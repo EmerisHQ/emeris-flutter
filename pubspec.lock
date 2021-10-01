@@ -187,17 +187,19 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/cosmos_ui_components"
-      ref: "feature/utils-improvements"
-      resolved-ref: "72317e827453a34ef12b75ef0e2db054393d1466"
+      ref: main
+      resolved-ref: "0efd0958e639ff726f3ff50e9e4a568c9127c32c"
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
   cosmos_utils:
     dependency: "direct main"
     description:
-      path: "../flutter-public/packages/cosmos_utils"
-      relative: true
-    source: path
+      path: "packages/cosmos_utils"
+      ref: main
+      resolved-ref: "0efd0958e639ff726f3ff50e9e4a568c9127c32c"
+      url: "https://github.com/tendermint/flutter.git"
+    source: git
     version: "0.0.1"
   coverage:
     dependency: transitive
@@ -851,8 +853,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/transaction_signing_gateway"
-      ref: "feature/utils-improvements"
-      resolved-ref: "72317e827453a34ef12b75ef0e2db054393d1466"
+      ref: main
+      resolved-ref: "0efd0958e639ff726f3ff50e9e4a568c9127c32c"
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"

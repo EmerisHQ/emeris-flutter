@@ -66,11 +66,11 @@ class OnboardingPresenter {
 
   Future<String?> _openNamePage() async {
     String? name;
-    // if (_walletsStore.wallets.isEmpty) {
-    //   name = "";
-    // } else {
-    name = await navigator.openWalletName(const WalletNameInitialParams());
-    // }
+    if (_walletsStore.wallets.isEmpty) {
+      name = "";
+    } else {
+      name = await navigator.openWalletName(const WalletNameInitialParams());
+    }
     return name;
   }
 

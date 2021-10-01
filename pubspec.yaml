@@ -34,18 +34,18 @@ dependencies:
     git:
       url: https://github.com/tendermint/flutter.git
       path: packages/transaction_signing_gateway
-      ref: feature/utils-improvements
+      ref: main
   cosmos_ui_components:
     git:
       url: https://github.com/tendermint/flutter.git
       path: packages/cosmos_ui_components
-      ref: feature/utils-improvements
+      ref: main
 
   cosmos_utils:
     git:
       url: https://github.com/tendermint/flutter.git
       path: packages/cosmos_utils
-      ref: feature/utils-improvements
+      ref: main
 
   cupertino_icons: 1.0.3
 

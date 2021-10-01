@@ -14,7 +14,6 @@ class WalletNamePresenter {
 
   void onTapSubmit() => navigator.closeWithResult("wallet name"); // TODO
 
-  void onChanged(String value) {
-    _model.name = value;
-  }
+  // ignore: use_setters_to_change_properties
+  void onChanged(String value) => _model.name = value;
 }
