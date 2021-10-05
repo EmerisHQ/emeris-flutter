@@ -24,6 +24,7 @@ dependencies:
   alan: 0.40.2+1
   biometric_storage: 3.0.1
   crypto: 3.0.1
+  pinput: 1.2.0
   wallet_core:
     git:
       url: https://github.com/wal33d006/wallet_core.git
@@ -50,6 +51,15 @@ dependencies:
 
 dependency_overrides:
   pointycastle: 3.0.1 #newer version has problems with web version of app
+
+## convenient overrides for development to reference packages on local disk, just uncomment following lines and make sure
+## it points to the location of the checked out tendermint/flutter repository
+#  cosmos_utils:
+#    path: ../flutter-public/packages/cosmos_utils
+#  transaction_signing_gateway:
+#    path: ../flutter-public/packages/transaction_signing_gateway
+#  cosmos_ui_components:
+#    path: ../flutter-public/packages/transaction_signing_gateway
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/utils/strings.dart';
 
+//TODO refactor to fullscreen MVP (Model View Presenter) page
 abstract class AddWalletRoute {
   BuildContext get context;
 
