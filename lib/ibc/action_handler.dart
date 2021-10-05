@@ -4,6 +4,7 @@ import 'package:cosmos_utils/extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/api_calls/ibc_api.dart';
+import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/trace_json.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/redeem_failure.dart';
 import 'package:flutter_app/domain/entities/failures/transfer_failure.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
+import 'package:flutter_app/ibc/helpers/ibc_transfer_recipient.dart';
 import 'package:flutter_app/ibc/model/chain_amount.dart';
 import 'package:flutter_app/ibc/model/fee_with_denom.dart';
 import 'package:flutter_app/ibc/model/step.dart';
@@ -72,9 +74,7 @@ class ActionHandler {
 
   Future<Either<TransferFailure, TransferChainAmount>> transfer({
     required Balance balance,
-    required String chainId,
-    required String destinationChainId,
-    required String toAddress,
+    required IbcTransferRecipient ibcTransferRecipient,
   }) async {
     final steps = <TransferStep>[];
     var mustAddFee = false;
@@ -83,16 +83,12 @@ class ActionHandler {
       chainId: '',
     );
     if (isNative(balance.denom.text)) {
-      if (chainId == destinationChainId) {
+      if (ibcTransferRecipient.chainId == ibcTransferRecipient.destinationChainId) {
         steps.add(
-          TransferStep(
+          ibcTransferRecipient.toTransferStep(
             name: 'transfer',
-            status: 'pending',
-            data: TransferStepData(
-              balance: balance,
-              chainId: chainId,
-              toAddress: toAddress,
-            ),
+            status: TransferStatus.Pending,
+            balance: balance,
           ),
         );
         return right(
@@ -103,170 +99,175 @@ class ActionHandler {
           ),
         );
       } else {
-        if (await isVerified(balance.denom, chainId, _ibcApi)) {
-          return (await _ibcApi.getPrimaryChannel(chainId: chainId, destinationChainId: destinationChainId))
-              .fold((l) => left(TransferFailure.primaryChannelError(l.cause)), (primaryChannelResult) async {
-            steps.add(
-              TransferStep(
-                name: 'ibc_forward',
-                status: 'pending',
-                data: TransferStepData(
-                  balance: balance,
-                  fromChain: chainId,
-                  chainFee: await getFeeForChain(chainId, _ibcApi),
-                  toAddress: toAddress,
-                  through: primaryChannelResult.channelName,
-                ),
-              ),
-            );
-            return right(
-              TransferChainAmount(
-                output: output,
-                mustAddFee: mustAddFee,
-                steps: steps,
-              ),
-            );
-          });
-        }
-      }
-    }
-    return (await _ibcApi.verifyTrace(chainId, balance.denom.text.split('/')[1]))
-        .fold((l) => left(TransferFailure.verifyTraceError(l.cause)), (verifyTrace) async {
-      if (verifyTrace.trace.length == 1 && chainId == destinationChainId) {
-        return (await _ibcApi.getPrimaryChannel(
-          chainId: chainId,
-          destinationChainId: verifyTrace.trace[0].counterpartyName,
-        ))
-            .fold((l) => left(TransferFailure.primaryChannelError(l.cause)), (primaryChannelResult) async {
-          if (primaryChannelResult.channelName == getChannel(verifyTrace.path, 0)) {
-            steps.add(
-              TransferStep(
-                name: 'transfer',
-                status: 'pending',
-                data: TransferStepData(
-                  balance: balance,
-                  chainId: chainId,
-                  toAddress: toAddress,
-                ),
-              ),
-            );
-            return right(
-              TransferChainAmount(
-                output: output,
-                steps: steps,
-                mustAddFee: mustAddFee,
-              ),
-            );
-          } else {
-            mustAddFee = true;
-            steps.add(
-              TransferStep(
-                name: 'ibc_backward',
-                status: 'pending',
-                addFee: true,
-                feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _ibcApi),
-                data: TransferStepData(
-                  balance: balance,
-                  fromChain: chainId,
-                  baseDenom: Denom(await getBaseDenom(balance.denom.text, chainId, _ibcApi)),
-                  toChain: verifyTrace.trace[0].counterpartyName,
-                  through: verifyTrace.trace[0].channel,
-                ),
-              ),
-            );
-            steps.add(
-              TransferStep(
-                name: 'ibc_forward',
-                status: 'pending',
-                data: TransferStepData(
-                  balance: Balance(amount: balance.amount, denom: Denom(verifyTrace.baseDenom)),
-                  fromChain: chainId,
-                  chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _ibcApi),
-                  toChain: destinationChainId,
-                  toAddress: toAddress,
-                  through: primaryChannelResult.channelName,
-                ),
-              ),
-            );
-            return right(
-              TransferChainAmount(
-                output: output,
-                steps: steps,
-                mustAddFee: mustAddFee,
-              ),
-            );
-          }
-        });
-      } else {
-        if (verifyTrace.trace.length > 1) {
-          return left(const TransferFailure.denomRedemptionError('Denom must be redeemed first'));
-        } else {
-          if (verifyTrace.trace[0].counterpartyName == destinationChainId) {
-            steps.add(
-              TransferStep(
-                name: 'ibc_backward',
-                status: 'pending',
-                data: TransferStepData(
-                  balance: balance,
-                  fromChain: chainId,
-                  baseDenom: Denom(await getBaseDenom(balance.denom.text, chainId, _ibcApi)),
-                  toChain: verifyTrace.trace[0].counterpartyName,
-                  toAddress: toAddress,
-                  through: verifyTrace.trace[0].channel,
-                ),
-              ),
-            );
-          } else {
-            mustAddFee = true;
-            steps.add(
-              TransferStep(
-                name: 'ibc_backward',
-                status: 'pending',
-                addFee: true,
-                feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _ibcApi),
-                data: TransferStepData(
-                  balance: balance,
-                  fromChain: chainId,
-                  baseDenom: Denom(await getBaseDenom(balance.denom.text, chainId, _ibcApi)),
-                  toChain: verifyTrace.trace[0].counterpartyName,
-                  through: verifyTrace.trace[0].channel,
-                ),
-              ),
-            );
-          }
-          if (verifyTrace.trace[0].counterpartyName != destinationChainId) {
-            (await _ibcApi.getPrimaryChannel(
-              chainId: verifyTrace.trace[0].counterpartyName,
-              destinationChainId: destinationChainId,
-            ))
-                .fold((l) => left(TransferFailure.primaryChannelError(l.cause)), (primaryChannelResult) async {
+        if (await isVerified(balance.denom, ibcTransferRecipient.chainId, _ibcApi)) {
+          final primaryChannelTrace = await _ibcApi.getPrimaryChannel(
+            chainId: ibcTransferRecipient.chainId,
+            destinationChainId: ibcTransferRecipient.destinationChainId,
+          );
+          return primaryChannelTrace.fold(
+            (l) => left(TransferFailure.primaryChannelError(l.cause)),
+            (primaryChannelResult) async {
               steps.add(
-                TransferStep(
+                ibcTransferRecipient.toTransferStep(
                   name: 'ibc_forward',
-                  status: 'pending',
-                  data: TransferStepData(
-                    balance: Balance(amount: balance.amount, denom: Denom(verifyTrace.baseDenom)),
-                    fromChain: verifyTrace.trace[0].counterpartyName,
-                    chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _ibcApi),
-                    toChain: destinationChainId,
-                    toAddress: toAddress,
-                    through: primaryChannelResult.channelName,
-                  ),
+                  status: TransferStatus.Pending,
+                  balance: balance,
+                  fromChain: ibcTransferRecipient.chainId,
+                  chainFee: await getFeeForChain(ibcTransferRecipient.chainId, _ibcApi),
+                  through: primaryChannelResult.channelName,
                 ),
               );
-            });
-          }
-          return right(
-            TransferChainAmount(
-              output: output,
-              steps: steps,
-              mustAddFee: mustAddFee,
-            ),
+              return right(
+                TransferChainAmount(
+                  output: output,
+                  mustAddFee: mustAddFee,
+                  steps: steps,
+                ),
+              );
+            },
           );
         }
       }
-    });
+    }
+    final verifyTraceEither = await _ibcApi.verifyTrace(ibcTransferRecipient.chainId, balance.denom.text.split('/')[1]);
+    return verifyTraceEither.fold(
+      (l) => left(TransferFailure.verifyTraceError(l.cause)),
+      (verifyTrace) async {
+        if (_isSingleSameChain(verifyTrace, ibcTransferRecipient)) {
+          final primaryChannelEither = await _ibcApi.getPrimaryChannel(
+            chainId: ibcTransferRecipient.chainId,
+            destinationChainId: verifyTrace.trace[0].counterpartyName,
+          );
+          return primaryChannelEither.fold(
+            (l) => left(TransferFailure.primaryChannelError(l.cause)),
+            (primaryChannelResult) async {
+              if (_isPrimaryChannelVerified(primaryChannelResult, verifyTrace)) {
+                steps.add(
+                  ibcTransferRecipient.toTransferStep(
+                    name: 'transfer',
+                    status: TransferStatus.Pending,
+                    balance: balance,
+                  ),
+                );
+                return right(
+                  TransferChainAmount(
+                    output: output,
+                    steps: steps,
+                    mustAddFee: mustAddFee,
+                  ),
+                );
+              } else {
+                mustAddFee = true;
+                steps.add(
+                  ibcTransferRecipient.toTransferStep(
+                    name: 'ibc_backward',
+                    status: TransferStatus.Pending,
+                    balance: balance,
+                    addFee: true,
+                    feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _ibcApi),
+                    fromChain: ibcTransferRecipient.chainId,
+                    baseDenom: Denom(await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _ibcApi)),
+                    toChain: verifyTrace.trace[0].counterpartyName,
+                    through: verifyTrace.trace[0].channel,
+                  ),
+                );
+                steps.add(
+                  ibcTransferRecipient.toTransferStep(
+                    name: 'ibc_forward',
+                    status: TransferStatus.Pending,
+                    balance: balance,
+                    fromChain: ibcTransferRecipient.chainId,
+                    chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _ibcApi),
+                    toChain: ibcTransferRecipient.destinationChainId,
+                    through: primaryChannelResult.channelName,
+                  ),
+                );
+                return right(
+                  TransferChainAmount(
+                    output: output,
+                    steps: steps,
+                    mustAddFee: mustAddFee,
+                  ),
+                );
+              }
+            },
+          );
+        } else {
+          if (verifyTrace.trace.length > 1) {
+            return left(const TransferFailure.denomRedemptionError('Denom must be redeemed first'));
+          } else {
+            if (isCounterPartyDestination(verifyTrace, ibcTransferRecipient)) {
+              steps.add(
+                ibcTransferRecipient.toTransferStep(
+                  name: 'ibc_backward',
+                  status: TransferStatus.Pending,
+                  balance: balance,
+                  fromChain: ibcTransferRecipient.chainId,
+                  baseDenom: Denom(await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _ibcApi)),
+                  toChain: verifyTrace.trace[0].counterpartyName,
+                  through: verifyTrace.trace[0].channel,
+                ),
+              );
+            } else {
+              mustAddFee = true;
+              steps.add(
+                ibcTransferRecipient.toTransferStep(
+                  name: 'ibc_backward',
+                  status: TransferStatus.Pending,
+                  addFee: true,
+                  feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _ibcApi),
+                  balance: balance,
+                  fromChain: ibcTransferRecipient.chainId,
+                  baseDenom: Denom(await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _ibcApi)),
+                  toChain: verifyTrace.trace[0].counterpartyName,
+                  through: verifyTrace.trace[0].channel,
+                ),
+              );
+              final primaryChannelEither = await _ibcApi.getPrimaryChannel(
+                chainId: verifyTrace.trace[0].counterpartyName,
+                destinationChainId: ibcTransferRecipient.destinationChainId,
+              );
+              primaryChannelEither.fold(
+                (l) => left(TransferFailure.primaryChannelError(l.cause)),
+                (primaryChannelResult) async {
+                  steps.add(
+                    ibcTransferRecipient.toTransferStep(
+                      name: 'ibc_forward',
+                      status: TransferStatus.Pending,
+                      balance: balance,
+                      fromChain: verifyTrace.trace[0].counterpartyName,
+                      chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _ibcApi),
+                      toChain: ibcTransferRecipient.destinationChainId,
+                      through: primaryChannelResult.channelName,
+                    ),
+                  );
+                },
+              );
+            }
+            return right(
+              TransferChainAmount(
+                output: output,
+                steps: steps,
+                mustAddFee: mustAddFee,
+              ),
+            );
+          }
+        }
+      },
+    );
   }
+
+  // TODO: Rename this whenever we get a domain-related suggestion from backend
+  bool isCounterPartyDestination(VerifyTraceJson verifyTrace, IbcTransferRecipient ibcTransferRecipient) =>
+      verifyTrace.trace[0].counterpartyName == ibcTransferRecipient.destinationChainId;
+
+  // TODO: Rename this whenever we get a domain-related suggestion from backend
+  bool _isPrimaryChannelVerified(PrimaryChannelJson primaryChannelResult, VerifyTraceJson verifyTrace) =>
+      primaryChannelResult.channelName == getChannel(verifyTrace.path, 0);
+
+  // TODO: Rename this whenever we get a domain-related suggestion from backend
+  bool _isSingleSameChain(VerifyTraceJson verifyTrace, IbcTransferRecipient ibcTransferRecipient) =>
+      verifyTrace.trace.length == 1 && ibcTransferRecipient.isSameChain;
 }
 
 extension ChainAmountOnTrace on VerifyTraceJson {
