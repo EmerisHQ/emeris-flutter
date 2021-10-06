@@ -4,6 +4,7 @@ enum _TransferFailureType {
   VerifyTrace,
   PrimaryChannel,
   DenomRedemption,
+  FeeChain,
 }
 
 class TransferFailure {
@@ -17,11 +18,14 @@ class TransferFailure {
 
   const TransferFailure.denomRedemptionError(this.cause) : _type = _TransferFailureType.DenomRedemption;
 
+  const TransferFailure.feeChainError(this.cause) : _type = _TransferFailureType.DenomRedemption;
+
   DisplayableFailure displayableFailure() {
     switch (_type) {
       case _TransferFailureType.VerifyTrace:
       case _TransferFailureType.PrimaryChannel:
       case _TransferFailureType.DenomRedemption:
+      case _TransferFailureType.FeeChain:
         return DisplayableFailure.commonError();
     }
   }

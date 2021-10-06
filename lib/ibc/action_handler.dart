@@ -72,6 +72,7 @@ class ActionHandler {
     );
   }
 
+  // TODO: Refactor this function
   Future<Either<TransferFailure, TransferChainAmount>> transfer({
     required Balance balance,
     required IbcTransferRecipient ibcTransferRecipient,
@@ -84,20 +85,7 @@ class ActionHandler {
     );
     if (isNative(balance.denom.text)) {
       if (ibcTransferRecipient.chainId == ibcTransferRecipient.destinationChainId) {
-        steps.add(
-          ibcTransferRecipient.toTransferStep(
-            name: 'transfer',
-            status: TransferStatus.Pending,
-            balance: balance,
-          ),
-        );
-        return right(
-          TransferChainAmount(
-            output: output,
-            steps: steps,
-            mustAddFee: mustAddFee,
-          ),
-        );
+        return addTransferStep(steps, ibcTransferRecipient, balance, output, mustAddFee: mustAddFee);
       } else {
         if (await isVerified(balance.denom, ibcTransferRecipient.chainId, _ibcApi)) {
           final primaryChannelTrace = await _ibcApi.getPrimaryChannel(
@@ -106,25 +94,14 @@ class ActionHandler {
           );
           return primaryChannelTrace.fold(
             (l) => left(TransferFailure.primaryChannelError(l.cause)),
-            (primaryChannelResult) async {
-              steps.add(
-                ibcTransferRecipient.toTransferStep(
-                  name: 'ibc_forward',
-                  status: TransferStatus.Pending,
-                  balance: balance,
-                  fromChain: ibcTransferRecipient.chainId,
-                  chainFee: await getFeeForChain(ibcTransferRecipient.chainId, _ibcApi),
-                  through: primaryChannelResult.channelName,
-                ),
-              );
-              return right(
-                TransferChainAmount(
-                  output: output,
-                  mustAddFee: mustAddFee,
-                  steps: steps,
-                ),
-              );
-            },
+            (primaryChannelResult) async => addIbcForwardStep(
+              steps,
+              ibcTransferRecipient,
+              balance,
+              primaryChannelResult,
+              output,
+              mustAddFee: mustAddFee,
+            ),
           );
         }
       }
@@ -142,20 +119,7 @@ class ActionHandler {
             (l) => left(TransferFailure.primaryChannelError(l.cause)),
             (primaryChannelResult) async {
               if (_isPrimaryChannelVerified(primaryChannelResult, verifyTrace)) {
-                steps.add(
-                  ibcTransferRecipient.toTransferStep(
-                    name: 'transfer',
-                    status: TransferStatus.Pending,
-                    balance: balance,
-                  ),
-                );
-                return right(
-                  TransferChainAmount(
-                    output: output,
-                    steps: steps,
-                    mustAddFee: mustAddFee,
-                  ),
-                );
+                return addTransferStep(steps, ibcTransferRecipient, balance, output, mustAddFee: mustAddFee);
               } else {
                 mustAddFee = true;
                 steps.add(
@@ -254,6 +218,62 @@ class ActionHandler {
           }
         }
       },
+    );
+  }
+
+  Future<Either<TransferFailure, TransferChainAmount>> addIbcForwardStep(
+    List<TransferStep> steps,
+    IbcTransferRecipient ibcTransferRecipient,
+    Balance balance,
+    PrimaryChannelJson primaryChannelResult,
+    Output output, {
+    required bool mustAddFee,
+  }) async {
+    var feeForChain = <FeeWithDenom>[];
+    try {
+      feeForChain = await getFeeForChain(ibcTransferRecipient.chainId, _ibcApi);
+    } catch (ex) {
+      return left(TransferFailure.feeChainError(ex));
+    }
+    steps.add(
+      ibcTransferRecipient.toTransferStep(
+        name: 'ibc_forward',
+        status: TransferStatus.Pending,
+        balance: balance,
+        fromChain: ibcTransferRecipient.chainId,
+        chainFee: feeForChain,
+        through: primaryChannelResult.channelName,
+      ),
+    );
+    return right(
+      TransferChainAmount(
+        output: output,
+        mustAddFee: mustAddFee,
+        steps: steps,
+      ),
+    );
+  }
+
+  Either<TransferFailure, TransferChainAmount> addTransferStep(
+    List<TransferStep> steps,
+    IbcTransferRecipient ibcTransferRecipient,
+    Balance balance,
+    Output output, {
+    required bool mustAddFee,
+  }) {
+    steps.add(
+      ibcTransferRecipient.toTransferStep(
+        name: 'transfer',
+        status: TransferStatus.Pending,
+        balance: balance,
+      ),
+    );
+    return right(
+      TransferChainAmount(
+        output: output,
+        steps: steps,
+        mustAddFee: mustAddFee,
+      ),
     );
   }
 
