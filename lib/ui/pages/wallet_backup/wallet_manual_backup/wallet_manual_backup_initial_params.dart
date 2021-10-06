@@ -1,0 +1,3 @@
+class WalletManualBackupInitialParams {
+  const WalletManualBackupInitialParams();
+}
