@@ -31,7 +31,7 @@ void main() {
         const destinationChainName = 'akash';
         final response = await ibcApi.getPrimaryChannel(
           chainId: chainName,
-          destinationChanName: destinationChainName,
+          destinationChainId: destinationChainName,
         );
         response.fold(
           (fail) => throw fail,
