@@ -16,7 +16,7 @@ class BalanceCard extends StatelessWidget {
     return ListTile(
       title: Text(data.denom.text.toUpperCase()),
       subtitle: Text(
-        '\$${data.amount.value.toStringAsFixed(2)} + 12.78%',
+        '\$${data.amount.value.toStringAsFixed(2)}',
         style: TextStyle(color: Theme.of(context).colorScheme.secondary),
       ),
       leading: CircleAvatar(backgroundColor: Theme.of(context).colorScheme.secondary),
