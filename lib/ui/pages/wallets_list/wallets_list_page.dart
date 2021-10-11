@@ -42,7 +42,6 @@ class _WalletsListPageState extends State<WalletsListPage> {
   Widget build(BuildContext context) {
     //ignore: deprecated_member_use_from_same_package
     return Scaffold(
-      // Not translating this.
       appBar: CosmosAppBar(
         title: strings.appTitle,
       ),

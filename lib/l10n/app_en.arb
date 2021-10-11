@@ -27,7 +27,7 @@
   "@passwordHelperText": {
     "description": "Helper text for password field"
   },
-  "walletDetailsTitle": "{alias}'s Wallet",
+  "walletDetailsTitle": "{alias} Wallet",
   "@walletDetailsTitle": {
     "description": "Wallet details page dynamic title",
     "placeholders": {
@@ -109,5 +109,9 @@
   "continueAction": "Continue",
   "walletNameHint": "Wallet name",
   "importingWalletProgressMessage": "Importing wallet...",
-  "generatingMnemonicProgressMessage": "Generating mnemonic..."
+  "generatingMnemonicProgressMessage": "Generating mnemonic...",
+  "assets": "Assets",
+  "receive": "Receive",
+  "send": "Send",
+  "balance": "Balance"
 }

@@ -19,6 +19,7 @@ import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
+import 'package:flutter_app/domain/use_cases/verify_wallet_password_use_case.dart';
 import 'package:flutter_app/domain/utils/password_manager.dart';
 import 'package:flutter_app/global.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -165,6 +166,9 @@ void _configureUseCases() {
   );
   getIt.registerFactory<GenerateMnemonicUseCase>(
     () => GenerateMnemonicUseCase(),
+  );
+  getIt.registerFactory<VerifyWalletPasswordUseCase>(
+    () => VerifyWalletPasswordUseCase(getIt()),
   );
 }
 
