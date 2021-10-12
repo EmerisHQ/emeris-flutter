@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
@@ -11,9 +12,9 @@ class ImportWalletUseCase {
 
   ImportWalletUseCase(this._walletCredentialsRepository, this._walletsStore);
 
-  Future<Either<AddWalletFailure, Unit>> execute({required ImportWalletFormData walletFormData}) async =>
+  Future<Either<AddWalletFailure, EmerisWallet>> execute({required ImportWalletFormData walletFormData}) async =>
       _walletCredentialsRepository.importWallet(walletFormData).map((info) {
         _walletsStore.wallets.add(info);
-        return right(unit);
+        return right(info);
       });
 }

@@ -1,15 +1,17 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
+import 'package:flutter_app/domain/entities/passcode.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
-import 'package:flutter_app/presentation/routing/routing_initial_params.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_initial_params.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
 
 class OnboardingPresenter {
@@ -46,22 +48,28 @@ class OnboardingPresenter {
     if (mnemonic == null) {
       return;
     }
-    _model.importWalletFuture = _importWalletUseCase
-        .execute(
+    final wallet = await _importWallet(mnemonic, name, passcode);
+    if (wallet == null) {
+      return;
+    }
+    navigator.close();
+    navigator.openWalletBackup(WalletBackupIntroInitialParams(wallet: wallet));
+  }
+
+  Future<EmerisWallet?> _importWallet(String mnemonic, String name, Passcode passcode) {
+    final future = _importWalletUseCase.execute(
       walletFormData: ImportWalletFormData(
         mnemonic: mnemonic,
         name: name,
         password: passcode.value,
         walletType: WalletType.Cosmos,
       ),
-    )
-        .observableDoOn(
-      (fail) => navigator.showError(fail.displayableFailure()),
-      (success) {
-        navigator.close();
-        return navigator.openRouting(const RoutingInitialParams());
-      }, //TODO
     );
+    _model.importWalletFuture = future.observableDoOn(
+      (fail) => navigator.showError(fail.displayableFailure()),
+      (success) {},
+    );
+    return future.asyncFold((fail) => null, (success) => success);
   }
 
   Future<String?> _openNamePage() async {

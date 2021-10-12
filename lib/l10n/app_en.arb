@@ -113,5 +113,17 @@
   "assets": "Assets",
   "receive": "Receive",
   "send": "Send",
-  "balance": "Balance"
+  "balance": "Balance",
+  "backUpYourWalletTitle": "Backup your wallet",
+  "backUpYourWalletMessage": "If your device is lost or stolen, you will be able to recover your wallet",
+  "backUpWalletInfoMessage1": "Emeris wallet will never ask you to share your recovery phrase,",
+  "backUpWalletInfoMessage2": "Never share your recovery phrase with anyone, store it securely,",
+  "backUpWalletInfoMessage3": "If you don't backup your wallet, or loose your recovery phrase, you will not be able to recover your wallet.",
+  "backUpIcloudAction": "Backup to iCloud",
+  "backUpGoogleDriveAction": "Backup to Google Drive",
+  "backUpManuallyAction": "Back up manually",
+  "backUpLaterAction": "Back up later",
+  "backUpNowAction": "Back up now",
+  "walletSkipBackupConfirmationTitle": "Back up later",
+  "walletSkipBackupConfirmationMessage": "I understand if I don't back up my wallet, or if I lost my recovery phrase,  I will not be able to access my wallet anymore"
 }
