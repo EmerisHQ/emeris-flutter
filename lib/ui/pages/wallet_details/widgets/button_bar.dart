@@ -17,7 +17,6 @@ class CosmosButtonBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(CosmosAppTheme.spacingM),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(child: CosmosElevatedButton(onTap: () {}, text: strings.receiveAction)),
           const SizedBox(width: CosmosAppTheme.spacingM),
