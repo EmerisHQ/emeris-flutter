@@ -8,8 +8,10 @@ import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_page.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_navigator.dart';
 
-class OnboardingNavigator with PasscodeRoute, WalletNameRoute, ErrorDialogRoute, CloseRoute, RoutingRoute {
+class OnboardingNavigator
+    with PasscodeRoute, WalletNameRoute, ErrorDialogRoute, CloseRoute, RoutingRoute, WalletBackupIntroRoute {
   @override
   late BuildContext context;
   @override

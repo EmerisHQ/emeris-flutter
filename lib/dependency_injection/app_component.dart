@@ -14,6 +14,7 @@ import 'package:flutter_app/data/web/web_key_info_storage.dart';
 import 'package:flutter_app/domain/repositories/balances_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
+import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
@@ -44,6 +45,15 @@ import 'package:flutter_app/ui/pages/passcode/passcode_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_presentation_model.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_presenter.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_cloud_backup/wallet_cloud_backup_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_cloud_backup/wallet_cloud_backup_presentation_model.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_cloud_backup/wallet_cloud_backup_presenter.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_presentation_model.dart';
+import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_presenter.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_password_retriever/biometric_wallet_password_retriever.dart';
 import 'package:flutter_app/ui/pages/wallet_password_retriever/user_prompt_wallet_password_retriever.dart';
@@ -123,6 +133,9 @@ void _configureRepositories() {
 void _configureStores() {
   getIt.registerLazySingleton<WalletsStore>(
     () => WalletsStore(),
+  );
+  getIt.registerLazySingleton<PlatformInfoStore>(
+    () => PlatformInfoStore(),
   );
 }
 
@@ -216,5 +229,25 @@ void _configureMvp() {
   );
   getIt.registerFactory<PasscodeNavigator>(
     () => PasscodeNavigator(getIt()),
+  );
+  getIt.registerFactoryParam<WalletBackupIntroPresenter, WalletBackupIntroPresentationModel, dynamic>(
+    (_model, _) => WalletBackupIntroPresenter(_model, getIt()),
+  );
+  getIt.registerFactory<WalletBackupIntroNavigator>(
+    () => WalletBackupIntroNavigator(getIt()),
+  );
+
+  getIt.registerFactoryParam<WalletCloudBackupPresenter, WalletCloudBackupPresentationModel, dynamic>(
+    (_model, _) => WalletCloudBackupPresenter(_model, getIt()),
+  );
+  getIt.registerFactory<WalletCloudBackupNavigator>(
+    () => WalletCloudBackupNavigator(getIt()),
+  );
+
+  getIt.registerFactoryParam<WalletManualBackupPresenter, WalletManualBackupPresentationModel, dynamic>(
+    (_model, _) => WalletManualBackupPresenter(_model, getIt()),
+  );
+  getIt.registerFactory<WalletManualBackupNavigator>(
+    () => WalletManualBackupNavigator(getIt()),
   );
 }

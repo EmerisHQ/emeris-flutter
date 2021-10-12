@@ -59,7 +59,7 @@ dependency_overrides:
 #  transaction_signing_gateway:
 #    path: ../flutter-public/packages/transaction_signing_gateway
 #  cosmos_ui_components:
-#    path: ../flutter-public/packages/transaction_signing_gateway
+#    path: ../flutter-public/packages/cosmos_ui_components
 
 dev_dependencies:
   flutter_test:
