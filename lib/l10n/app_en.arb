@@ -27,7 +27,7 @@
   "@passwordHelperText": {
     "description": "Helper text for password field"
   },
-  "walletDetailsTitle": "{alias}'s Wallet",
+  "walletDetailsTitle": "{alias} Wallet",
   "@walletDetailsTitle": {
     "description": "Wallet details page dynamic title",
     "placeholders": {
@@ -110,6 +110,10 @@
   "walletNameHint": "Wallet name",
   "importingWalletProgressMessage": "Importing wallet...",
   "generatingMnemonicProgressMessage": "Generating mnemonic...",
+  "assetTitle": "Assets",
+  "receiveAction": "Receive",
+  "sendAction": "Send",
+  "balanceTitle": "Balance",
   "backUpYourWalletTitle": "Backup your wallet",
   "backUpYourWalletMessage": "If your device is lost or stolen, you will be able to recover your wallet",
   "backUpWalletInfoMessage1": "Emeris wallet will never ask you to share your recovery phrase,",

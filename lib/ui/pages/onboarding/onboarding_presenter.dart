@@ -75,9 +75,9 @@ class OnboardingPresenter {
   Future<String?> _openNamePage() async {
     String? name;
     if (_walletsStore.wallets.isEmpty) {
-      name = "";
-    } else {
       name = await navigator.openWalletName(const WalletNameInitialParams());
+    } else {
+      name = "";
     }
     return name;
   }

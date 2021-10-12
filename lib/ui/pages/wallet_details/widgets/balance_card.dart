@@ -1,9 +1,5 @@
-import 'dart:math';
-
-import 'package:cosmos_ui_components/cosmos_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/utils/strings.dart';
 
 class BalanceCard extends StatelessWidget {
   final Balance data;
@@ -14,30 +10,29 @@ class BalanceCard extends StatelessWidget {
     required this.onTransferPressed,
   });
 
-  // TODO: Remove these icons during refactor
-  // ignore: avoid_field_initializers_in_const_classes
-  final List<Widget> icons = const [
-    Icon(Icons.wifi_tethering),
-    Icon(Icons.workspaces_filled),
-    Icon(Icons.workspaces_filled),
-  ];
-
+  /// TODO: Add missing parameters to [Balance] model (currently hardcoded as strings)
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: CosmosAppTheme.elevationS,
-      child: ListTile(
-        title: Text(data.denom.text),
-        subtitle: Text(data.amount.displayText),
-        // TODO: Fix this during refactor
-        leading: icons[Random().nextInt(2)],
-        trailing: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: const StadiumBorder(),
+    return ListTile(
+      title: Text(data.denom.text.toUpperCase()),
+      subtitle: Text(
+        '\$${data.amount.value.toStringAsFixed(2)}',
+        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+      ),
+      leading: CircleAvatar(backgroundColor: Theme.of(context).colorScheme.secondary),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            '#\$1.23M',
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
-          onPressed: onTransferPressed,
-          child: Text(strings.transfer),
-        ),
+          Text(
+            '#12,300 ATOM',
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          ),
+        ],
       ),
     );
   }

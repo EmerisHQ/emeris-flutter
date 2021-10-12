@@ -6,6 +6,7 @@ import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
+import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -43,19 +44,29 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CosmosAppBar(
-        title: strings.walletDetailsTitle(widget.initialParams.wallet.walletDetails.walletAlias),
-      ),
+      appBar: CosmosAppBar(actions: [IconButton(icon: const Icon(Icons.qr_code_scanner_sharp), onPressed: () {})]),
       body: Center(
         child: Observer(
           builder: (context) => ContentStateSwitcher(
             contentChild: Column(
               children: [
                 ListTile(
-                  title: Text(strings.walletAddress),
-                  subtitle: Text(widget.initialParams.wallet.walletDetails.walletAddress),
+                  title: Row(
+                    children: [
+                      Text(strings.walletDetailsTitle(widget.initialParams.wallet.walletDetails.walletAlias)),
+                      const Icon(Icons.keyboard_arrow_down),
+                    ],
+                  ),
+                  // TODO: Sum of all the assets converted into USD
+                  subtitle: Text(
+                    '#\$766.43',
+                    style: TextStyle(
+                      fontSize: CosmosAppTheme.fontSizeXXL,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
                 ),
-                const Divider(),
+                CosmosButtonBar(onReceivePressed: () {}, onSendPressed: () {}),
                 const Padding(padding: EdgeInsets.only(top: 16)),
                 BalanceHeading(
                   wallet: widget.initialParams.wallet,
