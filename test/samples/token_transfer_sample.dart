@@ -1,7 +1,6 @@
 import 'package:alan/alan.dart';
 import 'package:alan/proto/cosmos/bank/v1beta1/export.dart' as bank;
 import 'package:flutter/foundation.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 /// Only for transferring sample tokens to newly created wallet
 Future<void> main() async {

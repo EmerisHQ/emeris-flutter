@@ -14,8 +14,8 @@ class BalanceHeading extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(strings.assets, textAlign: TextAlign.start, style: Theme.of(context).textTheme.headline6),
-          Text(strings.balance),
+          Text(strings.assetTitle, textAlign: TextAlign.start, style: Theme.of(context).textTheme.headline6),
+          Text(strings.balanceTitle),
         ],
       ),
     );

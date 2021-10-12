@@ -59,7 +59,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                   ),
                   // TODO: Sum of all the assets converted into USD
                   subtitle: Text(
-                    '\$766.43',
+                    '#\$766.43',
                     style: TextStyle(
                       fontSize: CosmosAppTheme.fontSizeXXL,
                       color: Theme.of(context).colorScheme.secondary,

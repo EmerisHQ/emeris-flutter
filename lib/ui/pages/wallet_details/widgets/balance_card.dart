@@ -25,11 +25,11 @@ class BalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            '\$1.23M',
+            '#\$1.23M',
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           Text(
-            '12,300 ATOM',
+            '#12,300 ATOM',
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
         ],

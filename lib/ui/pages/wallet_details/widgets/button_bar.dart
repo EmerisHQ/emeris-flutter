@@ -19,9 +19,9 @@ class CosmosButtonBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(child: CosmosElevatedButton(onTap: () {}, text: strings.receive)),
+          Expanded(child: CosmosElevatedButton(onTap: () {}, text: strings.receiveAction)),
           const SizedBox(width: CosmosAppTheme.spacingM),
-          Expanded(child: CosmosOutlineButton(text: strings.send, onTap: onSendPressed)),
+          Expanded(child: CosmosOutlineButton(text: strings.sendAction, onTap: onSendPressed)),
         ],
       ),
     );
