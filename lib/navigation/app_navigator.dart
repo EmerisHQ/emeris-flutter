@@ -1,4 +1,8 @@
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:flutter/material.dart';
+
+/// helper method to show `Not implemented` dialog upon user-triggered actions
+void showNotImplemented() => notImplemented(AppNavigator.navigatorKey.currentContext!);
 
 /// Class responsible of handling navigation between pages, this should not be used directly,
 /// but trough "*Navigator" classes instead

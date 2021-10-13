@@ -186,20 +186,16 @@ packages:
   cosmos_ui_components:
     dependency: "direct main"
     description:
-      path: "packages/cosmos_ui_components"
-      ref: main
-      resolved-ref: "5f3e555a707320deab01295de2debb99e2376349"
-      url: "https://github.com/tendermint/flutter.git"
-    source: git
+      path: "../flutter-public/packages/cosmos_ui_components"
+      relative: true
+    source: path
     version: "0.0.1"
   cosmos_utils:
     dependency: "direct main"
     description:
-      path: "packages/cosmos_utils"
-      ref: main
-      resolved-ref: "5f3e555a707320deab01295de2debb99e2376349"
-      url: "https://github.com/tendermint/flutter.git"
-    source: git
+      path: "../flutter-public/packages/cosmos_utils"
+      relative: true
+    source: path
     version: "0.0.1"
   coverage:
     dependency: transitive

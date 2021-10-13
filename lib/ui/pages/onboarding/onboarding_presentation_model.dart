@@ -2,6 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
+import 'package:flutter_app/domain/model/mnemonic.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_app/utils/utils.dart';
@@ -23,7 +24,7 @@ class OnboardingPresentationModel with OnboardingPresentationModelBase implement
   @override
   bool get isLoading => isFutureInProgress(importWalletFuture) || isFutureInProgress(generateMnemonicFuture);
 
-  ObservableFuture<String?>? get generateMnemonicFuture => _generateMnemonicFuture.value;
+  ObservableFuture<Mnemonic?>? get generateMnemonicFuture => _generateMnemonicFuture.value;
 
   @override
   String get loadingMessage {
@@ -46,7 +47,8 @@ abstract class OnboardingPresentationModelBase {
       Action(() => _importWalletFuture.value = value)();
 
   //////////////////////////////////////
-  final Observable<ObservableFuture<String?>?> _generateMnemonicFuture = Observable(null);
+  final Observable<ObservableFuture<Mnemonic?>?> _generateMnemonicFuture = Observable(null);
 
-  set generateMnemonicFuture(ObservableFuture<String?>? value) => Action(() => _generateMnemonicFuture.value = value)();
+  set generateMnemonicFuture(ObservableFuture<Mnemonic?>? value) =>
+      Action(() => _generateMnemonicFuture.value = value)();
 }

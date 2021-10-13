@@ -22,7 +22,7 @@ Future<Either<AddWalletFailure, EmerisWallet>> importEthereumWallet(
   final Wallet wallet;
   final corePassword = Key.fromSecureRandom(16).base64;
   try {
-    final privateKey = Web3.privateKeyFromMnemonic(walletFormData.mnemonic);
+    final privateKey = Web3.privateKeyFromMnemonic(walletFormData.mnemonic.stringRepresentation);
     final privateEthCredentials = EthPrivateKey.fromHex(privateKey);
     wallet = Wallet.createNew(privateEthCredentials, corePassword, rng);
   } catch (e, stack) {
@@ -30,7 +30,7 @@ Future<Either<AddWalletFailure, EmerisWallet>> importEthereumWallet(
     return left(AddWalletFailure.invalidMnemonic(e));
   }
   final creds = EthereumPrivateWalletCredentials(
-    mnemonic: walletFormData.mnemonic,
+    mnemonic: walletFormData.mnemonic.stringRepresentation,
     publicInfo: WalletPublicInfo(
       walletId: const Uuid().v4(),
       chainId: walletFormData.walletType.stringVal,

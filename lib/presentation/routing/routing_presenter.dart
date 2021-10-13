@@ -1,5 +1,4 @@
 import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
-import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
@@ -22,10 +21,10 @@ class RoutingPresenter {
       await _appInitializer.init();
     }
     navigator.close();
-    if (_model.wallets.isEmpty) {
-      navigator.openOnboarding(const OnboardingInitialParams());
-    } else {
-      navigator.openWalletsList(const WalletsListInitialParams());
-    }
+    // if (_model.wallets.isEmpty) {
+    navigator.openOnboarding(const OnboardingInitialParams());
+    // } else {
+    //   navigator.openWalletsList(const WalletsListInitialParams());
+    // }
   }
 }

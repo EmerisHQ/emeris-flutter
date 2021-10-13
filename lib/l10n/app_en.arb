@@ -125,5 +125,13 @@
   "backUpLaterAction": "Back up later",
   "backUpNowAction": "Back up now",
   "walletSkipBackupConfirmationTitle": "Back up later",
-  "walletSkipBackupConfirmationMessage": "I understand if I don't back up my wallet, or if I lost my recovery phrase,  I will not be able to access my wallet anymore"
+  "walletSkipBackupConfirmationMessage": "I understand if I don't back up my wallet, or if I lost my recovery phrase,  I will not be able to access my wallet anymore",
+  "recoveryPhraseTitle": "Recovery Phrase",
+  "recoveryPhraseMessage": "Please write down your 12 words in a safe space manually on paper.",
+  "recoveryPhraseCheckbox": "I have backed up my recovery phrase, I understand that if I loose my recovery phrase, I will loose my funds",
+  "copyToClipboardAction": "Copy to clipboard",
+  "copiedToClipboardMessage": "Copied to clipboard",
+  "writeRecoveryPhraseTitle": "Write your recovery phrase",
+  "invalidOrderMessage": "Invalid order",
+  "walletCreatedSuccessMessage": "Your wallet is created"
 }
