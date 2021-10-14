@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>336481090944-ub8gc73slluo4ak6t4kfl6l5t4tf28uc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.336481090944-ub8gc73slluo4ak6t4kfl6l5t4tf28uc</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>336481090944-u75tn3sqm6ov1i4620ppknatno2j8te6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC-kiKnbX5R4_TtgWr4OhwMZnaIEnHGlsw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>336481090944</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.emeris</string>
+	<key>PROJECT_ID</key>
+	<string>emeris-5d513</string>
+	<key>STORAGE_BUCKET</key>
+	<string>emeris-5d513.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:336481090944:ios:e235ddbd7d4e01c8139565</string>
+</dict>
+</plist>

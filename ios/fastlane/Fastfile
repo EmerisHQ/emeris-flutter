@@ -1,0 +1,41 @@
+default_platform(:ios)
+platform :ios do
+  ENV["FLUTTER_BUILD_NUMBER"] = ENV["GITHUB_RUN_NUMBER"] || '123'
+
+  lane :build_development do
+    setup_ci
+    increment_build_number(
+        build_number: ENV["FLUTTER_BUILD_NUMBER"] # set a specific number
+    )
+    puts("Build number: " + ENV["FLUTTER_BUILD_NUMBER"])
+    match(type: "adhoc", readonly: true)
+    build_app(
+        workspace: "Runner.xcworkspace",
+        scheme: "Runner",
+    )
+  end
+
+  lane :deploy_firebase do
+    setup_ci
+    releaseNotes = changelog_from_git_commits(
+        commits_count: 10,
+        date_format: "format:%d %b",
+        pretty: "- (%cd) %s",
+        merge_commit_filtering: "exclude_merges",
+        quiet: true
+    )
+                       .split("\n")
+                       .select do |elem|
+      !elem.include? "skip-ci"
+    end[0 ... 5].join("\n")
+    print("RELEASE NOTES:\n")
+    print(releaseNotes)
+
+    firebase_app_distribution(
+        app: ENV["IOS_FIREBASE_APP_ID"],
+        groups: "ios-testers",
+        release_notes: releaseNotes,
+        firebase_cli_token: ENV["FIREBASE_TOKEN"]
+    )
+  end
+end
