@@ -2,6 +2,7 @@ import 'package:biometric_storage/biometric_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/api_calls/cosmos_wallet_api.dart';
+import 'package:flutter_app/data/api_calls/emeris_backend_api.dart';
 import 'package:flutter_app/data/api_calls/ethereum_wallet_api.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
 import 'package:flutter_app/data/emeris/emeris_balances_repository.dart';
@@ -120,6 +121,10 @@ void _configureRepositories() {
     ],
   );
 
+  getIt.registerFactory<EmerisBackendApi>(
+    () => EmerisBackendApi(getIt(), getIt()),
+  );
+
   getIt.registerFactory<TransactionsRepository>(
     () => EmerisTransactionsRepository(getIt()),
   );
@@ -127,7 +132,7 @@ void _configureRepositories() {
     () => EmerisWalletsRepository(getIt(), getIt()),
   );
   getIt.registerFactory<BalancesRepository>(
-    () => EmerisBalancesRepository(getIt()),
+    () => EmerisBalancesRepository(getIt(), getIt()),
   );
 }
 

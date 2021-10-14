@@ -24,9 +24,10 @@ class PaginatedBalancesJson {
 
   PaginatedList<Balance> toDomain() => PaginatedList(
         list: balances
+            .where((element) => element.verified)
             .map(
               (it) => Balance(
-                denom: Denom(it.denom),
+                denom: Denom(it.baseDenom),
                 amount: Amount.fromString(it.amount),
               ),
             )
@@ -36,20 +37,60 @@ class PaginatedBalancesJson {
 }
 
 class BalanceJson {
-  late String denom;
+  late String address;
+  late String baseDenom;
+  late bool verified;
   late String amount;
+  late String onChain;
+  late Ibc ibc;
 
-  BalanceJson({required this.denom, required this.amount});
+  BalanceJson({
+    required this.address,
+    required this.baseDenom,
+    required this.verified,
+    required this.amount,
+    required this.onChain,
+    required this.ibc,
+  });
 
   BalanceJson.fromJson(Map<String, dynamic> json) {
-    denom = json['denom'] as String;
-    amount = json['amount'] as String;
+    address = json['address'] as String? ?? '';
+    baseDenom = json['base_denom'] as String? ?? '';
+    verified = json['verified'] as bool? ?? false;
+    amount = json['amount'] as String? ?? '';
+    onChain = json['on_chain'] as String? ?? '';
+    if (json['ibc'] != null) {
+      ibc = Ibc.fromJson(json['ibc'] as Map<String, dynamic>);
+    }
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['denom'] = denom;
+    data['address'] = address;
+    data['base_denom'] = baseDenom;
+    data['verified'] = verified;
     data['amount'] = amount;
+    data['on_chain'] = onChain;
+    data['ibc'] = ibc.toJson();
+    return data;
+  }
+}
+
+class Ibc {
+  late String path;
+  late String hash;
+
+  Ibc({required this.path, required this.hash});
+
+  Ibc.fromJson(Map<String, dynamic> json) {
+    path = json['path'] as String? ?? '';
+    hash = json['hash'] as String? ?? '';
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['path'] = path;
+    data['hash'] = hash;
     return data;
   }
 }

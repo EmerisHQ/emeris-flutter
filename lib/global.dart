@@ -5,6 +5,7 @@ class BaseEnv {
   late NetworkInfo _networkInfo;
   late String _baseApiUrl;
   late String _baseEthUrl;
+  late String _emerisBackendApiUrl;
 
   void setEnv({
     required String lcdUrl,
@@ -12,6 +13,7 @@ class BaseEnv {
     required String lcdPort,
     required String grpcPort,
     required String ethUrl,
+    required String emerisUrl,
   }) {
     _networkInfo = NetworkInfo(
       bech32Hrp: 'cosmos',
@@ -20,6 +22,7 @@ class BaseEnv {
     );
     _baseApiUrl = "$lcdUrl:$lcdPort";
     _baseEthUrl = ethUrl;
+    _emerisBackendApiUrl = emerisUrl;
   }
 
   NetworkInfo get networkInfo => _networkInfo;
@@ -27,6 +30,8 @@ class BaseEnv {
   String get baseApiUrl => _baseApiUrl;
 
   String get baseEthUrl => _baseEthUrl;
+
+  String get emerisBackendApiUrl => _emerisBackendApiUrl;
 }
 
 abstract class SharedPreferencesKeys {
