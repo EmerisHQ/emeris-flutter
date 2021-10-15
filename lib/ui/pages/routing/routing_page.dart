@@ -33,7 +33,7 @@ class _RoutingPageState extends State<RoutingPage> {
           param2: getIt<RoutingNavigator>(),
         );
     presenter.navigator.context = context;
-    presenter.init();
+    WidgetsBinding.instance?.addPostFrameCallback((_) => presenter.init());
   }
 
   @override

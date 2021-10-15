@@ -18,7 +18,8 @@ Future<Either<AddWalletFailure, EmerisWallet>> importAlanWallet(
 ) async {
   final alan.Wallet wallet;
   try {
-    wallet = alan.Wallet.derive(walletFormData.mnemonic.split(" "), baseEnv.networkInfo);
+    final words = walletFormData.mnemonic.words.map((e) => e.word).toList();
+    wallet = alan.Wallet.derive(words, baseEnv.networkInfo);
   } catch (e) {
     return left(AddWalletFailure.invalidMnemonic(e));
   }
@@ -29,7 +30,7 @@ Future<Either<AddWalletFailure, EmerisWallet>> importAlanWallet(
       name: walletFormData.name,
       publicAddress: wallet.bech32Address,
     ),
-    mnemonic: walletFormData.mnemonic,
+    mnemonic: walletFormData.mnemonic.stringRepresentation,
     networkInfo: baseEnv.networkInfo,
   );
   final result = await signingGateway.storeWalletCredentials(

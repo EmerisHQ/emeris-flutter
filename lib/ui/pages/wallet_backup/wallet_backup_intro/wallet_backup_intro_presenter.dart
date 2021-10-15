@@ -18,7 +18,16 @@ class WalletBackupIntroPresenter {
 
   void onTapCloudBackup() => navigator.openWalletCloudBackup(const WalletCloudBackupInitialParams());
 
-  void onTapManualBackup() => navigator.openWalletManualBackup(const WalletManualBackupInitialParams());
+  Future<void> onTapManualBackup() async {
+    final result = await navigator.openWalletManualBackup(
+      WalletManualBackupInitialParams(
+        mnemonic: _model.mnemonic,
+      ),
+    );
+    if (result == true) {
+      navigator.openRouting(const RoutingInitialParams());
+    }
+  }
 
   Future<void> onTapBackupLater() async {
     final decision = await navigator.openBackupLaterConfirmation();

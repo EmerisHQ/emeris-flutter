@@ -23,7 +23,7 @@ class WelcomeSplash extends StatelessWidget {
           strings.welcomeToEmerisTitle,
           style: Theme.of(context).textTheme.headline4,
         ),
-        const SizedBox(height: CosmosAppTheme.spacingL),
+        const Spacer(),
         Text(
           strings.splashLargeTitle,
           textAlign: TextAlign.center,

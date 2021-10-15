@@ -3,6 +3,7 @@ import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/passcode.dart';
+import 'package:flutter_app/domain/model/mnemonic.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
@@ -53,10 +54,15 @@ class OnboardingPresenter {
       return;
     }
     navigator.close();
-    navigator.openWalletBackup(WalletBackupIntroInitialParams(wallet: wallet));
+    navigator.openWalletBackup(
+      WalletBackupIntroInitialParams(
+        wallet: wallet,
+        mnemonic: mnemonic,
+      ),
+    );
   }
 
-  Future<EmerisWallet?> _importWallet(String mnemonic, String name, Passcode passcode) {
+  Future<EmerisWallet?> _importWallet(Mnemonic mnemonic, String name, Passcode passcode) {
     final future = _importWalletUseCase.execute(
       walletFormData: ImportWalletFormData(
         mnemonic: mnemonic,
@@ -82,8 +88,8 @@ class OnboardingPresenter {
     return name;
   }
 
-  Future<String?> _generateMnemonic() async =>
-      _model.generateMnemonicFuture = _generateMnemonicUseCase.execute().observableAsyncFold<String?>(
+  Future<Mnemonic?> _generateMnemonic() async =>
+      _model.generateMnemonicFuture = _generateMnemonicUseCase.execute().observableAsyncFold<Mnemonic?>(
         (fail) {
           navigator.showError(fail.displayableFailure());
           return null;
