@@ -34,9 +34,6 @@ import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dar
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_navigator.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presenter.dart';
-import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_navigator.dart';
-import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_presentation_model.dart';
-import 'package:flutter_app/ui/pages/mnemonic/password_generation/password_generation_presenter.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
@@ -60,6 +57,7 @@ import 'package:flutter_app/ui/pages/wallet_password_retriever/biometric_wallet_
 import 'package:flutter_app/ui/pages/wallet_password_retriever/user_prompt_wallet_password_retriever.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
+import 'package:flutter_app/utils/clipboard_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:transaction_signing_gateway/alan/alan_transaction_broadcaster.dart';
@@ -165,6 +163,9 @@ void _configureGeneralDependencies() {
   getIt.registerFactory<AppInitializer>(
     () => AppInitializer(getIt(), getIt()),
   );
+  getIt.registerFactory<ClipboardManager>(
+    () => ClipboardManager(),
+  );
 }
 
 void _configureUseCases() {
@@ -197,12 +198,6 @@ void _configureMvp() {
   );
   getIt.registerFactory<WalletDetailsNavigator>(
     () => WalletDetailsNavigator(getIt()),
-  );
-  getIt.registerFactoryParam<PasswordGenerationPresenter, PasswordGenerationPresentationModel, dynamic>(
-    (_model, _) => PasswordGenerationPresenter(_model, getIt(), getIt()),
-  );
-  getIt.registerFactory<PasswordGenerationNavigator>(
-    () => PasswordGenerationNavigator(getIt()),
   );
   getIt.registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
     (_model, _) => SendMoneyPresenter(_model, getIt(), getIt()),
@@ -249,7 +244,7 @@ void _configureMvp() {
   );
 
   getIt.registerFactoryParam<WalletManualBackupPresenter, WalletManualBackupPresentationModel, dynamic>(
-    (_model, _) => WalletManualBackupPresenter(_model, getIt()),
+    (_model, _) => WalletManualBackupPresenter(_model, getIt(), getIt()),
   );
   getIt.registerFactory<WalletManualBackupNavigator>(
     () => WalletManualBackupNavigator(getIt()),

@@ -1,11 +1,12 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/domain/model/failures/generate_mnemonic_failure.dart';
+import 'package:flutter_app/domain/model/mnemonic.dart';
 
 class GenerateMnemonicUseCase {
-  Future<Either<GenerateMnemonicFailure, String>> execute() async {
+  Future<Either<GenerateMnemonicFailure, Mnemonic>> execute() async {
     try {
-      return right(await generateMnemonic());
+      return right(Mnemonic.fromString(await generateMnemonic()));
     } catch (ex, stack) {
       logError(ex, stack);
       return left(const GenerateMnemonicFailure.unknown());

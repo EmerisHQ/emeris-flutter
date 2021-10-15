@@ -4,11 +4,10 @@ import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
-import 'package:flutter_app/ui/pages/add_wallet/add_wallet_bottom_sheet.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_page.dart';
 
-class WalletsListNavigator with NoRoutes, AddWalletRoute, ErrorDialogRoute, WalletDetailsRoute {
+class WalletsListNavigator with NoRoutes, ErrorDialogRoute, WalletDetailsRoute {
   @override
   late BuildContext context;
   @override

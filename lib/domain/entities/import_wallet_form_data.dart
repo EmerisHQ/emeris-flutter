@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:flutter_app/domain/model/mnemonic.dart';
 
 class ImportWalletFormData extends Equatable {
-  final String mnemonic;
+  final Mnemonic mnemonic;
   final String name;
   final String password;
   final WalletType walletType;
@@ -23,7 +24,7 @@ class ImportWalletFormData extends Equatable {
       ];
 
   ImportWalletFormData copyWith({
-    String? mnemonic,
+    Mnemonic? mnemonic,
     String? name,
     String? password,
     WalletType? walletType,

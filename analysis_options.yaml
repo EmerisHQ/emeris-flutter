@@ -41,6 +41,7 @@ analyzer:
     missing_enum_constant_in_switch: error
     prefer_const_constructors: error
     depend_on_referenced_packages: ignore
+    use_setters_to_change_properties: ignore
 
 linter:
   rules:
