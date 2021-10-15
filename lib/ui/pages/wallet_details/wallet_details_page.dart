@@ -74,7 +74,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    children: model.balanceList.list
+                    children: model.balanceList
                         .map(
                           (balance) => BalanceCard(
                             data: balance,

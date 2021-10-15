@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_app/data/alan/actions/get_alan_balances.dart';
 import 'package:flutter_app/data/alan/actions/import_alan_wallet.dart';
 import 'package:flutter_app/data/alan/alan_transaction.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
@@ -22,17 +21,16 @@ import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 
 class CosmosWalletApi implements WalletApi {
   final TransactionSigningGateway _signingGateway;
-  final Dio _dio;
   final BaseEnv _baseEnv;
 
-  CosmosWalletApi(this._signingGateway, this._dio, this._baseEnv);
+  CosmosWalletApi(this._signingGateway, this._baseEnv);
 
   @override
   WalletType get walletType => WalletType.Cosmos;
 
   @override
   Future<Either<GeneralFailure, PaginatedList<Balance>>> getWalletBalances(String walletAddress) async =>
-      getAlanBalances(_baseEnv, _dio, walletAddress);
+      left(GeneralFailure.unknown('Moved to Emeris Backend Repository'));
 
   @override
   Future<Either<AddWalletFailure, EmerisWallet>> importWallet(

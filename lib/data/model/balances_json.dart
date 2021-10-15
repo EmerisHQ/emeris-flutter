@@ -1,40 +1,6 @@
-import 'package:flutter_app/data/model/emeris_pagination.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/paginated_list.dart';
-
-class PaginatedBalancesJson {
-  late List<BalanceJson> balances;
-  late EmerisPagination pagination;
-
-  PaginatedBalancesJson({required this.balances, required this.pagination});
-
-  PaginatedBalancesJson.fromJson(Map<String, dynamic> json) {
-    balances = <BalanceJson>[];
-    if (json['balances'] != null) {
-      if ((json['balances'] as List).isNotEmpty) {
-        json['balances'].forEach((v) {
-          balances.add(BalanceJson.fromJson(v as Map<String, dynamic>));
-        });
-      }
-    }
-    pagination = EmerisPagination.fromJson(json['pagination'] as Map<String, dynamic>);
-  }
-
-  PaginatedList<Balance> toDomain() => PaginatedList(
-        list: balances
-            .where((element) => element.verified)
-            .map(
-              (it) => Balance(
-                denom: Denom(it.baseDenom),
-                amount: Amount.fromString(it.amount),
-              ),
-            )
-            .toList(),
-        pagination: pagination,
-      );
-}
 
 class BalanceJson {
   late String address;
@@ -63,6 +29,16 @@ class BalanceJson {
       ibc = Ibc.fromJson(json['ibc'] as Map<String, dynamic>);
     }
   }
+
+  List<Balance> toDomain(List<BalanceJson> balances) => balances
+      .where((element) => element.verified)
+      .map(
+        (it) => Balance(
+          denom: Denom(it.baseDenom),
+          amount: Amount.fromString(it.amount.replaceAll(it.baseDenom, '')),
+        ),
+      )
+      .toList();
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

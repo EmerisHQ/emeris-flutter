@@ -116,7 +116,7 @@ void _configureTransactionSigningGateway() {
 void _configureRepositories() {
   getIt.registerFactory<List<WalletApi>>(
     () => [
-      CosmosWalletApi(getIt(), getIt(), getIt()),
+      CosmosWalletApi(getIt(), getIt()),
       EthereumWalletApi(getIt(), getIt()),
     ],
   );
@@ -132,7 +132,7 @@ void _configureRepositories() {
     () => EmerisWalletsRepository(getIt(), getIt()),
   );
   getIt.registerFactory<BalancesRepository>(
-    () => EmerisBalancesRepository(getIt(), getIt()),
+    () => EmerisBalancesRepository(getIt()),
   );
 }
 
