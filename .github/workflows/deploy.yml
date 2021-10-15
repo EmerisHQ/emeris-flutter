@@ -3,32 +3,43 @@ name: Flutter Web
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
+env:
+  FLUTTER_VERSION: '2.5.1'
+  JAVA_VERSION: '12'
+  RUBY_VERSION: '2.7'
+  LC_ALL: en_US.UTF-8
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
+  ANDROID_FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
+  LANG: en_US.UTF-8
+
 jobs:
-  build:
-    timeout-minutes: 10
-    runs-on: macos-latest
+  build-android:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '2.5.1'
-    - run: flutter config --enable-web
-    - run: flutter build web --dart-define=LCD_URL=api.testnet.cosmos.network --dart-define=LCD_PORT=443 --dart-define=GRPC_URL=grpc.testnet.cosmos.network --dart-define=GRPC_PORT=443
-    - name: Deploy to Netlify
-      uses: nwtgck/actions-netlify@v1.1
-      with:
-        publish-dir: './build/web'
-        production-branch: main
-        github-token: $
-        deploy-message: "Deploy from GitHub Actions"
-        enable-pull-request-comment: false
-        enable-commit-comment: true
-        overwrites-pull-request-comment: true
-      env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.netlify_auth_token }}
-        NETLIFY_SITE_ID: ${{ secrets.netlify_site_id }}
-      timeout-minutes: 1
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+      - name: pub get
+        run: flutter pub get
+
+      - name: build Android app
+        timeout-minutes: 10
+        run: flutter build apk --profile --build-number $GITHUB_RUN_NUMBER
+
+      - name: set up ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+
+      - name: deploy firebase Android
+        working-directory: ./android
+        run: |
+          gem install bundler
+          bundle install
+          bundle exec fastlane deploy_firebase
+
