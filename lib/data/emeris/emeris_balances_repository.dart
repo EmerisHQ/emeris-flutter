@@ -1,3 +1,4 @@
+import 'package:cosmos_utils/address_parser.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/api_calls/emeris_backend_api.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
@@ -10,9 +11,7 @@ class EmerisBalancesRepository implements BalancesRepository {
 
   EmerisBalancesRepository(this._emerisBackendApi);
 
-  /// TODO: Convert the wallet address to hex code first before sending.
-  /// Hardcoding for now to get some data on screen.
   @override
   Future<Either<GeneralFailure, List<Balance>>> getBalances(EmerisWallet walletData) async =>
-      _emerisBackendApi.getWalletBalances('7ee143fd1d91345128da542f27ccd8d0e3d78fc0');
+      _emerisBackendApi.getWalletBalances(bech32ToHex(walletData.walletDetails.walletAddress));
 }
