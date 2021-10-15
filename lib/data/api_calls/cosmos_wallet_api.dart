@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_app/data/alan/actions/import_alan_wallet.dart';
 import 'package:flutter_app/data/alan/alan_transaction.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
