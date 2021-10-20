@@ -1,4 +1,5 @@
 import 'package:flutter_app/data/model/data_json.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
 
 class PricesDataJson {
   late DataJson data;
@@ -15,11 +16,14 @@ class PricesDataJson {
     status = json['status'] as int? ?? -1;
   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['data'] = this.data.toJson();
-    data['message'] = message;
-    data['status'] = status;
-    return data;
+  PricesDomain toDomain(PricesDataJson model) {
+    return PricesDomain(
+      data: DataDomain(
+        fiats: model.data.fiats.map((e) => FiatsDomain(symbol: e.symbol, price: e.price)).toList(),
+        tokens: model.data.tokens.map((e) => TokensDomain(symbol: e.symbol, price: e.price, supply: e.supply)).toList(),
+      ),
+      message: model.message,
+      status: model.status,
+    );
   }
 }

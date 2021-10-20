@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cosmos_utils/extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/api_calls/emeris_backend_api.dart';
+import 'package:flutter_app/data/ibc/rest_api_ibc_repository.dart';
 import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/trace_json.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
@@ -22,9 +22,9 @@ import 'package:flutter_app/ibc/model/transfer_chain_amount.dart';
 import 'package:flutter_app/ibc/model/transfer_step.dart';
 
 class ActionHandler {
-  final EmerisBackendApi _emerisBackendApi;
+  final RestApiIbcRepository _restApiIbcRepository;
 
-  const ActionHandler(this._emerisBackendApi);
+  const ActionHandler(this._restApiIbcRepository);
 
   /// This function has multiple steps to redeem the IBC token
   /// First: If the IBC denom is native, directly return the [ChainAmount] with the same values
@@ -36,7 +36,7 @@ class ActionHandler {
       return right(ChainAmount(output: Output(balance: balance, chainId: chainId)));
     } else {
       // Else get the trace for this IBC denom
-      return _emerisBackendApi
+      return _restApiIbcRepository
           .verifyTrace(chainId, balance.denom.text.split('/')[1])
           .mapError((fail) => RedeemFailure.verifyTraceError(fail))
           .flatMap(
@@ -64,7 +64,7 @@ class ActionHandler {
         denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
       ),
       baseDenom: Denom(
-        await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _emerisBackendApi),
+        await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _restApiIbcRepository),
       ),
       fromChain: hop.chainName,
       toChain: hop.counterpartyName,
@@ -87,8 +87,8 @@ class ActionHandler {
       if (ibcTransferRecipient.chainId == ibcTransferRecipient.destinationChainId) {
         return addTransferStep(steps, ibcTransferRecipient, balance, output, mustAddFee: mustAddFee);
       } else {
-        if (await isVerified(balance.denom, ibcTransferRecipient.chainId, _emerisBackendApi)) {
-          final primaryChannelTrace = await _emerisBackendApi.getPrimaryChannel(
+        if (await isVerified(balance.denom, ibcTransferRecipient.chainId, _restApiIbcRepository)) {
+          final primaryChannelTrace = await _restApiIbcRepository.getPrimaryChannel(
             chainId: ibcTransferRecipient.chainId,
             destinationChainId: ibcTransferRecipient.destinationChainId,
           );
@@ -107,12 +107,12 @@ class ActionHandler {
       }
     }
     final verifyTraceEither =
-        await _emerisBackendApi.verifyTrace(ibcTransferRecipient.chainId, balance.denom.text.split('/')[1]);
+        await _restApiIbcRepository.verifyTrace(ibcTransferRecipient.chainId, balance.denom.text.split('/')[1]);
     return verifyTraceEither.fold(
       (l) => left(TransferFailure.verifyTraceError(l.cause)),
       (verifyTrace) async {
         if (_isSingleSameChain(verifyTrace, ibcTransferRecipient)) {
-          final primaryChannelEither = await _emerisBackendApi.getPrimaryChannel(
+          final primaryChannelEither = await _restApiIbcRepository.getPrimaryChannel(
             chainId: ibcTransferRecipient.chainId,
             destinationChainId: verifyTrace.trace[0].counterpartyName,
           );
@@ -129,10 +129,11 @@ class ActionHandler {
                     status: TransferStatus.Pending,
                     balance: balance,
                     addFee: true,
-                    feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _emerisBackendApi),
+                    feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
                     fromChain: ibcTransferRecipient.chainId,
-                    baseDenom:
-                        Denom(await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _emerisBackendApi)),
+                    baseDenom: Denom(
+                      await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
+                    ),
                     toChain: verifyTrace.trace[0].counterpartyName,
                     through: verifyTrace.trace[0].channel,
                   ),
@@ -143,7 +144,7 @@ class ActionHandler {
                     status: TransferStatus.Pending,
                     balance: balance,
                     fromChain: ibcTransferRecipient.chainId,
-                    chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _emerisBackendApi),
+                    chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
                     toChain: ibcTransferRecipient.destinationChainId,
                     through: primaryChannelResult.channelName,
                   ),
@@ -169,8 +170,9 @@ class ActionHandler {
                   status: TransferStatus.Pending,
                   balance: balance,
                   fromChain: ibcTransferRecipient.chainId,
-                  baseDenom:
-                      Denom(await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _emerisBackendApi)),
+                  baseDenom: Denom(
+                    await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
+                  ),
                   toChain: verifyTrace.trace[0].counterpartyName,
                   through: verifyTrace.trace[0].channel,
                 ),
@@ -182,16 +184,17 @@ class ActionHandler {
                   name: 'ibc_backward',
                   status: TransferStatus.Pending,
                   addFee: true,
-                  feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _emerisBackendApi),
+                  feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
                   balance: balance,
                   fromChain: ibcTransferRecipient.chainId,
-                  baseDenom:
-                      Denom(await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _emerisBackendApi)),
+                  baseDenom: Denom(
+                    await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
+                  ),
                   toChain: verifyTrace.trace[0].counterpartyName,
                   through: verifyTrace.trace[0].channel,
                 ),
               );
-              final primaryChannelEither = await _emerisBackendApi.getPrimaryChannel(
+              final primaryChannelEither = await _restApiIbcRepository.getPrimaryChannel(
                 chainId: verifyTrace.trace[0].counterpartyName,
                 destinationChainId: ibcTransferRecipient.destinationChainId,
               );
@@ -204,7 +207,7 @@ class ActionHandler {
                       status: TransferStatus.Pending,
                       balance: balance,
                       fromChain: verifyTrace.trace[0].counterpartyName,
-                      chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _emerisBackendApi),
+                      chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
                       toChain: ibcTransferRecipient.destinationChainId,
                       through: primaryChannelResult.channelName,
                     ),
@@ -235,7 +238,7 @@ class ActionHandler {
   }) async {
     var feeForChain = <FeeWithDenom>[];
     try {
-      feeForChain = await getFeeForChain(ibcTransferRecipient.chainId, _emerisBackendApi);
+      feeForChain = await getFeeForChain(ibcTransferRecipient.chainId, _restApiIbcRepository);
     } catch (ex) {
       return left(TransferFailure.feeChainError(ex));
     }
@@ -321,9 +324,9 @@ String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
   return 'ibc/${sha256.convert(utf8.encode(newPath)).toString().toUpperCase()}';
 }
 
-Future<bool> isVerified(Denom denom, String chainId, EmerisBackendApi ibcApi) async {
+Future<bool> isVerified(Denom denom, String chainId, RestApiIbcRepository ibcRepository) async {
   late bool isVerified;
-  final verifiedDenoms = await ibcApi.getVerifiedDenoms();
+  final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
   verifiedDenoms.fold<Future?>((l) => throw 'Could not fetch verified denoms', (r) {
     try {
       isVerified = r.firstWhere((element) => element.name == chainId).verified;
@@ -335,8 +338,8 @@ Future<bool> isVerified(Denom denom, String chainId, EmerisBackendApi ibcApi) as
   return isVerified;
 }
 
-Future<List<FeeWithDenom>> getFeeForChain(String chainId, EmerisBackendApi ibcApi) async {
-  final chainDetails = await ibcApi.getChainDetails(chainId);
+Future<List<FeeWithDenom>> getFeeForChain(String chainId, RestApiIbcRepository ibcRepository) async {
+  final chainDetails = await ibcRepository.getChainDetails(chainId);
   final fees = <FeeWithDenom>[];
 
   chainDetails.fold<Future?>((l) => throw 'Could not get chain details', (r) {
@@ -354,10 +357,10 @@ Future<List<FeeWithDenom>> getFeeForChain(String chainId, EmerisBackendApi ibcAp
   return fees;
 }
 
-Future<String> getBaseDenom(String denom, String? chainId, EmerisBackendApi ibcApi) async {
+Future<String> getBaseDenom(String denom, String? chainId, RestApiIbcRepository ibcRepository) async {
   const cosmosHubChainId = 'cosmos-hub';
   final finalChainName = chainId ?? cosmosHubChainId;
-  final verifiedDenoms = await ibcApi.getVerifiedDenoms();
+  final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
 
   verifiedDenoms.fold<Future?>((l) => throw 'Could not get verified denoms', (r) async {
     VerifiedDenomJson? denomFound;
@@ -383,7 +386,7 @@ Future<String> getBaseDenom(String denom, String? chainId, EmerisBackendApi ibcA
   }
 
   VerifyTraceJson? verifyTrace;
-  final traceEither = await ibcApi.verifyTrace(finalChainName, denomHash);
+  final traceEither = await ibcRepository.verifyTrace(finalChainName, denomHash);
   traceEither.fold<Future?>((l) => null, (r) {
     verifyTrace = r;
   });

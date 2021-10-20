@@ -2,17 +2,17 @@ import 'package:biometric_storage/biometric_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/api_calls/cosmos_wallet_api.dart';
-import 'package:flutter_app/data/api_calls/emeris_backend_api.dart';
 import 'package:flutter_app/data/api_calls/ethereum_wallet_api.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
-import 'package:flutter_app/data/emeris/emeris_balances_repository.dart';
+import 'package:flutter_app/data/emeris/emeris_bank_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_transactions_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_wallets_repository.dart';
 import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
 import 'package:flutter_app/data/http/dio_builder.dart';
+import 'package:flutter_app/data/ibc/rest_api_ibc_repository.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
-import 'package:flutter_app/domain/repositories/balances_repository.dart';
+import 'package:flutter_app/domain/repositories/bank_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
@@ -119,8 +119,8 @@ void _configureRepositories() {
     ],
   );
 
-  getIt.registerFactory<EmerisBackendApi>(
-    () => EmerisBackendApi(getIt(), getIt()),
+  getIt.registerFactory<RestApiIbcRepository>(
+    () => RestApiIbcRepository(getIt(), getIt()),
   );
 
   getIt.registerFactory<TransactionsRepository>(
@@ -129,8 +129,8 @@ void _configureRepositories() {
   getIt.registerFactory<WalletsRepository>(
     () => EmerisWalletsRepository(getIt(), getIt()),
   );
-  getIt.registerFactory<BalancesRepository>(
-    () => EmerisBalancesRepository(getIt()),
+  getIt.registerFactory<BankRepository>(
+    () => EmerisBankRepository(getIt(), getIt()),
   );
 }
 
