@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_app/data/model/balances_json.dart';
 import 'package:flutter_app/data/model/chain_json.dart';
+import 'package:flutter_app/data/model/prices_data_json.dart';
 import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/global.dart';
 
 class EmerisBackendApi {
@@ -43,8 +45,7 @@ class EmerisBackendApi {
     required String destinationChainId,
   }) async {
     try {
-      final response =
-          await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/primary_channel/$destinationChainId');
+      final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/primary_channel/$destinationChainId');
       return right(PrimaryChannelJson.fromJson((response.data as Map)['primary_channel'] as Map<String, dynamic>));
     } catch (ex, stack) {
       return left(GeneralFailure.unknown("error while getting primary channel", ex, stack));
@@ -60,15 +61,7 @@ class EmerisBackendApi {
     }
   }
 
-  Future<Either<GeneralFailure, List<Balance>>> getWalletBalances(String walletAddress) async {
-    final uri = '${_baseEnv.emerisBackendApiUrl}/v1/account/$walletAddress/balance';
-    final response = await _dio.get(uri);
-    final map = response.data as Map<String, dynamic>;
-    final list = map['balances'] as List;
-    return right(_toDomain(list));
-  }
-
-  List<Balance> _toDomain(List<dynamic> list) {
+  List<Balance> _toBalancesDomain(List<dynamic> list) {
     return list
         .map((e) => BalanceJson.fromJson(e as Map<String, dynamic>))
         .where((element) => element.verified)
@@ -79,5 +72,32 @@ class EmerisBackendApi {
           ),
         )
         .toList();
+  }
+
+  Future<Either<GeneralFailure, List<Balance>>> getWalletBalances(String walletAddress) async {
+    final uri = '${_baseEnv.emerisBackendApiUrl}/v1/account/$walletAddress/balance';
+    final response = await _dio.get(uri);
+    final map = response.data as Map<String, dynamic>;
+    final list = map['balances'] as List;
+    return right(_toBalancesDomain(list));
+  }
+
+  Future<Either<GeneralFailure, PricesDomain>> getPricesData() async {
+    final uri = '${_baseEnv.emerisBackendApiUrl}/v1/oracle/prices';
+    final response = await _dio.get(uri);
+    final map = response.data as Map<String, dynamic>;
+    final model = PricesDataJson.fromJson(map);
+    return right(_toPricesDomain(model));
+  }
+
+  PricesDomain _toPricesDomain(PricesDataJson model) {
+    return PricesDomain(
+      data: DataDomain(
+        fiats: model.data.fiats.map((e) => FiatsDomain(symbol: e.symbol, price: e.price)).toList(),
+        tokens: model.data.tokens.map((e) => TokensDomain(symbol: e.symbol, price: e.price, supply: e.supply)).toList(),
+      ),
+      message: model.message,
+      status: model.status,
+    );
   }
 }
