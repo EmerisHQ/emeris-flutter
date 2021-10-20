@@ -5,9 +5,7 @@ import 'package:flutter_app/data/model/chain_json.dart';
 import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/global.dart';
 
@@ -43,8 +41,7 @@ class EmerisBackendApi {
     required String destinationChainId,
   }) async {
     try {
-      final response =
-          await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/primary_channel/$destinationChainId');
+      final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/primary_channel/$destinationChainId');
       return right(PrimaryChannelJson.fromJson((response.data as Map)['primary_channel'] as Map<String, dynamic>));
     } catch (ex, stack) {
       return left(GeneralFailure.unknown("error while getting primary channel", ex, stack));
@@ -65,19 +62,8 @@ class EmerisBackendApi {
     final response = await _dio.get(uri);
     final map = response.data as Map<String, dynamic>;
     final list = map['balances'] as List;
-    return right(_toDomain(list));
-  }
-
-  List<Balance> _toDomain(List<dynamic> list) {
-    return list
-        .map((e) => BalanceJson.fromJson(e as Map<String, dynamic>))
-        .where((element) => element.verified)
-        .map(
-          (it) => Balance(
-            denom: Denom(it.baseDenom),
-            amount: Amount.fromString(it.amount.split('/')[0].replaceAll(it.baseDenom, '').replaceAll('ibc', '')),
-          ),
-        )
-        .toList();
+    return right(
+      list.map((e) => BalanceJson.fromJson(e as Map<String, dynamic>)).toList().where((element) => element.verified).map((e) => e.toDomain(e)).toList(),
+    );
   }
 }
