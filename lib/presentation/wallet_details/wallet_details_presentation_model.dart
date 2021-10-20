@@ -5,7 +5,7 @@ abstract class WalletDetailsViewModel {
 
   bool get isSendMoneyLoading;
 
-  PaginatedList<Balance> get balanceList;
+  List<Balance> get balanceList;
 }
 
 class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase implements WalletDetailsViewModel {
@@ -15,13 +15,13 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
     this.initialParams,
   );
 
-  ObservableFuture<Either<GeneralFailure, PaginatedList<Balance>>>? get getWalletBalancesFuture =>
+  ObservableFuture<Either<GeneralFailure, List<Balance>>>? get getWalletBalancesFuture =>
       _getWalletBalancesFuture.value;
 
   ObservableFuture<Either<AddWalletFailure, Unit>>? get sendMoneyFuture => _sendMoneyFuture.value;
 
   @override
-  PaginatedList<Balance> get balanceList => _balanceList.value;
+  List<Balance> get balanceList => _balanceList.value;
 
   @override
   bool get isLoading => isFutureInProgress(getWalletBalancesFuture);
@@ -31,7 +31,7 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
 }
 
 abstract class WalletDetailsPresentationModelBase {
-  final Observable<ObservableFuture<Either<GeneralFailure, PaginatedList<Balance>>>?> _getWalletBalancesFuture =
+  final Observable<ObservableFuture<Either<GeneralFailure, List<Balance>>>?> _getWalletBalancesFuture =
       Observable(null);
 
   final Observable<ObservableFuture<Either<AddWalletFailure, Unit>>?> _sendMoneyFuture = Observable(null);
@@ -39,11 +39,10 @@ abstract class WalletDetailsPresentationModelBase {
   set sendMoneyFuture(ObservableFuture<Either<AddWalletFailure, Unit>>? value) =>
       Action(() => _sendMoneyFuture.value = value)();
 
-  set getWalletBalancesFuture(ObservableFuture<Either<GeneralFailure, PaginatedList<Balance>>>? value) =>
+  set getWalletBalancesFuture(ObservableFuture<Either<GeneralFailure, List<Balance>>>? value) =>
       Action(() => _getWalletBalancesFuture.value = value)();
 
-  final Observable<PaginatedList<Balance>> _balanceList =
-      Observable(PaginatedList<Balance>(pagination: BalancePagination(), list: const []));
+  final Observable<List<Balance>> _balanceList = Observable(<Balance>[]);
 
-  set balanceList(PaginatedList<Balance> value) => Action(() => _balanceList.value = value)();
+  set balanceList(List<Balance> value) => Action(() => _balanceList.value = value)();
 }

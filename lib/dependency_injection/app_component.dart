@@ -2,6 +2,7 @@ import 'package:biometric_storage/biometric_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/api_calls/cosmos_wallet_api.dart';
+import 'package:flutter_app/data/api_calls/emeris_backend_api.dart';
 import 'package:flutter_app/data/api_calls/ethereum_wallet_api.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
 import 'package:flutter_app/data/emeris/emeris_balances_repository.dart';
@@ -113,9 +114,13 @@ void _configureTransactionSigningGateway() {
 void _configureRepositories() {
   getIt.registerFactory<List<WalletApi>>(
     () => [
-      CosmosWalletApi(getIt(), getIt(), getIt()),
+      CosmosWalletApi(getIt(), getIt()),
       EthereumWalletApi(getIt(), getIt()),
     ],
+  );
+
+  getIt.registerFactory<EmerisBackendApi>(
+    () => EmerisBackendApi(getIt(), getIt()),
   );
 
   getIt.registerFactory<TransactionsRepository>(

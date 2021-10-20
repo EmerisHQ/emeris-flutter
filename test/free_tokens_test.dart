@@ -5,6 +5,6 @@ void main() {
   final faucetApi = FaucetApi();
 
   test('Get free tokens', () async {
-    await faucetApi.getFreeTokens('cosmos1xfmuh3p44lu0ef6v3n8zkn8luln40p5cyxh52j');
+    await faucetApi.getFreeTokens('cosmos1eena90vsrqf8vgm2z8m7mrjnr3vc4tjtas8tj4');
   });
 }

@@ -9,6 +9,7 @@ void main() {
   const lcdUrl = String.fromEnvironment('LCD_URL', defaultValue: 'http://localhost');
   const grpcUrl = String.fromEnvironment('GRPC_URL', defaultValue: 'http://localhost');
   const ethUrl = String.fromEnvironment('ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
+  const emerisUrl = String.fromEnvironment('EMERIS_URL', defaultValue: 'https://dev.demeris.io');
 
   final baseEnv = BaseEnv()
     ..setEnv(
@@ -17,6 +18,7 @@ void main() {
       lcdPort: lcdPort,
       grpcPort: grpcPort,
       ethUrl: ethUrl,
+      emerisUrl: emerisUrl,
     );
   configureDependencies(baseEnv);
   runApp(EmerisApp());

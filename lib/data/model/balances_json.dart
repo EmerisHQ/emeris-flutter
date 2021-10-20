@@ -1,55 +1,38 @@
-import 'package:flutter_app/data/model/emeris_pagination.dart';
+import 'package:flutter_app/data/model/ibc_json.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/paginated_list.dart';
-
-class PaginatedBalancesJson {
-  late List<BalanceJson> balances;
-  late EmerisPagination pagination;
-
-  PaginatedBalancesJson({required this.balances, required this.pagination});
-
-  PaginatedBalancesJson.fromJson(Map<String, dynamic> json) {
-    balances = <BalanceJson>[];
-    if (json['balances'] != null) {
-      if ((json['balances'] as List).isNotEmpty) {
-        json['balances'].forEach((v) {
-          balances.add(BalanceJson.fromJson(v as Map<String, dynamic>));
-        });
-      }
-    }
-    pagination = EmerisPagination.fromJson(json['pagination'] as Map<String, dynamic>);
-  }
-
-  PaginatedList<Balance> toDomain() => PaginatedList(
-        list: balances
-            .map(
-              (it) => Balance(
-                denom: Denom(it.denom),
-                amount: Amount.fromString(it.amount),
-              ),
-            )
-            .toList(),
-        pagination: pagination,
-      );
-}
 
 class BalanceJson {
-  late String denom;
+  late String address;
+  late String baseDenom;
+  late bool verified;
   late String amount;
+  late String onChain;
+  late IbcJson ibc;
 
-  BalanceJson({required this.denom, required this.amount});
+  BalanceJson({
+    required this.address,
+    required this.baseDenom,
+    required this.verified,
+    required this.amount,
+    required this.onChain,
+    required this.ibc,
+  });
 
   BalanceJson.fromJson(Map<String, dynamic> json) {
-    denom = json['denom'] as String;
-    amount = json['amount'] as String;
+    address = json['address'] as String? ?? '';
+    baseDenom = json['base_denom'] as String? ?? '';
+    verified = json['verified'] as bool? ?? false;
+    amount = json['amount'] as String? ?? '';
+    onChain = json['on_chain'] as String? ?? '';
+    if (json['ibc'] != null) {
+      ibc = IbcJson.fromJson(json['ibc'] as Map<String, dynamic>);
+    }
   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['denom'] = denom;
-    data['amount'] = amount;
-    return data;
-  }
+  Balance toDomain(BalanceJson balance) => Balance(
+        denom: Denom(balance.baseDenom),
+        amount: Amount.fromString(balance.amount.replaceAll(balance.baseDenom, '')),
+      );
 }
