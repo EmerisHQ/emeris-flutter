@@ -41,7 +41,8 @@ class EmerisBackendApi {
     required String destinationChainId,
   }) async {
     try {
-      final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/primary_channel/$destinationChainId');
+      final response =
+          await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/primary_channel/$destinationChainId');
       return right(PrimaryChannelJson.fromJson((response.data as Map)['primary_channel'] as Map<String, dynamic>));
     } catch (ex, stack) {
       return left(GeneralFailure.unknown("error while getting primary channel", ex, stack));
@@ -63,7 +64,12 @@ class EmerisBackendApi {
     final map = response.data as Map<String, dynamic>;
     final list = map['balances'] as List;
     return right(
-      list.map((e) => BalanceJson.fromJson(e as Map<String, dynamic>)).toList().where((element) => element.verified).map((e) => e.toDomain(e)).toList(),
+      list
+          .map((e) => BalanceJson.fromJson(e as Map<String, dynamic>))
+          .toList()
+          .where((element) => element.verified)
+          .map((e) => e.toDomain(e))
+          .toList(),
     );
   }
 }
