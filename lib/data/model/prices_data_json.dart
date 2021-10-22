@@ -15,15 +15,20 @@ class PricesDataJson {
     message = json['message'];
     status = json['status'] as int? ?? -1;
   }
+}
 
-  PricesDomain toDomain(PricesDataJson model) {
+/// TODO: Update [PricesDomain]
+/// The domain needs to be updated according to what the UI requires,
+/// stuff like converted USD values, and per unit price values of the assets.
+extension PricesTranslator on PricesDataJson {
+  PricesDomain toPrices() {
     return PricesDomain(
       data: DataDomain(
-        fiats: model.data.fiats.map((e) => FiatsDomain(symbol: e.symbol, price: e.price)).toList(),
-        tokens: model.data.tokens.map((e) => TokensDomain(symbol: e.symbol, price: e.price, supply: e.supply)).toList(),
+        fiats: data.fiats.map((e) => FiatsDomain(symbol: e.symbol, price: e.price)).toList(),
+        tokens: data.tokens.map((e) => TokensDomain(symbol: e.symbol, price: e.price, supply: e.supply)).toList(),
       ),
-      message: model.message,
-      status: model.status,
+      message: message,
+      status: status,
     );
   }
 }
