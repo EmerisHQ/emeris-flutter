@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
@@ -26,7 +27,7 @@ class WalletDetailsPresenter {
   );
 
   Future<void> getWalletBalances(EmerisWallet walletData) async {
-    _model.getWalletBalancesFuture = _getBalancesUseCase.execute(walletData: walletData).observableDoOn(
+    _model.getAssetDetailsFuture = _getBalancesUseCase.execute(walletData: walletData).observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
           (balances) => _model.balanceList = balances,
         );

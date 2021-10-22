@@ -130,7 +130,7 @@ void _configureRepositories() {
     () => EmerisWalletsRepository(getIt(), getIt()),
   );
   getIt.registerFactory<BankRepository>(
-    () => EmerisBankRepository(getIt(), getIt()),
+    () => EmerisBankRepository(getIt(), getIt(), getIt()),
   );
 }
 

@@ -9,7 +9,7 @@ class GetBalancesUseCase {
 
   GetBalancesUseCase(this._balancesRepository);
 
-  Future<Either<GeneralFailure, List<Balance>>> execute({
+  Future<Either<GeneralFailure, AssetDetails>> execute({
     required EmerisWallet walletData,
   }) async =>
       _balancesRepository.getBalances(walletData);

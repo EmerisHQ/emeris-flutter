@@ -6,7 +6,7 @@ class FiatsJson {
 
   FiatsJson.fromJson(Map<String, dynamic> json) {
     symbol = json['Symbol'] as String? ?? '';
-    price = json['Price'] as double? ?? 0.0;
+    price = double.tryParse(json['Price'].toString()) ?? 0.0;
   }
 
   Map<String, dynamic> toJson() {

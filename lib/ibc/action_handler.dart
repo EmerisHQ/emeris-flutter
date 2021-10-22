@@ -62,6 +62,8 @@ class ActionHandler {
       balance: Balance(
         amount: balance.amount,
         denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
+        unitPrice: Amount.fromString('0'),
+        dollarPrice: Amount.fromString('0'),
       ),
       baseDenom: Denom(
         await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _restApiIbcRepository),
@@ -80,7 +82,12 @@ class ActionHandler {
     final steps = <TransferStep>[];
     var mustAddFee = false;
     final output = Output(
-      balance: Balance(denom: const Denom(''), amount: Amount.fromInt(0)),
+      balance: Balance(
+        denom: const Denom(''),
+        amount: Amount.fromInt(0),
+        unitPrice: Amount.fromString('0'),
+        dollarPrice: Amount.fromString('0'),
+      ),
       chainId: '',
     );
     if (isNative(balance.denom.text)) {
@@ -306,6 +313,8 @@ extension ChainAmountOnTrace on VerifyTraceJson {
             denom: Denom(
               baseDenom,
             ),
+            unitPrice: Amount.fromString('0'),
+            dollarPrice: Amount.fromString('0'),
           ),
           chainId: trace[trace.length - 1].counterpartyName,
         ),

@@ -4,5 +4,5 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 
 abstract class BankRepository {
-  Future<Either<GeneralFailure, List<Balance>>> getBalances(EmerisWallet walletData);
+  Future<Either<GeneralFailure, AssetDetails>> getBalances(EmerisWallet walletData);
 }

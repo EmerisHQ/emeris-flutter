@@ -59,7 +59,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                   ),
                   // TODO: Sum of all the assets converted into USD
                   subtitle: Text(
-                    '#\$766.43',
+                    '\$${model.assetDetails.totalAmountInUSD.displayText}',
                     style: TextStyle(
                       fontSize: CosmosAppTheme.fontSizeXXL,
                       color: Theme.of(context).colorScheme.secondary,
@@ -74,7 +74,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
-                    children: model.balanceList
+                    children: model.assetDetails.balances
                         .map(
                           (balance) => BalanceCard(
                             data: balance,

@@ -5,7 +5,7 @@ abstract class WalletDetailsViewModel {
 
   bool get isSendMoneyLoading;
 
-  List<Balance> get balanceList;
+  AssetDetails get assetDetails;
 }
 
 class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase implements WalletDetailsViewModel {
@@ -15,34 +15,33 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
     this.initialParams,
   );
 
-  ObservableFuture<Either<GeneralFailure, List<Balance>>>? get getWalletBalancesFuture =>
-      _getWalletBalancesFuture.value;
+  ObservableFuture<Either<GeneralFailure, AssetDetails>>? get getAssetDetailsFuture => _getAssetDetailsFuture.value;
 
   ObservableFuture<Either<AddWalletFailure, Unit>>? get sendMoneyFuture => _sendMoneyFuture.value;
 
   @override
-  List<Balance> get balanceList => _balanceList.value;
+  AssetDetails get assetDetails => _assetDetails.value;
 
   @override
-  bool get isLoading => isFutureInProgress(getWalletBalancesFuture);
+  bool get isLoading => isFutureInProgress(getAssetDetailsFuture);
 
   @override
   bool get isSendMoneyLoading => sendMoneyFuture?.status == FutureStatus.pending;
 }
 
 abstract class WalletDetailsPresentationModelBase {
-  final Observable<ObservableFuture<Either<GeneralFailure, List<Balance>>>?> _getWalletBalancesFuture =
-      Observable(null);
+  final Observable<ObservableFuture<Either<GeneralFailure, AssetDetails>>?> _getAssetDetailsFuture = Observable(null);
 
   final Observable<ObservableFuture<Either<AddWalletFailure, Unit>>?> _sendMoneyFuture = Observable(null);
 
   set sendMoneyFuture(ObservableFuture<Either<AddWalletFailure, Unit>>? value) =>
       Action(() => _sendMoneyFuture.value = value)();
 
-  set getWalletBalancesFuture(ObservableFuture<Either<GeneralFailure, List<Balance>>>? value) =>
-      Action(() => _getWalletBalancesFuture.value = value)();
+  set getAssetDetailsFuture(ObservableFuture<Either<GeneralFailure, AssetDetails>>? value) =>
+      Action(() => _getAssetDetailsFuture.value = value)();
 
-  final Observable<List<Balance>> _balanceList = Observable(<Balance>[]);
+  final Observable<AssetDetails> _assetDetails =
+      Observable(AssetDetails(balances: const <Balance>[], totalAmountInUSD: Amount.fromString('0')));
 
-  set balanceList(List<Balance> value) => Action(() => _balanceList.value = value)();
+  set balanceList(AssetDetails value) => Action(() => _assetDetails.value = value)();
 }
