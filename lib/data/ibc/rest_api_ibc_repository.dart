@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_app/data/model/chain_json.dart';
 import 'package:flutter_app/data/model/prices_data_json.dart';
 import 'package:flutter_app/data/model/primary_channel_json.dart';
+import 'package:flutter_app/data/model/translators/prices_translator.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
