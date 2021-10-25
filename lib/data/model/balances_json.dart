@@ -3,7 +3,7 @@ import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/prices.dart';
+import 'package:flutter_app/domain/entities/price.dart';
 
 class BalanceJson {
   late String address;
@@ -33,13 +33,13 @@ class BalanceJson {
     }
   }
 
-  Balance toDomain(BalanceJson balance, PricesDomain prices, List<VerifiedDenomJson> verifiedDenomJson) {
+  Balance toDomain(BalanceJson balance, Price prices, List<VerifiedDenomJson> verifiedDenomJson) {
     final amount = Amount.fromString(balance.amount.replaceAll(balance.baseDenom, ''));
     final baseDenomDisplayText =
         verifiedDenomJson.firstWhere((element) => element.name == balance.baseDenom).displayName;
     final ticker = '${verifiedDenomJson.firstWhere((element) => element.name == balance.baseDenom).ticker}USDT';
-    final unitPrice = prices.data.tokens.firstWhere((element) => element.symbol == ticker).price;
-    final dollarPrice = amount.value.toDouble() * unitPrice;
+    final unitPrice = prices.data.tokens.firstWhere((element) => element.denom.text == ticker).amount.value;
+    final dollarPrice = amount.value * unitPrice;
 
     return Balance(
       denom: Denom(baseDenomDisplayText),
