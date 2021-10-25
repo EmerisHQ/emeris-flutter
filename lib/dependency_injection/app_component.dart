@@ -101,11 +101,11 @@ void _configureTransactionSigningGateway() {
       transactionSummaryUI: getIt(),
       infoStorage: getIt(),
       signers: [
-        AlanTransactionSigner(),
+        AlanTransactionSigner(getIt<BaseEnv>().networkInfo),
         EthereumTransactionSigner(getIt()),
       ],
       broadcasters: [
-        AlanTransactionBroadcaster(),
+        AlanTransactionBroadcaster(getIt<BaseEnv>().networkInfo),
       ],
     ),
   );
