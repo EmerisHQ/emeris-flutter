@@ -4,7 +4,7 @@ import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
-import 'package:flutter_app/domain/entities/prices.dart';
+import 'package:flutter_app/domain/entities/price.dart';
 
 abstract class IbcRepository {
   Future<Either<GeneralFailure, VerifyTraceJson>> verifyTrace(String chainId, String hash);
@@ -18,5 +18,5 @@ abstract class IbcRepository {
 
   Future<Either<GeneralFailure, ChainJson>> getChainDetails(String chainId);
 
-  Future<Either<GeneralFailure, PricesDomain>> getPricesData();
+  Future<Either<GeneralFailure, Price>> getPricesData();
 }

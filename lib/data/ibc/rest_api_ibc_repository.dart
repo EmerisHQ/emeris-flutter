@@ -7,7 +7,7 @@ import 'package:flutter_app/data/model/translators/prices_translator.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
-import 'package:flutter_app/domain/entities/prices.dart';
+import 'package:flutter_app/domain/entities/price.dart';
 import 'package:flutter_app/domain/repositories/ibc_respository.dart';
 import 'package:flutter_app/global.dart';
 
@@ -65,7 +65,7 @@ class RestApiIbcRepository implements IbcRepository {
   }
 
   @override
-  Future<Either<GeneralFailure, PricesDomain>> getPricesData() async {
+  Future<Either<GeneralFailure, Price>> getPricesData() async {
     final uri = '${_baseEnv.emerisBackendApiUrl}/v1/oracle/prices';
     final response = await _dio.get(uri);
     final map = response.data as Map<String, dynamic>;
