@@ -19,13 +19,6 @@ class OnboardingPresentationModel with OnboardingPresentationModelBase implement
 
   OnboardingPresentationModel(this.initialParams);
 
-  ObservableFuture<Either<AddWalletFailure, EmerisWallet>>? get importWalletFuture => _importWalletFuture.value;
-
-  @override
-  bool get isLoading => isFutureInProgress(importWalletFuture) || isFutureInProgress(generateMnemonicFuture);
-
-  ObservableFuture<Mnemonic?>? get generateMnemonicFuture => _generateMnemonicFuture.value;
-
   @override
   String get loadingMessage {
     if (isFutureInProgress(importWalletFuture)) {
@@ -39,16 +32,4 @@ class OnboardingPresentationModel with OnboardingPresentationModelBase implement
 }
 
 //////////////////BOILERPLATE
-abstract class OnboardingPresentationModelBase {
-  //////////////////////////////////////
-  final Observable<ObservableFuture<Either<AddWalletFailure, EmerisWallet>>?> _importWalletFuture = Observable(null);
-
-  set importWalletFuture(ObservableFuture<Either<AddWalletFailure, EmerisWallet>>? value) =>
-      Action(() => _importWalletFuture.value = value)();
-
-  //////////////////////////////////////
-  final Observable<ObservableFuture<Mnemonic?>?> _generateMnemonicFuture = Observable(null);
-
-  set generateMnemonicFuture(ObservableFuture<Mnemonic?>? value) =>
-      Action(() => _generateMnemonicFuture.value = value)();
-}
+abstract class OnboardingPresentationModelBase {}
