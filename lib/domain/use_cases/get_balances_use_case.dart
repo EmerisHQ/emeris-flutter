@@ -5,12 +5,12 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
 
 class GetBalancesUseCase {
-  final BankRepository _balancesRepository;
+  final BankRepository _bankRepository;
 
-  GetBalancesUseCase(this._balancesRepository);
+  GetBalancesUseCase(this._bankRepository);
 
   Future<Either<GeneralFailure, AssetDetails>> execute({
     required EmerisWallet walletData,
   }) async =>
-      _balancesRepository.getBalances(walletData);
+      _bankRepository.getBalances(walletData);
 }
