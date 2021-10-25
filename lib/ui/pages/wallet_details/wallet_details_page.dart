@@ -57,7 +57,6 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                       const Icon(Icons.keyboard_arrow_down),
                     ],
                   ),
-                  // TODO: Sum of all the assets converted into USD
                   subtitle: Text(
                     '\$${model.assetDetails.totalAmountInUSD.displayText}',
                     style: TextStyle(
@@ -67,32 +66,29 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                   ),
                 ),
                 CosmosButtonBar(onReceivePressed: () {}, onSendPressed: () {}),
-                const Padding(padding: EdgeInsets.only(top: 16)),
+                const Padding(padding: EdgeInsets.only(top: CosmosAppTheme.spacingM)),
                 BalanceHeading(
                   wallet: widget.initialParams.wallet,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: model.assetDetails.balances
-                        .map(
-                          (balance) => BalanceCard(
-                            data: balance,
-                            onTransferPressed: model.isSendMoneyLoading
-                                ? null
-                                : () {
-                                    presenter.transferTapped(
-                                      balance: balance,
-                                    );
-                                  },
-                          ),
-                        )
-                        .toList(),
-                  ),
+                Column(
+                  children: model.assetDetails.balances
+                      .map(
+                        (balance) => BalanceCard(
+                          data: balance,
+                          onTransferPressed: model.isSendMoneyLoading
+                              ? null
+                              : () {
+                                  presenter.transferTapped(
+                                    balance: balance,
+                                  );
+                                },
+                        ),
+                      )
+                      .toList(),
                 ),
                 if (model.isSendMoneyLoading)
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding: const EdgeInsets.only(top: CosmosAppTheme.spacingS),
                     child: Center(
                       child: Text(
                         strings.sendingMoney,
