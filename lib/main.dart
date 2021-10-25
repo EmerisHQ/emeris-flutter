@@ -1,3 +1,6 @@
+import 'package:cosmos_utils/cosmos_utils.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app_widget.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
@@ -11,6 +14,7 @@ void main() {
   const ethUrl = String.fromEnvironment('ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
   const emerisUrl = String.fromEnvironment('EMERIS_URL', defaultValue: 'https://dev.demeris.io');
 
+  _initFirebase();
   final baseEnv = BaseEnv()
     ..setEnv(
       lcdUrl: lcdUrl,
@@ -20,8 +24,24 @@ void main() {
       ethUrl: ethUrl,
       emerisUrl: emerisUrl,
     );
+
   configureDependencies(baseEnv);
   runApp(EmerisApp());
+}
+
+Future<void> _initFirebase() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  errorLogger = (error, stack, reason) {
+    FirebaseCrashlytics.instance.recordError(error, (stack as StackTrace?) ?? StackTrace.current);
+    debugLog(
+      "ERROR ${reason == null ? "" : ": $reason"}\n"
+      "================\n"
+      "error: $error\n"
+      "stack: ${stack ?? StackTrace.current}\n"
+      "================\n",
+    );
+  };
 }
 
 class EmerisApp extends StatelessWidget {

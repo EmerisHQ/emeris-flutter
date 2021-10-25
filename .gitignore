@@ -83,3 +83,4 @@ report.xml
 *.iml
 *.ipr
 misc.xml
+android/.idea
