@@ -1,10 +1,10 @@
-class FiatsJson {
+class FiatJson {
   late String symbol;
   late double price;
 
-  FiatsJson({required this.symbol, required this.price});
+  FiatJson({required this.symbol, required this.price});
 
-  FiatsJson.fromJson(Map<String, dynamic> json) {
+  FiatJson.fromJson(Map<String, dynamic> json) {
     symbol = json['Symbol'] as String? ?? '';
     price = double.tryParse(json['Price'].toString()) ?? 0.0;
   }

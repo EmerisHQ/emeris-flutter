@@ -1,7 +1,7 @@
-import 'package:flutter_app/data/model/data_json.dart';
+import 'package:flutter_app/data/model/token_price_data_json.dart';
 
 class PricesDataJson {
-  late DataJson data;
+  late TokenPriceDataJson data;
   dynamic message;
   late int status;
 
@@ -9,7 +9,7 @@ class PricesDataJson {
 
   PricesDataJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = DataJson.fromJson(json['data'] as Map<String, dynamic>);
+      data = TokenPriceDataJson.fromJson(json['data'] as Map<String, dynamic>);
     }
     message = json['message'];
     status = json['status'] as int? ?? -1;
