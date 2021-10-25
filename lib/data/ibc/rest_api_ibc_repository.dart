@@ -11,6 +11,7 @@ import 'package:flutter_app/domain/entities/price.dart';
 import 'package:flutter_app/domain/repositories/ibc_respository.dart';
 import 'package:flutter_app/global.dart';
 
+/// TODO: None of these functions should return Json models.
 class RestApiIbcRepository implements IbcRepository {
   final Dio _dio;
   final BaseEnv _baseEnv;

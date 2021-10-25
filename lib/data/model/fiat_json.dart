@@ -1,18 +1,13 @@
 class FiatJson {
-  late String symbol;
-  late double price;
+  final String symbol;
+  final double price;
 
-  FiatJson({required this.symbol, required this.price});
+  const FiatJson({required this.symbol, required this.price});
 
-  FiatJson.fromJson(Map<String, dynamic> json) {
-    symbol = json['Symbol'] as String? ?? '';
-    price = double.tryParse(json['Price'].toString()) ?? 0.0;
-  }
-
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['Symbol'] = symbol;
-    data['Price'] = price;
-    return data;
+  factory FiatJson.fromJson(Map<String, dynamic> json) {
+    return FiatJson(
+      symbol: json['Symbol'] as String? ?? '',
+      price: json['Price'] as double? ?? 0.0,
+    );
   }
 }
