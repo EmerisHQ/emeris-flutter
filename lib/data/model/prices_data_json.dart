@@ -1,17 +1,21 @@
 import 'package:flutter_app/data/model/token_price_data_json.dart';
 
 class PricesDataJson {
-  late TokenPriceDataJson data;
-  dynamic message;
-  late int status;
+  final TokenPriceDataJson data;
+  final String message;
+  final int status;
 
-  PricesDataJson({required this.data, required this.message, required this.status});
+  const PricesDataJson({
+    required this.data,
+    required this.message,
+    required this.status,
+  });
 
-  PricesDataJson.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      data = TokenPriceDataJson.fromJson(json['data'] as Map<String, dynamic>);
-    }
-    message = json['message'];
-    status = json['status'] as int? ?? -1;
+  factory PricesDataJson.fromJson(Map<String, dynamic> json) {
+    return PricesDataJson(
+      data: TokenPriceDataJson.fromJson(json['data'] as Map<String, dynamic>),
+      message: json['message'] as String? ?? '',
+      status: json['status'] as int? ?? -1,
+    );
   }
 }
