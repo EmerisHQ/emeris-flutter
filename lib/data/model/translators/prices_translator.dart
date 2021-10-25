@@ -3,8 +3,8 @@ import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/fiat.dart';
 import 'package:flutter_app/domain/entities/price.dart';
-import 'package:flutter_app/domain/entities/token_price_data.dart';
 import 'package:flutter_app/domain/entities/token.dart';
+import 'package:flutter_app/domain/entities/token_price_data.dart';
 
 /// TODO: Update [Price]
 /// The domain needs to be updated according to what the UI requires,
