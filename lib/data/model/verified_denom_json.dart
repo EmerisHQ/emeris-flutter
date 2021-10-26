@@ -1,5 +1,6 @@
 import 'package:flutter_app/data/model/denom_json.dart';
 import 'package:flutter_app/data/model/gas_price_levels_json.dart';
+import 'package:flutter_app/domain/entities/verified_denom.dart';
 
 class VerifiedDenomJson extends DenomJson {
   late String chainName;
@@ -36,4 +37,20 @@ class VerifiedDenomJson extends DenomJson {
   VerifiedDenomJson.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     chainName = json['chain_name'] as String;
   }
+
+  VerifiedDenom toDomain() => VerifiedDenom(
+        chainName: chainName,
+        name: name,
+        displayName: displayName,
+        logo: logo,
+        precision: precision,
+        verified: verified,
+        stakable: stakable,
+        ticker: ticker,
+        feeToken: feeToken,
+        gasPriceLevels: gasPriceLevels.toDomain(),
+        fetchPrice: fetchPrice,
+        relayerDenom: relayerDenom,
+        minimumThreshRelayerBalance: minimumThreshRelayerBalance,
+      );
 }

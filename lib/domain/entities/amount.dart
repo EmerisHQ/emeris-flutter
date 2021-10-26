@@ -1,9 +1,11 @@
 import 'package:decimal/decimal.dart';
 
 class Amount {
+  static final zero = Amount(Decimal.zero);
+
   final Decimal value;
 
-  Amount(this.value);
+  const Amount(this.value);
 
   Amount.fromString(String string) : value = Decimal.parse(string);
 

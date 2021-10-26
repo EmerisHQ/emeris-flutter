@@ -13,6 +13,7 @@ import 'package:flutter_app/data/http/dio_builder.dart';
 import 'package:flutter_app/data/ibc/rest_api_ibc_repository.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
+import 'package:flutter_app/domain/repositories/ibc_respository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
@@ -130,7 +131,11 @@ void _configureRepositories() {
     () => EmerisWalletsRepository(getIt(), getIt()),
   );
   getIt.registerFactory<BankRepository>(
-    () => EmerisBankRepository(getIt(), getIt(), getIt()),
+    () => EmerisBankRepository(getIt(), getIt()),
+  );
+
+  getIt.registerFactory<IbcRepository>(
+    () => RestApiIbcRepository(getIt(), getIt()),
   );
 }
 
@@ -178,7 +183,7 @@ void _configureUseCases() {
     () => ImportWalletUseCase(getIt(), getIt()),
   );
   getIt.registerFactory<GetBalancesUseCase>(
-    () => GetBalancesUseCase(getIt()),
+    () => GetBalancesUseCase(getIt(), getIt()),
   );
   getIt.registerFactory<SendMoneyUseCase>(
     () => SendMoneyUseCase(getIt(), getIt()),

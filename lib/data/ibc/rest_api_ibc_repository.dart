@@ -8,6 +8,7 @@ import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/price.dart';
+import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/domain/repositories/ibc_respository.dart';
 import 'package:flutter_app/global.dart';
 
@@ -29,12 +30,12 @@ class RestApiIbcRepository implements IbcRepository {
   }
 
   @override
-  Future<Either<GeneralFailure, List<VerifiedDenomJson>>> getVerifiedDenoms() async {
+  Future<Either<GeneralFailure, List<VerifiedDenom>>> getVerifiedDenoms() async {
     try {
       final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/verified_denoms');
       final denomsList = (response.data as Map)['verified_denoms'] as List;
       return right(
-        denomsList.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>)).toList(),
+        denomsList.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>).toDomain()).toList(),
       );
     } catch (ex, stack) {
       return left(GeneralFailure.unknown("error while getting verified denoms", ex, stack));

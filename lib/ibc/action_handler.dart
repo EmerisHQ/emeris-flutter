@@ -13,6 +13,7 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/redeem_failure.dart';
 import 'package:flutter_app/domain/entities/failures/transfer_failure.dart';
+import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/ibc/helpers/ibc_transfer_recipient.dart';
 import 'package:flutter_app/ibc/model/chain_amount.dart';
@@ -372,7 +373,7 @@ Future<String> getBaseDenom(String denom, String? chainId, RestApiIbcRepository 
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
 
   verifiedDenoms.fold<Future?>((l) => throw 'Could not get verified denoms', (r) async {
-    VerifiedDenomJson? denomFound;
+    VerifiedDenom? denomFound;
     try {
       denomFound = r.firstWhere((element) => element.name == denom);
     } catch (ex) {

@@ -40,8 +40,7 @@ abstract class WalletDetailsPresentationModelBase {
   set getAssetDetailsFuture(ObservableFuture<Either<GeneralFailure, AssetDetails>>? value) =>
       Action(() => _getAssetDetailsFuture.value = value)();
 
-  final Observable<AssetDetails> _assetDetails =
-      Observable(AssetDetails(balances: const <Balance>[], totalAmountInUSD: Amount.fromString('0')));
+  final Observable<AssetDetails> _assetDetails = Observable(const AssetDetails(balances: <Balance>[]));
 
   set balanceList(AssetDetails value) => Action(() => _assetDetails.value = value)();
 }
