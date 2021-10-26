@@ -45,11 +45,10 @@ class Balance extends Equatable {
   @override
   List<Object> get props => [denom, amount, unitPrice, dollarPrice];
 
-  Balance toDomain(Balance balance, Price prices, List<VerifiedDenom> verifiedDenomJson) {
-    final baseDenomDisplayText =
-        verifiedDenomJson.firstWhere((element) => element.name == balance.denom.text).displayName;
-    final ticker = '${verifiedDenomJson.firstWhere((element) => element.name == balance.denom.text).ticker}USDT';
-    final unitPrice = prices.data.tokens.firstWhere((element) => element.denom.text == ticker).amount.value;
+  Balance toDomain(Balance balance, Price price, List<VerifiedDenom> verifiedDenoms) {
+    final baseDenomDisplayText = verifiedDenoms.firstWhere((element) => element.name == balance.denom.text).displayName;
+    final ticker = '${verifiedDenoms.firstWhere((element) => element.name == balance.denom.text).ticker}USDT';
+    final unitPrice = price.data.tokens.firstWhere((element) => element.denom.text == ticker).amount.value;
     final dollarPrice = amount.value * unitPrice;
 
     return Balance(
