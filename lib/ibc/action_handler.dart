@@ -6,7 +6,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/ibc/rest_api_ibc_repository.dart';
 import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/trace_json.dart';
-import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
