@@ -4,25 +4,6 @@ import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/price.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
-class AssetDetails extends Equatable {
-  final List<Balance> balances;
-
-  Amount get totalAmountInUSD => Amount.fromString(_calculateTotalAmount().toStringAsFixed(2));
-
-  const AssetDetails({required this.balances});
-
-  @override
-  List<Object?> get props => [balances, totalAmountInUSD];
-
-  double _calculateTotalAmount() {
-    var totalAmount = 0.0;
-    for (final element in balances) {
-      totalAmount += element.dollarPrice.value.toDouble();
-    }
-    return totalAmount;
-  }
-}
-
 class Balance extends Equatable {
   final Denom denom;
   final Amount amount;
