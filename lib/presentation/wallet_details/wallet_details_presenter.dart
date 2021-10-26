@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
