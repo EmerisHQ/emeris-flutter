@@ -1,6 +1,8 @@
-import 'package:cosmos_utils/extensions.dart';
+import 'package:cosmos_utils/cosmos_utils.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/passcode.dart';
 import 'package:flutter_app/domain/model/mnemonic.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_app/ui/pages/add_wallet/add_wallet_result.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_initial_params.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
+import 'package:mobx/mobx.dart';
 
 class AddWalletPresenter {
   AddWalletPresenter(
@@ -34,7 +37,7 @@ class AddWalletPresenter {
   Future<void> init() async {
     final name = await _openNamePage();
     if (name == null) {
-      return;
+      return navigator.close();
     }
     final passcode = await navigator.openPasscode(
       const PasscodeInitialParams(
@@ -42,34 +45,31 @@ class AddWalletPresenter {
       ),
     );
     if (passcode == null) {
-      return;
+      return navigator.close();
     }
     final mnemonic = await _generateMnemonic();
     if (mnemonic == null) {
       return;
     }
-    final wallet = await _importWallet(mnemonic, name, passcode);
-    if (wallet == null) {
-      return;
-    }
-    navigator.closeWithResult(AddWalletResult(wallet: wallet, mnemonic: mnemonic));
+    await _importWallet(mnemonic, name, passcode).asyncFold(
+      (fail) => navigator
+        ..close()
+        ..showError(fail.displayableFailure()),
+      (wallet) => navigator.closeWithResult(AddWalletResult(wallet: wallet, mnemonic: mnemonic)),
+    );
   }
 
-  Future<EmerisWallet?> _importWallet(Mnemonic mnemonic, String name, Passcode passcode) {
-    final future = _importWalletUseCase.execute(
-      walletFormData: ImportWalletFormData(
-        mnemonic: mnemonic,
-        name: name,
-        password: passcode.value,
-        walletType: WalletType.Cosmos,
-      ),
-    );
-    _model.importWalletFuture = future.observableDoOn(
-      (fail) => navigator.showError(fail.displayableFailure()),
-      (success) {},
-    );
-    return future.asyncFold((fail) => null, (success) => success);
-  }
+  Future<Either<AddWalletFailure, EmerisWallet>> _importWallet(Mnemonic mnemonic, String name, Passcode passcode) =>
+      _model.importWalletFuture = _importWalletUseCase
+          .execute(
+            walletFormData: ImportWalletFormData(
+              mnemonic: mnemonic,
+              name: name,
+              password: passcode.value,
+              walletType: WalletType.Cosmos,
+            ),
+          )
+          .asObservable();
 
   Future<String?> _openNamePage() async {
     String? name;
@@ -84,7 +84,9 @@ class AddWalletPresenter {
   Future<Mnemonic?> _generateMnemonic() async =>
       _model.generateMnemonicFuture = _generateMnemonicUseCase.execute().observableAsyncFold<Mnemonic?>(
         (fail) {
-          navigator.showError(fail.displayableFailure());
+          navigator
+            ..close()
+            ..showError(fail.displayableFailure());
           return null;
         },
         (mnemonic) => mnemonic,

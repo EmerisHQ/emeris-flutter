@@ -32,9 +32,18 @@ import 'package:flutter_app/presentation/send_money/send_money_presenter.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
+import 'package:flutter_app/ui/pages/add_wallet/add_wallet_navigator.dart';
+import 'package:flutter_app/ui/pages/add_wallet/add_wallet_presentation_model.dart';
+import 'package:flutter_app/ui/pages/add_wallet/add_wallet_presenter.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_navigator.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presenter.dart';
+import 'package:flutter_app/ui/pages/import_wallet/import_wallet_navigator.dart';
+import 'package:flutter_app/ui/pages/import_wallet/import_wallet_presentation_model.dart';
+import 'package:flutter_app/ui/pages/import_wallet/import_wallet_presenter.dart';
+import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_navigator.dart';
+import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_presentation_model.dart';
+import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_presenter.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
@@ -217,7 +226,7 @@ void _configureMvp() {
     () => RoutingNavigator(getIt()),
   );
   getIt.registerFactoryParam<OnboardingPresenter, OnboardingPresentationModel, dynamic>(
-    (_model, _) => OnboardingPresenter(_model, getIt(), getIt(), getIt(), getIt()),
+    (_model, _) => OnboardingPresenter(_model, getIt()),
   );
   getIt.registerFactory<OnboardingNavigator>(
     () => OnboardingNavigator(getIt()),
@@ -253,5 +262,26 @@ void _configureMvp() {
   );
   getIt.registerFactory<WalletManualBackupNavigator>(
     () => WalletManualBackupNavigator(getIt()),
+  );
+
+  getIt.registerFactoryParam<AddWalletPresenter, AddWalletPresentationModel, dynamic>(
+    (_model, _) => AddWalletPresenter(_model, getIt(), getIt(), getIt(), getIt()),
+  );
+  getIt.registerFactory<AddWalletNavigator>(
+    () => AddWalletNavigator(getIt()),
+  );
+
+  getIt.registerFactoryParam<ImportWalletPresenter, ImportWalletPresentationModel, dynamic>(
+    (_model, _) => ImportWalletPresenter(_model, getIt(), getIt()),
+  );
+  getIt.registerFactory<ImportWalletNavigator>(
+    () => ImportWalletNavigator(getIt()),
+  );
+
+  getIt.registerFactoryParam<MnemonicImportPresenter, MnemonicImportPresentationModel, dynamic>(
+    (_model, _) => MnemonicImportPresenter(_model, getIt(), getIt()),
+  );
+  getIt.registerFactory<MnemonicImportNavigator>(
+    () => MnemonicImportNavigator(getIt()),
   );
 }
