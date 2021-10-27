@@ -100,6 +100,7 @@
   "splashLargeTitle": "Experience the power of cross-chain DeFi",
   "createWalletAction": "Create Wallet",
   "importWalletAction": "Import Wallet",
+  "importWalletTitle": "Import Wallet",
   "passcodeTitle": "Enter your passcode",
   "confirmPasscodeTitle": "Confirm passcode",
   "passcodeMatchFailureTitle": "Invalid Passcode",
@@ -133,5 +134,9 @@
   "copiedToClipboardMessage": "Copied to clipboard",
   "writeRecoveryPhraseTitle": "Write your recovery phrase",
   "invalidOrderMessage": "Invalid order",
-  "walletCreatedSuccessMessage": "Your wallet is created"
+  "walletCreatedSuccessMessage": "Your wallet is created",
+  "enterRecoveryPhraseHint": "Enter your recovery phrase",
+  "importAction": "Import",
+  "pasteAction": "Paste",
+  "whatIsRecoveryPhraseAction": "What's a recovery phrase?"
 }
