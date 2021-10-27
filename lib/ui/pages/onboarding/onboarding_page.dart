@@ -9,7 +9,6 @@ import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
 import 'package:flutter_app/ui/pages/onboarding/widgets/welcome_splash.dart';
 import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class OnboardingPage extends StatefulWidget {
   final OnboardingInitialParams initialParams;
@@ -45,33 +44,25 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const EmerisLogoAppBar(),
-      body: Observer(
-        builder: (context) => ContentStateSwitcher(
-          isLoading: model.isLoading,
-          loadingChild: ContentLoadingIndicator(
-            message: model.loadingMessage,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: CosmosAppTheme.spacingL,
+            vertical: CosmosAppTheme.spacingM,
           ),
-          contentChild: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: CosmosAppTheme.spacingL,
-                vertical: CosmosAppTheme.spacingM,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Expanded(child: WelcomeSplash()),
+              CosmosElevatedButton(
+                text: strings.createWalletAction,
+                onTap: presenter.onTapCreateWallet,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Expanded(child: WelcomeSplash()),
-                  CosmosElevatedButton(
-                    text: strings.createWalletAction,
-                    onTap: presenter.onTapCreateWallet,
-                  ),
-                  CosmosOutlineButton(
-                    text: strings.importWalletAction,
-                    onTap: presenter.onTapImportWallet,
-                  ),
-                ],
+              CosmosOutlineButton(
+                text: strings.importWalletAction,
+                onTap: presenter.onTapImportWallet,
               ),
-            ),
+            ],
           ),
         ),
       ),

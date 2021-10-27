@@ -31,7 +31,6 @@ Future<Either<AddWalletFailure, EmerisWallet>> importAlanWallet(
       publicAddress: wallet.bech32Address,
     ),
     mnemonic: walletFormData.mnemonic.stringRepresentation,
-    networkInfo: baseEnv.networkInfo,
   );
   final result = await signingGateway.storeWalletCredentials(
     credentials: creds,

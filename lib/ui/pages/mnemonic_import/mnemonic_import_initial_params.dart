@@ -1,0 +1,3 @@
+class MnemonicImportInitialParams {
+  const MnemonicImportInitialParams();
+}

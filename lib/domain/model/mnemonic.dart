@@ -2,6 +2,7 @@ import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:equatable/equatable.dart';
 
 class Mnemonic extends Equatable {
+  static const numberOfWords = 24;
   final List<MnemonicWord> words;
 
   const Mnemonic({
@@ -23,6 +24,8 @@ class Mnemonic extends Equatable {
       ];
 
   List<String> get stringWords => words.map((e) => e.word).toList();
+
+  bool get isEnoughWords => words.length >= numberOfWords;
 
   List<MnemonicWord> filteredOutSelectedWords(List<MnemonicWord> selectedWords) => words
       .map(
