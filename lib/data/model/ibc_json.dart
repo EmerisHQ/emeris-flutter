@@ -1,11 +1,11 @@
 class IbcJson {
-  late String path;
-  late String hash;
+  final String path;
+  final String hash;
 
   IbcJson({required this.path, required this.hash});
 
-  IbcJson.fromJson(Map<String, dynamic> json) {
-    path = json['path'] as String? ?? '';
-    hash = json['hash'] as String? ?? '';
-  }
+  factory IbcJson.fromJson(Map<String, dynamic> json) => IbcJson(
+        path: json['path'] as String? ?? '',
+        hash: json['hash'] as String? ?? '',
+      );
 }
