@@ -6,13 +6,13 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/ibc/rest_api_ibc_repository.dart';
 import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/trace_json.dart';
-import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/redeem_failure.dart';
 import 'package:flutter_app/domain/entities/failures/transfer_failure.dart';
+import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/ibc/helpers/ibc_transfer_recipient.dart';
 import 'package:flutter_app/ibc/model/chain_amount.dart';
@@ -62,6 +62,8 @@ class ActionHandler {
       balance: Balance(
         amount: balance.amount,
         denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
+        unitPrice: Amount.fromString('0'),
+        dollarPrice: Amount.fromString('0'),
       ),
       baseDenom: Denom(
         await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _restApiIbcRepository),
@@ -80,7 +82,12 @@ class ActionHandler {
     final steps = <TransferStep>[];
     var mustAddFee = false;
     final output = Output(
-      balance: Balance(denom: const Denom(''), amount: Amount.fromInt(0)),
+      balance: Balance(
+        denom: const Denom(''),
+        amount: Amount.fromInt(0),
+        unitPrice: Amount.fromString('0'),
+        dollarPrice: Amount.fromString('0'),
+      ),
       chainId: '',
     );
     if (isNative(balance.denom.text)) {
@@ -306,6 +313,8 @@ extension ChainAmountOnTrace on VerifyTraceJson {
             denom: Denom(
               baseDenom,
             ),
+            unitPrice: Amount.fromString('0'),
+            dollarPrice: Amount.fromString('0'),
           ),
           chainId: trace[trace.length - 1].counterpartyName,
         ),
@@ -363,7 +372,7 @@ Future<String> getBaseDenom(String denom, String? chainId, RestApiIbcRepository 
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
 
   verifiedDenoms.fold<Future?>((l) => throw 'Could not get verified denoms', (r) async {
-    VerifiedDenomJson? denomFound;
+    VerifiedDenom? denomFound;
     try {
       denomFound = r.firstWhere((element) => element.name == denom);
     } catch (ex) {

@@ -42,7 +42,7 @@ void main() {
         (_) async {
           final list = jsonDecode(verifiedDenoms)['verified_denoms'] as List;
           return right(
-            list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>)).toList(),
+            list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>).toDomain()).toList(),
           );
         },
       );
@@ -68,7 +68,7 @@ void main() {
         (_) async {
           final list = jsonDecode(verifiedDenoms)['verified_denoms'] as List;
           return right(
-            list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>)).toList(),
+            list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>).toDomain()).toList(),
           );
         },
       );

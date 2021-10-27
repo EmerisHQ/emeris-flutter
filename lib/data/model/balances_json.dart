@@ -31,8 +31,6 @@ class BalanceJson {
     }
   }
 
-  Balance toDomain(BalanceJson balance) => Balance(
-        denom: Denom(balance.baseDenom),
-        amount: Amount.fromString(balance.amount.replaceAll(balance.baseDenom, '')),
-      );
+  Balance toBalanceDomain() =>
+      Balance(amount: Amount.fromString(amount.replaceAll(baseDenom, '')), denom: Denom(baseDenom));
 }

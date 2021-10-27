@@ -20,13 +20,14 @@ class EmerisBankRepository implements BankRepository {
         '${_baseEnv.emerisBackendApiUrl}/v1/account/${bech32ToHex(walletData.walletDetails.walletAddress)}/balance';
     final response = await _dio.get(uri);
     final map = response.data as Map<String, dynamic>;
-    final list = map['balances'] as List;
+    final balanceList = map['balances'] as List;
+
     return right(
-      list
+      balanceList
           .map((e) => BalanceJson.fromJson(e as Map<String, dynamic>))
           .toList()
           .where((element) => element.verified)
-          .map((e) => e.toDomain(e))
+          .map((e) => e.toBalanceDomain())
           .toList(),
     );
   }

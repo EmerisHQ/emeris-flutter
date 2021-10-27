@@ -7,7 +7,7 @@ class FiatJson {
   factory FiatJson.fromJson(Map<String, dynamic> json) {
     return FiatJson(
       symbol: json['Symbol'] as String? ?? '',
-      price: json['Price'] as double? ?? 0.0,
+      price: double.tryParse(json['Price'].toString()) ?? 0.0,
     );
   }
 }

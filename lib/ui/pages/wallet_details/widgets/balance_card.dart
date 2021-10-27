@@ -10,13 +10,12 @@ class BalanceCard extends StatelessWidget {
     required this.onTransferPressed,
   });
 
-  /// TODO: Add missing parameters to [Balance] model (currently hardcoded as strings)
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(data.denom.text.toUpperCase()),
       subtitle: Text(
-        '\$${data.amount.value.toStringAsFixed(2)}',
+        '\$${data.unitPrice.value.toStringAsFixed(2)}',
         style: TextStyle(color: Theme.of(context).colorScheme.secondary),
       ),
       leading: CircleAvatar(backgroundColor: Theme.of(context).colorScheme.secondary),
@@ -25,11 +24,11 @@ class BalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            '#\$1.23M',
+            '\$${data.dollarPrice.displayText}',
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           Text(
-            '#12,300 ATOM',
+            '${data.amount.displayText} ${data.denom.text}',
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
         ],

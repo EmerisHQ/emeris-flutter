@@ -1,3 +1,5 @@
+import 'package:flutter_app/domain/entities/gas_price_level.dart';
+
 class GasPriceLevelsJson {
   late double low;
   late double average;
@@ -11,11 +13,5 @@ class GasPriceLevelsJson {
     high = double.tryParse(json['high'].toString()) ?? 0.0;
   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['low'] = low;
-    data['average'] = average;
-    data['high'] = high;
-    return data;
-  }
+  GasPriceLevel toDomain() => GasPriceLevel(low: low, average: average, high: high);
 }
