@@ -1,4 +1,5 @@
 import 'package:flutter_app/data/model/gas_price_levels_json.dart';
+import 'package:flutter_app/domain/entities/gas_price_level.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
 class VerifiedDenomJson {
@@ -11,7 +12,7 @@ class VerifiedDenomJson {
   final bool stakable;
   final String ticker;
   final bool feeToken;
-  final GasPriceLevelsJson gasPriceLevels;
+  final GasPriceLevelsJson? gasPriceLevels;
   final bool fetchPrice;
   final bool relayerDenom;
   final int minimumThreshRelayerBalance;
@@ -41,7 +42,9 @@ class VerifiedDenomJson {
         stakable: json['stakable'] as bool? ?? false,
         ticker: json['ticker'] as String? ?? '',
         feeToken: json['fee_token'] as bool? ?? false,
-        gasPriceLevels: GasPriceLevelsJson.fromJson(json['gas_price_levels'] as Map<String, dynamic>),
+        gasPriceLevels: json['gas_price_levels'] == null
+            ? null
+            : GasPriceLevelsJson.fromJson(json['gas_price_levels'] as Map<String, dynamic>),
         fetchPrice: json['fetch_price'] as bool? ?? false,
         relayerDenom: json['relayer_denom'] as bool? ?? false,
         minimumThreshRelayerBalance: json['minimum_thresh_relayer_balance'] as int? ?? -1,
@@ -58,7 +61,7 @@ class VerifiedDenomJson {
         stakable: stakable,
         ticker: ticker,
         feeToken: feeToken,
-        gasPriceLevels: gasPriceLevels.toDomain(),
+        gasPriceLevels: gasPriceLevels?.toDomain() ?? GasPriceLevel(low: 0.0, average: 0.0, high: 0.0),
         fetchPrice: fetchPrice,
         relayerDenom: relayerDenom,
         minimumThreshRelayerBalance: minimumThreshRelayerBalance,

@@ -7,7 +7,7 @@ class ChainJson {
   final String chainName;
   final String logo;
   final String displayName;
-  final PrimaryChannelChainJson primaryChannel;
+  final PrimaryChannelChainJson? primaryChannel;
   final List<DenomJson> denoms;
   final List<String> demerisAddresses;
   final String genesisHash;
@@ -36,7 +36,9 @@ class ChainJson {
         chainName: json['chain_name'] as String? ?? '',
         logo: json['logo'] as String? ?? '',
         displayName: json['display_name'] as String? ?? '',
-        primaryChannel: PrimaryChannelChainJson.fromJson(json['primary_channel'] as Map<String, dynamic>),
+        primaryChannel: json['primary_channel'] == null
+            ? null
+            : PrimaryChannelChainJson.fromJson(json['primary_channel'] as Map<String, dynamic>),
         denoms: (json['denoms'] as List?)?.map((v) => DenomJson.fromJson(v as Map<String, dynamic>)).toList() ?? [],
         demerisAddresses: (json['demeris_addresses'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
         genesisHash: json['genesis_hash'] as String? ?? '',

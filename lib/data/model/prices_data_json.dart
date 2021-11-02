@@ -1,7 +1,7 @@
 import 'package:flutter_app/data/model/token_price_data_json.dart';
 
 class PricesDataJson {
-  final TokenPriceDataJson data;
+  final TokenPriceDataJson? data;
   final String message;
   final int status;
 
@@ -13,7 +13,7 @@ class PricesDataJson {
 
   factory PricesDataJson.fromJson(Map<String, dynamic> json) {
     return PricesDataJson(
-      data: TokenPriceDataJson.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null ? null : TokenPriceDataJson.fromJson(json['data'] as Map<String, dynamic>),
       message: json['message'] as String? ?? '',
       status: json['status'] as int? ?? -1,
     );

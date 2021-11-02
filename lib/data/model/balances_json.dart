@@ -9,7 +9,7 @@ class BalanceJson {
   final bool verified;
   final String amount;
   final String onChain;
-  final IbcJson ibc;
+  final IbcJson? ibc;
 
   BalanceJson({
     required this.address,
@@ -26,7 +26,7 @@ class BalanceJson {
         verified: json['verified'] as bool? ?? false,
         amount: json['amount'] as String? ?? '',
         onChain: json['on_chain'] as String? ?? '',
-        ibc: IbcJson.fromJson(json['ibc'] as Map<String, dynamic>),
+        ibc: json['ibc'] == null ? null : IbcJson.fromJson(json['ibc'] as Map<String, dynamic>),
       );
 
   Balance toBalanceDomain() =>
