@@ -4,12 +4,12 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 
 class BalanceJson {
-  late String address;
-  late String baseDenom;
-  late bool verified;
-  late String amount;
-  late String onChain;
-  late IbcJson ibc;
+  final String address;
+  final String baseDenom;
+  final bool verified;
+  final String amount;
+  final String onChain;
+  final IbcJson? ibc;
 
   BalanceJson({
     required this.address,
@@ -20,16 +20,14 @@ class BalanceJson {
     required this.ibc,
   });
 
-  BalanceJson.fromJson(Map<String, dynamic> json) {
-    address = json['address'] as String? ?? '';
-    baseDenom = json['base_denom'] as String? ?? '';
-    verified = json['verified'] as bool? ?? false;
-    amount = json['amount'] as String? ?? '';
-    onChain = json['on_chain'] as String? ?? '';
-    if (json['ibc'] != null) {
-      ibc = IbcJson.fromJson(json['ibc'] as Map<String, dynamic>);
-    }
-  }
+  factory BalanceJson.fromJson(Map<String, dynamic> json) => BalanceJson(
+        address: json['address'] as String? ?? '',
+        baseDenom: json['base_denom'] as String? ?? '',
+        verified: json['verified'] as bool? ?? false,
+        amount: json['amount'] as String? ?? '',
+        onChain: json['on_chain'] as String? ?? '',
+        ibc: json['ibc'] == null ? null : IbcJson.fromJson(json['ibc'] as Map<String, dynamic>),
+      );
 
   Balance toBalanceDomain() =>
       Balance(amount: Amount.fromString(amount.replaceAll(baseDenom, '')), denom: Denom(baseDenom));

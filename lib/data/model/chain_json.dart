@@ -3,18 +3,18 @@ import 'package:flutter_app/data/model/node_info_json.dart';
 import 'package:flutter_app/data/model/primary_channel_chain_json.dart';
 
 class ChainJson {
-  late bool enabled;
-  late String chainName;
-  late String logo;
-  late String displayName;
-  late PrimaryChannelChainJson primaryChannel;
-  late List<DenomJson> denoms;
-  late List<String> demerisAddresses;
-  late String genesisHash;
-  late NodeInfoJson nodeInfo;
-  late String validBlockThresh;
-  late String derivationPath;
-  late String blockExplorer;
+  final bool enabled;
+  final String chainName;
+  final String logo;
+  final String displayName;
+  final PrimaryChannelChainJson? primaryChannel;
+  final List<DenomJson> denoms;
+  final List<String> demerisAddresses;
+  final String genesisHash;
+  final NodeInfoJson nodeInfo;
+  final String validBlockThresh;
+  final String derivationPath;
+  final String blockExplorer;
 
   ChainJson({
     required this.enabled,
@@ -28,29 +28,23 @@ class ChainJson {
     required this.validBlockThresh,
     required this.derivationPath,
     required this.blockExplorer,
+    required this.logo,
   });
 
-  ChainJson.fromJson(Map<String, dynamic> json) {
-    enabled = json['enabled'] as bool? ?? false;
-    chainName = json['chain_name'] as String? ?? '';
-    logo = json['logo'] as String? ?? '';
-    displayName = json['display_name'] as String? ?? '';
-    if (json['primary_channel'] != null) {
-      primaryChannel = PrimaryChannelChainJson.fromJson(json['primary_channel'] as Map<String, dynamic>);
-    }
-    if (json['denoms'] != null) {
-      denoms = <DenomJson>[];
-      json['denoms'].forEach((v) {
-        denoms.add(DenomJson.fromJson(v as Map<String, dynamic>));
-      });
-    }
-    demerisAddresses = (json['demeris_addresses'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
-    genesisHash = json['genesis_hash'] as String? ?? '';
-    if (json['node_info'] != null) {
-      nodeInfo = NodeInfoJson.fromJson(json['node_info'] as Map<String, dynamic>);
-    }
-    validBlockThresh = json['valid_block_thresh'] as String? ?? '';
-    derivationPath = json['derivation_path'] as String? ?? '';
-    blockExplorer = json['block_explorer'] as String? ?? '';
-  }
+  factory ChainJson.fromJson(Map<String, dynamic> json) => ChainJson(
+        enabled: json['enabled'] as bool? ?? false,
+        chainName: json['chain_name'] as String? ?? '',
+        logo: json['logo'] as String? ?? '',
+        displayName: json['display_name'] as String? ?? '',
+        primaryChannel: json['primary_channel'] == null
+            ? null
+            : PrimaryChannelChainJson.fromJson(json['primary_channel'] as Map<String, dynamic>),
+        denoms: (json['denoms'] as List?)?.map((v) => DenomJson.fromJson(v as Map<String, dynamic>)).toList() ?? [],
+        demerisAddresses: (json['demeris_addresses'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+        genesisHash: json['genesis_hash'] as String? ?? '',
+        nodeInfo: NodeInfoJson.fromJson(json['node_info'] as Map<String, dynamic>),
+        validBlockThresh: json['valid_block_thresh'] as String? ?? '',
+        derivationPath: json['derivation_path'] as String? ?? '',
+        blockExplorer: json['block_explorer'] as String? ?? '',
+      );
 }

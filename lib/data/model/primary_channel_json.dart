@@ -1,11 +1,11 @@
 class PrimaryChannelJson {
-  late String counterParty;
-  late String channelName;
+  final String counterParty;
+  final String channelName;
 
   PrimaryChannelJson({required this.counterParty, required this.channelName});
 
-  PrimaryChannelJson.fromJson(Map<String, dynamic> json) {
-    counterParty = json['counterparty'] as String;
-    channelName = json['channel_name'] as String;
-  }
+  factory PrimaryChannelJson.fromJson(Map<String, dynamic> json) => PrimaryChannelJson(
+        counterParty: json['counterparty'] as String,
+        channelName: json['channel_name'] as String,
+      );
 }
