@@ -3,15 +3,29 @@ import 'package:cosmos_ui_components/components/cosmos_elevated_button.dart';
 import 'package:cosmos_ui_components/components/cosmos_outline_button.dart';
 import 'package:cosmos_ui_components/cosmos_app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/presentation/send_money/recipient_address_input/recipient_address_input_presenter.dart';
+import 'package:flutter_app/ui/pages/send_money/recipient_address_input/recipient_address_input_navigator.dart';
 
 class RecipientAddressInputPage extends StatefulWidget {
-  const RecipientAddressInputPage({Key? key}) : super(key: key);
+  final RecipientAddressInputPresenter? presenter;
+
+  const RecipientAddressInputPage({Key? key, this.presenter}) : super(key: key);
 
   @override
   _RecipientAddressInputPageState createState() => _RecipientAddressInputPageState();
 }
 
 class _RecipientAddressInputPageState extends State<RecipientAddressInputPage> {
+  late RecipientAddressInputPresenter presenter;
+
+  @override
+  void initState() {
+    super.initState();
+    presenter = widget.presenter ?? getIt(param1: getIt<RecipientAddressInputNavigator>());
+    presenter.navigator.context = context;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +67,9 @@ class _RecipientAddressInputPageState extends State<RecipientAddressInputPage> {
         ),
         Row(
           children: [
-            Expanded(child: CosmosElevatedButton(onTap: () {}, text: 'Continue')),
+            Expanded(
+              child: CosmosElevatedButton(onTap: () => presenter.navigator.navigateToEnterAmount(), text: 'Continue'),
+            ),
           ],
         ),
       ],

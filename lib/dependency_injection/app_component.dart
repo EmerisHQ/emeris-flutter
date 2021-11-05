@@ -28,6 +28,7 @@ import 'package:flutter_app/global.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
 import 'package:flutter_app/presentation/routing/routing_presenter.dart';
+import 'package:flutter_app/presentation/send_money/recipient_address_input/recipient_address_input_presenter.dart';
 import 'package:flutter_app/presentation/send_money/send_money_presentation_model.dart';
 import 'package:flutter_app/presentation/send_money/send_money_presenter.dart';
 import 'package:flutter_app/presentation/send_money/send_to_selection/send_to_selection_presenter.dart';
@@ -53,6 +54,7 @@ import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_presentation_model.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
+import 'package:flutter_app/ui/pages/send_money/recipient_address_input/recipient_address_input_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_to_selection/send_to_selection_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
@@ -296,5 +298,11 @@ void _configureMvp() {
   );
   getIt.registerFactory<SendToSelectionNavigator>(
     () => SendToSelectionNavigator(getIt()),
+  );
+  getIt.registerFactory<RecipientAddressInputPresenter>(
+    () => RecipientAddressInputPresenter(getIt()),
+  );
+  getIt.registerFactory<RecipientAddressInputNavigator>(
+    () => RecipientAddressInputNavigator(getIt()),
   );
 }
