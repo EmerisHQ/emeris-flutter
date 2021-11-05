@@ -30,6 +30,7 @@ import 'package:flutter_app/presentation/routing/routing_presentation_model.dart
 import 'package:flutter_app/presentation/routing/routing_presenter.dart';
 import 'package:flutter_app/presentation/send_money/send_money_presentation_model.dart';
 import 'package:flutter_app/presentation/send_money/send_money_presenter.dart';
+import 'package:flutter_app/presentation/send_money/send_to_selection/send_to_selection_presenter.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
@@ -53,6 +54,7 @@ import 'package:flutter_app/ui/pages/passcode/passcode_presentation_model.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
+import 'package:flutter_app/ui/pages/send_money/send_to_selection/send_to_selection_navigator.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_presentation_model.dart';
@@ -288,5 +290,11 @@ void _configureMvp() {
   );
   getIt.registerFactory<MnemonicImportNavigator>(
     () => MnemonicImportNavigator(getIt()),
+  );
+  getIt.registerFactory<SendToSelectionPresenter>(
+    () => SendToSelectionPresenter(getIt()),
+  );
+  getIt.registerFactory<SendToSelectionNavigator>(
+    () => SendToSelectionNavigator(getIt()),
   );
 }

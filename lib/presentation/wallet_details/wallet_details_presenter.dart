@@ -5,7 +5,6 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
-import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/utils/utils.dart';
@@ -33,11 +32,5 @@ class WalletDetailsPresenter {
         );
   }
 
-  void transferTapped({required Balance balance}) => navigator.openSendMoneySheet(
-        SendMoneyInitialParams(
-          walletAddress: _model.initialParams.wallet.walletDetails.walletAddress,
-          walletType: _model.initialParams.wallet.walletType,
-          denom: balance.denom,
-        ),
-      );
+  void sendTapped() => navigator.navigateToSendSelectionPage();
 }

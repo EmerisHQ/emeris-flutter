@@ -3,12 +3,8 @@ import 'package:flutter_app/domain/entities/balance.dart';
 
 class BalanceCard extends StatelessWidget {
   final Balance data;
-  final VoidCallback? onTransferPressed;
 
-  const BalanceCard({
-    required this.data,
-    required this.onTransferPressed,
-  });
+  const BalanceCard({required this.data});
 
   @override
   Widget build(BuildContext context) {

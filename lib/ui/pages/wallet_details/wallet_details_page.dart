@@ -59,41 +59,19 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                   ),
                   subtitle: Text(
                     '\$${model.assetDetails.totalAmountInUSD.displayText}',
-                    style: TextStyle(
-                      fontSize: CosmosAppTheme.fontSizeXXL,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
+                    style:
+                        TextStyle(fontSize: CosmosAppTheme.fontSizeXXL, color: Theme.of(context).colorScheme.secondary),
                   ),
                 ),
-                CosmosButtonBar(onReceivePressed: () {}, onSendPressed: () {}),
+                CosmosButtonBar(onReceivePressed: () {}, onSendPressed: () => presenter.sendTapped()),
                 const Padding(padding: EdgeInsets.only(top: CosmosAppTheme.spacingM)),
-                BalanceHeading(
-                  wallet: widget.initialParams.wallet,
-                ),
-                Column(
-                  children: model.assetDetails.balances
-                      .map(
-                        (balance) => BalanceCard(
-                          data: balance,
-                          onTransferPressed: model.isSendMoneyLoading
-                              ? null
-                              : () {
-                                  presenter.transferTapped(
-                                    balance: balance,
-                                  );
-                                },
-                        ),
-                      )
-                      .toList(),
-                ),
+                BalanceHeading(wallet: widget.initialParams.wallet),
+                Column(children: model.assetDetails.balances.map((balance) => BalanceCard(data: balance)).toList()),
                 if (model.isSendMoneyLoading)
                   Padding(
                     padding: const EdgeInsets.only(top: CosmosAppTheme.spacingS),
                     child: Center(
-                      child: Text(
-                        strings.sendingMoney,
-                        textAlign: TextAlign.center,
-                      ),
+                      child: Text(strings.sendingMoney, textAlign: TextAlign.center),
                     ),
                   ),
               ],
