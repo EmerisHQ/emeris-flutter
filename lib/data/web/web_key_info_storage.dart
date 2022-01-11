@@ -1,11 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
-import 'package:transaction_signing_gateway/key_info_storage.dart';
 import 'package:transaction_signing_gateway/model/credentials_storage_failure.dart';
-import 'package:transaction_signing_gateway/model/private_wallet_credentials.dart';
 import 'package:transaction_signing_gateway/model/transaction_signing_failure.dart';
 import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
-import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
+import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 
 /// Dumb version of the keyInfoStorage, that keeps wallets in the memory. If needed, we can come
 /// up with something more sophisticated for web later on
@@ -42,4 +40,10 @@ class WebKeyInfoStorage implements KeyInfoStorage {
       getPrivateCredentials(walletLookupKey) //
           .map((creds) => right(true))
           .leftMap((fail) => right(false));
+
+  @override
+  Future<Either<CredentialsStorageFailure, Unit>> updatePublicWalletInfo({required WalletPublicInfo info}) {
+    // TODO: implement updatePublicWalletInfo
+    throw UnimplementedError();
+  }
 }
