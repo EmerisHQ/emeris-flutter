@@ -1,6 +1,6 @@
 name: Pull Request Worfklow
 
-on: [pull_request]
+on: [ pull_request ]
 
 env:
   FLUTTER_VERSION: '2.8.1'
@@ -17,28 +17,28 @@ jobs:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
-    - uses: amannn/action-semantic-pull-request@v3.4.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/checkout@v2
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-    - name: pub get
-      run: flutter pub get
+      - uses: amannn/action-semantic-pull-request@v3.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+      - name: pub get
+        run: flutter pub get
 
-    - name: check codestyle
-      run: find lib test -name "*.dart" -not -name "*.g.dart" -not -name "*.freezed.dart" -not -name "*.gen.dart" -exec dartfmt -l 120 --dry-run --set-exit-if-changed {} +;
+      - name: check codestyle
+        run: find lib test -name "*.dart" -not -name "*.g.dart" -not -name "*.freezed.dart" -not -name "*.gen.dart" -exec dartfmt -l 120 --dry-run --set-exit-if-changed {} +;
 
-    - name: dart analysis
-      run: flutter analyze
+      - name: dart analysis
+        run: flutter analyze
 
-    - name: tests
-      run: flutter test
-# TODO reenable it when proper development team is set up in app store connect
-#    - name: build iOS app
-#      run: flutter build ios
+      - name: tests
+        run: flutter test
+      # TODO reenable it when proper development team is set up in app store connect
+      #    - name: build iOS app
+      #      run: flutter build ios
 
-    - name: build Android app
-      timeout-minutes: 10
-      run: flutter build appbundle
+      - name: build Android app
+        timeout-minutes: 10
+        run: flutter build appbundle
