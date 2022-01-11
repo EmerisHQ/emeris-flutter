@@ -22,9 +22,9 @@ dependencies:
   flutter_mobx: 2.0.2
   dio: 4.0.1
   alan: 0.40.2+1
-  biometric_storage: 3.0.1
+  biometric_storage: 4.0.0-dev.1
   crypto: 3.0.1
-  pinput: 1.2.1
+  pinput: 1.2.2
   firebase_core: 1.8.0
   firebase_crashlytics: 2.2.4
   wallet_core:
