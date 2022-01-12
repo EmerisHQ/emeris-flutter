@@ -19,10 +19,11 @@ class _BackupLaterConfirmationSheetState extends State<BackupLaterConfirmationSh
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: CosmosAppTheme.spacingL,
-        vertical: CosmosAppTheme.spacingXL,
+      padding: EdgeInsets.symmetric(
+        horizontal: theme.spacingL,
+        vertical: theme.spacingXL,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,14 +33,14 @@ class _BackupLaterConfirmationSheetState extends State<BackupLaterConfirmationSh
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline4,
           ),
-          const SizedBox(height: CosmosAppTheme.spacingL),
+          SizedBox(height: theme.spacingL),
           CheckboxListTile(
             onChanged: (value) => setState(() => checked = !checked),
             value: checked,
             controlAffinity: ListTileControlAffinity.leading,
             title: Text(strings.walletSkipBackupConfirmationMessage),
           ),
-          const SizedBox(height: CosmosAppTheme.spacingL),
+          SizedBox(height: theme.spacingL),
           CosmosElevatedButton(
             text: strings.continueAction,
             onTap: checked //

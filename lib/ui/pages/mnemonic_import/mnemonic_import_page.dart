@@ -45,6 +45,7 @@ class _MnemonicImportPageState extends State<MnemonicImportPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Observer(
       builder: (context) => Scaffold(
         appBar: CosmosAppBar(
@@ -52,9 +53,9 @@ class _MnemonicImportPageState extends State<MnemonicImportPage> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: CosmosAppTheme.spacingL,
-              vertical: CosmosAppTheme.spacingM,
+            padding: EdgeInsets.symmetric(
+              horizontal: theme.spacingL,
+              vertical: theme.spacingM,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

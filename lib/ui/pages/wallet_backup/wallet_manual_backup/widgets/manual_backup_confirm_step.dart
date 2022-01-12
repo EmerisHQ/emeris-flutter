@@ -18,8 +18,9 @@ class ManualBackupConfirmStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(CosmosAppTheme.spacingL),
+      padding: EdgeInsets.all(theme.spacingL),
       child: Observer(
         builder: (context) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,7 +40,7 @@ class ManualBackupConfirmStep extends StatelessWidget {
                       onTapWord: presenter.onTapSelectedWord,
                       isValid: model.isWordsOrderValid,
                     ),
-                    const SizedBox(height: CosmosAppTheme.spacingL),
+                    SizedBox(height: theme.spacingL),
                     CosmosMnemonicWordsGrid(
                       physics: const NeverScrollableScrollPhysics(),
                       showIndices: false,

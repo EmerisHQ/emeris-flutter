@@ -12,7 +12,7 @@ class ManualBackupSuccessStep extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Icon(Icons.check_circle, size: 128),
-        const SizedBox(height: CosmosAppTheme.spacingL),
+        SizedBox(height: CosmosTheme.of(context).spacingL),
         Text(
           strings.walletCreatedSuccessMessage,
           style: Theme.of(context).textTheme.headline5,

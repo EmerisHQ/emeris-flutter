@@ -1,4 +1,4 @@
-import 'package:cosmos_ui_components/cosmos_app_theme.dart';
+import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/material.dart';
 
 class BulletPointMessage extends StatelessWidget {
@@ -8,17 +8,15 @@ class BulletPointMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Row(
       children: [
         Container(
           width: 30,
           height: 30,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: CosmosColors.lightInactive,
-          ),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: theme.colors.inactive),
         ),
-        const SizedBox(width: CosmosAppTheme.spacingM),
+        SizedBox(width: theme.spacingM),
         Expanded(child: Text(message)),
       ],
     );

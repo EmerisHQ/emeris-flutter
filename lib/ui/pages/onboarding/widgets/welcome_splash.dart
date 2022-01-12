@@ -7,18 +7,19 @@ class WelcomeSplash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: 128,
           height: 128,
-          decoration: const BoxDecoration(
-            color: CosmosColors.lightDivider,
+          decoration: BoxDecoration(
+            color: theme.colors.divider,
             shape: BoxShape.circle,
           ),
         ),
-        const SizedBox(height: CosmosAppTheme.spacingL),
+        SizedBox(height: theme.spacingL),
         Text(
           strings.welcomeToEmerisTitle,
           style: Theme.of(context).textTheme.headline4,
