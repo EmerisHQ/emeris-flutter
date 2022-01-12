@@ -17,8 +17,9 @@ class ManualBackupIntroStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(CosmosAppTheme.spacingL),
+      padding: EdgeInsets.all(theme.spacingL),
       child: Observer(
         builder: (context) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,7 +29,7 @@ class ManualBackupIntroStep extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline4,
             ),
-            const SizedBox(height: CosmosAppTheme.spacingM),
+            SizedBox(height: theme.spacingM),
             Text(
               strings.backUpYourWalletMessage,
               textAlign: TextAlign.center,
@@ -50,9 +51,7 @@ class ManualBackupIntroStep extends StatelessWidget {
               controlAffinity: ListTileControlAffinity.leading,
               title: Text(strings.recoveryPhraseCheckbox),
             ),
-            const SizedBox(
-              height: CosmosAppTheme.spacingM,
-            ),
+            SizedBox(height: theme.spacingM),
             CosmosElevatedButton(
               text: strings.continueAction,
               onTap: model.confirmationChecked //
