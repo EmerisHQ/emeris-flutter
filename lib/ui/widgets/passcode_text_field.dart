@@ -27,7 +27,7 @@ class _PasscodeTextFieldState extends State<PasscodeTextField> {
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
       border: Border.all(color: Theme.of(context).colorScheme.secondary),
-      borderRadius: BorderRadius.circular(CosmosAppTheme.radiusS),
+      borderRadius: BorderRadius.circular(CosmosTheme.of(context).radiusS),
     );
   }
 

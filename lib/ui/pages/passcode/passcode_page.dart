@@ -50,12 +50,11 @@ class _PasscodePageState extends State<PasscodePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Scaffold(
       appBar: const CosmosAppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(
-          CosmosAppTheme.spacingL,
-        ),
+        padding: EdgeInsets.all(theme.spacingL),
         child: Observer(
           builder: (context) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +64,7 @@ class _PasscodePageState extends State<PasscodePage> {
                 _title,
                 style: Theme.of(context).textTheme.headline4,
               ),
-              const SizedBox(height: CosmosAppTheme.spacingL),
+              SizedBox(height: theme.spacingL),
               if (model.mode == PasscodeMode.firstPasscode)
                 PasscodeTextField(
                   key: const ValueKey(PasscodeMode.firstPasscode),
@@ -78,7 +77,7 @@ class _PasscodePageState extends State<PasscodePage> {
                   text: model.confirmPasscodeText,
                   onSubmit: presenter.onPasscodeSubmit,
                 ),
-              const SizedBox(height: CosmosAppTheme.spacingXL * 3),
+              SizedBox(height: theme.spacingXL * 3),
             ],
           ),
         ),

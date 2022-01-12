@@ -1,4 +1,4 @@
-import 'package:cosmos_ui_components/cosmos_app_theme.dart';
+import 'package:cosmos_ui_components/cosmos_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/routing/routing_initial_params.dart';
@@ -11,24 +11,26 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      darkTheme: CosmosAppTheme.buildDarkAppTheme(),
-      theme: CosmosAppTheme.buildAppTheme(),
-      home: const RoutingPage(
-        initialParams: RoutingInitialParams(
-          initializeApp: true,
+    return CosmosTheme(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        darkTheme: CosmosTheme.buildDarkAppTheme(),
+        theme: CosmosTheme.buildAppTheme(),
+        home: const RoutingPage(
+          initialParams: RoutingInitialParams(
+            initializeApp: true,
+          ),
         ),
+        navigatorKey: AppNavigator.navigatorKey,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('en', '')],
       ),
-      navigatorKey: AppNavigator.navigatorKey,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [Locale('en', '')],
     );
   }
 }

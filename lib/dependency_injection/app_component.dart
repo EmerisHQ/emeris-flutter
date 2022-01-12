@@ -71,10 +71,6 @@ import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/clipboard_manager.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
-import 'package:transaction_signing_gateway/alan/alan_transaction_broadcaster.dart';
-import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
-import 'package:transaction_signing_gateway/key_info_storage.dart';
-import 'package:transaction_signing_gateway/mobile/mobile_key_info_storage.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/transaction_summary_ui.dart';
 import 'package:wallet_core/wallet_core.dart';
@@ -99,7 +95,9 @@ void _configureTransactionSigningGateway() {
   getIt.registerFactory<KeyInfoStorage>(
     () => kIsWeb
         ? WebKeyInfoStorage()
-        : MobileKeyInfoStorage(
+        : CosmosKeyInfoStorage(
+            plainDataStore: SharedPrefsPlainDataStore(),
+            secureDataStore: FlutterSecureStorageDataStore(),
             serializers: [
               AlanCredentialsSerializer(),
               EthereumCredentialsSerializer(),

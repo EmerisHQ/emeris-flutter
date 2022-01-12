@@ -43,6 +43,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Scaffold(
       appBar: CosmosAppBar(actions: [IconButton(icon: const Icon(Icons.qr_code_scanner_sharp), onPressed: () {})]),
       body: Center(
@@ -60,13 +61,13 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                   subtitle: Text(
                     '\$${model.assetDetails.totalAmountInUSD.displayText}',
                     style: TextStyle(
-                      fontSize: CosmosAppTheme.fontSizeXXL,
+                      fontSize: theme.fontSizeXXL,
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                 ),
                 CosmosButtonBar(onReceivePressed: () {}, onSendPressed: () {}),
-                const Padding(padding: EdgeInsets.only(top: CosmosAppTheme.spacingM)),
+                Padding(padding: EdgeInsets.only(top: theme.spacingM)),
                 BalanceHeading(
                   wallet: widget.initialParams.wallet,
                 ),
@@ -88,7 +89,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                 ),
                 if (model.isSendMoneyLoading)
                   Padding(
-                    padding: const EdgeInsets.only(top: CosmosAppTheme.spacingS),
+                    padding: EdgeInsets.only(top: theme.spacingS),
                     child: Center(
                       child: Text(
                         strings.sendingMoney,

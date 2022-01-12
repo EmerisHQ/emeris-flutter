@@ -1,5 +1,4 @@
-import 'package:cosmos_ui_components/components/mnemonic_choice_chip.dart';
-import 'package:cosmos_ui_components/cosmos_app_theme.dart';
+import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:cosmos_utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/model/mnemonic.dart';
@@ -19,6 +18,7 @@ class SelectedMnemonicWordsArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height / 4),
       child: Container(
@@ -26,12 +26,12 @@ class SelectedMnemonicWordsArea extends StatelessWidget {
           border: Border.all(),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(CosmosAppTheme.spacingM),
+          padding: EdgeInsets.all(theme.spacingM),
           child: Stack(
             children: [
               Wrap(
-                spacing: CosmosAppTheme.spacingS,
-                runSpacing: CosmosAppTheme.spacingS,
+                spacing: theme.spacingS,
+                runSpacing: theme.spacingS,
                 children: selectedWords //
                     .mapIndexed(
                       (index, it) => MnemonicChoiceChip(
@@ -52,7 +52,7 @@ class SelectedMnemonicWordsArea extends StatelessWidget {
                     strings.invalidOrderMessage,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                          color: CosmosColors.error,
+                          color: theme.colors.error,
                           fontWeight: FontWeight.bold,
                         ),
                   ),

@@ -1,5 +1,3 @@
-import 'package:cosmos_ui_components/components/cosmos_elevated_button.dart';
-import 'package:cosmos_ui_components/cosmos_app_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
@@ -43,10 +41,11 @@ class _WalletBackupIntroPageState extends State<WalletBackupIntroPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Scaffold(
       appBar: const EmerisLogoAppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(CosmosAppTheme.spacingL),
+        padding: EdgeInsets.all(theme.spacingL),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -55,7 +54,7 @@ class _WalletBackupIntroPageState extends State<WalletBackupIntroPage> {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline4,
             ),
-            const SizedBox(height: CosmosAppTheme.spacingM),
+            SizedBox(height: theme.spacingM),
             Text(
               strings.backUpYourWalletMessage,
               textAlign: TextAlign.center,
@@ -64,15 +63,15 @@ class _WalletBackupIntroPageState extends State<WalletBackupIntroPage> {
             BulletPointMessage(
               message: strings.backUpWalletInfoMessage1,
             ),
-            const SizedBox(height: CosmosAppTheme.spacingL),
+            SizedBox(height: theme.spacingL),
             BulletPointMessage(
               message: strings.backUpWalletInfoMessage2,
             ),
-            const SizedBox(height: CosmosAppTheme.spacingL),
+            SizedBox(height: theme.spacingL),
             BulletPointMessage(
               message: strings.backUpWalletInfoMessage3,
             ),
-            const SizedBox(height: CosmosAppTheme.spacingM),
+            SizedBox(height: theme.spacingM),
             const Spacer(),
             CosmosElevatedButton(
               text: model.isIcloudAvailable ? strings.backUpIcloudAction : strings.backUpGoogleDriveAction,

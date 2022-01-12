@@ -40,13 +40,14 @@ class _WalletNamePageState extends State<WalletNamePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Scaffold(
       appBar: const EmerisLogoAppBar(),
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
             child: Padding(
-              padding: const EdgeInsets.all(CosmosAppTheme.spacingL),
+              padding: EdgeInsets.all(theme.spacingL),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,9 +56,9 @@ class _WalletNamePageState extends State<WalletNamePage> {
                     strings.nameYourWalletTitle,
                     style: Theme.of(context).textTheme.headline5,
                   ),
-                  const SizedBox(height: CosmosAppTheme.spacingL),
+                  SizedBox(height: theme.spacingL),
                   Text(strings.nameYourWalletMessage),
-                  const SizedBox(height: CosmosAppTheme.spacingXL),
+                  SizedBox(height: theme.spacingXL),
                   TextFormField(
                     autofocus: true,
                     onChanged: presenter.onChanged,

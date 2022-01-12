@@ -3,7 +3,7 @@ name: Pull Request Worfklow
 on: [pull_request]
 
 env:
-  FLUTTER_VERSION: '2.5.1'
+  FLUTTER_VERSION: '2.8.1'
   JAVA_VERSION: '12'
   RUBY_VERSION: '2.7'
   LC_ALL: en_US.UTF-8
@@ -28,7 +28,7 @@ jobs:
       run: flutter pub get
 
     - name: check codestyle
-      run: find lib test -name "*.dart" -not -name "*.g.dart" -not -name "*.freezed.dart" -not -name "*.gen.dart" -exec dartfmt -l 120 --dry-run --set-exit-if-changed {} +;
+      run: find lib test -name "*.dart" -not -name "*.g.dart" -not -name "*.freezed.dart" -not -name "*.gen.dart" -exec flutter format -l 120 --dry-run --set-exit-if-changed {} +;
 
     - name: dart analysis
       run: flutter analyze

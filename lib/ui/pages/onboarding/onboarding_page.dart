@@ -1,4 +1,3 @@
-import 'package:cosmos_ui_components/components/cosmos_elevated_button.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
@@ -42,13 +41,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CosmosTheme.of(context);
     return Scaffold(
       appBar: const EmerisLogoAppBar(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: CosmosAppTheme.spacingL,
-            vertical: CosmosAppTheme.spacingM,
+          padding: EdgeInsets.symmetric(
+            horizontal: theme.spacingL,
+            vertical: theme.spacingM,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

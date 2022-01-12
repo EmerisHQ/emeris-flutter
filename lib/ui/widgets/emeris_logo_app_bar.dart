@@ -14,7 +14,7 @@ class EmerisLogoAppBar extends StatelessWidget with PreferredSizeWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.album_outlined), // TODO replace with proper emeris logo
-          const SizedBox(width: CosmosAppTheme.spacingM),
+          SizedBox(width: CosmosTheme.of(context).spacingM),
           Text(strings.appTitle),
         ],
       ),
