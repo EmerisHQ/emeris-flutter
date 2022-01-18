@@ -52,6 +52,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
     return Scaffold(
       appBar: CosmosAppBar(
         leading: _gradientAvatar(context),
+        preferredHeight: 70,
         actions: [
           IconButton(icon: const Icon(Icons.qr_code_scanner_sharp), onPressed: () {}),
         ],
@@ -125,51 +126,5 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
         ),
       ),
     );
-  }
-}
-
-class CosmosAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CosmosAppBar({
-    Key? key,
-    this.title,
-    this.actions,
-    this.leading,
-  }) : super(key: key);
-
-  final String? title;
-  final List<Widget>? actions;
-  final Widget? leading;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SizedBox(width: CosmosTheme.of(context).spacingS),
-              if (leading != null) leading!,
-              const Spacer(),
-              if (actions != null) ...actions!,
-            ],
-          ),
-          if (title != null)
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: CosmosTheme.of(context).spacingL),
-              child: Text(title!, style: CosmosTextTheme.titleSans2Bold),
-            ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Size get preferredSize => Size.fromHeight(title == null ? kToolbarHeight : 120);
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(StringProperty('title', title));
   }
 }
