@@ -6,6 +6,8 @@ abstract class WalletsListViewModel {
   bool get isEmpty;
 
   List<EmerisWallet> get wallets;
+
+  set setCurrentWallet(EmerisWallet wallet);
 }
 
 class WalletsListPresentationModel with WalletsListPresentationModelBase implements WalletsListViewModel {
@@ -19,6 +21,9 @@ class WalletsListPresentationModel with WalletsListPresentationModelBase impleme
 
   @override
   List<EmerisWallet> get wallets => _walletsStore.wallets;
+
+  @override
+  set setCurrentWallet(EmerisWallet wallet) => _walletsStore.currentWallet = wallet;
 }
 
 //////////////////BOILERPLATE

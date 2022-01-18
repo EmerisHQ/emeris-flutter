@@ -7,8 +7,9 @@ import 'package:flutter_app/navigation/no_routes.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_page.dart';
+import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 
-class WalletDetailsNavigator with NoRoutes, SendMoneyRoute, ErrorDialogRoute, WalletDetailsRoute {
+class WalletDetailsNavigator with NoRoutes, SendMoneyRoute, ErrorDialogRoute, WalletDetailsRoute, WalletsListRoute {
   @override
   late BuildContext context;
   @override

@@ -46,4 +46,10 @@ class WebKeyInfoStorage implements KeyInfoStorage {
     // TODO: implement updatePublicWalletInfo
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<CredentialsStorageFailure, Unit>> deleteWalletCredentials({required WalletPublicInfo publicInfo}) {
+    // TODO: implement deleteWalletCredentials
+    throw UnimplementedError();
+  }
 }

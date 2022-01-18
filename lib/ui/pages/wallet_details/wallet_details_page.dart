@@ -1,9 +1,13 @@
+import 'package:cosmos_ui_components/cosmos_text_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
+import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_details/widgets/asset_portfolio_heading.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
@@ -45,64 +49,126 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
     return Scaffold(
-      appBar: CosmosAppBar(actions: [IconButton(icon: const Icon(Icons.qr_code_scanner_sharp), onPressed: () {})]),
-      body: Center(
-        child: Observer(
-          builder: (context) => ContentStateSwitcher(
-            contentChild: Column(
-              children: [
-                ListTile(
-                  title: Row(
-                    children: [
-                      Text(strings.walletDetailsTitle(widget.initialParams.wallet.walletDetails.walletAlias)),
-                      const Icon(Icons.keyboard_arrow_down),
-                    ],
+      appBar: CosmosAppBar(
+        leading: _gradientAvatar(context),
+        actions: [
+          IconButton(icon: const Icon(Icons.qr_code_scanner_sharp), onPressed: () {}),
+        ],
+      ),
+      body: Observer(
+        builder: (context) => ContentStateSwitcher(
+          contentChild: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AssetPortfolioHeading(
+                title: strings.walletDetailsTitle(widget.initialParams.wallet.walletDetails.walletAlias),
+                onTap: () {
+                  presenter.navigator.openWalletsList(const WalletsListInitialParams());
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: theme.spacingL),
+                child: Text(
+                  '\$${model.assetDetails.totalAmountInUSD.displayText}',
+                  style: TextStyle(
+                    fontSize: theme.fontSizeXXL,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  subtitle: Text(
-                    '\$${model.assetDetails.totalAmountInUSD.displayText}',
-                    style: TextStyle(
-                      fontSize: theme.fontSizeXXL,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
                 ),
-                CosmosButtonBar(onReceivePressed: () {}, onSendPressed: () {}),
-                Padding(padding: EdgeInsets.only(top: theme.spacingM)),
-                BalanceHeading(
-                  wallet: widget.initialParams.wallet,
-                ),
-                Column(
-                  children: model.assetDetails.balances
-                      .map(
-                        (balance) => BalanceCard(
-                          data: balance,
-                          onTransferPressed: model.isSendMoneyLoading
-                              ? null
-                              : () {
-                                  presenter.transferTapped(
-                                    balance: balance,
-                                  );
-                                },
-                        ),
-                      )
-                      .toList(),
-                ),
-                if (model.isSendMoneyLoading)
-                  Padding(
-                    padding: EdgeInsets.only(top: theme.spacingS),
-                    child: Center(
-                      child: Text(
-                        strings.sendingMoney,
-                        textAlign: TextAlign.center,
+              ),
+              CosmosButtonBar(onReceivePressed: () {}, onSendPressed: () {}),
+              Padding(padding: EdgeInsets.only(top: theme.spacingM)),
+              BalanceHeading(
+                wallet: widget.initialParams.wallet,
+              ),
+              Column(
+                children: model.assetDetails.balances
+                    .map(
+                      (balance) => BalanceCard(
+                        data: balance,
+                        onTransferPressed:
+                            model.isSendMoneyLoading ? null : () => presenter.transferTapped(balance: balance),
                       ),
+                    )
+                    .toList(),
+              ),
+              if (model.isSendMoneyLoading)
+                Padding(
+                  padding: EdgeInsets.only(top: theme.spacingS),
+                  child: Center(
+                    child: Text(
+                      strings.sendingMoney,
+                      textAlign: TextAlign.center,
                     ),
                   ),
-              ],
-            ),
-            isLoading: model.isLoading,
+                ),
+            ],
+          ),
+          isLoading: model.isLoading,
+        ),
+      ),
+    );
+  }
+
+  Widget _gradientAvatar(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(CosmosTheme.of(context).spacingL),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: SizedBox(
+          height: 35,
+          child: InkWell(
+            onTap: () {},
+            child: GradientAvatar(stringKey: widget.initialParams.wallet.walletDetails.walletAddress),
           ),
         ),
       ),
     );
+  }
+}
+
+class CosmosAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CosmosAppBar({
+    Key? key,
+    this.title,
+    this.actions,
+    this.leading,
+  }) : super(key: key);
+
+  final String? title;
+  final List<Widget>? actions;
+  final Widget? leading;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(width: CosmosTheme.of(context).spacingS),
+              if (leading != null) leading!,
+              const Spacer(),
+              if (actions != null) ...actions!,
+            ],
+          ),
+          if (title != null)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: CosmosTheme.of(context).spacingL),
+              child: Text(title!, style: CosmosTextTheme.titleSans2Bold),
+            ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(title == null ? kToolbarHeight : 120);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty('title', title));
   }
 }

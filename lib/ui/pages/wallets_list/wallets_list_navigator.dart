@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_page.dart';
+import 'package:flutter_app/ui/pages/wallets_list/wallets_list_sheet.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class WalletsListNavigator with NoRoutes, ErrorDialogRoute, WalletDetailsRoute {
   @override
@@ -17,10 +17,12 @@ class WalletsListNavigator with NoRoutes, ErrorDialogRoute, WalletDetailsRoute {
 }
 
 abstract class WalletsListRoute {
-  Future<void> openWalletsList(WalletsListInitialParams initialParams) async => appNavigator.push(
-        context,
-        materialRoute(
-          const WalletsListPage(
+  Future<void> openWalletsList(WalletsListInitialParams initialParams) async => showMaterialModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => SizedBox(
+          height: MediaQuery.of(context).size.height / 1.06,
+          child: const WalletsListSheet(
             initialParams: WalletsListInitialParams(),
           ),
         ),

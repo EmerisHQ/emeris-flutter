@@ -12,6 +12,8 @@ class RoutingPresentationModel with RoutingPresentationModelBase implements Rout
 
   List<EmerisWallet> get wallets => _walletsStore.wallets;
 
+  WalletsStore get walletsStore => _walletsStore;
+
   bool get initializeApp => _initialParams.initializeApp;
 }
 

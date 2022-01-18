@@ -17,5 +17,8 @@ class WalletsListPresenter {
 
   Future<void> addWalletClicked() async => notImplemented(AppNavigator.navigatorKey.currentContext!);
 
-  void walletClicked(EmerisWallet wallet) => navigator.openWalletDetails(wallet);
+  void walletClicked(EmerisWallet wallet) {
+    viewModel.setCurrentWallet = wallet;
+    navigator.appNavigator.close(navigator.context);
+  }
 }

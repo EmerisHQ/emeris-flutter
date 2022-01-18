@@ -5,9 +5,10 @@ import 'package:flutter_app/navigation/close_route.dart';
 import 'package:flutter_app/presentation/routing/routing_initial_params.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_page.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 
-class RoutingNavigator with OnboardingRoute, WalletsListRoute, CloseRoute {
+class RoutingNavigator with OnboardingRoute, WalletsListRoute, CloseRoute, WalletDetailsRoute {
   @override
   late BuildContext context;
   @override
