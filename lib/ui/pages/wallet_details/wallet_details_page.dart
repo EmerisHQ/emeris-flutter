@@ -1,5 +1,6 @@
 import 'package:cosmos_ui_components/cosmos_text_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
@@ -69,7 +70,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
               Padding(
                 padding: EdgeInsets.only(left: theme.spacingL),
                 child: Text(
-                  '\$${model.assetDetails.totalAmountInUSD.displayText}',
+                  formatAmount(model.assetDetails.totalAmountInUSD.value.toDouble()),
                   style: TextStyle(
                     fontSize: theme.fontSizeXXL,
                     color: Theme.of(context).colorScheme.secondary,
