@@ -1,5 +1,4 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
-import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
 import 'package:flutter_app/ui/widgets/emeris_gradient_avatar.dart';
+import 'package:flutter_app/utils/emeris_amount_formatter.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -56,8 +56,12 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
           address: widget.initialParams.wallet.walletDetails.walletAddress,
         ),
         preferredHeight: 67,
-        actions: [
-          IconButton(icon: const Icon(Icons.qr_code_scanner_sharp), onPressed: () {}),
+        actions: const [
+          IconButton(
+            /// TODO: Pick this up from the design after Figma is finalised
+            icon: Icon(Icons.qr_code_scanner_sharp),
+            onPressed: showNotImplemented,
+          ),
         ],
       ),
       body: Observer(
@@ -74,18 +78,16 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
               Padding(
                 padding: EdgeInsets.only(left: theme.spacingL),
                 child: Text(
-                  formatAmount(model.assetDetails.totalAmountInUSD.value.toDouble()),
+                  formatEmerisAmount(model.assetDetails.totalAmountInUSD),
                   style: TextStyle(
                     fontSize: theme.fontSizeXXL,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ),
-              CosmosButtonBar(onReceivePressed: () {}, onSendPressed: () {}),
+              const CosmosButtonBar(onReceivePressed: showNotImplemented, onSendPressed: showNotImplemented),
               Padding(padding: EdgeInsets.only(top: theme.spacingM)),
-              BalanceHeading(
-                wallet: widget.initialParams.wallet,
-              ),
+              BalanceHeading(wallet: widget.initialParams.wallet),
               Column(
                 children: model.assetDetails.balances
                     .map(

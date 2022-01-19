@@ -28,4 +28,6 @@ class WalletsListPresenter {
         );
     navigator.appNavigator.close(navigator.context);
   }
+
+  void editClicked() => _model.isEditingAccountList = !_model.isEditingAccountList;
 }

@@ -1,6 +1,6 @@
-import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/utils/emeris_amount_formatter.dart';
 
 class BalanceCard extends StatelessWidget {
   final Balance data;
@@ -25,11 +25,11 @@ class BalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            formatAmount(data.dollarPrice.value.toDouble()),
+            formatEmerisAmount(data.dollarPrice),
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           Text(
-            '${formatAmount(data.amount.value.toDouble(), symbol: '')} ${data.denom.text}',
+            '${formatEmerisAmount(data.amount)} ${data.denom.text}',
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
         ],
