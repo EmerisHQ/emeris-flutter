@@ -1,3 +1,4 @@
+import 'package:cosmos_ui_components/components/cosmos_bottom_sheet_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
@@ -20,8 +21,10 @@ abstract class WalletsListRoute {
   Future<void> openWalletsList(WalletsListInitialParams initialParams) async => showMaterialModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
-        builder: (context) => const WalletsListSheet(
-          initialParams: WalletsListInitialParams(),
+        builder: (context) => const CosmosBottomSheetContainer(
+          child: WalletsListSheet(
+            initialParams: WalletsListInitialParams(),
+          ),
         ),
       );
 

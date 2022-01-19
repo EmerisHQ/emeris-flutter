@@ -53,45 +53,43 @@ class _WalletsListSheetState extends State<WalletsListSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
-    return CosmosBottomSheetContainer(
-      child: SafeArea(
-        top: false,
-        child: ContentStateSwitcher(
-          emptyChild: EmptyListMessage(
-            message: strings.walletListEmptyText,
-          ),
-          isEmpty: model.isEmpty,
-          contentChild: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CosmosBottomSheetHeader(
-                title: 'Wallets',
-                titleTextStyle: CosmosTextTheme.title2Bold,
-                leading: CosmosTextButton(
-                  text: isEditingAccountList ? 'Done' : 'Edit',
-                  onTap: () => setState(() {
-                    isEditingAccountList = !isEditingAccountList;
-                  }),
-                ),
-                actions: [CosmosTextButton(text: 'Close', onTap: () => Navigator.of(context).pop())],
+    return SafeArea(
+      top: false,
+      child: ContentStateSwitcher(
+        emptyChild: EmptyListMessage(
+          message: strings.walletListEmptyText,
+        ),
+        isEmpty: model.isEmpty,
+        contentChild: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CosmosBottomSheetHeader(
+              title: 'Wallets',
+              titleTextStyle: CosmosTextTheme.title2Bold,
+              leading: CosmosTextButton(
+                text: isEditingAccountList ? 'Done' : 'Edit',
+                onTap: () => setState(() {
+                  isEditingAccountList = !isEditingAccountList;
+                }),
               ),
-              SizedBox(height: theme.spacingXL),
-              _buildMainList(),
-              const CosmosDivider(),
-              SizedBox(height: theme.spacingL),
-              CosmosCircleTextButton(
-                onTap: () {},
-                text: 'Create account',
-                asset: 'assets/images/plus_circle.png',
-              ),
-              CosmosCircleTextButton(
-                onTap: () {},
-                text: 'Import account',
-                asset: 'assets/images/arrow_down_circle.png',
-              ),
-              SizedBox(height: theme.spacingL),
-            ],
-          ),
+              actions: [CosmosTextButton(text: 'Close', onTap: () => Navigator.of(context).pop())],
+            ),
+            SizedBox(height: theme.spacingXL),
+            _buildMainList(),
+            const CosmosDivider(),
+            SizedBox(height: theme.spacingL),
+            CosmosCircleTextButton(
+              onTap: () {},
+              text: 'Create account',
+              asset: 'assets/images/plus_circle.png',
+            ),
+            CosmosCircleTextButton(
+              onTap: () {},
+              text: 'Import account',
+              asset: 'assets/images/arrow_down_circle.png',
+            ),
+            SizedBox(height: theme.spacingL),
+          ],
         ),
       ),
     );
