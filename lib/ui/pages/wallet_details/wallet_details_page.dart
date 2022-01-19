@@ -2,6 +2,7 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_app/ui/pages/wallet_details/widgets/asset_portfolio_head
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
+import 'package:flutter_app/ui/widgets/emeris_gradient_avatar.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -49,8 +51,11 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
     final theme = CosmosTheme.of(context);
     return Scaffold(
       appBar: CosmosAppBar(
-        leading: _gradientAvatar(context),
-        preferredHeight: 70,
+        leading: EmerisGradientAvatar(
+          onTap: showNotImplemented,
+          address: widget.initialParams.wallet.walletDetails.walletAddress,
+        ),
+        preferredHeight: 67,
         actions: [
           IconButton(icon: const Icon(Icons.qr_code_scanner_sharp), onPressed: () {}),
         ],
@@ -105,22 +110,6 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
             ],
           ),
           isLoading: model.isLoading,
-        ),
-      ),
-    );
-  }
-
-  Widget _gradientAvatar(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(CosmosTheme.of(context).spacingL),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: SizedBox(
-          height: 35,
-          child: InkWell(
-            onTap: () {},
-            child: GradientAvatar(stringKey: widget.initialParams.wallet.walletDetails.walletAddress),
-          ),
         ),
       ),
     );

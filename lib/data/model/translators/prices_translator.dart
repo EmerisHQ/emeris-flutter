@@ -16,7 +16,7 @@ extension PricesTranslator on PricesDataJson {
                   (e) => Token(
                     denom: Denom(e.symbol),
                     amount: Amount.fromString(e.price.toString()),
-                    supply: e.supply,
+                    supply: e.supply.toDouble(),
                   ),
                 )
                 .toList() ??

@@ -20,11 +20,8 @@ abstract class WalletsListRoute {
   Future<void> openWalletsList(WalletsListInitialParams initialParams) async => showMaterialModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
-        builder: (context) => SizedBox(
-          height: MediaQuery.of(context).size.height / 1.06,
-          child: const WalletsListSheet(
-            initialParams: WalletsListInitialParams(),
-          ),
+        builder: (context) => const WalletsListSheet(
+          initialParams: WalletsListInitialParams(),
         ),
       );
 
