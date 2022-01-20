@@ -27,6 +27,7 @@ dependencies:
   pinput: 1.2.2
   firebase_core: 1.8.0
   firebase_crashlytics: 2.2.4
+  modal_bottom_sheet: 2.0.0
   wallet_core:
     git:
       url: https://github.com/wal33d006/wallet_core.git
@@ -72,3 +73,6 @@ flutter:
 
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/images/

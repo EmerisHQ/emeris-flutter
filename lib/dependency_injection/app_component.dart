@@ -18,6 +18,7 @@ import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
+import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
@@ -201,11 +202,14 @@ void _configureUseCases() {
   getIt.registerFactory<VerifyWalletPasswordUseCase>(
     () => VerifyWalletPasswordUseCase(getIt()),
   );
+  getIt.registerFactory<ChangeCurrentWalletUseCase>(
+    () => ChangeCurrentWalletUseCase(getIt()),
+  );
 }
 
 void _configureMvp() {
   getIt.registerFactoryParam<WalletsListPresenter, WalletsListPresentationModel, dynamic>(
-    (_model, _) => WalletsListPresenter(_model, getIt()),
+    (_model, _) => WalletsListPresenter(_model, getIt(), getIt()),
   );
   getIt.registerFactory<WalletsListNavigator>(
     () => WalletsListNavigator(getIt()),
@@ -223,7 +227,7 @@ void _configureMvp() {
     () => SendMoneyNavigator(getIt()),
   );
   getIt.registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
-    (_model, _) => RoutingPresenter(_model, getIt(), getIt()),
+    (_model, _) => RoutingPresenter(_model, getIt(), getIt(), getIt()),
   );
   getIt.registerFactory<RoutingNavigator>(
     () => RoutingNavigator(getIt()),
