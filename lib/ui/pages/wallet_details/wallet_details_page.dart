@@ -4,7 +4,6 @@ import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
-import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/asset_portfolio_heading.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
@@ -74,9 +73,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
             children: [
               AssetPortfolioHeading(
                 title: strings.walletDetailsTitle(widget.initialParams.wallet.walletDetails.walletAlias),
-                onTap: () {
-                  presenter.navigator.openWalletsList(const WalletsListInitialParams());
-                },
+                onTap: presenter.onTapPortfolioHeading,
               ),
               Padding(
                 padding: EdgeInsets.only(left: theme.spacingL),
@@ -88,7 +85,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                   ),
                 ),
               ),
-              const CosmosButtonBar(onReceivePressed: showNotImplemented, onSendPressed: showNotImplemented),
+              CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),
               Padding(padding: EdgeInsets.only(top: theme.spacingM)),
               BalanceHeading(wallet: widget.initialParams.wallet),
               Column(
