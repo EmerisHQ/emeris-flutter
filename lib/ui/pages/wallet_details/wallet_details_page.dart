@@ -34,7 +34,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
   WalletDetailsViewModel get model => presenter.viewModel;
 
   /// TODO: move it to somewhere as a global constant
-  final double APP_BAR_HEIGHT = 67;
+  static const double appBarHeight = 67;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
           onTap: showNotImplemented,
           address: widget.initialParams.wallet.walletDetails.walletAddress,
         ),
-        preferredHeight: APP_BAR_HEIGHT,
+        preferredHeight: appBarHeight,
         actions: const [
           IconButton(
             /// TODO: Pick this up from the design after Figma is finalised

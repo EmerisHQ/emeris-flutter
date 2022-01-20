@@ -29,8 +29,6 @@ class _WalletsListSheetState extends State<WalletsListSheet> {
 
   WalletsListViewModel get model => presenter.viewModel;
 
-  bool isEditingAccountList = false;
-
   List<WalletInfo> get walletInfos => model.wallets
       .map(
         (e) => WalletInfo(
