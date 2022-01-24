@@ -93,8 +93,12 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                     .map(
                       (balance) => BalanceCard(
                         data: balance,
-                        onTransferPressed:
-                            model.isSendMoneyLoading ? null : () => presenter.transferTapped(balance: balance),
+                        onTap: model.isSendMoneyLoading
+                            ? null
+                            : () => presenter.transferTapped(
+                                  balance: balance,
+                                  assetDetails: model.assetDetails,
+                                ),
                       ),
                     )
                     .toList(),

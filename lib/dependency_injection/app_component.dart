@@ -27,6 +27,8 @@ import 'package:flutter_app/domain/use_cases/verify_wallet_password_use_case.dar
 import 'package:flutter_app/domain/utils/password_manager.dart';
 import 'package:flutter_app/global.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/presentation/asset_details/asset_details_presentation_model.dart';
+import 'package:flutter_app/presentation/asset_details/asset_details_presenter.dart';
 import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
 import 'package:flutter_app/presentation/routing/routing_presenter.dart';
 import 'package:flutter_app/presentation/send_money/send_money_presentation_model.dart';
@@ -40,6 +42,7 @@ import 'package:flutter_app/ui/pages/add_wallet/add_wallet_presenter.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_navigator.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presenter.dart';
+import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/import_wallet/import_wallet_navigator.dart';
 import 'package:flutter_app/ui/pages/import_wallet/import_wallet_presentation_model.dart';
 import 'package:flutter_app/ui/pages/import_wallet/import_wallet_presenter.dart';
@@ -290,5 +293,12 @@ void _configureMvp() {
   );
   getIt.registerFactory<MnemonicImportNavigator>(
     () => MnemonicImportNavigator(getIt()),
+  );
+
+  getIt.registerFactoryParam<AssetDetailsPresenter, AssetDetailsPresentationModel, dynamic>(
+    (_model, _) => AssetDetailsPresenter(_model, getIt()),
+  );
+  getIt.registerFactory<AssetDetailsNavigator>(
+    () => AssetDetailsNavigator(getIt()),
   );
 }
