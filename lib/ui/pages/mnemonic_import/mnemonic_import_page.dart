@@ -74,7 +74,7 @@ class _MnemonicImportPageState extends State<MnemonicImportPage> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: CosmosTextButton(
-                          text: strings.whatIsRecoveryPhraseAction,
+                          text: strings.mnemonicHint,
                           onTap: presenter.onTapWhatIsRecovery,
                         ),
                       ),

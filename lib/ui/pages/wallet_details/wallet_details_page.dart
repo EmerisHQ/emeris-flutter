@@ -2,9 +2,10 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
-import 'package:flutter_app/presentation/wallet_details/wallet_details_initial_params.dart';
-import 'package:flutter_app/presentation/wallet_details/wallet_details_presenter.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presentation_model.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/asset_portfolio_heading.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
@@ -93,8 +94,12 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
                     .map(
                       (balance) => BalanceCard(
                         data: balance,
-                        onTransferPressed:
-                            model.isSendMoneyLoading ? null : () => presenter.transferTapped(balance: balance),
+                        onTap: model.isSendMoneyLoading
+                            ? null
+                            : () => presenter.transferTapped(
+                                  balance: balance,
+                                  assetDetails: model.assetDetails,
+                                ),
                       ),
                     )
                     .toList(),

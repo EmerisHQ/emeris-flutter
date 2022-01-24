@@ -3,7 +3,7 @@ import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
-import 'package:flutter_app/presentation/send_money/send_money_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money_initial_params.dart';
 import 'package:mobx/mobx.dart';
 import 'package:transaction_signing_gateway/model/transaction_hash.dart';
 

@@ -138,5 +138,10 @@
   "enterRecoveryPhraseHint": "Enter your recovery phrase",
   "importAction": "Import",
   "pasteAction": "Paste",
-  "whatIsRecoveryPhraseAction": "What's a recovery phrase?"
+  "mnemonicHint": "What's a recovery phrase?",
+  "availableTitle": "Available",
+  "stakedTitle": "Staked",
+  "pooledTitle": "Pooled",
+  "buyCryptoAction": "Buy crypto",
+  "chainsTitle": "Chains"
 }
