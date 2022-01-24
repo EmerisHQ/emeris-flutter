@@ -1,6 +1,6 @@
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
-import 'package:flutter_app/presentation/routing/routing_initial_params.dart';
+import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 
 abstract class RoutingViewModel {}
 

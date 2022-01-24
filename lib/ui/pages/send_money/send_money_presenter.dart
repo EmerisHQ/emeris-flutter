@@ -2,8 +2,8 @@ import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:flutter_app/domain/entities/failures/no_wallet_selected_failure.dart';
 import 'package:flutter_app/domain/entities/send_money_message.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
-import 'package:flutter_app/presentation/send_money/send_money_presentation_model.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money_presentation_model.dart';
 import 'package:flutter_app/utils/utils.dart';
 
 class SendMoneyPresenter {

@@ -1,4 +1,4 @@
-import 'package:flutter_app/presentation/asset_details/asset_details_initial_params.dart';
+import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 
 abstract class AssetDetailsViewModel {}
 

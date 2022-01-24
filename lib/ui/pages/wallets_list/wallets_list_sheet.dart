@@ -3,10 +3,10 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
-import 'package:flutter_app/presentation/wallets_list/wallets_list_initial_params.dart';
-import 'package:flutter_app/presentation/wallets_list/wallets_list_presentation_model.dart';
-import 'package:flutter_app/presentation/wallets_list/wallets_list_presenter.dart';
+import 'package:flutter_app/ui/pages/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
+import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presentation_model.dart';
+import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presenter.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 

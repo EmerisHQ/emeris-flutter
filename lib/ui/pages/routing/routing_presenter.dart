@@ -1,8 +1,8 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
-import 'package:flutter_app/presentation/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
+import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/utils.dart';
 

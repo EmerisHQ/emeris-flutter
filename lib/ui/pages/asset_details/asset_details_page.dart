@@ -4,10 +4,10 @@ import 'package:cosmos_ui_components/components/cosmos_elevated_button.dart';
 import 'package:cosmos_ui_components/cosmos_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/presentation/asset_details/asset_details_initial_params.dart';
-import 'package:flutter_app/presentation/asset_details/asset_details_presentation_model.dart';
-import 'package:flutter_app/presentation/asset_details/asset_details_presenter.dart';
+import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
+import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
+import 'package:flutter_app/ui/pages/asset_details/asset_details_presenter.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
 import 'package:flutter_app/utils/emeris_amount_formatter.dart';
@@ -74,20 +74,20 @@ class _AssetDetailsPageState extends State<AssetDetailsPage> {
                 children: [
                   Column(
                     children: [
-                      Text(strings.available),
-                      const Text('\$110.23'),
+                      Text(strings.availableTitle),
+                      const Text('#\$110.23'),
                     ],
                   ),
                   Column(
                     children: [
-                      Text(strings.staked),
-                      const Text('\$56.87'),
+                      Text(strings.stakedTitle),
+                      const Text('#\$56.87'),
                     ],
                   ),
                   Column(
                     children: [
-                      Text(strings.pooled),
-                      const Text('\$11.54'),
+                      Text(strings.pooledTitle),
+                      const Text('#\$11.54'),
                     ],
                   ),
                 ],
@@ -97,14 +97,14 @@ class _AssetDetailsPageState extends State<AssetDetailsPage> {
               padding: EdgeInsets.all(theme.spacingL),
               child: Row(
                 children: [
-                  Expanded(child: CosmosElevatedButton(text: strings.buyCryptoButtonText)),
+                  Expanded(child: CosmosElevatedButton(text: strings.buyCryptoAction)),
                 ],
               ),
             ),
             Padding(
               padding: EdgeInsets.all(theme.spacingL),
               child: Text(
-                strings.chains,
+                strings.chainsTitle,
                 style: TextStyle(
                   fontSize: theme.fontSizeXL,
                   color: Theme.of(context).colorScheme.secondary,
