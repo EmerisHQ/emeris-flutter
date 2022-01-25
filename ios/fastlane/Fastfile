@@ -52,7 +52,7 @@ platform :ios do
     )
 
     firebase_app_distribution(
-        app: ENV["IOS_FIREBASE_APP_ID"],
+        app: '1:336481090944:ios:e235ddbd7d4e01c8139565',
         groups: "ios-testers",
         release_notes: releaseNotes,
         firebase_cli_token: ENV["FIREBASE_TOKEN"]
