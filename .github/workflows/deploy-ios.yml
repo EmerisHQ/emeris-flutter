@@ -16,18 +16,10 @@ env:
   RUBY_VERSION: '2.7'
   ALPHA_ANDROID_FIREBASE_TESTERS_GROUP: android-testers
   LC_ALL: en_US.UTF-8
-  MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }} # TODO set in github secrets
-  MATCH_APP_ID: ${{ secrets.MATCH_APP_ID }} # TODO set in github secrets
-  MATCH_APPLE_USERNAME: ${{ secrets.MATCH_APPLE_USERNAME }} # TODO set in github secrets
-  MATCH_TEAM_ID: ${{ secrets.MATCH_TEAM_ID }} # TODO set in github secrets
-  MATCH_ITC_TEAM_ID: ${{ secrets.MATCH_ITC_TEAM_ID }} # TODO set in github secrets
   MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} # TODO set in github secrets
-  FASTLANE_IOS_CODE_SIGNING_IDENTITY: ${{ secrets.FASTLANE_IOS_CODE_SIGNING_IDENTITY }} # TODO set in github secrets
-  MATCH_ADHOC_PROVISIONING_PROFILE: ${{ secrets.MATCH_ADHOC_PROVISIONING_PROFILE }} # TODO set in github secrets
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   FIREBASE_PLIST_FILE: ${{ secrets.FIREBASE_PLIST_FILE }}
   IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
-  ANDROID_FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
   LANG: en_US.UTF-8
 
 jobs:
@@ -60,7 +52,7 @@ jobs:
 
       - name: prepare ios build with cosmos testnet
         run: |
-          flutter build ios --build-number $GITHUB_RUN_NUMBER --no-codesign --dart-define=LCD_URL=https://api.testnet.cosmos.network --dart-define=LCD_PORT=443 --dart-define=GRPC_URL=https://grpc.testnet.cosmos.network --dart-define=GRPC_PORT=443
+          flutter build ipa --profile --build-number $GITHUB_RUN_NUMBER --dart-define=LCD_URL=https://api.testnet.cosmos.network --dart-define=LCD_PORT=443 --dart-define=GRPC_URL=https://grpc.testnet.cosmos.network --dart-define=GRPC_PORT=443
 
       - name: deploy firebase iOS
         working-directory: ./ios
