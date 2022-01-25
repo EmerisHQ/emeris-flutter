@@ -1,0 +1,9 @@
+git_url("https://github.com/allinbits/ios-certificates.git")
+
+storage_mode("git")
+
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
+
+app_identifier("com.emeris")
+
+username("andrzej.chmielewski@tendermint.com")

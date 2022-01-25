@@ -31,6 +31,40 @@ platform :ios do
     print("RELEASE NOTES:\n")
     print(releaseNotes)
 
+
+
+    match(type: "adhoc", readonly: is_ci)
+
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      profile_name: ENV["MATCH_ADHOC_PROVISIONING_PROFILE"],
+      team_id: ENV["MATCH_TEAM_ID"],
+      path: "Runner.xcodeproj"
+    )
+
+    increment_build_number(
+      build_number: ENV["GITHUB_RUN_NUMBER"]
+    )
+
+    build_app(
+        workspace: "Runner.xcworkspace",
+        export_method: "ad-hoc",
+    )
+
+    firebase_app_distribution(
+        app: ENV["IOS_FIREBASE_APP_ID"],
+        groups: "ios-testers",
+        release_notes: releaseNotes,
+        firebase_cli_token: ENV["FIREBASE_TOKEN"]
+    )
+
+    update_code_signing_settings(
+      use_automatic_signing: true,
+      path: "Runner.xcodeproj",
+      team_id: "",
+      profile_name: ""
+    )
+
     firebase_app_distribution(
         app: ENV["IOS_FIREBASE_APP_ID"],
         groups: "ios-testers",
