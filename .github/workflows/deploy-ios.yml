@@ -3,7 +3,6 @@ name: Deploy Firebase - iOS
   push:
     branches:
       - main
-      - feature/ios-deployment # TODO delete this branch
   workflow_dispatch: null
 
 concurrency:
