@@ -1,4 +1,4 @@
-name: Deploy Firebase - iOS
+name: Deploy Firebase - Android
 'on':
   push:
     branches:
@@ -15,9 +15,7 @@ env:
   RUBY_VERSION: '2.7'
   ALPHA_ANDROID_FIREBASE_TESTERS_GROUP: android-testers
   LC_ALL: en_US.UTF-8
-  FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
-  FIREBASE_PLIST_FILE: '${{ secrets.FIREBASE_PLIST_FILE }}'
-  IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   ANDROID_FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
   LANG: en_US.UTF-8
 
@@ -73,7 +71,7 @@ jobs:
           SLACK_ICON: 'https://github.com/tendermint.png?size=48'
           SLACK_TITLE: Emeris Android - DEPLOY FAILED
           SLACK_LINK_NAMES: true
-          SLACK_USERNAME: Github iOS Deployment
+          SLACK_USERNAME: Github Android Deployment
           MSG_MINIMAL: 'actions url, ref'
           SLACK_FOOTER: Mobile Slackbot
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
