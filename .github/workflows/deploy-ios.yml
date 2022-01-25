@@ -2,7 +2,8 @@ name: Deploy Firebase - Android
 'on':
   push:
     branches:
-      - disabled # TODO reenable it after app is configured in appstoreconnect
+      - main
+      - feature/ios-deployment # TODO delete this branch
   workflow_dispatch: null
 
 concurrency:
