@@ -53,7 +53,7 @@ jobs:
 
       - name: prepare ios build with cosmos testnet
         run: |
-          flutter build ios --profile --no-codesign --build-number $GITHUB_RUN_NUMBER --dart-define=LCD_URL=https://api.testnet.cosmos.network --dart-define=LCD_PORT=443 --dart-define=GRPC_URL=https://grpc.testnet.cosmos.network --dart-define=GRPC_PORT=443
+          flutter build ipa --profile --build-number $GITHUB_RUN_NUMBER --dart-define=LCD_URL=https://api.testnet.cosmos.network --dart-define=LCD_PORT=443 --dart-define=GRPC_URL=https://grpc.testnet.cosmos.network --dart-define=GRPC_PORT=443
 
       - name: deploy firebase iOS
         working-directory: ./ios

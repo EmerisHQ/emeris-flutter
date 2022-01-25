@@ -47,6 +47,8 @@ platform :ios do
     build_app(
         workspace: "Runner.xcworkspace",
         export_method: "ad-hoc",
+        skip_build_archive: true,
+        archive_path: "../build/ios/archive/Runner.xcarchive"
     )
 
     firebase_app_distribution(
