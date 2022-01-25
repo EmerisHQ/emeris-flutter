@@ -36,6 +36,19 @@ platform :ios do
     print("RELEASE NOTES:\n")
     print(releaseNotes)
 
+    match(type: "adhoc", readonly: is_ci)
+
+    if ENV["GITHUB_RUN_NUMBER"]
+        increment_build_number(
+          build_number: ENV["GITHUB_RUN_NUMBER"]
+        )
+    end
+
+    build_app(
+        workspace: "Runner.xcworkspace",
+        export_method: "ad-hoc",
+    )
+
     firebase_app_distribution(
         app: ENV["IOS_FIREBASE_APP_ID"],
         groups: "ios-testers",
