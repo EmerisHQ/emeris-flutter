@@ -24,7 +24,7 @@ class GetBalancesUseCase {
           (l) => left(GeneralFailure.unknown(l.message, l.cause, l.stack)),
           (verifiedDenoms) async {
             return balanceList.fold((l) => left(GeneralFailure.unknown(l.message, l.cause, l.stack)), (r) {
-              final balances = r.map((e) => e.toDomain(e, prices, verifiedDenoms)).toList();
+              final balances = r.map((it) => it.byUpdatingPriceAndVerifiedDenom(prices, verifiedDenoms)).toList();
               return right(
                 AssetDetails(balances: balances),
               );

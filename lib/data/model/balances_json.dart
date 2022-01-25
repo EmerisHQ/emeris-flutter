@@ -29,6 +29,8 @@ class BalanceJson {
         ibc: json['ibc'] == null ? null : IbcJson.fromJson(json['ibc'] as Map<String, dynamic>),
       );
 
-  Balance toBalanceDomain() =>
-      Balance(amount: Amount.fromString(amount.replaceAll(baseDenom, '')), denom: Denom(baseDenom));
+  Balance toBalanceDomain() => Balance(
+        amount: Amount.fromString(amount.replaceAll(baseDenom, '')),
+        denom: Denom(baseDenom),
+      );
 }
