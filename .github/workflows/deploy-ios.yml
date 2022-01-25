@@ -49,6 +49,7 @@ jobs:
         run: |
           gem install bundler
           bundle install
+          bundle exec fastlane prepare_certificates
 
       - name: prepare ios build with cosmos testnet
         run: |
@@ -57,8 +58,6 @@ jobs:
       - name: deploy firebase iOS
         working-directory: ./ios
         run: |
-          gem install bundler
-          bundle install
           bundle exec fastlane deploy_firebase
 
       - name: Report Status
