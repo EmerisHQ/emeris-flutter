@@ -1,4 +1,4 @@
-name: Deploy Firebase - Android
+name: Deploy Firebase - iOS
 'on':
   push:
     branches:
@@ -7,14 +7,13 @@ name: Deploy Firebase - Android
   workflow_dispatch: null
 
 concurrency:
-  group: '${{ github.head_ref || github.ref }}-android-deployment'
+  group: '${{ github.head_ref || github.ref }}-ios-deployment'
   cancel-in-progress: true
 
 env:
   FLUTTER_VERSION: '2.8.1'
   JAVA_VERSION: '12'
   RUBY_VERSION: '2.7'
-  ALPHA_ANDROID_FIREBASE_TESTERS_GROUP: android-testers
   LC_ALL: en_US.UTF-8
   MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} # TODO set in github secrets
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
@@ -24,7 +23,7 @@ env:
   LANG: en_US.UTF-8
 
 jobs:
-  deploy-android:
+  deploy-ios:
     timeout-minutes: 30
     runs-on: macos-11
     steps:
@@ -54,7 +53,7 @@ jobs:
 
       - name: prepare ios build with cosmos testnet
         run: |
-          flutter build ipa --profile --build-number $GITHUB_RUN_NUMBER --dart-define=LCD_URL=https://api.testnet.cosmos.network --dart-define=LCD_PORT=443 --dart-define=GRPC_URL=https://grpc.testnet.cosmos.network --dart-define=GRPC_PORT=443
+          flutter build ios --profile --no-codesign --build-number $GITHUB_RUN_NUMBER --dart-define=LCD_URL=https://api.testnet.cosmos.network --dart-define=LCD_PORT=443 --dart-define=GRPC_URL=https://grpc.testnet.cosmos.network --dart-define=GRPC_PORT=443
 
       - name: deploy firebase iOS
         working-directory: ./ios
