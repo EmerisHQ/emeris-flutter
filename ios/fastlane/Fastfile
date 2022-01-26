@@ -15,6 +15,11 @@ platform :ios do
     )
   end
 
+  lane :prepare_certificates do
+    setup_ci
+    match(type: "adhoc", readonly: is_ci)
+  end
+
   lane :deploy_firebase do
     setup_ci
     releaseNotes = changelog_from_git_commits(
@@ -31,8 +36,23 @@ platform :ios do
     print("RELEASE NOTES:\n")
     print(releaseNotes)
 
+    match(type: "adhoc", readonly: is_ci)
+
+    if ENV["GITHUB_RUN_NUMBER"]
+        increment_build_number(
+          build_number: ENV["GITHUB_RUN_NUMBER"]
+        )
+    end
+
+    build_app(
+        workspace: "Runner.xcworkspace",
+        export_method: "ad-hoc",
+        skip_build_archive: true,
+        archive_path: "../build/ios/archive/Runner.xcarchive"
+    )
+
     firebase_app_distribution(
-        app: ENV["IOS_FIREBASE_APP_ID"],
+        app: '1:336481090944:ios:e235ddbd7d4e01c8139565',
         groups: "ios-testers",
         release_notes: releaseNotes,
         firebase_cli_token: ENV["FIREBASE_TOKEN"]

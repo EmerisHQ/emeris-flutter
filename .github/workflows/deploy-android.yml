@@ -10,14 +10,12 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  FLUTTER_VERSION: 2.8.0
+  FLUTTER_VERSION: '2.8.1'
   JAVA_VERSION: '12'
   RUBY_VERSION: '2.7'
   ALPHA_ANDROID_FIREBASE_TESTERS_GROUP: android-testers
   LC_ALL: en_US.UTF-8
-  FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
-  FIREBASE_PLIST_FILE: '${{ secrets.FIREBASE_PLIST_FILE }}'
-  IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   ANDROID_FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
   LANG: en_US.UTF-8
 
@@ -71,7 +69,7 @@ jobs:
           SLACK_CHANNEL: ${{ secrets.SLACK_NOTIFICATIONS_CHANNEL }}
           SLACK_COLOR: '${{ job.status }}'
           SLACK_ICON: 'https://github.com/tendermint.png?size=48'
-          SLACK_TITLE: Emeris - DEPLOY FAILED
+          SLACK_TITLE: Emeris Android - DEPLOY FAILED
           SLACK_LINK_NAMES: true
           SLACK_USERNAME: Github Android Deployment
           MSG_MINIMAL: 'actions url, ref'
