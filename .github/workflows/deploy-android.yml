@@ -36,7 +36,7 @@ jobs:
         run: flutter pub get
 
       - name: set up ruby
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
 
