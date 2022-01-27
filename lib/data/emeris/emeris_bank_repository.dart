@@ -46,9 +46,8 @@ class EmerisBankRepository implements BankRepository {
 
     return right(
       stakingBalanceList
-          .map((e) => StakingBalanceJson.fromJson(e as Map<String, dynamic>))
-          .toList()
-          .map((e) => e.toBalanceDomain())
+          .map((it) => StakingBalanceJson.fromJson(it as Map<String, dynamic>))
+          .map((it) => it.toDomain())
           .toList(),
     );
   }
@@ -61,7 +60,7 @@ class EmerisBankRepository implements BankRepository {
     final pools = map['pools'] as List;
 
     return right(
-      pools.map((e) => PoolJson.fromJson(e as Map<String, dynamic>)).toList().map((e) => e.toBalanceDomain()).toList(),
+      pools.map((it) => PoolJson.fromJson(it as Map<String, dynamic>)).map((it) => it.toBalanceDomain()).toList(),
     );
   }
 }

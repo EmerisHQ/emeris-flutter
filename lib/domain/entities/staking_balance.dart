@@ -13,5 +13,9 @@ class StakingBalance extends Equatable {
   });
 
   @override
-  List<Object> get props => [validatorAddress, amount, chainName];
+  List<Object> get props => [
+        validatorAddress,
+        amount,
+        chainName,
+      ];
 }

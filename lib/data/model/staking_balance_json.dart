@@ -18,7 +18,7 @@ class StakingBalanceJson {
         chainName: json['chain_name'] as String? ?? '',
       );
 
-  StakingBalance toBalanceDomain() => StakingBalance(
+  StakingBalance toDomain() => StakingBalance(
         validatorAddress: validatorAddress,
         amount: Amount.fromString(amount),
         chainName: chainName,

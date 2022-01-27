@@ -1,5 +1,7 @@
-class Pool {
-  Pool({
+import 'package:equatable/equatable.dart';
+
+class Pool extends Equatable {
+  const Pool({
     required this.id,
     required this.typeId,
     required this.reserveCoinDenoms,
@@ -12,4 +14,13 @@ class Pool {
   final List<String> reserveCoinDenoms;
   final String reserveAccountAddress;
   final String poolCoinDenom;
+
+  @override
+  List<Object?> get props => [
+        id,
+        typeId,
+        reserveCoinDenoms,
+        reserveAccountAddress,
+        poolCoinDenom,
+      ];
 }
