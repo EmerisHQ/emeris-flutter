@@ -40,6 +40,15 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
 
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 8
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
       - name: prepare fastlane
         working-directory: ./android
         run: |
