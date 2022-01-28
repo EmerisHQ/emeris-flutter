@@ -1,4 +1,5 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AssetPortfolioHeading extends StatelessWidget {
@@ -28,5 +29,14 @@ class AssetPortfolioHeading extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty('title', title))
+      ..add(ObjectFlagProperty<VoidCallback>.has('onTap', onTap))
+      ..add(DiagnosticsProperty<bool>('isCentered', isCentered));
   }
 }

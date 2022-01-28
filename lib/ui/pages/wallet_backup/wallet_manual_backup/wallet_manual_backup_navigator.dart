@@ -8,15 +8,15 @@ import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_m
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_page.dart';
 
 class WalletManualBackupNavigator with NoRoutes, SnackBarRoute, CloseRoute<bool> {
+  WalletManualBackupNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  WalletManualBackupNavigator(this.appNavigator);
 }
 
-abstract class WalletManualBackupRoute {
+mixin WalletManualBackupRoute {
   Future<bool?> openWalletManualBackup(WalletManualBackupInitialParams initialParams) async => appNavigator.push(
         context,
         materialRoute(
@@ -27,6 +27,4 @@ abstract class WalletManualBackupRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory WalletManualBackupRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

@@ -16,11 +16,11 @@ abstract class WalletDetailsViewModel {
 }
 
 class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase implements WalletDetailsViewModel {
-  final WalletDetailsInitialParams initialParams;
-
   WalletDetailsPresentationModel(
     this.initialParams,
   );
+
+  final WalletDetailsInitialParams initialParams;
 
   ObservableFuture<Either<GeneralFailure, AssetDetails>>? get getAssetDetailsFuture => _getAssetDetailsFuture.value;
 
@@ -36,7 +36,7 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
   bool get isSendMoneyLoading => sendMoneyFuture?.status == FutureStatus.pending;
 }
 
-abstract class WalletDetailsPresentationModelBase {
+mixin WalletDetailsPresentationModelBase {
   final Observable<ObservableFuture<Either<GeneralFailure, AssetDetails>>?> _getAssetDetailsFuture = Observable(null);
 
   final Observable<ObservableFuture<Either<AddWalletFailure, Unit>>?> _sendMoneyFuture = Observable(null);

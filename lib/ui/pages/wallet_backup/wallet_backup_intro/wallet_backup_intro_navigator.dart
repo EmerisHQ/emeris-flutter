@@ -10,15 +10,15 @@ import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_m
 
 class WalletBackupIntroNavigator
     with WalletCloudBackupRoute, WalletManualBackupRoute, BackupLaterConfirmationRoute, RoutingRoute {
+  WalletBackupIntroNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  WalletBackupIntroNavigator(this.appNavigator);
 }
 
-abstract class WalletBackupIntroRoute {
+mixin WalletBackupIntroRoute {
   Future<void> openWalletBackup(WalletBackupIntroInitialParams initialParams) async => appNavigator.push(
         context,
         materialRoute(
@@ -31,6 +31,4 @@ abstract class WalletBackupIntroRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory WalletBackupIntroRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

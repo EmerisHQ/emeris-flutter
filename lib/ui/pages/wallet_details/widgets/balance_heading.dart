@@ -1,11 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class BalanceHeading extends StatelessWidget {
+  const BalanceHeading({
+    required this.wallet,
+    Key? key,
+  }) : super(key: key);
   final EmerisWallet wallet;
-
-  const BalanceHeading({Key? key, required this.wallet}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,5 +22,11 @@ class BalanceHeading extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<EmerisWallet>('wallet', wallet));
   }
 }

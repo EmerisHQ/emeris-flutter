@@ -6,10 +6,10 @@ abstract class WalletCloudBackupViewModel {}
 class WalletCloudBackupPresentationModel
     with WalletCloudBackupPresentationModelBase
     implements WalletCloudBackupViewModel {
-  final WalletCloudBackupInitialParams initialParams;
-
   WalletCloudBackupPresentationModel(this.initialParams);
+
+  final WalletCloudBackupInitialParams initialParams;
 }
 
 //////////////////BOILERPLATE
-abstract class WalletCloudBackupPresentationModelBase {}
+mixin WalletCloudBackupPresentationModelBase {}

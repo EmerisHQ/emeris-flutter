@@ -9,7 +9,7 @@ UnsignedAlanTransaction? alanFromDomain(Transaction transaction) {
       final messages = transaction.messages
           .whereType<SendMoneyMessage>()
           .map(
-            (moneyMessage) => AlanMsgSend.fromDomain(moneyMessage),
+            AlanMsgSend.fromDomain,
           )
           .toList();
       return UnsignedAlanTransaction(messages: messages, memo: transaction.memo);

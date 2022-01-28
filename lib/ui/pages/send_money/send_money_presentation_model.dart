@@ -12,23 +12,23 @@ abstract class SendMoneyViewModel {
 }
 
 class SendMoneyPresentationModel with SendMoneyPresentationModelBase implements SendMoneyViewModel {
+  SendMoneyPresentationModel(
+    this.initialParams,
+    this._walletsStore,
+  );
+
   final SendMoneyInitialParams initialParams;
   final WalletsStore _walletsStore;
 
   @override
   Denom get denom => initialParams.denom;
 
-  SendMoneyPresentationModel(
-    this.initialParams,
-    this._walletsStore,
-  );
-
   ObservableFuture<Either<GeneralFailure, TransactionHash>>? get sendMoneyFuture => _sendMoneyFuture.value;
 
   WalletIdentifier? get walletIdentifier => _walletsStore.currentWallet?.walletDetails.walletIdentifier;
 }
 
-abstract class SendMoneyPresentationModelBase {
+mixin SendMoneyPresentationModelBase {
   final Observable<ObservableFuture<Either<GeneralFailure, TransactionHash>>?> _sendMoneyFuture = Observable(null);
 
   set sendMoneyFuture(ObservableFuture<Either<GeneralFailure, TransactionHash>>? value) =>

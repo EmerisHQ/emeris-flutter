@@ -4,9 +4,9 @@ import 'package:flutter_app/domain/model/failures/verify_wallet_password_failure
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 
 class VerifyWalletPasswordUseCase {
-  final WalletsRepository _walletsRepository;
-
   VerifyWalletPasswordUseCase(this._walletsRepository);
+
+  final WalletsRepository _walletsRepository;
 
   Future<Either<VerifyWalletPasswordFailure, bool>> execute(WalletIdentifier walletIdentifier) async {
     if (walletIdentifier.password == null) {

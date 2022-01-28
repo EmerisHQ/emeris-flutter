@@ -12,15 +12,15 @@ import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
 
 class ImportWalletNavigator
     with CloseRoute<EmerisWallet>, PasscodeRoute, ErrorDialogRoute, WalletNameRoute, MnemonicImportRoute {
+  ImportWalletNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  ImportWalletNavigator(this.appNavigator);
 }
 
-abstract class ImportWalletRoute {
+mixin ImportWalletRoute {
   Future<EmerisWallet?> openImportWallet(ImportWalletInitialParams initialParams) async => appNavigator.push(
         context,
         materialRoute(
@@ -31,6 +31,4 @@ abstract class ImportWalletRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory ImportWalletRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

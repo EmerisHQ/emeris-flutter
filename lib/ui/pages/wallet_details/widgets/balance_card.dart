@@ -1,15 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/utils/emeris_amount_formatter.dart';
 
 class BalanceCard extends StatelessWidget {
-  final Balance data;
-  final VoidCallback? onTap;
-
   const BalanceCard({
     required this.data,
     this.onTap,
-  });
+    Key? key,
+  }) : super(key: key);
+
+  final Balance data;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -36,5 +38,13 @@ class BalanceCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<Balance>('data', data))
+      ..add(ObjectFlagProperty<VoidCallback?>.has('onTap', onTap));
   }
 }

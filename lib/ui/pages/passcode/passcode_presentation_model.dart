@@ -17,9 +17,9 @@ abstract class PasscodeViewModel {
 }
 
 class PasscodePresentationModel with PasscodePresentationModelBase implements PasscodeViewModel {
-  final PasscodeInitialParams _initialParams;
-
   PasscodePresentationModel(this._initialParams);
+
+  final PasscodeInitialParams _initialParams;
 
   @override
   String get firstPasscodeText => _firstPasscodeText.value;
@@ -36,14 +36,14 @@ class PasscodePresentationModel with PasscodePresentationModelBase implements Pa
 }
 
 //////////////////BOILERPLATE
-abstract class PasscodePresentationModelBase {
+mixin PasscodePresentationModelBase {
   //////////////////////////////////////
-  final Observable<String> _firstPasscodeText = Observable("");
+  final Observable<String> _firstPasscodeText = Observable('');
 
   set firstPasscodeText(String value) => Action(() => _firstPasscodeText.value = value)();
 
   //////////////////////////////////////
-  final Observable<String> _confirmPasscodeText = Observable("");
+  final Observable<String> _confirmPasscodeText = Observable('');
 
   set confirmPasscodeText(String value) => Action(() => _confirmPasscodeText.value = value)();
 

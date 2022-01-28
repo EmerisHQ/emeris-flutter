@@ -15,7 +15,7 @@ class WebKeyInfoStorage implements KeyInfoStorage {
   ) async {
     final creds = _credentialsMap[walletLookupKey.walletId];
     if (creds == null) {
-      return left(const CredentialsStorageFailure("Credentials not found"));
+      return left(const CredentialsStorageFailure('Credentials not found'));
     } else {
       return right(creds);
     }

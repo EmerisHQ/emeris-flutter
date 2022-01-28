@@ -36,10 +36,10 @@ class WalletManualBackupPresenter {
 
   Future<void> onTapCopyToClipboard() async {
     await clipboardManager.copyToClipboard(_model.mnemonic.stringRepresentation);
-    navigator.showSnackBar(strings.copiedToClipboardMessage);
+    await navigator.showSnackBar(strings.copiedToClipboardMessage);
   }
 
-  //ignore: avoid_positional_boolean_parameters
+  //ignore: avoid_positional_boolean_parameters, use_setters_to_change_properties
   void onCheckConfirmationCheckbox(bool checked) => _model.confirmationChecked = checked;
 
   void onTapSelectedWord(int index) => _model.selectedWords.removeAt(index);

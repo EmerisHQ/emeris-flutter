@@ -5,10 +5,10 @@ enum _GenerateMnemonicFailureType {
 }
 
 class GenerateMnemonicFailure {
-  final _GenerateMnemonicFailureType _type;
-
   // ignore: avoid_field_initializers_in_const_classes
   const GenerateMnemonicFailure.unknown() : _type = _GenerateMnemonicFailureType.Unknown;
+
+  final _GenerateMnemonicFailureType _type;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {

@@ -11,13 +11,13 @@ abstract class WalletBackupIntroViewModel {
 class WalletBackupIntroPresentationModel
     with WalletBackupIntroPresentationModelBase
     implements WalletBackupIntroViewModel {
-  final WalletBackupIntroInitialParams initialParams;
-  final PlatformInfoStore platformInfoStore;
-
   WalletBackupIntroPresentationModel(
     this.initialParams,
     this.platformInfoStore,
   );
+
+  final WalletBackupIntroInitialParams initialParams;
+  final PlatformInfoStore platformInfoStore;
 
   @override
   bool get isIcloudAvailable => platformInfoStore.operatingSystem.isIcloudAvailable;
@@ -26,4 +26,4 @@ class WalletBackupIntroPresentationModel
 }
 
 //////////////////BOILERPLATE
-abstract class WalletBackupIntroPresentationModelBase {}
+mixin WalletBackupIntroPresentationModelBase {}

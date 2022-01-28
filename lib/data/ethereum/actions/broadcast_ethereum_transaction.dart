@@ -16,6 +16,6 @@ Future<Either<GeneralFailure, TransactionHash>> broadcastEthereumTransaction(
     return right(TransactionHash(txHash: result));
   } catch (e, stack) {
     logError(e, stack);
-    return left(GeneralFailure.unknown("$e"));
+    return left(GeneralFailure.unknown('$e'));
   }
 }

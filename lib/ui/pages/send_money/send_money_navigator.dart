@@ -6,23 +6,21 @@ import 'package:flutter_app/ui/pages/send_money/send_money.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_initial_params.dart';
 
 class SendMoneyNavigator with NoRoutes, ErrorDialogRoute {
+  SendMoneyNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  SendMoneyNavigator(this.appNavigator);
 }
 
-abstract class SendMoneyRoute {
+mixin SendMoneyRoute {
   BuildContext get context;
 
   AppNavigator get appNavigator;
 
-  factory SendMoneyRoute._() => throw UnsupportedError("This class is meant to be mixed in");
-
   Future<void> openSendMoneySheet(SendMoneyInitialParams initialParams) async {
-    showModalBottomSheet(
+    await showModalBottomSheet(
       context: context,
       builder: (context) => SafeArea(
         child: SendMoneySheet(

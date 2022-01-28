@@ -1,4 +1,5 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_initial_params.dart';
@@ -9,20 +10,28 @@ import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class WalletNamePage extends StatefulWidget {
-  final WalletNameInitialParams initialParams;
-  final WalletNamePresenter? presenter;
-
   const WalletNamePage({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final WalletNameInitialParams initialParams;
+  final WalletNamePresenter? presenter;
+
   @override
-  _WalletNamePageState createState() => _WalletNamePageState();
+  WalletNamePageState createState() => WalletNamePageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletNameInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<WalletNamePresenter?>('presenter', presenter));
+  }
 }
 
-class _WalletNamePageState extends State<WalletNamePage> {
+class WalletNamePageState extends State<WalletNamePage> {
   late WalletNamePresenter presenter;
 
   WalletNameViewModel get model => presenter.viewModel;
@@ -75,5 +84,13 @@ class _WalletNamePageState extends State<WalletNamePage> {
         ],
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletNamePresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<WalletNameViewModel>('model', model));
   }
 }

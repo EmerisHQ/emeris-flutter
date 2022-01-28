@@ -7,22 +7,22 @@ import 'package:flutter_app/ui/pages/send_money/send_money_presentation_model.da
 import 'package:flutter_app/utils/utils.dart';
 
 class SendMoneyPresenter {
-  final SendMoneyPresentationModel _model;
-  final SendMoneyNavigator navigator;
-  late final SendMoneyUseCase _sendMoneyUseCase;
-
-  SendMoneyViewModel get viewModel => _model;
-
   SendMoneyPresenter(
     this._model,
     this.navigator,
     this._sendMoneyUseCase,
   );
 
+  final SendMoneyPresentationModel _model;
+  final SendMoneyNavigator navigator;
+  late final SendMoneyUseCase _sendMoneyUseCase;
+
+  SendMoneyViewModel get viewModel => _model;
+
   Future<void> sendMoney(SendMoneyMessage data) async {
     final walletId = _model.walletIdentifier;
     if (walletId == null) {
-      navigator.showError(const NoWalletSelectedFailure().displayableFailure());
+      await navigator.showError(const NoWalletSelectedFailure().displayableFailure());
       return;
     }
     _model.sendMoneyFuture = _sendMoneyUseCase

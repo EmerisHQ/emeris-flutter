@@ -12,10 +12,10 @@ abstract class WalletsListViewModel {
 }
 
 class WalletsListPresentationModel with WalletsListPresentationModelBase implements WalletsListViewModel {
+  WalletsListPresentationModel(this._walletsStore, this.initialParams);
+
   final WalletsListInitialParams initialParams;
   final WalletsStore _walletsStore;
-
-  WalletsListPresentationModel(this._walletsStore, this.initialParams);
 
   @override
   bool get isEmpty => wallets.isEmpty;
@@ -28,7 +28,7 @@ class WalletsListPresentationModel with WalletsListPresentationModelBase impleme
 }
 
 //////////////////BOILERPLATE
-abstract class WalletsListPresentationModelBase {
+mixin WalletsListPresentationModelBase {
   final Observable<bool> _isEditingAccountList = Observable(false);
 
   set isEditingAccountList(bool value) => Action(() => _isEditingAccountList.value = value)();

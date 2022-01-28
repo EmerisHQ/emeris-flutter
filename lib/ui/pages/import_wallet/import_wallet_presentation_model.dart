@@ -14,9 +14,9 @@ abstract class ImportWalletViewModel {
 }
 
 class ImportWalletPresentationModel with ImportWalletPresentationModelBase implements ImportWalletViewModel {
-  final ImportWalletInitialParams initialParams;
-
   ImportWalletPresentationModel(this.initialParams);
+
+  final ImportWalletInitialParams initialParams;
 
   ObservableFuture<Either<AddWalletFailure, EmerisWallet>>? get importWalletFuture => _importWalletFuture.value;
 
@@ -28,13 +28,13 @@ class ImportWalletPresentationModel with ImportWalletPresentationModelBase imple
     if (isFutureInProgress(importWalletFuture)) {
       return strings.importingWalletProgressMessage;
     } else {
-      return "";
+      return '';
     }
   }
 }
 
 //////////////////BOILERPLATE
-abstract class ImportWalletPresentationModelBase {
+mixin ImportWalletPresentationModelBase {
   //////////////////////////////////////
   final Observable<ObservableFuture<Either<AddWalletFailure, EmerisWallet>>?> _importWalletFuture = Observable(null);
 

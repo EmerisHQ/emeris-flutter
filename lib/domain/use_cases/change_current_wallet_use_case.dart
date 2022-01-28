@@ -5,9 +5,9 @@ import 'package:flutter_app/domain/model/failures/change_current_wallet_failure.
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 
 class ChangeCurrentWalletUseCase {
-  final WalletsStore _walletsStore;
-
   ChangeCurrentWalletUseCase(this._walletsStore);
+
+  final WalletsStore _walletsStore;
 
   Future<Either<ChangeCurrentWalletFailure, Unit>> execute({required EmerisWallet wallet}) async {
     try {

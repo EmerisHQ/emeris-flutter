@@ -1,5 +1,6 @@
 import 'package:cosmos_ui_components/components/content_loading_indicator.dart';
 import 'package:cosmos_ui_components/components/content_state_switcher.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/import_wallet/import_wallet_initial_params.dart';
@@ -9,20 +10,28 @@ import 'package:flutter_app/ui/pages/import_wallet/import_wallet_presenter.dart'
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ImportWalletPage extends StatefulWidget {
-  final ImportWalletInitialParams initialParams;
-  final ImportWalletPresenter? presenter;
-
   const ImportWalletPage({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final ImportWalletInitialParams initialParams;
+  final ImportWalletPresenter? presenter;
+
   @override
-  _ImportWalletPageState createState() => _ImportWalletPageState();
+  ImportWalletPageState createState() => ImportWalletPageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<ImportWalletInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<ImportWalletPresenter?>('presenter', presenter));
+  }
 }
 
-class _ImportWalletPageState extends State<ImportWalletPage> {
+class ImportWalletPageState extends State<ImportWalletPage> {
   late ImportWalletPresenter presenter;
 
   ImportWalletViewModel get model => presenter.viewModel;
@@ -52,5 +61,13 @@ class _ImportWalletPageState extends State<ImportWalletPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<ImportWalletPresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<ImportWalletViewModel>('model', model));
   }
 }

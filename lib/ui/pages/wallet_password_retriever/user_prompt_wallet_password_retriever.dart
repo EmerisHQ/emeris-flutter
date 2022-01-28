@@ -8,10 +8,10 @@ import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class UserPromptWalletPasswordRetriever implements WalletPasswordRetriever {
+  UserPromptWalletPasswordRetriever(this._verifyWalletPasswordUseCase);
+
   final Map<String, String> _passwords = {};
   final VerifyWalletPasswordUseCase _verifyWalletPasswordUseCase;
-
-  UserPromptWalletPasswordRetriever(this._verifyWalletPasswordUseCase);
 
   @override
   Future<Either<GeneralFailure, String>> getWalletPassword(WalletIdentifier walletIdentifier) async {
@@ -27,7 +27,7 @@ class UserPromptWalletPasswordRetriever implements WalletPasswordRetriever {
         _passwords[walletIdentifier.walletId] = password!;
         return _storeAndReturn(walletIdentifier, password);
       } else {
-        return left(GeneralFailure.unknown("Incorrect password"));
+        return left(GeneralFailure.unknown('Incorrect password'));
       }
     }
   }
@@ -42,10 +42,10 @@ class PasswordUserPromptDialog extends StatefulWidget {
   const PasswordUserPromptDialog({Key? key}) : super(key: key);
 
   @override
-  _PasswordUserPromptDialogState createState() => _PasswordUserPromptDialogState();
+  PasswordUserPromptDialogState createState() => PasswordUserPromptDialogState();
 }
 
-class _PasswordUserPromptDialogState extends State<PasswordUserPromptDialog> {
+class PasswordUserPromptDialogState extends State<PasswordUserPromptDialog> {
   late TextEditingController _passwordController;
 
   @override

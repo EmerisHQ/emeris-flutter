@@ -8,15 +8,15 @@ import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_initial_par
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_page.dart';
 
 class MnemonicImportNavigator with NoRoutes, CloseRoute<Mnemonic> {
+  MnemonicImportNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  MnemonicImportNavigator(this.appNavigator);
 }
 
-abstract class MnemonicImportRoute {
+mixin MnemonicImportRoute {
   Future<Mnemonic?> openMnemonicImport(MnemonicImportInitialParams initialParams) => appNavigator.push(
         context,
         materialRoute(
@@ -27,6 +27,4 @@ abstract class MnemonicImportRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory MnemonicImportRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

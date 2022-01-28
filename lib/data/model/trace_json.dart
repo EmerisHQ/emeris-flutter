@@ -1,9 +1,4 @@
 class TraceJson {
-  final String channel;
-  final String port;
-  final String chainName;
-  final String counterpartyName;
-
   TraceJson({required this.channel, required this.port, required this.chainName, required this.counterpartyName});
 
   factory TraceJson.fromJson(Map<String, dynamic> json) => TraceJson(
@@ -12,4 +7,9 @@ class TraceJson {
         chainName: json['chain_name'] as String,
         counterpartyName: json['counterparty_name'] as String,
       );
+
+  final String channel;
+  final String port;
+  final String chainName;
+  final String counterpartyName;
 }

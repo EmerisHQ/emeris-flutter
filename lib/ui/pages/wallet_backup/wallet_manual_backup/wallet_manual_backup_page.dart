@@ -1,4 +1,5 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_initial_params.dart';
@@ -13,20 +14,28 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 
 class WalletManualBackupPage extends StatefulWidget {
-  final WalletManualBackupInitialParams initialParams;
-  final WalletManualBackupPresenter? presenter;
-
   const WalletManualBackupPage({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final WalletManualBackupInitialParams initialParams;
+  final WalletManualBackupPresenter? presenter;
+
   @override
-  _WalletManualBackupPageState createState() => _WalletManualBackupPageState();
+  WalletManualBackupPageState createState() => WalletManualBackupPageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletManualBackupInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<WalletManualBackupPresenter?>('presenter', presenter));
+  }
 }
 
-class _WalletManualBackupPageState extends State<WalletManualBackupPage> {
+class WalletManualBackupPageState extends State<WalletManualBackupPage> {
   late WalletManualBackupPresenter presenter;
 
   WalletManualBackupViewModel get model => presenter.viewModel;
@@ -75,5 +84,13 @@ class _WalletManualBackupPageState extends State<WalletManualBackupPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletManualBackupPresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<WalletManualBackupViewModel>('model', model));
   }
 }

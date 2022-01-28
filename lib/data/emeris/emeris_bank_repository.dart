@@ -13,10 +13,10 @@ import 'package:flutter_app/domain/repositories/bank_repository.dart';
 import 'package:flutter_app/global.dart';
 
 class EmerisBankRepository implements BankRepository {
+  EmerisBankRepository(this._baseEnv, this._dio);
+
   final Dio _dio;
   final BaseEnv _baseEnv;
-
-  EmerisBankRepository(this._baseEnv, this._dio);
 
   @override
   Future<Either<GeneralFailure, List<Balance>>> getBalances(EmerisWallet walletData) async {

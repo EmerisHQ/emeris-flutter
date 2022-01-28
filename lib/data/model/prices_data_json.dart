@@ -1,10 +1,6 @@
 import 'package:flutter_app/data/model/token_price_data_json.dart';
 
 class PricesDataJson {
-  final TokenPriceDataJson? data;
-  final String message;
-  final int status;
-
   const PricesDataJson({
     required this.data,
     required this.message,
@@ -18,4 +14,8 @@ class PricesDataJson {
       status: json['status'] as int? ?? -1,
     );
   }
+
+  final TokenPriceDataJson? data;
+  final String message;
+  final int status;
 }

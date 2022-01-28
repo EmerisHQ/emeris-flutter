@@ -1,12 +1,6 @@
 import 'package:flutter_app/data/model/trace_json.dart';
 
 class VerifyTraceJson {
-  final String ibcDenom;
-  final String baseDenom;
-  final bool verified;
-  final String path;
-  final List<TraceJson> trace;
-
   VerifyTraceJson({
     required this.ibcDenom,
     required this.baseDenom,
@@ -22,4 +16,10 @@ class VerifyTraceJson {
         path: json['path'] as String,
         trace: (json['trace'] as List?)?.map((v) => TraceJson.fromJson(v as Map<String, dynamic>)).toList() ?? [],
       );
+
+  final String ibcDenom;
+  final String baseDenom;
+  final bool verified;
+  final String path;
+  final List<TraceJson> trace;
 }

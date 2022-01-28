@@ -4,17 +4,17 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/transaction_message.dart';
 
 class SendMoneyMessage extends Equatable implements TransactionMessage {
-  final WalletType walletType;
-  final Balance balance;
-  final String toAddress;
-  final String fromAddress;
-
   const SendMoneyMessage({
     required this.balance,
     required this.walletType,
     required this.fromAddress,
     required this.toAddress,
   });
+
+  final WalletType walletType;
+  final Balance balance;
+  final String toAddress;
+  final String fromAddress;
 
   @override
   List<Object> get props => [
