@@ -9,10 +9,12 @@ class Balance extends Equatable {
   final Amount amount;
   final Amount unitPrice;
   final Amount dollarPrice;
+  final String onChain;
 
   Balance({
     required this.denom,
     required this.amount,
+    required this.onChain,
     Amount? unitPrice,
     Amount? dollarPrice,
   })  : unitPrice = unitPrice ?? Amount.zero,
@@ -37,6 +39,7 @@ class Balance extends Equatable {
       amount: amount,
       unitPrice: Amount.fromString(unitPrice.toStringAsFixed(2)),
       dollarPrice: Amount.fromString(dollarPrice.toStringAsFixed(2)),
+      onChain: onChain,
     );
   }
 }

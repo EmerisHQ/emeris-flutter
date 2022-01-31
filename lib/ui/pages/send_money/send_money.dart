@@ -85,6 +85,7 @@ class _SendMoneySheetState extends State<SendMoneySheet> {
                   amount: Amount(amount.value),
                   unitPrice: Amount.fromString('0'),
                   dollarPrice: Amount.fromString('0'),
+                  onChain: '',
                 ),
                 walletType: widget.initialParams.walletType,
                 fromAddress: widget.initialParams.walletAddress,

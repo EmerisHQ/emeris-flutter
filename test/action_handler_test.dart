@@ -51,6 +51,7 @@ void main() {
         balance: Balance(
           denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
           amount: Amount.fromInt(100),
+          onChain: '',
         ),
         chainId: 'cosmos-hub',
       );
@@ -77,6 +78,7 @@ void main() {
         balance: Balance(
           denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
           amount: Amount.fromInt(100),
+          onChain: '',
         ),
         chainId: 'cosmos-hub',
       );
@@ -105,6 +107,7 @@ void main() {
         balance: Balance(
           denom: const Denom('uatom/4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5'),
           amount: Amount.fromInt(100),
+          onChain: '',
         ),
         chainId: 'cosmos-hub',
       );
