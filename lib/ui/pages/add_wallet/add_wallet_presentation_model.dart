@@ -15,12 +15,12 @@ abstract class AddWalletViewModel {
 }
 
 class AddWalletPresentationModel with AddWalletPresentationModelBase implements AddWalletViewModel {
+  AddWalletPresentationModel(this.initialParams);
+
   final AddWalletInitialParams initialParams;
 
   @override
   bool get isLoading => isFutureInProgress(importWalletFuture) || isFutureInProgress(generateMnemonicFuture);
-
-  AddWalletPresentationModel(this.initialParams);
 
   ObservableFuture<Either<AddWalletFailure, EmerisWallet>>? get importWalletFuture => _importWalletFuture.value;
 
@@ -33,13 +33,13 @@ class AddWalletPresentationModel with AddWalletPresentationModelBase implements 
     } else if (isFutureInProgress(generateMnemonicFuture)) {
       return strings.generatingMnemonicProgressMessage;
     } else {
-      return "";
+      return '';
     }
   }
 }
 
 //////////////////BOILERPLATE
-abstract class AddWalletPresentationModelBase {
+mixin AddWalletPresentationModelBase {
   //////////////////////////////////////
   final Observable<ObservableFuture<Either<AddWalletFailure, EmerisWallet>>?> _importWalletFuture = Observable(null);
 

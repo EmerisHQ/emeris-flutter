@@ -24,15 +24,15 @@ class WalletBackupIntroPresenter {
         mnemonic: _model.mnemonic,
       ),
     );
-    if (result == true) {
-      navigator.openRouting(const RoutingInitialParams());
+    if (result ?? true) {
+      await navigator.openRouting(const RoutingInitialParams());
     }
   }
 
   Future<void> onTapBackupLater() async {
     final decision = await navigator.openBackupLaterConfirmation();
     if (decision == BackupLaterConfirmationResult.skipBackup) {
-      navigator.openRouting(const RoutingInitialParams());
+      await navigator.openRouting(const RoutingInitialParams());
     }
   }
 }

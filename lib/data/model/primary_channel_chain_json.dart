@@ -1,10 +1,4 @@
 class PrimaryChannelChainJson {
-  final String akash;
-  final String cn1;
-  final String cn2;
-  final String cryptoCom;
-  final String persistence;
-
   PrimaryChannelChainJson({
     required this.akash,
     required this.cn1,
@@ -20,4 +14,10 @@ class PrimaryChannelChainJson {
         cryptoCom: json['crypto-com'] as String? ?? '',
         persistence: json['persistence'] as String? ?? '',
       );
+
+  final String akash;
+  final String cn1;
+  final String cn2;
+  final String cryptoCom;
+  final String persistence;
 }

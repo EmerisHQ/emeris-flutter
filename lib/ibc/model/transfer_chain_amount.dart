@@ -1,8 +1,6 @@
 import 'package:flutter_app/ibc/model/chain_amount.dart';
 
 class TransferChainAmount extends ChainAmount {
-  final bool mustAddFee;
-
   TransferChainAmount({
     required Output output,
     required this.mustAddFee,
@@ -11,4 +9,6 @@ class TransferChainAmount extends ChainAmount {
           output: output,
           steps: steps,
         );
+
+  final bool mustAddFee;
 }

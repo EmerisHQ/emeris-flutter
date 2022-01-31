@@ -7,14 +7,14 @@ enum AddWalletFailureType {
 }
 
 class AddWalletFailure {
-  final AddWalletFailureType _type;
-  final Object? cause;
-
   const AddWalletFailure.unknown({this.cause}) : _type = AddWalletFailureType.Unknown;
 
   const AddWalletFailure.storeError(this.cause) : _type = AddWalletFailureType.StoreError;
 
   const AddWalletFailure.invalidMnemonic(this.cause) : _type = AddWalletFailureType.InvalidMnemonic;
+
+  final AddWalletFailureType _type;
+  final Object? cause;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {

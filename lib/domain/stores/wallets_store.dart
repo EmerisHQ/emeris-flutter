@@ -7,7 +7,7 @@ class WalletsStore with _WalletStoreBase {
   EmerisWallet? get currentWallet => _currentWallet.value;
 }
 
-abstract class _WalletStoreBase {
+mixin _WalletStoreBase {
   //////////////////////////////////////
   final Observable<ObservableList<EmerisWallet>> _wallets = Observable(ObservableList());
 

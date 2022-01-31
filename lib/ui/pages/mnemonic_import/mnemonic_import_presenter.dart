@@ -22,5 +22,6 @@ class MnemonicImportPresenter {
 
   void onTapWhatIsRecovery() => showNotImplemented();
 
+  // ignore: use_setters_to_change_properties
   void onTextChangedMnemonic(String value) => _model.mnemonicText = value;
 }

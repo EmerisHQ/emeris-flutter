@@ -1,8 +1,4 @@
 class TokenJson {
-  final String symbol;
-  final num price;
-  final num supply;
-
   const TokenJson({required this.symbol, required this.price, required this.supply});
 
   factory TokenJson.fromJson(Map<String, dynamic> json) {
@@ -12,4 +8,8 @@ class TokenJson {
       supply: json['Supply'] as num? ?? -1,
     );
   }
+
+  final String symbol;
+  final num price;
+  final num supply;
 }

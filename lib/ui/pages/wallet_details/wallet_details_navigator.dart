@@ -12,20 +12,18 @@ import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 
 class WalletDetailsNavigator
     with NoRoutes, SendMoneyRoute, ErrorDialogRoute, WalletDetailsRoute, WalletsListRoute, AssetDetailsRoute {
+  WalletDetailsNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  WalletDetailsNavigator(this.appNavigator);
 }
 
-abstract class WalletDetailsRoute {
+mixin WalletDetailsRoute {
   BuildContext get context;
 
   AppNavigator get appNavigator;
-
-  factory WalletDetailsRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 
   Future<void> openWalletDetails(EmerisWallet wallet) => appNavigator.push(
         context,

@@ -18,10 +18,10 @@ import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 
 class CosmosWalletApi implements WalletApi {
+  CosmosWalletApi(this._signingGateway, this._baseEnv);
+
   final TransactionSigningGateway _signingGateway;
   final BaseEnv _baseEnv;
-
-  CosmosWalletApi(this._signingGateway, this._baseEnv);
 
   @override
   WalletType get walletType => WalletType.Cosmos;
@@ -43,11 +43,11 @@ class CosmosWalletApi implements WalletApi {
   }) async {
     final saccoTx = alanFromDomain(transaction);
     if (saccoTx == null) {
-      return left(GeneralFailure.unknown("Could not create Alan transaction from $transaction"));
+      return left(GeneralFailure.unknown('Could not create Alan transaction from $transaction'));
     }
     final password = walletIdentifier.password;
     if (password == null) {
-      return left(GeneralFailure.unknown("There was no password provided"));
+      return left(GeneralFailure.unknown('There was no password provided'));
     }
     final walletLookupKey = WalletLookupKey(
       walletId: walletIdentifier.walletId,
@@ -59,7 +59,7 @@ class CosmosWalletApi implements WalletApi {
           transaction: saccoTx,
           walletLookupKey: walletLookupKey,
         )
-        .leftMap((signingFailure) => left(GeneralFailure.unknown("$signingFailure")))
+        .leftMap((signingFailure) => left(GeneralFailure.unknown('$signingFailure')))
         .flatMap(
           (transaction) => _signingGateway
               .broadcastTransaction(
@@ -68,7 +68,7 @@ class CosmosWalletApi implements WalletApi {
               )
               .leftMap(
                 (broadcastingFailure) => left(
-                  GeneralFailure.unknown("$broadcastingFailure"),
+                  GeneralFailure.unknown('$broadcastingFailure'),
                 ),
               ),
         );

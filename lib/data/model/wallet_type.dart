@@ -7,9 +7,9 @@ extension WalletTypeString on WalletType {
   String get stringVal {
     switch (this) {
       case WalletType.Eth:
-        return "ethereum";
+        return 'ethereum';
       case WalletType.Cosmos:
-        return "cosmos";
+        return 'cosmos';
     }
   }
 

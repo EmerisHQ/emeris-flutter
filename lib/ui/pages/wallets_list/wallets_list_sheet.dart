@@ -1,5 +1,6 @@
 import 'package:cosmos_ui_components/cosmos_text_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -11,20 +12,28 @@ import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class WalletsListSheet extends StatefulWidget {
-  final WalletsListInitialParams initialParams;
-  final WalletsListPresenter? presenter;
-
   const WalletsListSheet({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final WalletsListInitialParams initialParams;
+  final WalletsListPresenter? presenter;
+
   @override
-  _WalletsListSheetState createState() => _WalletsListSheetState();
+  WalletsListSheetState createState() => WalletsListSheetState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletsListPresenter?>('presenter', presenter))
+      ..add(DiagnosticsProperty<WalletsListInitialParams>('initialParams', initialParams));
+  }
 }
 
-class _WalletsListSheetState extends State<WalletsListSheet> {
+class WalletsListSheetState extends State<WalletsListSheet> {
   late WalletsListPresenter presenter;
 
   WalletsListViewModel get model => presenter.viewModel;
@@ -107,5 +116,14 @@ class _WalletsListSheetState extends State<WalletsListSheet> {
         onEditIconPressed: (wallet) => showNotImplemented(),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletsListPresenter>('presenter', presenter))
+      ..add(IterableProperty<WalletInfo>('walletInfos', walletInfos))
+      ..add(DiagnosticsProperty<WalletsListViewModel>('model', model));
   }
 }

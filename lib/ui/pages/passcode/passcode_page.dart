@@ -1,4 +1,5 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
@@ -10,20 +11,28 @@ import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class PasscodePage extends StatefulWidget {
-  final PasscodeInitialParams initialParams;
-  final PasscodePresenter? presenter;
-
   const PasscodePage({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final PasscodeInitialParams initialParams;
+  final PasscodePresenter? presenter;
+
   @override
-  _PasscodePageState createState() => _PasscodePageState();
+  PasscodePageState createState() => PasscodePageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<PasscodeInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<PasscodePresenter?>('presenter', presenter));
+  }
 }
 
-class _PasscodePageState extends State<PasscodePage> {
+class PasscodePageState extends State<PasscodePage> {
   late PasscodePresenter presenter;
 
   PasscodeViewModel get model => presenter.viewModel;
@@ -83,5 +92,13 @@ class _PasscodePageState extends State<PasscodePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<PasscodePresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<PasscodeViewModel>('model', model));
   }
 }

@@ -8,9 +8,6 @@ enum _TransferFailureType {
 }
 
 class TransferFailure {
-  final Object? cause;
-  final _TransferFailureType _type;
-
   // ignore: avoid_field_initializers_in_const_classes
   const TransferFailure.verifyTraceError(this.cause) : _type = _TransferFailureType.VerifyTrace;
 
@@ -19,6 +16,9 @@ class TransferFailure {
   const TransferFailure.denomRedemptionError(this.cause) : _type = _TransferFailureType.DenomRedemption;
 
   const TransferFailure.feeChainError(this.cause) : _type = _TransferFailureType.DenomRedemption;
+
+  final Object? cause;
+  final _TransferFailureType _type;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {

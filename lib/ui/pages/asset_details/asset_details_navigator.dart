@@ -8,15 +8,15 @@ import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.
 import 'package:flutter_app/ui/pages/asset_details/asset_details_page.dart';
 
 class AssetDetailsNavigator with NoRoutes, ErrorDialogRoute {
+  AssetDetailsNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  AssetDetailsNavigator(this.appNavigator);
 }
 
-abstract class AssetDetailsRoute {
+mixin AssetDetailsRoute {
   Future<void> openAssetDetails({required Balance balance, required AssetDetails assetDetails}) => appNavigator.push(
         context,
         materialRoute(
@@ -32,6 +32,4 @@ abstract class AssetDetailsRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory AssetDetailsRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

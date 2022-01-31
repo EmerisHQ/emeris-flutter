@@ -9,13 +9,13 @@ import 'package:flutter_app/domain/utils/password_manager.dart';
 import 'package:transaction_signing_gateway/model/transaction_hash.dart';
 
 class SendMoneyUseCase {
-  final TransactionsRepository _transactionsRepository;
-  final PasswordManager _passwordManager;
-
   SendMoneyUseCase(
     this._transactionsRepository,
     this._passwordManager,
   );
+
+  final TransactionsRepository _transactionsRepository;
+  final PasswordManager _passwordManager;
 
   Future<Either<GeneralFailure, TransactionHash>> execute({
     required WalletIdentifier walletIdentifier,

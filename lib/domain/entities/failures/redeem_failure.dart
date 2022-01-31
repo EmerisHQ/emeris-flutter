@@ -6,12 +6,12 @@ enum _RedeemFailureTyre {
 }
 
 class RedeemFailure {
-  final Object? cause;
-  final _RedeemFailureTyre _type;
-
   const RedeemFailure.verifyTraceError(this.cause) : _type = _RedeemFailureTyre.VerifyTrace;
 
   const RedeemFailure.buildStepError(this.cause) : _type = _RedeemFailureTyre.BuildStep;
+
+  final Object? cause;
+  final _RedeemFailureTyre _type;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {

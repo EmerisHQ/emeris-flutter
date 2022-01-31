@@ -1,4 +1,5 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
@@ -10,20 +11,28 @@ import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class OnboardingPage extends StatefulWidget {
-  final OnboardingInitialParams initialParams;
-  final OnboardingPresenter? presenter;
-
   const OnboardingPage({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final OnboardingInitialParams initialParams;
+  final OnboardingPresenter? presenter;
+
   @override
-  _OnboardingPageState createState() => _OnboardingPageState();
+  OnboardingPageState createState() => OnboardingPageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<OnboardingInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<OnboardingPresenter?>('presenter', presenter));
+  }
 }
 
-class _OnboardingPageState extends State<OnboardingPage> {
+class OnboardingPageState extends State<OnboardingPage> {
   late OnboardingPresenter presenter;
 
   OnboardingViewModel get model => presenter.viewModel;
@@ -67,5 +76,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<OnboardingPresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<OnboardingViewModel>('model', model));
   }
 }

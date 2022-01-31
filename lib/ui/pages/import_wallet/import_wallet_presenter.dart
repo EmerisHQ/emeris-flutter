@@ -50,7 +50,7 @@ class ImportWalletPresenter {
         (fail) => navigator
           ..close()
           ..showError(fail.displayableFailure()),
-        (newWallet) => navigator.closeWithResult(newWallet),
+        navigator.closeWithResult,
       );
     }
   }

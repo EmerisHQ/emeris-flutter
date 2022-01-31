@@ -22,9 +22,9 @@ import 'package:flutter_app/ibc/model/transfer_chain_amount.dart';
 import 'package:flutter_app/ibc/model/transfer_step.dart';
 
 class ActionHandler {
-  final RestApiIbcRepository _restApiIbcRepository;
-
   const ActionHandler(this._restApiIbcRepository);
+
+  final RestApiIbcRepository _restApiIbcRepository;
 
   /// This function has multiple steps to redeem the IBC token
   /// First: If the IBC denom is native, directly return the [ChainAmount] with the same values
@@ -38,7 +38,7 @@ class ActionHandler {
       // Else get the trace for this IBC denom
       return _restApiIbcRepository
           .verifyTrace(chainId, balance.denom.text.split('/')[1])
-          .mapError((fail) => RedeemFailure.verifyTraceError(fail))
+          .mapError(RedeemFailure.verifyTraceError)
           .flatMap(
         (verifyTraces) async {
           try {
@@ -130,32 +130,33 @@ class ActionHandler {
                 return addTransferStep(steps, ibcTransferRecipient, balance, output, mustAddFee: mustAddFee);
               } else {
                 mustAddFee = true;
-                steps.add(
-                  ibcTransferRecipient.toTransferStep(
-                    name: 'ibc_backward',
-                    status: TransferStatus.Pending,
-                    balance: balance,
-                    addFee: true,
-                    feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
-                    fromChain: ibcTransferRecipient.chainId,
-                    baseDenom: Denom(
-                      await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
+                steps
+                  ..add(
+                    ibcTransferRecipient.toTransferStep(
+                      name: 'ibc_backward',
+                      status: TransferStatus.Pending,
+                      balance: balance,
+                      addFee: true,
+                      feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
+                      fromChain: ibcTransferRecipient.chainId,
+                      baseDenom: Denom(
+                        await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
+                      ),
+                      toChain: verifyTrace.trace[0].counterpartyName,
+                      through: verifyTrace.trace[0].channel,
                     ),
-                    toChain: verifyTrace.trace[0].counterpartyName,
-                    through: verifyTrace.trace[0].channel,
-                  ),
-                );
-                steps.add(
-                  ibcTransferRecipient.toTransferStep(
-                    name: 'ibc_forward',
-                    status: TransferStatus.Pending,
-                    balance: balance,
-                    fromChain: ibcTransferRecipient.chainId,
-                    chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
-                    toChain: ibcTransferRecipient.destinationChainId,
-                    through: primaryChannelResult.channelName,
-                  ),
-                );
+                  )
+                  ..add(
+                    ibcTransferRecipient.toTransferStep(
+                      name: 'ibc_forward',
+                      status: TransferStatus.Pending,
+                      balance: balance,
+                      fromChain: ibcTransferRecipient.chainId,
+                      chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
+                      toChain: ibcTransferRecipient.destinationChainId,
+                      through: primaryChannelResult.channelName,
+                    ),
+                  );
                 return right(
                   TransferChainAmount(
                     output: output,
@@ -328,6 +329,7 @@ String getChannel(String path, int index) {
 
 String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
   final parts = path.split('/');
+  //ignore: cascade_invocations
   parts.add(baseDenom);
   final newPath = parts.sublist(hopsToRemove * 2).join('/');
   return 'ibc/${sha256.convert(utf8.encode(newPath)).toString().toUpperCase()}';
@@ -336,7 +338,7 @@ String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
 Future<bool> isVerified(Denom denom, String chainId, RestApiIbcRepository ibcRepository) async {
   late bool isVerified;
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
-  verifiedDenoms.fold<Future?>((l) => throw 'Could not fetch verified denoms', (r) {
+  await verifiedDenoms.fold<Future?>((l) => throw 'Could not fetch verified denoms', (r) {
     try {
       isVerified = r.firstWhere((element) => element.name == chainId).verified;
     } catch (ex) {
@@ -351,7 +353,7 @@ Future<List<FeeWithDenom>> getFeeForChain(String chainId, RestApiIbcRepository i
   final chainDetails = await ibcRepository.getChainDetails(chainId);
   final fees = <FeeWithDenom>[];
 
-  chainDetails.fold<Future?>((l) => throw 'Could not get chain details', (r) {
+  await chainDetails.fold<Future?>((l) => throw 'Could not get chain details', (r) {
     for (final denom in r.denoms) {
       fees.add(
         FeeWithDenom(
@@ -371,7 +373,7 @@ Future<String> getBaseDenom(String denom, String? chainId, RestApiIbcRepository 
   final finalChainName = chainId ?? cosmosHubChainId;
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
 
-  verifiedDenoms.fold<Future?>((l) => throw 'Could not get verified denoms', (r) async {
+  await verifiedDenoms.fold<Future?>((l) => throw 'Could not get verified denoms', (r) async {
     VerifiedDenom? denomFound;
     try {
       denomFound = r.firstWhere((element) => element.name == denom);
@@ -396,7 +398,7 @@ Future<String> getBaseDenom(String denom, String? chainId, RestApiIbcRepository 
 
   VerifyTraceJson? verifyTrace;
   final traceEither = await ibcRepository.verifyTrace(finalChainName, denomHash);
-  traceEither.fold<Future?>((l) => null, (r) {
+  await traceEither.fold<Future?>((l) => null, (r) {
     verifyTrace = r;
   });
   if (verifyTrace != null) {

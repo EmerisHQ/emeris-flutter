@@ -1,23 +1,34 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class PasscodeTextField extends StatefulWidget {
+  const PasscodeTextField({
+    required this.onSubmit,
+    Key? key,
+    this.digits = 6,
+    this.text = '',
+    this.focusOnTextReset = true,
+  }) : super(key: key);
+
   final int digits;
   final ValueChanged<String> onSubmit;
   final String text;
   final bool focusOnTextReset;
 
-  const PasscodeTextField({
-    Key? key,
-    this.digits = 6,
-    required this.onSubmit,
-    this.text = "",
-    this.focusOnTextReset = true,
-  }) : super(key: key);
-
   @override
   State<PasscodeTextField> createState() => _PasscodeTextFieldState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(IntProperty('digits', digits))
+      ..add(ObjectFlagProperty<ValueChanged<String>>.has('onSubmit', onSubmit))
+      ..add(StringProperty('text', text))
+      ..add(DiagnosticsProperty<bool>('focusOnTextReset', focusOnTextReset));
+  }
 }
 
 class _PasscodeTextFieldState extends State<PasscodeTextField> {
@@ -42,7 +53,7 @@ class _PasscodeTextFieldState extends State<PasscodeTextField> {
   @override
   void didUpdateWidget(covariant PasscodeTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.text == "" && oldWidget.text != widget.text && widget.focusOnTextReset) {
+    if (widget.text == '' && oldWidget.text != widget.text && widget.focusOnTextReset) {
       _focusNode.requestFocus();
     }
   }
@@ -53,14 +64,14 @@ class _PasscodeTextFieldState extends State<PasscodeTextField> {
       focusNode: _focusNode,
       controller: _textController,
       onSubmit: widget.onSubmit,
-      onChanged: (text) => _onTextChanged(text),
+      onChanged: _onTextChanged,
       fieldsCount: widget.digits,
       submittedFieldDecoration: _pinPutDecoration.copyWith(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20),
       ),
       selectedFieldDecoration: _pinPutDecoration,
       followingFieldDecoration: _pinPutDecoration.copyWith(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: Colors.deepPurpleAccent.withOpacity(.5),
         ),

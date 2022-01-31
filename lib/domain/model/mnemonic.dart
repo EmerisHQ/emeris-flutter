@@ -2,9 +2,6 @@ import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:equatable/equatable.dart';
 
 class Mnemonic extends Equatable {
-  static const numberOfWords = 24;
-  final List<MnemonicWord> words;
-
   const Mnemonic({
     required this.words,
   });
@@ -16,7 +13,10 @@ class Mnemonic extends Equatable {
             .mapIndexed((index, word) => MnemonicWord(index: index, word: word))
             .toList();
 
-  String get stringRepresentation => words.map((it) => it.word).join(" ");
+  static const numberOfWords = 24;
+  final List<MnemonicWord> words;
+
+  String get stringRepresentation => words.map((it) => it.word).join(' ');
 
   @override
   List<Object> get props => [
@@ -30,7 +30,7 @@ class Mnemonic extends Equatable {
   List<MnemonicWord> filteredOutSelectedWords(List<MnemonicWord> selectedWords) => words
       .map(
         (e) => selectedWords.contains(e) //
-            ? MnemonicWord(index: e.index, word: "")
+            ? MnemonicWord(index: e.index, word: '')
             : e,
       )
       .toList();
@@ -43,13 +43,13 @@ class Mnemonic extends Equatable {
 }
 
 class MnemonicWord extends Equatable {
-  final int index;
-  final String word;
-
   const MnemonicWord({
     required this.index,
     required this.word,
   });
+
+  final int index;
+  final String word;
 
   @override
   List<Object> get props => [

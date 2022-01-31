@@ -10,9 +10,9 @@ import 'package:transaction_signing_gateway/transaction_signer.dart';
 import 'package:web3dart/web3dart.dart';
 
 class EthereumTransactionSigner implements TransactionSigner {
-  final Web3Client _web3client;
-
   EthereumTransactionSigner(this._web3client);
+
+  final Web3Client _web3client;
 
   @override
   bool canSign(UnsignedTransaction unsignedTransaction) => unsignedTransaction is EthereumTransaction;
@@ -23,11 +23,11 @@ class EthereumTransactionSigner implements TransactionSigner {
     required UnsignedTransaction transaction,
   }) async {
     if (transaction is! EthereumTransaction) {
-      return left(EthereumTransactionSigningFailure("passed transaction is not $EthereumTransaction"));
+      return left(EthereumTransactionSigningFailure('passed transaction is not $EthereumTransaction'));
     }
     if (privateCredentials is! EthereumPrivateWalletCredentials) {
       return left(
-        EthereumTransactionSigningFailure("passed privateCredentials is not $EthereumPrivateWalletCredentials"),
+        EthereumTransactionSigningFailure('passed privateCredentials is not $EthereumPrivateWalletCredentials'),
       );
     }
 
@@ -45,9 +45,9 @@ class EthereumTransactionSigner implements TransactionSigner {
 }
 
 class EthereumTransactionSigningFailure extends TransactionSigningFailure {
-  final Object cause;
-
   EthereumTransactionSigningFailure(this.cause);
+
+  final Object cause;
 
   @override
   TransactionSigningFailType get type => TransactionSigningFailType.unknown;

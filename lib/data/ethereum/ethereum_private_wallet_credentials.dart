@@ -3,6 +3,13 @@ import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 import 'package:wallet_core/wallet_core.dart' as core;
 
 class EthereumPrivateWalletCredentials implements PrivateWalletCredentials {
+  EthereumPrivateWalletCredentials({
+    required this.mnemonic,
+    required this.publicInfo,
+    required this.walletCoreJson,
+    required this.walletCorePassword,
+  });
+
   @override
   String get serializerIdentifier => EthereumCredentialsSerializer.id;
 
@@ -16,11 +23,4 @@ class EthereumPrivateWalletCredentials implements PrivateWalletCredentials {
   final String walletCorePassword;
 
   core.Wallet get wallet => core.Wallet.fromJson(walletCoreJson, walletCorePassword);
-
-  EthereumPrivateWalletCredentials({
-    required this.mnemonic,
-    required this.publicInfo,
-    required this.walletCoreJson,
-    required this.walletCorePassword,
-  });
 }

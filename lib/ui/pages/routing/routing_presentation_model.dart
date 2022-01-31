@@ -5,10 +5,10 @@ import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 abstract class RoutingViewModel {}
 
 class RoutingPresentationModel with RoutingPresentationModelBase implements RoutingViewModel {
+  RoutingPresentationModel(this._initialParams, this._walletsStore);
+
   final WalletsStore _walletsStore;
   final RoutingInitialParams _initialParams;
-
-  RoutingPresentationModel(this._initialParams, this._walletsStore);
 
   List<EmerisWallet> get wallets => _walletsStore.wallets;
 
@@ -16,4 +16,4 @@ class RoutingPresentationModel with RoutingPresentationModelBase implements Rout
 }
 
 //////////////////BOILERPLATE
-abstract class RoutingPresentationModelBase {}
+mixin RoutingPresentationModelBase {}

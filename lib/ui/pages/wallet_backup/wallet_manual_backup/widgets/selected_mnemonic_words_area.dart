@@ -1,20 +1,21 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:cosmos_utils/extensions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/model/mnemonic.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class SelectedMnemonicWordsArea extends StatelessWidget {
-  final List<MnemonicWord> selectedWords;
-  final void Function(int index)? onTapWord;
-  final bool isValid;
-
   const SelectedMnemonicWordsArea({
-    Key? key,
     required this.selectedWords,
     required this.onTapWord,
     required this.isValid,
+    Key? key,
   }) : super(key: key);
+
+  final List<MnemonicWord> selectedWords;
+  final void Function(int index)? onTapWord;
+  final bool isValid;
 
   @override
   Widget build(BuildContext context) {
@@ -62,5 +63,14 @@ class SelectedMnemonicWordsArea extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(IterableProperty<MnemonicWord>('selectedWords', selectedWords))
+      ..add(ObjectFlagProperty<void Function(int index)?>.has('onTapWord', onTapWord))
+      ..add(DiagnosticsProperty<bool>('isValid', isValid));
   }
 }

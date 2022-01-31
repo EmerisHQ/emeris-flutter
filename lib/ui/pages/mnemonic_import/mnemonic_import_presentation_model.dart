@@ -14,9 +14,9 @@ abstract class MnemonicImportViewModel {
 }
 
 class MnemonicImportPresentationModel with MnemonicImportPresentationModelBase implements MnemonicImportViewModel {
-  final MnemonicImportInitialParams initialParams;
-
   MnemonicImportPresentationModel(this.initialParams);
+
+  final MnemonicImportInitialParams initialParams;
 
   @override
   String get mnemonicText => _mnemonicText.value;
@@ -34,9 +34,9 @@ class MnemonicImportPresentationModel with MnemonicImportPresentationModelBase i
 }
 
 //////////////////BOILERPLATE
-abstract class MnemonicImportPresentationModelBase {
+mixin MnemonicImportPresentationModelBase {
   //////////////////////////////////////
-  final Observable<String> _mnemonicText = Observable("");
+  final Observable<String> _mnemonicText = Observable('');
 
   set mnemonicText(String value) => Action(() => _mnemonicText.value = value)();
 }

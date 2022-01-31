@@ -2,10 +2,6 @@ import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/staking_balance.dart';
 
 class StakingBalanceJson {
-  final String validatorAddress;
-  final String amount;
-  final String chainName;
-
   StakingBalanceJson({
     required this.validatorAddress,
     required this.amount,
@@ -23,4 +19,8 @@ class StakingBalanceJson {
         amount: Amount.fromString(amount),
         chainName: chainName,
       );
+
+  final String validatorAddress;
+  final String amount;
+  final String chainName;
 }

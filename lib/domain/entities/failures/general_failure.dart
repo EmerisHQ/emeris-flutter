@@ -6,17 +6,17 @@ enum _GeneralFailureType {
 }
 
 class GeneralFailure {
-  final String message;
-  final _GeneralFailureType _type;
-  final Object? cause;
-  final StackTrace? stack;
-
   // ignore: avoid_field_initializers_in_const_classes
   GeneralFailure.unknown(this.message, [this.cause, this.stack]) : _type = _GeneralFailureType.Unknown {
     if (cause != null) {
       logError(cause, stack, message);
     }
   }
+
+  final String message;
+  final _GeneralFailureType _type;
+  final Object? cause;
+  final StackTrace? stack;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {

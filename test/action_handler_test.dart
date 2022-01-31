@@ -40,7 +40,7 @@ void main() {
 
       when(() => ibcApiMock.getVerifiedDenoms()).thenAnswer(
         (_) async {
-          final list = jsonDecode(verifiedDenoms)['verified_denoms'] as List;
+          final list = (jsonDecode(verifiedDenoms) as Map<String, dynamic>)['verified_denoms'] as List;
           return right(
             list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>).toDomain()).toList(),
           );
@@ -66,7 +66,7 @@ void main() {
 
       when(() => ibcApiMock.getVerifiedDenoms()).thenAnswer(
         (_) async {
-          final list = jsonDecode(verifiedDenoms)['verified_denoms'] as List;
+          final list = (jsonDecode(verifiedDenoms) as Map<String, dynamic>)['verified_denoms'] as List;
           return right(
             list.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>).toDomain()).toList(),
           );

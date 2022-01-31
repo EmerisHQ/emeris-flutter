@@ -3,19 +3,6 @@ import 'package:flutter_app/data/model/node_info_json.dart';
 import 'package:flutter_app/data/model/primary_channel_chain_json.dart';
 
 class ChainJson {
-  final bool enabled;
-  final String chainName;
-  final String logo;
-  final String displayName;
-  final PrimaryChannelChainJson? primaryChannel;
-  final List<DenomJson> denoms;
-  final List<String> demerisAddresses;
-  final String genesisHash;
-  final NodeInfoJson nodeInfo;
-  final String validBlockThresh;
-  final String derivationPath;
-  final String blockExplorer;
-
   ChainJson({
     required this.enabled,
     required this.chainName,
@@ -47,4 +34,17 @@ class ChainJson {
         derivationPath: json['derivation_path'] as String? ?? '',
         blockExplorer: json['block_explorer'] as String? ?? '',
       );
+
+  final bool enabled;
+  final String chainName;
+  final String logo;
+  final String displayName;
+  final PrimaryChannelChainJson? primaryChannel;
+  final List<DenomJson> denoms;
+  final List<String> demerisAddresses;
+  final String genesisHash;
+  final NodeInfoJson nodeInfo;
+  final String validBlockThresh;
+  final String derivationPath;
+  final String blockExplorer;
 }

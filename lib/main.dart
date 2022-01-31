@@ -7,11 +7,17 @@ import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/global.dart';
 
 void main() {
+  // ignore: do_not_use_environment
   const lcdPort = String.fromEnvironment('LCD_PORT', defaultValue: '1317');
+  // ignore: do_not_use_environment
   const grpcPort = String.fromEnvironment('GRPC_PORT', defaultValue: '9091');
+  // ignore: do_not_use_environment
   const lcdUrl = String.fromEnvironment('LCD_URL', defaultValue: 'http://localhost');
+  // ignore: do_not_use_environment
   const grpcUrl = String.fromEnvironment('GRPC_URL', defaultValue: 'http://localhost');
+  // ignore: do_not_use_environment
   const ethUrl = String.fromEnvironment('ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
+  // ignore: do_not_use_environment
   const emerisUrl = String.fromEnvironment('EMERIS_URL', defaultValue: 'https://dev.demeris.io');
 
   _initFirebase();
@@ -26,7 +32,7 @@ void main() {
     );
 
   configureDependencies(baseEnv);
-  runApp(EmerisApp());
+  runApp(const EmerisApp());
 }
 
 Future<void> _initFirebase() async {
@@ -36,15 +42,17 @@ Future<void> _initFirebase() async {
     FirebaseCrashlytics.instance.recordError(error, (stack as StackTrace?) ?? StackTrace.current);
     debugLog(
       "ERROR ${reason == null ? "" : ": $reason"}\n"
-      "================\n"
-      "error: $error\n"
-      "stack: ${stack ?? StackTrace.current}\n"
-      "================\n",
+      '================\n'
+      'error: $error\n'
+      'stack: ${stack ?? StackTrace.current}\n'
+      '================\n',
     );
   };
 }
 
 class EmerisApp extends StatelessWidget {
+  const EmerisApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return const AppWidget();

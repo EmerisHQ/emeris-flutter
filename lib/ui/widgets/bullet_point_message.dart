@@ -1,10 +1,14 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class BulletPointMessage extends StatelessWidget {
-  final String message;
+  const BulletPointMessage({
+    required this.message,
+    Key? key,
+  }) : super(key: key);
 
-  const BulletPointMessage({Key? key, required this.message}) : super(key: key);
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -20,5 +24,11 @@ class BulletPointMessage extends StatelessWidget {
         Expanded(child: Text(message)),
       ],
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty('message', message));
   }
 }

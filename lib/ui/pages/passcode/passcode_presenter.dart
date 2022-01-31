@@ -14,7 +14,7 @@ class PasscodePresenter {
 
   PasscodeViewModel get viewModel => _model;
 
-  void onTapSubmit() => navigator.closeWithResult(const Passcode(value: "123456")); // TODO
+  void onTapSubmit() => navigator.closeWithResult(const Passcode(value: '123456')); // TODO
 
   void onPasscodeSubmit(String value) {
     switch (_model.mode) {
@@ -32,9 +32,10 @@ class PasscodePresenter {
           navigator.showError(
             const PasscodeFailure.passcodesDontMatch().displayableFailure(),
           );
-          _model.firstPasscodeText = "";
-          _model.confirmPasscodeText = "";
-          _model.mode = PasscodeMode.firstPasscode;
+          _model
+            ..firstPasscodeText = ''
+            ..confirmPasscodeText = ''
+            ..mode = PasscodeMode.firstPasscode;
         } else {
           navigator.closeWithResult(_model.passcode);
         }

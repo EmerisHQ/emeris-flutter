@@ -9,17 +9,17 @@ import 'package:flutter_app/ui/pages/wallets_list/wallets_list_initial_params.da
 import 'package:flutter_app/utils/utils.dart';
 
 class WalletDetailsPresenter {
-  final WalletDetailsPresentationModel _model;
-  final WalletDetailsNavigator navigator;
-  final GetBalancesUseCase _getBalancesUseCase;
-
-  WalletDetailsViewModel get viewModel => _model;
-
   WalletDetailsPresenter(
     this._model,
     this.navigator,
     this._getBalancesUseCase,
   );
+
+  final WalletDetailsPresentationModel _model;
+  final WalletDetailsNavigator navigator;
+  final GetBalancesUseCase _getBalancesUseCase;
+
+  WalletDetailsViewModel get viewModel => _model;
 
   Future<void> getWalletBalances(EmerisWallet walletData) async {
     _model.getAssetDetailsFuture = _getBalancesUseCase.execute(walletData: walletData).observableDoOn(

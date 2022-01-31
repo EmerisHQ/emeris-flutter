@@ -1,17 +1,18 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class EmerisGradientAvatar extends StatelessWidget {
+  const EmerisGradientAvatar({
+    required this.onTap,
+    required this.address,
+    Key? key,
+    this.height = 35,
+  }) : super(key: key);
+
   final String address;
   final double height;
   final VoidCallback onTap;
-
-  const EmerisGradientAvatar({
-    Key? key,
-    required this.address,
-    this.height = 35,
-    required this.onTap,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,5 +26,14 @@ class EmerisGradientAvatar extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty('address', address))
+      ..add(DoubleProperty('height', height))
+      ..add(ObjectFlagProperty<VoidCallback>.has('onTap', onTap));
   }
 }

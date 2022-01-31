@@ -1,19 +1,6 @@
 import 'package:flutter_app/data/model/gas_price_levels_json.dart';
 
 class DenomJson {
-  final String name;
-  final String displayName;
-  final String logo;
-  final int precision;
-  final bool verified;
-  final bool stakable;
-  final String ticker;
-  final bool feeToken;
-  final GasPriceLevelsJson? gasPriceLevels;
-  final bool fetchPrice;
-  final bool relayerDenom;
-  final int minimumThreshRelayerBalance;
-
   DenomJson({
     required this.name,
     required this.displayName,
@@ -45,4 +32,17 @@ class DenomJson {
         relayerDenom: json['relayer_denom'] as bool? ?? false,
         minimumThreshRelayerBalance: json['minimum_thresh_relayer_balance'] as int? ?? -1,
       );
+
+  final String name;
+  final String displayName;
+  final String logo;
+  final int precision;
+  final bool verified;
+  final bool stakable;
+  final String ticker;
+  final bool feeToken;
+  final GasPriceLevelsJson? gasPriceLevels;
+  final bool fetchPrice;
+  final bool relayerDenom;
+  final int minimumThreshRelayerBalance;
 }
