@@ -58,94 +58,96 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
-    return Observer(builder: (context) {
-      return Scaffold(
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CosmosAppBar(leading: CosmosBackButton()),
-              BalanceCard(data: widget.initialParams.balance),
-              Padding(
-                padding: EdgeInsets.only(left: theme.spacingL, top: theme.spacingL),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(strings.balanceTitle),
-                    Text(
-                      formatEmerisAmount(widget.initialParams.assetDetails.totalAmountInUSD),
-                      style: TextStyle(
-                        fontSize: theme.fontSizeXXL,
-                        color: Theme.of(context).colorScheme.secondary,
+    return Observer(
+      builder: (context) {
+        return Scaffold(
+          body: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CosmosAppBar(leading: CosmosBackButton()),
+                BalanceCard(data: widget.initialParams.balance),
+                Padding(
+                  padding: EdgeInsets.only(left: theme.spacingL, top: theme.spacingL),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(strings.balanceTitle),
+                      Text(
+                        formatEmerisAmount(widget.initialParams.assetDetails.totalAmountInUSD),
+                        style: TextStyle(
+                          fontSize: theme.fontSizeXXL,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(theme.spacingL),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                  /// TODO: Pick these up from the model after API integration
-                  children: [
-                    Column(
-                      children: [
-                        Text(strings.availableTitle),
-                        const Text(r'#$110.23'),
-                      ],
-                    ),
-                    ContentStateSwitcher(
-                      isLoading: model.isStakedAmountLoading,
-                      contentChild: Column(
-                        children: [
-                          Text(strings.stakedTitle),
-                          Text(formatEmerisAmount(model.stakedAmount)),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Text(strings.pooledTitle),
-                        const Text(r'#$11.54'),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(theme.spacingL),
-                child: Row(
-                  children: [
-                    Expanded(child: CosmosElevatedButton(text: strings.buyCryptoAction)),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(theme.spacingL),
-                child: Text(
-                  strings.chainsTitle,
-                  style: TextStyle(
-                    fontSize: theme.fontSizeXL,
-                    color: Theme.of(context).colorScheme.secondary,
+                    ],
                   ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.all(theme.spacingL),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-              /// TODO: Pick these up from the model after API integration
-              Column(
-                children: [
-                  BalanceCard(data: widget.initialParams.balance),
-                  BalanceCard(data: widget.initialParams.balance),
-                ],
-              ),
-              const Spacer(),
-              CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),
-            ],
+                    /// TODO: Pick these up from the model after API integration
+                    children: [
+                      Column(
+                        children: [
+                          Text(strings.availableTitle),
+                          const Text(r'#$110.23'),
+                        ],
+                      ),
+                      ContentStateSwitcher(
+                        isLoading: model.isStakedAmountLoading,
+                        contentChild: Column(
+                          children: [
+                            Text(strings.stakedTitle),
+                            Text(formatEmerisAmount(model.stakedAmount)),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Text(strings.pooledTitle),
+                          const Text(r'#$11.54'),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(theme.spacingL),
+                  child: Row(
+                    children: [
+                      Expanded(child: CosmosElevatedButton(text: strings.buyCryptoAction)),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(theme.spacingL),
+                  child: Text(
+                    strings.chainsTitle,
+                    style: TextStyle(
+                      fontSize: theme.fontSizeXL,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ),
+
+                /// TODO: Pick these up from the model after API integration
+                Column(
+                  children: [
+                    BalanceCard(data: widget.initialParams.balance),
+                    BalanceCard(data: widget.initialParams.balance),
+                  ],
+                ),
+                const Spacer(),
+                CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   @override
