@@ -28,7 +28,7 @@ packages:
       name: archive
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.9"
+    version: "3.1.11"
   args:
     dependency: transitive
     description:
@@ -188,7 +188,7 @@ packages:
     description:
       path: "packages/cosmos_ui_components"
       ref: main
-      resolved-ref: "88828e6a3802617e9c91626fc8efd35051eff78e"
+      resolved-ref: "85f1324a2102162102c060420cb31851cff3c7df"
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -197,7 +197,7 @@ packages:
     description:
       path: "packages/cosmos_utils"
       ref: main
-      resolved-ref: "88828e6a3802617e9c91626fc8efd35051eff78e"
+      resolved-ref: "85f1324a2102162102c060420cb31851cff3c7df"
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -305,14 +305,14 @@ packages:
       name: firebase_core_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.3"
+    version: "4.2.4"
   firebase_core_web:
     dependency: transitive
     description:
       name: firebase_core_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.3"
+    version: "1.5.4"
   firebase_crashlytics:
     dependency: "direct main"
     description:
@@ -326,7 +326,7 @@ packages:
       name: firebase_crashlytics_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.12"
+    version: "3.1.13"
   fixnum:
     dependency: transitive
     description:
@@ -973,7 +973,7 @@ packages:
     description:
       path: "packages/transaction_signing_gateway"
       ref: main
-      resolved-ref: "88828e6a3802617e9c91626fc8efd35051eff78e"
+      resolved-ref: "85f1324a2102162102c060420cb31851cff3c7df"
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -1048,7 +1048,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.8"
+    version: "2.3.10"
   xdg_directories:
     dependency: transitive
     description:
