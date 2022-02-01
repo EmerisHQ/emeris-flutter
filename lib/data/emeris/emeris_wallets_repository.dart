@@ -14,10 +14,10 @@ import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
 import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 
 class EmerisWalletsRepository implements WalletsRepository {
+  EmerisWalletsRepository(this._walletApis, this._signingGateway);
+
   final List<WalletApi> _walletApis;
   final TransactionSigningGateway _signingGateway;
-
-  EmerisWalletsRepository(this._walletApis, this._signingGateway);
 
   @override
   Future<Either<AddWalletFailure, EmerisWallet>> importWallet(ImportWalletFormData walletFormData) async {
@@ -25,7 +25,7 @@ class EmerisWalletsRepository implements WalletsRepository {
         Future.value(
           left(
             AddWalletFailure.unknown(
-              cause: "Could not find wallet api for ${walletFormData.walletType}",
+              cause: 'Could not find wallet api for ${walletFormData.walletType}',
             ),
           ),
         );
@@ -54,7 +54,7 @@ class EmerisWalletsRepository implements WalletsRepository {
           WalletLookupKey(
             chainId: walletIdentifier.chainId,
             walletId: walletIdentifier.walletId,
-            password: walletIdentifier.password ?? "",
+            password: walletIdentifier.password ?? '',
           ),
         )
         .leftMap(

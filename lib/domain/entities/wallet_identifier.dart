@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 class WalletIdentifier extends Equatable {
-  final String walletId;
-  final String chainId;
-  final String? password;
-
   const WalletIdentifier({
     required this.walletId,
     required this.chainId,
     this.password,
   });
+
+  final String walletId;
+  final String chainId;
+  final String? password;
 
   @override
   List<Object?> get props => [

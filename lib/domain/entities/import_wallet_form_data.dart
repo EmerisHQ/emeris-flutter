@@ -3,17 +3,17 @@ import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/model/mnemonic.dart';
 
 class ImportWalletFormData extends Equatable {
-  final Mnemonic mnemonic;
-  final String name;
-  final String password;
-  final WalletType walletType;
-
   const ImportWalletFormData({
     required this.mnemonic,
     required this.name,
     required this.password,
     required this.walletType,
   });
+
+  final Mnemonic mnemonic;
+  final String name;
+  final String password;
+  final WalletType walletType;
 
   @override
   List<Object> get props => [

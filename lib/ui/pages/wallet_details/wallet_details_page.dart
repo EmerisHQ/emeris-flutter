@@ -1,4 +1,5 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -16,20 +17,28 @@ import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class WalletDetailsPage extends StatefulWidget {
-  final WalletDetailsInitialParams initialParams;
-  final WalletDetailsPresenter? presenter;
-
   const WalletDetailsPage({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter,
   }) : super(key: key);
 
+  final WalletDetailsInitialParams initialParams;
+  final WalletDetailsPresenter? presenter;
+
   @override
-  _WalletDetailsPageState createState() => _WalletDetailsPageState();
+  WalletDetailsPageState createState() => WalletDetailsPageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletDetailsInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<WalletDetailsPresenter?>('presenter', presenter));
+  }
 }
 
-class _WalletDetailsPageState extends State<WalletDetailsPage> {
+class WalletDetailsPageState extends State<WalletDetailsPage> {
   late WalletDetailsPresenter presenter;
 
   WalletDetailsViewModel get model => presenter.viewModel;
@@ -120,5 +129,13 @@ class _WalletDetailsPageState extends State<WalletDetailsPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletDetailsPresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<WalletDetailsViewModel>('model', model));
   }
 }

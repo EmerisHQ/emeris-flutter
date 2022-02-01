@@ -18,7 +18,7 @@ void main() {
       debugPrint(wallet.toJson());
 
 //      const apiUrl = "HTTP://127.0.0.1:7545"; // localhost
-      const apiUrl = "https://ropsten.infura.io/v3/96ac5dcb92d545b6a7ffc3d8af21fde0"; // publicly hosted
+      const apiUrl = 'https://ropsten.infura.io/v3/96ac5dcb92d545b6a7ffc3d8af21fde0'; // publicly hosted
 
       final httpClient = Client();
       final ethClient = Web3Client(apiUrl, httpClient);
@@ -29,7 +29,7 @@ void main() {
 
       debugPrint(wallet.privateKey.address.hex);
       debugPrint(privateEthCredentials.address.hex);
-      debugPrint("${balance.getValueInUnit(EtherUnit.ether)}");
+      debugPrint('${balance.getValueInUnit(EtherUnit.ether)}');
       await ethClient.sendTransaction(
         privateEthCredentials,
         Transaction(

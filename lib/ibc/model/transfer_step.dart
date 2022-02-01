@@ -6,17 +6,17 @@ enum TransferStatus {
 }
 
 class TransferStep {
+  TransferStep({
+    required this.name,
+    required this.status,
+    required this.data,
+    this.addFee = false,
+    this.feeToAdd = const [],
+  });
+
   final String name;
   final TransferStatus status;
   final TransferStepData data;
   final bool addFee;
   final List<FeeWithDenom> feeToAdd;
-
-  TransferStep({
-    this.addFee = false,
-    this.feeToAdd = const [],
-    required this.name,
-    required this.status,
-    required this.data,
-  });
 }

@@ -7,9 +7,9 @@ import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:transaction_signing_gateway/model/transaction_hash.dart';
 
 class EmerisTransactionsRepository implements TransactionsRepository {
-  final List<WalletApi> _walletApis;
-
   EmerisTransactionsRepository(this._walletApis);
+
+  final List<WalletApi> _walletApis;
 
   @override
   Future<Either<GeneralFailure, TransactionHash>> signAndBroadcast({
@@ -22,7 +22,7 @@ class EmerisTransactionsRepository implements TransactionsRepository {
       ) ??
       Future.value(
         left(
-          GeneralFailure.unknown("Could not find wallet api for ${transaction.walletType}"),
+          GeneralFailure.unknown('Could not find wallet api for ${transaction.walletType}'),
         ),
       );
 }

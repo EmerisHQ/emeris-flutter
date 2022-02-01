@@ -7,10 +7,10 @@ import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 
 class ImportWalletUseCase {
+  ImportWalletUseCase(this._walletCredentialsRepository, this._walletsStore);
+
   final WalletsRepository _walletCredentialsRepository;
   final WalletsStore _walletsStore;
-
-  ImportWalletUseCase(this._walletCredentialsRepository, this._walletsStore);
 
   Future<Either<AddWalletFailure, EmerisWallet>> execute({required ImportWalletFormData walletFormData}) async =>
       _walletCredentialsRepository.importWallet(walletFormData).map((info) {

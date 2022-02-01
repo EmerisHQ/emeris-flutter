@@ -10,15 +10,15 @@ import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dar
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 
 class RoutingNavigator with OnboardingRoute, WalletsListRoute, CloseRoute, WalletDetailsRoute, ErrorDialogRoute {
+  RoutingNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  RoutingNavigator(this.appNavigator);
 }
 
-abstract class RoutingRoute {
+mixin RoutingRoute {
   Future<void> openRouting(RoutingInitialParams initialParams, {bool popUntilRoot = true}) async {
     if (popUntilRoot) {
       appNavigator.popUntilRoot(context);
@@ -36,6 +36,4 @@ abstract class RoutingRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory RoutingRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

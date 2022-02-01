@@ -6,15 +6,15 @@ import 'package:transaction_signing_gateway/model/private_wallet_credentials_ser
 import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
 
 class EthereumCredentialsSerializer implements PrivateWalletCredentialsSerializer {
-  static const id = "EthereumPrivateWalletCredentialsSerializer";
+  static const id = 'EthereumPrivateWalletCredentialsSerializer';
 
-  static const _chainIdKey = "chainId";
-  static const _mnemonicKey = "mnemonic";
-  static const _publicAddressKey = "publicAddress";
-  static const _nameKey = "name";
-  static const _walletIdKey = "walletId";
-  static const _walletCoreJsonKey = "walletCoreJson";
-  static const _walletCorePasswordKey = "walletCorePassword";
+  static const _chainIdKey = 'chainId';
+  static const _mnemonicKey = 'mnemonic';
+  static const _publicAddressKey = 'publicAddress';
+  static const _nameKey = 'name';
+  static const _walletIdKey = 'walletId';
+  static const _walletCoreJsonKey = 'walletCoreJson';
+  static const _walletCorePasswordKey = 'walletCorePassword';
 
   @override
   Either<CredentialsStorageFailure, PrivateWalletCredentials> fromJson(Map<String, dynamic> json) {
@@ -22,19 +22,19 @@ class EthereumCredentialsSerializer implements PrivateWalletCredentialsSerialize
       return right(
         EthereumPrivateWalletCredentials(
           publicInfo: WalletPublicInfo(
-            chainId: json[_chainIdKey] as String? ?? "",
-            publicAddress: json[_publicAddressKey] as String? ?? "",
-            walletId: json[_walletIdKey] as String? ?? "",
-            name: json[_nameKey] as String? ?? "",
+            chainId: json[_chainIdKey] as String? ?? '',
+            publicAddress: json[_publicAddressKey] as String? ?? '',
+            walletId: json[_walletIdKey] as String? ?? '',
+            name: json[_nameKey] as String? ?? '',
           ),
-          mnemonic: json[_mnemonicKey] as String? ?? "",
-          walletCoreJson: json[_walletCoreJsonKey] as String? ?? "",
-          walletCorePassword: json[_walletCorePasswordKey] as String? ?? "",
+          mnemonic: json[_mnemonicKey] as String? ?? '',
+          walletCoreJson: json[_walletCoreJsonKey] as String? ?? '',
+          walletCorePassword: json[_walletCorePasswordKey] as String? ?? '',
         ),
       );
     } catch (e, stack) {
       logError(e, stack);
-      return left(CredentialsStorageFailure("Could not parse wallet credentials: $e"));
+      return left(CredentialsStorageFailure('Could not parse wallet credentials: $e'));
     }
   }
 
@@ -46,7 +46,7 @@ class EthereumCredentialsSerializer implements PrivateWalletCredentialsSerialize
     if (credentials is! EthereumPrivateWalletCredentials) {
       return left(
         CredentialsStorageFailure(
-          "Passed credentials are not of type $EthereumPrivateWalletCredentials. actual: $credentials",
+          'Passed credentials are not of type $EthereumPrivateWalletCredentials. actual: $credentials',
         ),
       );
     }

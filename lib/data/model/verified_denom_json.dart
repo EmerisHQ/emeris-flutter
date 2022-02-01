@@ -3,20 +3,6 @@ import 'package:flutter_app/domain/entities/gas_price_level.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
 class VerifiedDenomJson {
-  late String chainName;
-  final String name;
-  final String displayName;
-  final String logo;
-  final int precision;
-  final bool verified;
-  final bool stakable;
-  final String ticker;
-  final bool feeToken;
-  final GasPriceLevelsJson? gasPriceLevels;
-  final bool fetchPrice;
-  final bool relayerDenom;
-  final int minimumThreshRelayerBalance;
-
   VerifiedDenomJson({
     required this.name,
     required this.displayName,
@@ -51,6 +37,20 @@ class VerifiedDenomJson {
         chainName: json['chain_name'] as String? ?? '',
       );
 
+  late String chainName;
+  final String name;
+  final String displayName;
+  final String logo;
+  final int precision;
+  final bool verified;
+  final bool stakable;
+  final String ticker;
+  final bool feeToken;
+  final GasPriceLevelsJson? gasPriceLevels;
+  final bool fetchPrice;
+  final bool relayerDenom;
+  final int minimumThreshRelayerBalance;
+
   VerifiedDenom toDomain() => VerifiedDenom(
         chainName: chainName,
         name: name,
@@ -61,7 +61,7 @@ class VerifiedDenomJson {
         stakable: stakable,
         ticker: ticker,
         feeToken: feeToken,
-        gasPriceLevels: gasPriceLevels?.toDomain() ?? GasPriceLevel(low: 0.0, average: 0.0, high: 0.0),
+        gasPriceLevels: gasPriceLevels?.toDomain() ?? GasPriceLevel(low: 0, average: 0, high: 0),
         fetchPrice: fetchPrice,
         relayerDenom: relayerDenom,
         minimumThreshRelayerBalance: minimumThreshRelayerBalance,

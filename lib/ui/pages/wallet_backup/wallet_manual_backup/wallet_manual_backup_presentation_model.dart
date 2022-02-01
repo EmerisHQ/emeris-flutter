@@ -30,11 +30,11 @@ abstract class WalletManualBackupViewModel {
 class WalletManualBackupPresentationModel
     with WalletManualBackupPresentationModelBase
     implements WalletManualBackupViewModel {
-  final WalletManualBackupInitialParams initialParams;
-
   WalletManualBackupPresentationModel(this.initialParams) {
     _shuffledMnemonic = Observable(mnemonic.byShufflingWords());
   }
+
+  final WalletManualBackupInitialParams initialParams;
 
   @override
   Mnemonic get mnemonic => initialParams.mnemonic;
@@ -67,7 +67,7 @@ class WalletManualBackupPresentationModel
 }
 
 //////////////////BOILERPLATE
-abstract class WalletManualBackupPresentationModelBase {
+mixin WalletManualBackupPresentationModelBase {
   //////////////////////////////////////
   final Observable<bool> _confirmationChecked = Observable(false);
 

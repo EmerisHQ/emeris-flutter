@@ -6,10 +6,10 @@ enum _VerifyWalletPasswordFailureType {
 }
 
 class VerifyWalletPasswordFailure {
-  final _VerifyWalletPasswordFailureType _type;
-
   // ignore: avoid_field_initializers_in_const_classes
   const VerifyWalletPasswordFailure.invalidPassword() : _type = _VerifyWalletPasswordFailureType.InvalidPassword;
+
+  final _VerifyWalletPasswordFailureType _type;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {

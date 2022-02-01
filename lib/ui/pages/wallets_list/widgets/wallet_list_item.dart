@@ -1,20 +1,21 @@
 import 'package:clipboard/clipboard.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 
 class WalletListItem extends StatelessWidget {
-  final String alias;
-  final String address;
-  final WalletType walletType;
-  final VoidCallback onClicked;
-
   const WalletListItem({
-    Key? key,
     required this.alias,
     required this.address,
     required this.walletType,
     required this.onClicked,
+    Key? key,
   }) : super(key: key);
+
+  final String alias;
+  final String address;
+  final WalletType walletType;
+  final VoidCallback onClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +50,18 @@ class WalletListItem extends StatelessWidget {
             ),
           ],
         ),
-        onTap: () => onClicked(),
+        onTap: onClicked,
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty('alias', alias))
+      ..add(StringProperty('address', address))
+      ..add(EnumProperty<WalletType>('walletType', walletType))
+      ..add(ObjectFlagProperty<VoidCallback>.has('onClicked', onClicked));
   }
 }

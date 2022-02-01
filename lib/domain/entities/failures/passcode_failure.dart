@@ -7,13 +7,13 @@ enum PasscodeFailureType {
 }
 
 class PasscodeFailure {
-  final PasscodeFailureType _type;
-
   // ignore: avoid_field_initializers_in_const_classes
   const PasscodeFailure.unknown() : _type = PasscodeFailureType.Unknown;
 
   // ignore: avoid_field_initializers_in_const_classes
   const PasscodeFailure.passcodesDontMatch() : _type = PasscodeFailureType.PasscodesDontMatch;
+
+  final PasscodeFailureType _type;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {

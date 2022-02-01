@@ -7,9 +7,9 @@ import 'package:transaction_signing_gateway/model/unsigned_transaction.dart';
 import 'package:web3dart/web3dart.dart' as eth;
 
 class EthereumTransaction implements UnsignedTransaction {
-  final eth.Transaction unsignedTransaction;
-
   EthereumTransaction(this.unsignedTransaction);
+
+  final eth.Transaction unsignedTransaction;
 
   static EthereumTransaction? fromDomain(Transaction transaction) {
     switch (transaction.transactionType) {
@@ -31,7 +31,7 @@ class EthereumTransaction implements UnsignedTransaction {
 }
 
 class EthereumSignedTransaction implements SignedTransaction {
-  final Uint8List txBytes;
-
   EthereumSignedTransaction(this.txBytes);
+
+  final Uint8List txBytes;
 }

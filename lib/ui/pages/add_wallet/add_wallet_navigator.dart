@@ -11,15 +11,15 @@ import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_navigato
 import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
 
 class AddWalletNavigator with NoRoutes, CloseRoute<AddWalletResult>, PasscodeRoute, ErrorDialogRoute, WalletNameRoute {
+  AddWalletNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  AddWalletNavigator(this.appNavigator);
 }
 
-abstract class AddWalletRoute {
+mixin AddWalletRoute {
   Future<AddWalletResult?> openAddWallet(AddWalletInitialParams initialParams) async => appNavigator.push(
         context,
         materialRoute(AddWalletPage(initialParams: initialParams)),
@@ -28,6 +28,4 @@ abstract class AddWalletRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory AddWalletRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

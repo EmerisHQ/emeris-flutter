@@ -27,13 +27,13 @@ class RoutingPresenter {
     }
     navigator.close();
     if (_model.wallets.isEmpty) {
-      navigator.openOnboarding(const OnboardingInitialParams());
+      await navigator.openOnboarding(const OnboardingInitialParams());
     } else {
-      _changeCurrentWalletUseCase.execute(wallet: _model.wallets.first).observableDoOn(
+      await _changeCurrentWalletUseCase.execute(wallet: _model.wallets.first).observableDoOn(
             (fail) => navigator.showError(fail.displayableFailure()),
             (success) => doNothing(),
           );
-      navigator.openWalletDetails(_model.wallets.first);
+      await navigator.openWalletDetails(_model.wallets.first);
     }
   }
 }

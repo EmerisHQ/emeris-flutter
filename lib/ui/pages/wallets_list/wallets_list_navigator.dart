@@ -9,15 +9,15 @@ import 'package:flutter_app/ui/pages/wallets_list/wallets_list_sheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class WalletsListNavigator with NoRoutes, ErrorDialogRoute, WalletDetailsRoute {
+  WalletsListNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  WalletsListNavigator(this.appNavigator);
 }
 
-abstract class WalletsListRoute {
+mixin WalletsListRoute {
   Future<void> openWalletsList(WalletsListInitialParams initialParams) async => showMaterialModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -31,6 +31,4 @@ abstract class WalletsListRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory WalletsListRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

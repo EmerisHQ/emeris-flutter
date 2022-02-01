@@ -1,16 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/ui/pages/wallets_list/widgets/wallet_list_item.dart';
 
 class WalletsListView extends StatelessWidget {
-  final List<EmerisWallet> list;
-  final void Function(EmerisWallet) walletClicked;
-
   const WalletsListView({
-    Key? key,
     required this.list,
     required this.walletClicked,
+    Key? key,
   }) : super(key: key);
+
+  final List<EmerisWallet> list;
+  final void Function(EmerisWallet) walletClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -26,5 +27,13 @@ class WalletsListView extends StatelessWidget {
           )
           .toList(),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(IterableProperty<EmerisWallet>('list', list))
+      ..add(ObjectFlagProperty<void Function(EmerisWallet p1)>.has('walletClicked', walletClicked));
   }
 }

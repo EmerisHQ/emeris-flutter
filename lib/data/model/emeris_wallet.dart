@@ -3,15 +3,15 @@ import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 
 class WalletDetails extends Equatable {
-  final WalletIdentifier walletIdentifier;
-  final String walletAlias;
-  final String walletAddress;
-
   const WalletDetails({
     required this.walletIdentifier,
     required this.walletAlias,
     required this.walletAddress,
   });
+
+  final WalletIdentifier walletIdentifier;
+  final String walletAlias;
+  final String walletAddress;
 
   @override
   List<Object?> get props => [
@@ -21,13 +21,13 @@ class WalletDetails extends Equatable {
 }
 
 class EmerisWallet extends Equatable {
-  final WalletDetails walletDetails;
-  final WalletType walletType;
-
   const EmerisWallet({
     required this.walletDetails,
     required this.walletType,
   });
+
+  final WalletDetails walletDetails;
+  final WalletType walletType;
 
   @override
   List<Object?> get props => [

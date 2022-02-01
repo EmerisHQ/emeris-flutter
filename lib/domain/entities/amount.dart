@@ -1,15 +1,15 @@
 import 'package:decimal/decimal.dart';
 
 class Amount {
-  static final zero = Amount(Decimal.zero);
-
-  final Decimal value;
-
   const Amount(this.value);
 
   Amount.fromString(String string) : value = Decimal.parse(string);
 
   Amount.fromInt(int int) : value = Decimal.fromInt(int);
+
+  static final zero = Amount(Decimal.zero);
+
+  final Decimal value;
 
   @override
   String toString() => value.toStringAsPrecision(10);

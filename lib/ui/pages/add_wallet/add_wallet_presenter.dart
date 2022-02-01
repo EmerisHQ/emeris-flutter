@@ -76,7 +76,7 @@ class AddWalletPresenter {
     if (_walletsStore.wallets.isEmpty) {
       name = await navigator.openWalletName(const WalletNameInitialParams());
     } else {
-      name = "";
+      name = '';
     }
     return name;
   }

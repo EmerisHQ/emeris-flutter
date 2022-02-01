@@ -1,5 +1,6 @@
 import 'package:cosmos_ui_components/components/content_loading_indicator.dart';
 import 'package:cosmos_ui_components/components/content_state_switcher.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/add_wallet/add_wallet_initial_params.dart';
@@ -9,20 +10,28 @@ import 'package:flutter_app/ui/pages/add_wallet/add_wallet_presenter.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AddWalletPage extends StatefulWidget {
-  final AddWalletInitialParams initialParams;
-  final AddWalletPresenter? presenter;
-
   const AddWalletPage({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final AddWalletInitialParams initialParams;
+  final AddWalletPresenter? presenter;
+
   @override
-  _AddWalletPageState createState() => _AddWalletPageState();
+  AddWalletPageState createState() => AddWalletPageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<AddWalletInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<AddWalletPresenter?>('presenter', presenter));
+  }
 }
 
-class _AddWalletPageState extends State<AddWalletPage> {
+class AddWalletPageState extends State<AddWalletPage> {
   late AddWalletPresenter presenter;
 
   AddWalletViewModel get model => presenter.viewModel;
@@ -54,5 +63,13 @@ class _AddWalletPageState extends State<AddWalletPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<AddWalletPresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<AddWalletViewModel>('model', model));
   }
 }

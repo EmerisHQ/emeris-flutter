@@ -94,212 +94,206 @@ void configureDependencies(BaseEnv baseEnv) {
 }
 
 void _configureTransactionSigningGateway() {
-  getIt.registerFactory<TransactionSummaryUI>(
-    () => MobileTransactionSummaryUI(),
-  );
-  getIt.registerFactory<KeyInfoStorage>(
-    () => kIsWeb
-        ? WebKeyInfoStorage()
-        : CosmosKeyInfoStorage(
-            plainDataStore: SharedPrefsPlainDataStore(),
-            secureDataStore: FlutterSecureStorageDataStore(),
-            serializers: [
-              AlanCredentialsSerializer(),
-              EthereumCredentialsSerializer(),
-            ],
-          ),
-  );
-  getIt.registerFactory<TransactionSigningGateway>(
-    () => TransactionSigningGateway(
-      transactionSummaryUI: getIt(),
-      infoStorage: getIt(),
-      signers: [
-        AlanTransactionSigner(getIt<BaseEnv>().networkInfo),
-        EthereumTransactionSigner(getIt()),
-      ],
-      broadcasters: [
-        AlanTransactionBroadcaster(getIt<BaseEnv>().networkInfo),
-      ],
-    ),
-  );
+  getIt
+    ..registerFactory<TransactionSummaryUI>(
+      MobileTransactionSummaryUI.new,
+    )
+    ..registerFactory<KeyInfoStorage>(
+      () => kIsWeb
+          ? WebKeyInfoStorage()
+          : CosmosKeyInfoStorage(
+              plainDataStore: SharedPrefsPlainDataStore(),
+              secureDataStore: FlutterSecureStorageDataStore(),
+              serializers: [
+                AlanCredentialsSerializer(),
+                EthereumCredentialsSerializer(),
+              ],
+            ),
+    )
+    ..registerFactory<TransactionSigningGateway>(
+      () => TransactionSigningGateway(
+        transactionSummaryUI: getIt(),
+        infoStorage: getIt(),
+        signers: [
+          AlanTransactionSigner(getIt<BaseEnv>().networkInfo),
+          EthereumTransactionSigner(getIt()),
+        ],
+        broadcasters: [
+          AlanTransactionBroadcaster(getIt<BaseEnv>().networkInfo),
+        ],
+      ),
+    );
 }
 
 void _configureRepositories() {
-  getIt.registerFactory<List<WalletApi>>(
-    () => [
-      CosmosWalletApi(getIt(), getIt()),
-      EthereumWalletApi(getIt(), getIt()),
-    ],
-  );
-
-  getIt.registerFactory<RestApiIbcRepository>(
-    () => RestApiIbcRepository(getIt(), getIt()),
-  );
-
-  getIt.registerFactory<TransactionsRepository>(
-    () => EmerisTransactionsRepository(getIt()),
-  );
-  getIt.registerFactory<WalletsRepository>(
-    () => EmerisWalletsRepository(getIt(), getIt()),
-  );
-  getIt.registerFactory<BankRepository>(
-    () => EmerisBankRepository(getIt(), getIt()),
-  );
-
-  getIt.registerFactory<IbcRepository>(
-    () => RestApiIbcRepository(getIt(), getIt()),
-  );
+  getIt
+    ..registerFactory<List<WalletApi>>(
+      () => [
+        CosmosWalletApi(getIt(), getIt()),
+        EthereumWalletApi(getIt(), getIt()),
+      ],
+    )
+    ..registerFactory<RestApiIbcRepository>(
+      () => RestApiIbcRepository(getIt(), getIt()),
+    )
+    ..registerFactory<TransactionsRepository>(
+      () => EmerisTransactionsRepository(getIt()),
+    )
+    ..registerFactory<WalletsRepository>(
+      () => EmerisWalletsRepository(getIt(), getIt()),
+    )
+    ..registerFactory<BankRepository>(
+      () => EmerisBankRepository(getIt(), getIt()),
+    )
+    ..registerFactory<IbcRepository>(
+      () => RestApiIbcRepository(getIt(), getIt()),
+    );
 }
 
 void _configureStores() {
-  getIt.registerLazySingleton<WalletsStore>(
-    () => WalletsStore(),
-  );
-  getIt.registerLazySingleton<PlatformInfoStore>(
-    () => PlatformInfoStore(),
-  );
+  getIt
+    ..registerLazySingleton<WalletsStore>(
+      WalletsStore.new,
+    )
+    ..registerLazySingleton<PlatformInfoStore>(
+      PlatformInfoStore.new,
+    );
 }
 
 void _configureGeneralDependencies() {
-  getIt.registerFactory<Web3Client>(
-    () => Web3Client(getIt<BaseEnv>().baseEthUrl, Client()),
-  );
-
-  getIt.registerLazySingleton<PasswordManager>(
-    () => PasswordManager(
-      BiometricWalletPasswordRetriever(BiometricStorage()),
-      UserPromptWalletPasswordRetriever(getIt()),
-    ),
-  );
-
-  getIt.registerFactory<DioBuilder>(
-    () => DioBuilder(),
-  );
-  getIt.registerFactory<Dio>(
-    () => getIt<DioBuilder>().build(),
-  );
-
-  getIt.registerFactory<AppNavigator>(
-    () => AppNavigator(),
-  );
-  getIt.registerFactory<AppInitializer>(
-    () => AppInitializer(getIt(), getIt()),
-  );
-  getIt.registerFactory<ClipboardManager>(
-    () => ClipboardManager(),
-  );
+  getIt
+    ..registerFactory<Web3Client>(
+      () => Web3Client(getIt<BaseEnv>().baseEthUrl, Client()),
+    )
+    ..registerLazySingleton<PasswordManager>(
+      () => PasswordManager(
+        BiometricWalletPasswordRetriever(BiometricStorage()),
+        UserPromptWalletPasswordRetriever(getIt()),
+      ),
+    )
+    ..registerFactory<DioBuilder>(
+      DioBuilder.new,
+    )
+    ..registerFactory<Dio>(
+      () => getIt<DioBuilder>().build(),
+    )
+    ..registerFactory<AppNavigator>(
+      AppNavigator.new,
+    )
+    ..registerFactory<AppInitializer>(
+      () => AppInitializer(getIt(), getIt()),
+    )
+    ..registerFactory<ClipboardManager>(
+      ClipboardManager.new,
+    );
 }
 
 void _configureUseCases() {
-  getIt.registerFactory<ImportWalletUseCase>(
-    () => ImportWalletUseCase(getIt(), getIt()),
-  );
-  getIt.registerFactory<GetBalancesUseCase>(
-    () => GetBalancesUseCase(getIt(), getIt()),
-  );
-  getIt.registerFactory<SendMoneyUseCase>(
-    () => SendMoneyUseCase(getIt(), getIt()),
-  );
-  getIt.registerFactory<GenerateMnemonicUseCase>(
-    () => GenerateMnemonicUseCase(),
-  );
-  getIt.registerFactory<VerifyWalletPasswordUseCase>(
-    () => VerifyWalletPasswordUseCase(getIt()),
-  );
-  getIt.registerFactory<ChangeCurrentWalletUseCase>(
-    () => ChangeCurrentWalletUseCase(getIt()),
-  );
+  getIt
+    ..registerFactory<ImportWalletUseCase>(
+      () => ImportWalletUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<GetBalancesUseCase>(
+      () => GetBalancesUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<SendMoneyUseCase>(
+      () => SendMoneyUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<GenerateMnemonicUseCase>(
+      GenerateMnemonicUseCase.new,
+    )
+    ..registerFactory<VerifyWalletPasswordUseCase>(
+      () => VerifyWalletPasswordUseCase(getIt()),
+    )
+    ..registerFactory<ChangeCurrentWalletUseCase>(
+      () => ChangeCurrentWalletUseCase(getIt()),
+    );
 }
 
 void _configureMvp() {
-  getIt.registerFactoryParam<WalletsListPresenter, WalletsListPresentationModel, dynamic>(
-    (_model, _) => WalletsListPresenter(_model, getIt(), getIt()),
-  );
-  getIt.registerFactory<WalletsListNavigator>(
-    () => WalletsListNavigator(getIt()),
-  );
-  getIt.registerFactoryParam<WalletDetailsPresenter, WalletDetailsPresentationModel, dynamic>(
-    (_model, _) => WalletDetailsPresenter(_model, getIt(), getIt()),
-  );
-  getIt.registerFactory<WalletDetailsNavigator>(
-    () => WalletDetailsNavigator(getIt()),
-  );
-  getIt.registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
-    (_model, _) => SendMoneyPresenter(_model, getIt(), getIt()),
-  );
-  getIt.registerFactory<SendMoneyNavigator>(
-    () => SendMoneyNavigator(getIt()),
-  );
-  getIt.registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
-    (_model, _) => RoutingPresenter(_model, getIt(), getIt(), getIt()),
-  );
-  getIt.registerFactory<RoutingNavigator>(
-    () => RoutingNavigator(getIt()),
-  );
-  getIt.registerFactoryParam<OnboardingPresenter, OnboardingPresentationModel, dynamic>(
-    (_model, _) => OnboardingPresenter(_model, getIt()),
-  );
-  getIt.registerFactory<OnboardingNavigator>(
-    () => OnboardingNavigator(getIt()),
-  );
-  getIt.registerFactoryParam<WalletNamePresenter, WalletNamePresentationModel, dynamic>(
-    (_model, _) => WalletNamePresenter(_model, getIt()),
-  );
-  getIt.registerFactory<WalletNameNavigator>(
-    () => WalletNameNavigator(getIt()),
-  );
-  getIt.registerFactoryParam<PasscodePresenter, PasscodePresentationModel, dynamic>(
-    (_model, _) => PasscodePresenter(_model, getIt()),
-  );
-  getIt.registerFactory<PasscodeNavigator>(
-    () => PasscodeNavigator(getIt()),
-  );
-  getIt.registerFactoryParam<WalletBackupIntroPresenter, WalletBackupIntroPresentationModel, dynamic>(
-    (_model, _) => WalletBackupIntroPresenter(_model, getIt()),
-  );
-  getIt.registerFactory<WalletBackupIntroNavigator>(
-    () => WalletBackupIntroNavigator(getIt()),
-  );
-
-  getIt.registerFactoryParam<WalletCloudBackupPresenter, WalletCloudBackupPresentationModel, dynamic>(
-    (_model, _) => WalletCloudBackupPresenter(_model, getIt()),
-  );
-  getIt.registerFactory<WalletCloudBackupNavigator>(
-    () => WalletCloudBackupNavigator(getIt()),
-  );
-
-  getIt.registerFactoryParam<WalletManualBackupPresenter, WalletManualBackupPresentationModel, dynamic>(
-    (_model, _) => WalletManualBackupPresenter(_model, getIt(), getIt()),
-  );
-  getIt.registerFactory<WalletManualBackupNavigator>(
-    () => WalletManualBackupNavigator(getIt()),
-  );
-
-  getIt.registerFactoryParam<AddWalletPresenter, AddWalletPresentationModel, dynamic>(
-    (_model, _) => AddWalletPresenter(_model, getIt(), getIt(), getIt(), getIt()),
-  );
-  getIt.registerFactory<AddWalletNavigator>(
-    () => AddWalletNavigator(getIt()),
-  );
-
-  getIt.registerFactoryParam<ImportWalletPresenter, ImportWalletPresentationModel, dynamic>(
-    (_model, _) => ImportWalletPresenter(_model, getIt(), getIt()),
-  );
-  getIt.registerFactory<ImportWalletNavigator>(
-    () => ImportWalletNavigator(getIt()),
-  );
-
-  getIt.registerFactoryParam<MnemonicImportPresenter, MnemonicImportPresentationModel, dynamic>(
-    (_model, _) => MnemonicImportPresenter(_model, getIt(), getIt()),
-  );
-  getIt.registerFactory<MnemonicImportNavigator>(
-    () => MnemonicImportNavigator(getIt()),
-  );
-
-  getIt.registerFactoryParam<AssetDetailsPresenter, AssetDetailsPresentationModel, dynamic>(
-    (_model, _) => AssetDetailsPresenter(_model, getIt()),
-  );
-  getIt.registerFactory<AssetDetailsNavigator>(
-    () => AssetDetailsNavigator(getIt()),
-  );
+  getIt
+    ..registerFactoryParam<WalletsListPresenter, WalletsListPresentationModel, dynamic>(
+      (_model, _) => WalletsListPresenter(_model, getIt(), getIt()),
+    )
+    ..registerFactory<WalletsListNavigator>(
+      () => WalletsListNavigator(getIt()),
+    )
+    ..registerFactoryParam<WalletDetailsPresenter, WalletDetailsPresentationModel, dynamic>(
+      (_model, _) => WalletDetailsPresenter(_model, getIt(), getIt()),
+    )
+    ..registerFactory<WalletDetailsNavigator>(
+      () => WalletDetailsNavigator(getIt()),
+    )
+    ..registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
+      (_model, _) => SendMoneyPresenter(_model, getIt(), getIt()),
+    )
+    ..registerFactory<SendMoneyNavigator>(
+      () => SendMoneyNavigator(getIt()),
+    )
+    ..registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
+      (_model, _) => RoutingPresenter(_model, getIt(), getIt(), getIt()),
+    )
+    ..registerFactory<RoutingNavigator>(
+      () => RoutingNavigator(getIt()),
+    )
+    ..registerFactoryParam<OnboardingPresenter, OnboardingPresentationModel, dynamic>(
+      (_model, _) => OnboardingPresenter(_model, getIt()),
+    )
+    ..registerFactory<OnboardingNavigator>(
+      () => OnboardingNavigator(getIt()),
+    )
+    ..registerFactoryParam<WalletNamePresenter, WalletNamePresentationModel, dynamic>(
+      (_model, _) => WalletNamePresenter(_model, getIt()),
+    )
+    ..registerFactory<WalletNameNavigator>(
+      () => WalletNameNavigator(getIt()),
+    )
+    ..registerFactoryParam<PasscodePresenter, PasscodePresentationModel, dynamic>(
+      (_model, _) => PasscodePresenter(_model, getIt()),
+    )
+    ..registerFactory<PasscodeNavigator>(
+      () => PasscodeNavigator(getIt()),
+    )
+    ..registerFactoryParam<WalletBackupIntroPresenter, WalletBackupIntroPresentationModel, dynamic>(
+      (_model, _) => WalletBackupIntroPresenter(_model, getIt()),
+    )
+    ..registerFactory<WalletBackupIntroNavigator>(
+      () => WalletBackupIntroNavigator(getIt()),
+    )
+    ..registerFactoryParam<WalletCloudBackupPresenter, WalletCloudBackupPresentationModel, dynamic>(
+      (_model, _) => WalletCloudBackupPresenter(_model, getIt()),
+    )
+    ..registerFactory<WalletCloudBackupNavigator>(
+      () => WalletCloudBackupNavigator(getIt()),
+    )
+    ..registerFactoryParam<WalletManualBackupPresenter, WalletManualBackupPresentationModel, dynamic>(
+      (_model, _) => WalletManualBackupPresenter(_model, getIt(), getIt()),
+    )
+    ..registerFactory<WalletManualBackupNavigator>(
+      () => WalletManualBackupNavigator(getIt()),
+    )
+    ..registerFactoryParam<AddWalletPresenter, AddWalletPresentationModel, dynamic>(
+      (_model, _) => AddWalletPresenter(_model, getIt(), getIt(), getIt(), getIt()),
+    )
+    ..registerFactory<AddWalletNavigator>(
+      () => AddWalletNavigator(getIt()),
+    )
+    ..registerFactoryParam<ImportWalletPresenter, ImportWalletPresentationModel, dynamic>(
+      (_model, _) => ImportWalletPresenter(_model, getIt(), getIt()),
+    )
+    ..registerFactory<ImportWalletNavigator>(
+      () => ImportWalletNavigator(getIt()),
+    )
+    ..registerFactoryParam<MnemonicImportPresenter, MnemonicImportPresentationModel, dynamic>(
+      (_model, _) => MnemonicImportPresenter(_model, getIt(), getIt()),
+    )
+    ..registerFactory<MnemonicImportNavigator>(
+      () => MnemonicImportNavigator(getIt()),
+    )
+    ..registerFactoryParam<AssetDetailsPresenter, AssetDetailsPresentationModel, dynamic>(
+      (_model, _) => AssetDetailsPresenter(_model, getIt()),
+    )
+    ..registerFactory<AssetDetailsNavigator>(
+      () => AssetDetailsNavigator(getIt()),
+    );
 }

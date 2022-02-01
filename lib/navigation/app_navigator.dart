@@ -38,7 +38,7 @@ Route<T> slideBottomRoute<T>(Widget page, {int? durationMillis, bool fullScreenD
       fullscreenDialog: fullScreenDialog,
       pageBuilder: (context, animation, secondaryAnimation) => SlideTransition(
         position: Tween<Offset>(
-          begin: const Offset(0.0, 1.0),
+          begin: const Offset(0, 1),
           end: Offset.zero,
         ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutQuint)),
         child: page,

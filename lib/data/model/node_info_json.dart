@@ -1,10 +1,6 @@
 import 'package:flutter_app/data/model/bech_32_config_json.dart';
 
 class NodeInfoJson {
-  final String endpoint;
-  final String chainId;
-  final Bech32ConfigJson? bech32Config;
-
   NodeInfoJson({
     required this.endpoint,
     required this.chainId,
@@ -18,4 +14,8 @@ class NodeInfoJson {
             ? null
             : Bech32ConfigJson.fromJson(json['bech32_config'] as Map<String, dynamic>),
       );
+
+  final String endpoint;
+  final String chainId;
+  final Bech32ConfigJson? bech32Config;
 }

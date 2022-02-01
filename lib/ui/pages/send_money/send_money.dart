@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
@@ -10,20 +11,28 @@ import 'package:flutter_app/ui/pages/send_money/send_money_presenter.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class SendMoneySheet extends StatefulWidget {
-  final SendMoneyInitialParams initialParams;
-  final SendMoneyPresenter? presenter;
-
   const SendMoneySheet({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final SendMoneyInitialParams initialParams;
+  final SendMoneyPresenter? presenter;
+
   @override
-  _SendMoneySheetState createState() => _SendMoneySheetState();
+  SendMoneySheetState createState() => SendMoneySheetState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<SendMoneyInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<SendMoneyPresenter?>('presenter', presenter));
+  }
 }
 
-class _SendMoneySheetState extends State<SendMoneySheet> {
+class SendMoneySheetState extends State<SendMoneySheet> {
   String _toAddress = '';
   String _amount = '';
 
@@ -78,7 +87,7 @@ class _SendMoneySheetState extends State<SendMoneySheet> {
           onPressed: () async {
             final amount = Amount.fromString(_amount);
             presenter.navigator.appNavigator.close(context);
-            presenter.sendMoney(
+            await presenter.sendMoney(
               SendMoneyMessage(
                 balance: Balance(
                   denom: presenter.viewModel.denom,
@@ -100,5 +109,13 @@ class _SendMoneySheetState extends State<SendMoneySheet> {
         ),
       ],
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<SendMoneyPresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<SendMoneyViewModel>('model', model));
   }
 }

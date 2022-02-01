@@ -1,4 +1,5 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_presentation_model.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_presenter.dart';
@@ -8,9 +9,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ManualBackupConfirmStep extends StatelessWidget {
   const ManualBackupConfirmStep({
-    Key? key,
     required this.model,
     required this.presenter,
+    Key? key,
   }) : super(key: key);
 
   final WalletManualBackupViewModel model;
@@ -61,5 +62,13 @@ class ManualBackupConfirmStep extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletManualBackupViewModel>('model', model))
+      ..add(DiagnosticsProperty<WalletManualBackupPresenter>('presenter', presenter));
   }
 }

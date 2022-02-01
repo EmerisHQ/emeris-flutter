@@ -13,14 +13,15 @@ import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_ba
 class OnboardingNavigator
     with ErrorDialogRoute, CloseRoute, RoutingRoute, WalletBackupIntroRoute, AddWalletRoute, ImportWalletRoute {
   @override
+  OnboardingNavigator(this.appNavigator);
+
+  @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  OnboardingNavigator(this.appNavigator);
 }
 
-abstract class OnboardingRoute {
+mixin OnboardingRoute {
   Future<void> openOnboarding(OnboardingInitialParams initialParams) async => appNavigator.push(
         context,
         materialRoute(OnboardingPage(initialParams: initialParams)),
@@ -29,6 +30,4 @@ abstract class OnboardingRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory OnboardingRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

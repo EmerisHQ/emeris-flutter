@@ -4,13 +4,6 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 
 class BalanceJson {
-  final String address;
-  final String baseDenom;
-  final bool verified;
-  final String amount;
-  final String onChain;
-  final IbcJson? ibc;
-
   BalanceJson({
     required this.address,
     required this.baseDenom,
@@ -28,6 +21,13 @@ class BalanceJson {
         onChain: json['on_chain'] as String? ?? '',
         ibc: json['ibc'] == null ? null : IbcJson.fromJson(json['ibc'] as Map<String, dynamic>),
       );
+
+  final String address;
+  final String baseDenom;
+  final bool verified;
+  final String amount;
+  final String onChain;
+  final IbcJson? ibc;
 
   Balance toBalanceDomain() => Balance(
         amount: Amount.fromString(amount.replaceAll(baseDenom, '')),

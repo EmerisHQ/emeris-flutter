@@ -5,17 +5,17 @@ import 'package:mobx/mobx.dart';
 abstract class WalletNameViewModel {}
 
 class WalletNamePresentationModel with WalletNamePresentationModelBase implements WalletNameViewModel {
-  final WalletNameInitialParams initialParams;
-
   WalletNamePresentationModel(this.initialParams);
+
+  final WalletNameInitialParams initialParams;
 
   String get name => _name.value;
 }
 
 //////////////////BOILERPLATE
-abstract class WalletNamePresentationModelBase {
+mixin WalletNamePresentationModelBase {
   //////////////////////////////////////
-  final Observable<String> _name = Observable("");
+  final Observable<String> _name = Observable('');
 
   set name(String value) => Action(() => _name.value = value)();
 }

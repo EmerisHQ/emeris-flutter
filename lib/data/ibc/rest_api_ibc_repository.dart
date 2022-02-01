@@ -14,10 +14,10 @@ import 'package:flutter_app/global.dart';
 
 /// TODO: None of these functions should return Json models.
 class RestApiIbcRepository implements IbcRepository {
+  RestApiIbcRepository(this._dio, this._baseEnv);
+
   final Dio _dio;
   final BaseEnv _baseEnv;
-
-  RestApiIbcRepository(this._dio, this._baseEnv);
 
   @override
   Future<Either<GeneralFailure, VerifyTraceJson>> verifyTrace(String chainId, String hash) async {
@@ -25,7 +25,7 @@ class RestApiIbcRepository implements IbcRepository {
       final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/denom/verify_trace/$hash');
       return right(VerifyTraceJson.fromJson((response.data as Map)['verify_trace'] as Map<String, dynamic>));
     } catch (ex, stack) {
-      return left(GeneralFailure.unknown("error while verifying trace", ex, stack));
+      return left(GeneralFailure.unknown('error while verifying trace', ex, stack));
     }
   }
 
@@ -38,7 +38,7 @@ class RestApiIbcRepository implements IbcRepository {
         denomsList.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>).toDomain()).toList(),
       );
     } catch (ex, stack) {
-      return left(GeneralFailure.unknown("error while getting verified denoms", ex, stack));
+      return left(GeneralFailure.unknown('error while getting verified denoms', ex, stack));
     }
   }
 
@@ -52,7 +52,7 @@ class RestApiIbcRepository implements IbcRepository {
           await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/primary_channel/$destinationChainId');
       return right(PrimaryChannelJson.fromJson((response.data as Map)['primary_channel'] as Map<String, dynamic>));
     } catch (ex, stack) {
-      return left(GeneralFailure.unknown("error while getting primary channel", ex, stack));
+      return left(GeneralFailure.unknown('error while getting primary channel', ex, stack));
     }
   }
 

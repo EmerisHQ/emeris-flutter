@@ -20,7 +20,7 @@ class BaseEnv {
       lcdInfo: LCDInfo(host: lcdUrl, port: int.parse(lcdPort)),
       grpcInfo: GRPCInfo(host: grpcUrl, port: int.parse(grpcPort)),
     );
-    _baseApiUrl = "$lcdUrl:$lcdPort";
+    _baseApiUrl = '$lcdUrl:$lcdPort';
     _baseEthUrl = ethUrl;
     _emerisBackendApiUrl = emerisUrl;
   }

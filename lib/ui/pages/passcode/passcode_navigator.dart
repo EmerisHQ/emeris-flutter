@@ -9,15 +9,15 @@ import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_page.dart';
 
 class PasscodeNavigator with NoRoutes, CloseRoute<Passcode>, ErrorDialogRoute {
+  PasscodeNavigator(this.appNavigator);
+
   @override
   late BuildContext context;
   @override
   final AppNavigator appNavigator;
-
-  PasscodeNavigator(this.appNavigator);
 }
 
-abstract class PasscodeRoute {
+mixin PasscodeRoute {
   Future<Passcode?> openPasscode(PasscodeInitialParams initialParams) async => appNavigator.push(
         context,
         materialRoute(PasscodePage(initialParams: initialParams)),
@@ -26,6 +26,4 @@ abstract class PasscodeRoute {
   AppNavigator get appNavigator;
 
   BuildContext get context;
-
-  factory PasscodeRoute._() => throw UnsupportedError("This class is meant to be mixed in");
 }

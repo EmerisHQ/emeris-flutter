@@ -1,4 +1,5 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_initial_params.dart';
@@ -10,20 +11,28 @@ import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class WalletBackupIntroPage extends StatefulWidget {
-  final WalletBackupIntroInitialParams initialParams;
-  final WalletBackupIntroPresenter? presenter;
-
   const WalletBackupIntroPage({
-    Key? key,
     required this.initialParams,
+    Key? key,
     this.presenter, // useful for tests
   }) : super(key: key);
 
+  final WalletBackupIntroInitialParams initialParams;
+  final WalletBackupIntroPresenter? presenter;
+
   @override
-  _WalletBackupIntroPageState createState() => _WalletBackupIntroPageState();
+  WalletBackupIntroPageState createState() => WalletBackupIntroPageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletBackupIntroInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<WalletBackupIntroPresenter?>('presenter', presenter));
+  }
 }
 
-class _WalletBackupIntroPageState extends State<WalletBackupIntroPage> {
+class WalletBackupIntroPageState extends State<WalletBackupIntroPage> {
   late WalletBackupIntroPresenter presenter;
 
   WalletBackupIntroViewModel get model => presenter.viewModel;
@@ -89,5 +98,13 @@ class _WalletBackupIntroPageState extends State<WalletBackupIntroPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<WalletBackupIntroPresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<WalletBackupIntroViewModel>('model', model));
   }
 }

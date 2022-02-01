@@ -6,15 +6,15 @@ import 'package:flutter_app/ibc/model/transfer_step.dart';
 import 'package:flutter_app/ibc/model/transfer_step_data.dart';
 
 class IbcTransferRecipient extends Equatable {
-  final String chainId;
-  final String destinationChainId;
-  final String toAddress;
-
   const IbcTransferRecipient({
     required this.chainId,
     required this.destinationChainId,
     required this.toAddress,
   });
+
+  final String chainId;
+  final String destinationChainId;
+  final String toAddress;
 
   @override
   List<Object?> get props => [

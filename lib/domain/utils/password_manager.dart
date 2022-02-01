@@ -5,10 +5,10 @@ import 'package:flutter_app/ui/pages/wallet_password_retriever/biometric_wallet_
 import 'package:flutter_app/ui/pages/wallet_password_retriever/user_prompt_wallet_password_retriever.dart';
 
 class PasswordManager {
+  PasswordManager(this._biometricRetriever, this._userPromptRetriever);
+
   final BiometricWalletPasswordRetriever _biometricRetriever;
   final UserPromptWalletPasswordRetriever _userPromptRetriever;
-
-  PasswordManager(this._biometricRetriever, this._userPromptRetriever);
 
   Future<Either<GeneralFailure, String>> retrievePassword(WalletIdentifier walletIdentifier) async {
     try {

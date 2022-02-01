@@ -31,6 +31,6 @@ Future<Either<GeneralFailure, PaginatedList<Balance>>> getEthereumBalances(
     );
   } catch (e, stack) {
     logError(e, stack);
-    return left(GeneralFailure.unknown("$e"));
+    return left(GeneralFailure.unknown('$e'));
   }
 }

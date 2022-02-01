@@ -9,8 +9,8 @@ import 'mocks/biometric_storage_mock.dart';
 import 'mocks/user_prompt_wallet_password_retiever_mock.dart';
 
 void main() {
-  const chainId = "atom";
-  const walletId = "123walletId";
+  const chainId = 'atom';
+  const walletId = '123walletId';
   const walletIdentifier = WalletIdentifier(walletId: walletId, chainId: chainId);
   late BiometricStorageMock biometricStorageMock;
   late BiometricStorageFileMock biometricStorageFileMock;
@@ -59,12 +59,12 @@ void main() {
     verify(() => biometricStorageFileMock.read());
   });
 
-  test("Biometric was available and biometric had saved password returns success", () async {
+  test('Biometric was available and biometric had saved password returns success', () async {
     when(() => biometricStorageMock.canAuthenticate()).thenAnswer((_) async => CanAuthenticateResponse.success);
 
     when(() => biometricStorageMock.getStorage(any())).thenAnswer((_) async => biometricStorageFileMock);
 
-    when(() => biometricStorageFileMock.read()).thenAnswer((_) async => "Sample");
+    when(() => biometricStorageFileMock.read()).thenAnswer((_) async => 'Sample');
 
     final manager = PasswordManager(
       BiometricWalletPasswordRetriever(biometricStorageMock),
@@ -80,12 +80,12 @@ void main() {
     verify(() => biometricStorageFileMock.read());
   });
 
-  test("Biometric was not available and user entered a password returns success", () async {
+  test('Biometric was not available and user entered a password returns success', () async {
     when(() => biometricStorageMock.canAuthenticate()).thenAnswer((_) async => CanAuthenticateResponse.statusUnknown);
 
     when(() => biometricStorageMock.getStorage(any())).thenAnswer((_) async => biometricStorageFileMock);
 
-    when(() => biometricStorageFileMock.read()).thenAnswer((_) async => "Sample");
+    when(() => biometricStorageFileMock.read()).thenAnswer((_) async => 'Sample');
 
     final manager = PasswordManager(
       BiometricWalletPasswordRetriever(biometricStorageMock),

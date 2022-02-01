@@ -20,14 +20,14 @@ import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
 import 'package:web3dart/web3dart.dart' as eth;
 
 class EthereumWalletApi implements WalletApi {
+  EthereumWalletApi(this._signingGateway, this._web3client);
+
   String? privateKey; // TODO
   final TransactionSigningGateway _signingGateway;
   final eth.Web3Client _web3client;
 
   @override
   WalletType get walletType => WalletType.Eth;
-
-  EthereumWalletApi(this._signingGateway, this._web3client);
 
   @override
   Future<Either<AddWalletFailure, EmerisWallet>> importWallet(
@@ -48,11 +48,11 @@ class EthereumWalletApi implements WalletApi {
   }) async {
     final ethTx = EthereumTransaction.fromDomain(transaction);
     if (ethTx == null) {
-      return left(GeneralFailure.unknown("Could not create Ethereum transaction from $transaction"));
+      return left(GeneralFailure.unknown('Could not create Ethereum transaction from $transaction'));
     }
     final password = walletIdentifier.password;
     if (password == null) {
-      return left(GeneralFailure.unknown("Could not resolve password to sign transaction: $walletIdentifier"));
+      return left(GeneralFailure.unknown('Could not resolve password to sign transaction: $walletIdentifier'));
     }
     return _signingGateway
         .signTransaction(
@@ -63,7 +63,7 @@ class EthereumWalletApi implements WalletApi {
             password: password,
           ),
         )
-        .leftMap((signingFailure) => left(GeneralFailure.unknown("$signingFailure")))
+        .leftMap((signingFailure) => left(GeneralFailure.unknown('$signingFailure')))
         .flatMap(
           (transaction) => broadcastEthereumTransaction(_web3client, transaction as EthereumSignedTransaction),
         );

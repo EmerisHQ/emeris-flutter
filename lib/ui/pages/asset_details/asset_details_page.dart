@@ -2,6 +2,7 @@ import 'package:cosmos_ui_components/components/cosmos_app_bar.dart';
 import 'package:cosmos_ui_components/components/cosmos_back_button.dart';
 import 'package:cosmos_ui_components/components/cosmos_elevated_button.dart';
 import 'package:cosmos_ui_components/cosmos_theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
@@ -14,16 +15,28 @@ import 'package:flutter_app/utils/emeris_amount_formatter.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class AssetDetailsPage extends StatefulWidget {
+  const AssetDetailsPage({
+    required this.initialParams,
+    Key? key,
+    this.presenter,
+  }) : super(key: key);
+
   final AssetDetailsInitialParams initialParams;
   final AssetDetailsPresenter? presenter;
 
-  const AssetDetailsPage({Key? key, required this.initialParams, this.presenter}) : super(key: key);
+  @override
+  AssetDetailsPageState createState() => AssetDetailsPageState();
 
   @override
-  _AssetDetailsPageState createState() => _AssetDetailsPageState();
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<AssetDetailsInitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<AssetDetailsPresenter?>('presenter', presenter));
+  }
 }
 
-class _AssetDetailsPageState extends State<AssetDetailsPage> {
+class AssetDetailsPageState extends State<AssetDetailsPage> {
   late AssetDetailsPresenter presenter;
 
   AssetDetailsViewModel get model => presenter.viewModel;
@@ -75,19 +88,19 @@ class _AssetDetailsPageState extends State<AssetDetailsPage> {
                   Column(
                     children: [
                       Text(strings.availableTitle),
-                      const Text('#\$110.23'),
+                      const Text(r'#$110.23'),
                     ],
                   ),
                   Column(
                     children: [
                       Text(strings.stakedTitle),
-                      const Text('#\$56.87'),
+                      const Text(r'#$56.87'),
                     ],
                   ),
                   Column(
                     children: [
                       Text(strings.pooledTitle),
-                      const Text('#\$11.54'),
+                      const Text(r'#$11.54'),
                     ],
                   ),
                 ],
@@ -125,5 +138,13 @@ class _AssetDetailsPageState extends State<AssetDetailsPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<AssetDetailsPresenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<AssetDetailsViewModel>('model', model));
   }
 }

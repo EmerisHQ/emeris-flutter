@@ -10,7 +10,7 @@ class FaucetApi {
       uri,
       body: jsonEncode(
         {
-          "address": address,
+          'address': address,
         },
       ),
     );

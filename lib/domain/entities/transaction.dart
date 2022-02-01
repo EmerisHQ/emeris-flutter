@@ -7,17 +7,17 @@ enum TransactionType {
 }
 
 class Transaction extends Equatable {
-  final WalletType walletType;
-  final TransactionType transactionType;
-  final List<TransactionMessage> messages;
-  final String memo;
-
   const Transaction({
     required this.walletType,
     required this.messages,
     required this.transactionType,
-    this.memo = "",
+    this.memo = '',
   });
+
+  final WalletType walletType;
+  final TransactionType transactionType;
+  final List<TransactionMessage> messages;
+  final String memo;
 
   @override
   List<Object> get props => [
