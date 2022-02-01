@@ -1,3 +1,4 @@
+import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
@@ -12,18 +13,12 @@ class GetStakedAmountUseCase {
   Future<Either<GeneralFailure, Amount>> execute({
     required EmerisWallet wallet,
     required String onChain,
-  }) async {
-    final stakingBalances = await _bankRepository.getStakingBalances(wallet);
-    return stakingBalances.fold(
-      left,
-      (r) {
-        final amountListOnChain = r.where((element) => element.chainName == onChain).toList();
-        var amount = 0.0;
-        for (final element in amountListOnChain) {
-          amount += element.amount.value.toDouble();
-        }
-        return right(Amount.fromString(amount.toString()));
-      },
-    );
-  }
+  }) =>
+      _bankRepository.getStakingBalances(wallet).mapSuccess((balances) {
+        final amountDecimal = balances
+            .where((element) => element.chainName == onChain)
+            .map((e) => e.amount.value)
+            .reduce((a, b) => a + b);
+        return Amount(amountDecimal);
+      });
 }

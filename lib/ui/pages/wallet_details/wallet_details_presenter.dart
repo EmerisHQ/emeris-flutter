@@ -21,6 +21,9 @@ class WalletDetailsPresenter {
 
   WalletDetailsViewModel get viewModel => _model;
 
+  // ignore: use_setters_to_change_properties
+  void setWallet(EmerisWallet wallet) => _model.wallet = wallet;
+
   Future<void> getWalletBalances(EmerisWallet walletData) async {
     _model.getAssetDetailsFuture = _getBalancesUseCase.execute(walletData: walletData).observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
@@ -31,7 +34,7 @@ class WalletDetailsPresenter {
   void transferTapped({required Balance balance, required AssetDetails assetDetails}) => navigator.openAssetDetails(
         balance: balance,
         assetDetails: assetDetails,
-        wallet: _model.initialParams.wallet,
+        wallet: _model.wallet,
       );
 
   void onTapPortfolioHeading() => navigator.openWalletsList(const WalletsListInitialParams());
