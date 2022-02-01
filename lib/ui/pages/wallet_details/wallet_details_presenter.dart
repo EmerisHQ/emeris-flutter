@@ -28,8 +28,11 @@ class WalletDetailsPresenter {
         );
   }
 
-  void transferTapped({required Balance balance, required AssetDetails assetDetails}) =>
-      navigator.openAssetDetails(balance: balance, assetDetails: assetDetails);
+  void transferTapped({required Balance balance, required AssetDetails assetDetails}) => navigator.openAssetDetails(
+        balance: balance,
+        assetDetails: assetDetails,
+        wallet: _model.initialParams.wallet,
+      );
 
   void onTapPortfolioHeading() => navigator.openWalletsList(const WalletsListInitialParams());
 

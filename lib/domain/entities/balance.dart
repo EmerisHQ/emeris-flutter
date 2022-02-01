@@ -5,12 +5,6 @@ import 'package:flutter_app/domain/entities/price.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
 class Balance extends Equatable {
-  final Denom denom;
-  final Amount amount;
-  final Amount unitPrice;
-  final Amount dollarPrice;
-  final String onChain;
-
   Balance({
     required this.denom,
     required this.amount,
@@ -19,6 +13,12 @@ class Balance extends Equatable {
     Amount? dollarPrice,
   })  : unitPrice = unitPrice ?? Amount.zero,
         dollarPrice = dollarPrice ?? Amount.zero;
+
+  final Denom denom;
+  final Amount amount;
+  final Amount unitPrice;
+  final Amount dollarPrice;
+  final String onChain;
 
   @override
   String toString() {

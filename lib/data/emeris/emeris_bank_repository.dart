@@ -42,6 +42,9 @@ class EmerisBankRepository implements BankRepository {
         '${_baseEnv.emerisBackendApiUrl}/v1/account/${bech32ToHex(walletData.walletDetails.walletAddress)}/stakingbalances';
     final response = await _dio.get(uri);
     final map = response.data as Map<String, dynamic>;
+    if (map['staking_balances'] == null) {
+      return right([]);
+    }
     final stakingBalanceList = map['staking_balances'] as List;
 
     return right(
