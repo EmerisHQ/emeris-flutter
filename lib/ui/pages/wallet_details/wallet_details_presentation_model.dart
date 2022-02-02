@@ -14,8 +14,6 @@ abstract class WalletDetailsViewModel {
   bool get isSendMoneyLoading;
 
   AssetDetails get assetDetails;
-
-  EmerisWallet get wallet;
 }
 
 class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase implements WalletDetailsViewModel {
@@ -38,7 +36,6 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
   @override
   bool get isSendMoneyLoading => sendMoneyFuture?.status == FutureStatus.pending;
 
-  @override
   EmerisWallet get wallet => initialParams.wallet;
 }
 

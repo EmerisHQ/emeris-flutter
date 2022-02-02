@@ -1,4 +1,5 @@
 import 'package:cosmos_utils/address_parser.dart';
+import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_app/data/model/balance_json.dart';
@@ -24,22 +25,17 @@ class EmerisBankRepository implements BankRepository {
     final uri =
         '${_baseEnv.emerisBackendApiUrl}/v1/account/${bech32ToHex(walletData.walletDetails.walletAddress)}/balance';
     final response = await _dio.get(uri);
-    return checkError(response).fold(
-      left,
-      (r) {
-        final map = response.data as Map<String, dynamic>;
-        final balanceList = map['balances'] as List? ?? [];
+    return checkError(response).mapSuccess((_) {
+      final map = response.data as Map<String, dynamic>;
+      final balanceList = map['balances'] as List? ?? [];
 
-        return right(
-          balanceList
-              .map((e) => BalanceJson.fromJson(e as Map<String, dynamic>))
-              .toList()
-              .where((element) => element.verified)
-              .map((e) => e.toBalanceDomain())
-              .toList(),
-        );
-      },
-    );
+      return balanceList
+          .map((e) => BalanceJson.fromJson(e as Map<String, dynamic>))
+          .toList()
+          .where((element) => element.verified)
+          .map((e) => e.toBalanceDomain())
+          .toList();
+    });
   }
 
   @override
@@ -47,36 +43,29 @@ class EmerisBankRepository implements BankRepository {
     final uri =
         '${_baseEnv.emerisBackendApiUrl}/v1/account/${bech32ToHex(walletData.walletDetails.walletAddress)}/stakingbalances';
     final response = await _dio.get(uri);
-    return checkError(response).fold(
-      left,
-      (r) {
-        final map = response.data as Map<String, dynamic>;
-        final stakingBalanceList = map['staking_balances'] as List? ?? [];
+    return checkError(response).mapSuccess((_) {
+      final map = response.data as Map<String, dynamic>;
+      final stakingBalanceList = map['staking_balances'] as List? ?? [];
 
-        return right(
-          stakingBalanceList
-              .map((it) => StakingBalanceJson.fromJson(it as Map<String, dynamic>))
-              .map((it) => it.toDomain())
-              .toList(),
-        );
-      },
-    );
+      return stakingBalanceList
+          .map((it) => StakingBalanceJson.fromJson(it as Map<String, dynamic>))
+          .map((it) => it.toDomain())
+          .toList();
+    });
   }
 
   @override
   Future<Either<GeneralFailure, List<Pool>>> getPools(EmerisWallet walletData) async {
     final uri = '${_baseEnv.emerisBackendApiUrl}/v1/liquidity/cosmos/liquidity/v1beta1/pools';
     final response = await _dio.get(uri);
-    return checkError(response).fold(
-      left,
-      (r) {
-        final map = response.data as Map<String, dynamic>;
-        final pools = map['pools'] as List? ?? [];
+    return checkError(response).mapSuccess((_) {
+      final map = response.data as Map<String, dynamic>;
+      final pools = map['pools'] as List? ?? [];
 
-        return right(
-          pools.map((it) => PoolJson.fromJson(it as Map<String, dynamic>)).map((it) => it.toBalanceDomain()).toList(),
-        );
-      },
-    );
+      return pools
+          .map((it) => PoolJson.fromJson(it as Map<String, dynamic>))
+          .map((it) => it.toBalanceDomain())
+          .toList();
+    });
   }
 }

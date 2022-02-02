@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 
-Either<GeneralFailure, Unit> checkError(Response response) {
+Future<Either<GeneralFailure, Unit>> checkError(Response response) async {
   final statusCode = response.statusCode;
 
   if (statusCode == null) {
