@@ -21,8 +21,9 @@ class WalletDetailsPresenter {
 
   WalletDetailsViewModel get viewModel => _model;
 
-  // ignore: use_setters_to_change_properties
-  void setWallet(EmerisWallet wallet) => _model.wallet = wallet;
+  Future<void> init() async {
+    await getWalletBalances(_model.wallet);
+  }
 
   Future<void> getWalletBalances(EmerisWallet walletData) async {
     _model.getAssetDetailsFuture = _getBalancesUseCase.execute(walletData: walletData).observableDoOn(

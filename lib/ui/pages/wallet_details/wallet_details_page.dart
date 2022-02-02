@@ -55,9 +55,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
           param2: getIt<WalletDetailsNavigator>(),
         );
     presenter.navigator.context = context;
-    presenter
-      ..setWallet(widget.initialParams.wallet)
-      ..getWalletBalances(widget.initialParams.wallet);
+    WidgetsBinding.instance?.addPostFrameCallback((_) => presenter.init());
   }
 
   @override

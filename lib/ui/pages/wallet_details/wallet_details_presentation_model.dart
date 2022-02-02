@@ -1,11 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
-import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
 import 'package:mobx/mobx.dart';
@@ -41,7 +39,7 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
   bool get isSendMoneyLoading => sendMoneyFuture?.status == FutureStatus.pending;
 
   @override
-  EmerisWallet get wallet => _wallet.value;
+  EmerisWallet get wallet => initialParams.wallet;
 }
 
 mixin WalletDetailsPresentationModelBase {
@@ -57,18 +55,5 @@ mixin WalletDetailsPresentationModelBase {
 
   final Observable<AssetDetails> _assetDetails = Observable(const AssetDetails(balances: <Balance>[]));
 
-  final Observable<EmerisWallet> _wallet = Observable(
-    const EmerisWallet(
-      walletDetails: WalletDetails(
-        walletAddress: '',
-        walletAlias: '',
-        walletIdentifier: WalletIdentifier(walletId: '', chainId: ''),
-      ),
-      walletType: WalletType.Cosmos,
-    ),
-  );
-
   set balanceList(AssetDetails value) => Action(() => _assetDetails.value = value)();
-
-  set wallet(EmerisWallet value) => Action(() => _wallet.value = value)();
 }
