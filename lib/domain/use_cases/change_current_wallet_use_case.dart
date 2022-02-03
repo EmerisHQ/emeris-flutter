@@ -10,12 +10,7 @@ class ChangeCurrentWalletUseCase {
   final WalletsStore _walletsStore;
 
   Future<Either<ChangeCurrentWalletFailure, Unit>> execute({required EmerisWallet wallet}) async {
-    try {
       _walletsStore.currentWallet = wallet;
       return right(unit);
-    } catch (ex, stack) {
-      logError(ex, stack);
-      return left(const ChangeCurrentWalletFailure.unknown());
-    }
   }
 }
