@@ -8,5 +8,5 @@ mixin CloseRoute<T> {
 
   void close() => appNavigator.close(context);
 
-  void closeWithResult(T result) => appNavigator.closeWithResult(context, result);
+  void closeWithResult(T? result) => appNavigator.closeWithResult(context, result);
 }

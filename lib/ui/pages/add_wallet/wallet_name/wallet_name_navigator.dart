@@ -16,10 +16,12 @@ class WalletNameNavigator with NoRoutes, CloseRoute<String> {
 }
 
 mixin WalletNameRoute {
-  Future<String?> openWalletName(WalletNameInitialParams initialParams) async => appNavigator.push(
-        context,
-        materialRoute(WalletNamePage(initialParams: initialParams)),
-      );
+  Future<String?> openWalletName(WalletNameInitialParams initialParams) {
+    return appNavigator.push(
+      context,
+      materialRoute(WalletNamePage(initialParams: initialParams)),
+    );
+  }
 
   AppNavigator get appNavigator;
 

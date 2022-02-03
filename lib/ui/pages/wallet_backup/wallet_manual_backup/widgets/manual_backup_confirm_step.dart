@@ -21,7 +21,7 @@ class ManualBackupConfirmStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
     return Padding(
-      padding: EdgeInsets.all(theme.spacingL),
+      padding: EdgeInsets.symmetric(horizontal: theme.spacingL),
       child: Observer(
         builder: (context) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

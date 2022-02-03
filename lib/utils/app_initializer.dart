@@ -24,7 +24,7 @@ class AppInitializer {
     await _settingsStore.init(_authRepository);
     (await _walletRepository.getWalletsList()).fold(
       (l) {},
-      (wallets) => _walletsStore.wallets.addAll(wallets),
+      _walletsStore.addAllWallets,
     );
   }
 }

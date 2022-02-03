@@ -13,8 +13,8 @@ class AppNavigator {
     return _navigator(context, useRoot: useRoot).push(route);
   }
 
-  Future<R?> pushReplacement<R>(BuildContext context, Route<R> route, {bool useRoot = false}) async {
-    return _navigator(context, useRoot: useRoot).pushReplacement(route);
+  Future<R?> pushReplacement<R>(BuildContext context, Route<R> route, {bool useRoot = false, R? result}) async {
+    return _navigator(context, useRoot: useRoot).pushReplacement(route, result: result);
   }
 
   void close(BuildContext context) => closeWithResult(context, null);

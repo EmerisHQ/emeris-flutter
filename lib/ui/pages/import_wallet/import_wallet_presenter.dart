@@ -30,7 +30,9 @@ class ImportWalletPresenter {
 
   Future<void> init() async {
     {
-      final name = await _openNamePage();
+      final name = await navigator.openWalletName(
+        const WalletNameInitialParams(),
+      );
       if (name == null) {
         return navigator.close();
       }
@@ -50,8 +52,6 @@ class ImportWalletPresenter {
       );
     }
   }
-
-  Future<String?> _openNamePage() => navigator.openWalletName(const WalletNameInitialParams());
 
   Future<Mnemonic?> _openMnemonicImportPage() => navigator.openMnemonicImport(const MnemonicImportInitialParams());
 
