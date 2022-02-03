@@ -209,7 +209,7 @@ void _configureGeneralDependencies() {
 void _configureUseCases() {
   getIt
     ..registerFactory<ImportWalletUseCase>(
-      () => ImportWalletUseCase(getIt(), getIt()),
+      () => ImportWalletUseCase(getIt(), getIt(), getIt()),
     )
     ..registerFactory<GetBalancesUseCase>(
       () => GetBalancesUseCase(getIt(), getIt()),
@@ -297,7 +297,12 @@ void _configureMvp() {
       () => WalletManualBackupNavigator(getIt()),
     )
     ..registerFactoryParam<AddWalletPresenter, AddWalletPresentationModel, dynamic>(
-      (_model, _) => AddWalletPresenter(_model, getIt(), getIt(), getIt(), getIt()),
+      (_model, _) => AddWalletPresenter(
+        _model,
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
     )
     ..registerFactory<AddWalletNavigator>(
       () => AddWalletNavigator(getIt()),

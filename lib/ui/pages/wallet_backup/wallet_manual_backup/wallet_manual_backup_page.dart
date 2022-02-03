@@ -68,19 +68,21 @@ class WalletManualBackupPageState extends State<WalletManualBackupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const EmerisLogoAppBar(),
-      body: AnimatedSwitcher(
-        duration: const ShortDuration(),
-        child: Observer(
-          builder: (context) {
-            switch (model.step) {
-              case ManualBackupStep.intro:
-                return ManualBackupIntroStep(model: model, presenter: presenter);
-              case ManualBackupStep.confirm:
-                return ManualBackupConfirmStep(model: model, presenter: presenter);
-              case ManualBackupStep.success:
-                return const ManualBackupSuccessStep();
-            }
-          },
+      body: SafeArea(
+        child: AnimatedSwitcher(
+          duration: const ShortDuration(),
+          child: Observer(
+            builder: (context) {
+              switch (model.step) {
+                case ManualBackupStep.intro:
+                  return ManualBackupIntroStep(model: model, presenter: presenter);
+                case ManualBackupStep.confirm:
+                  return ManualBackupConfirmStep(model: model, presenter: presenter);
+                case ManualBackupStep.success:
+                  return const ManualBackupSuccessStep();
+              }
+            },
+          ),
         ),
       ),
     );

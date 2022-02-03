@@ -23,7 +23,7 @@ mixin RoutingRoute {
     if (popUntilRoot) {
       appNavigator.popUntilRoot(context);
     }
-    return appNavigator.push(
+    return appNavigator.pushReplacement(
       context,
       materialRoute(
         const RoutingPage(

@@ -20,12 +20,7 @@ class OnboardingPresenter {
     final creationResult = await navigator.openAddWallet(const AddWalletInitialParams());
     if (creationResult != null) {
       navigator.close();
-      await navigator.openWalletBackup(
-        WalletBackupIntroInitialParams(
-          wallet: creationResult.wallet,
-          mnemonic: creationResult.mnemonic,
-        ),
-      );
+      await navigator.openRouting(const RoutingInitialParams());
     }
   }
 

@@ -5,6 +5,14 @@ class WalletsStore with _WalletStoreBase {
   ObservableList<EmerisWallet> get wallets => _wallets.value;
 
   EmerisWallet? get currentWallet => _currentWallet.value;
+
+  void addWallet(EmerisWallet wallet) => Action(() {
+        wallets.add(wallet);
+      })();
+
+  void addAllWallets(List<EmerisWallet> newWallets) => Action(() {
+        wallets.addAll(newWallets);
+      })();
 }
 
 mixin _WalletStoreBase {

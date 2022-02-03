@@ -1,4 +1,3 @@
-import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/backup_later_confirmation_sheet.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_presentation_model.dart';
@@ -24,15 +23,15 @@ class WalletBackupIntroPresenter {
         mnemonic: _model.mnemonic,
       ),
     );
-    if (result ?? true) {
-      await navigator.openRouting(const RoutingInitialParams());
+    if (result != null) {
+      navigator.closeWithResult(result);
     }
   }
 
   Future<void> onTapBackupLater() async {
     final decision = await navigator.openBackupLaterConfirmation();
     if (decision == BackupLaterConfirmationResult.skipBackup) {
-      await navigator.openRouting(const RoutingInitialParams());
+      navigator.closeWithResult(true);
     }
   }
 }
