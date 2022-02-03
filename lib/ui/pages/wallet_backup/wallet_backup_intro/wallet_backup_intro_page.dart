@@ -53,48 +53,56 @@ class WalletBackupIntroPageState extends State<WalletBackupIntroPage> {
     final theme = CosmosTheme.of(context);
     return Scaffold(
       appBar: const EmerisLogoAppBar(),
-      body: Padding(
-        padding: EdgeInsets.all(theme.spacingL),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              strings.backUpYourWalletTitle,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            SizedBox(height: theme.spacingM),
-            Text(
-              strings.backUpYourWalletMessage,
-              textAlign: TextAlign.center,
-            ),
-            const Spacer(),
-            BulletPointMessage(
-              message: strings.backUpWalletInfoMessage1,
-            ),
-            SizedBox(height: theme.spacingL),
-            BulletPointMessage(
-              message: strings.backUpWalletInfoMessage2,
-            ),
-            SizedBox(height: theme.spacingL),
-            BulletPointMessage(
-              message: strings.backUpWalletInfoMessage3,
-            ),
-            SizedBox(height: theme.spacingM),
-            const Spacer(),
-            CosmosElevatedButton(
-              text: model.isIcloudAvailable ? strings.backUpIcloudAction : strings.backUpGoogleDriveAction,
-              onTap: presenter.onTapCloudBackup,
-            ),
-            CosmosElevatedButton(
-              text: strings.backUpManuallyAction,
-              onTap: presenter.onTapManualBackup,
-            ),
-            CosmosTextButton(
-              text: strings.backUpLaterAction,
-              onTap: presenter.onTapBackupLater,
-            ),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: theme.spacingL),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                strings.backUpYourWalletTitle,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              SizedBox(height: theme.spacingM),
+              Text(
+                strings.backUpYourWalletMessage,
+                textAlign: TextAlign.center,
+              ),
+              const Spacer(),
+              BulletPointMessage(
+                message: strings.backUpWalletInfoMessage1,
+              ),
+              SizedBox(height: theme.spacingL),
+              BulletPointMessage(
+                message: strings.backUpWalletInfoMessage2,
+              ),
+              SizedBox(height: theme.spacingL),
+              BulletPointMessage(
+                message: strings.backUpWalletInfoMessage3,
+              ),
+              SizedBox(height: theme.spacingM),
+              const Spacer(),
+              CosmosElevatedButton(
+                text: model.isIcloudAvailable ? strings.backUpIcloudAction : strings.backUpGoogleDriveAction,
+                onTap: presenter.onTapCloudBackup,
+              ),
+              SizedBox(
+                height: CosmosTheme.of(context).spacingM,
+              ),
+              CosmosElevatedButton(
+                text: strings.backUpManuallyAction,
+                onTap: presenter.onTapManualBackup,
+              ),
+              SizedBox(
+                height: CosmosTheme.of(context).spacingM,
+              ),
+              CosmosTextButton(
+                text: strings.backUpLaterAction,
+                onTap: presenter.onTapBackupLater,
+              ),
+            ],
+          ),
         ),
       ),
     );

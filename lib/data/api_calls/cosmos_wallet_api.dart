@@ -12,7 +12,7 @@ import 'package:flutter_app/domain/entities/paginated_list.dart';
 import 'package:flutter_app/domain/entities/transaction.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
-import 'package:flutter_app/global.dart';
+import 'package:flutter_app/environment_config.dart';
 import 'package:transaction_signing_gateway/model/transaction_hash.dart';
 import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
@@ -21,7 +21,7 @@ class CosmosWalletApi implements WalletApi {
   CosmosWalletApi(this._signingGateway, this._baseEnv);
 
   final TransactionSigningGateway _signingGateway;
-  final BaseEnv _baseEnv;
+  final EnvironmentConfig _baseEnv;
 
   @override
   WalletType get walletType => WalletType.Cosmos;

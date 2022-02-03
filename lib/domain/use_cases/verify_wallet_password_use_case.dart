@@ -8,6 +8,7 @@ class VerifyWalletPasswordUseCase {
 
   final WalletsRepository _walletsRepository;
 
+  /// checks if the [walletIdentifier] contains a valid password for this given wallet
   Future<Either<VerifyWalletPasswordFailure, bool>> execute(WalletIdentifier walletIdentifier) async {
     if (walletIdentifier.password == null) {
       return left(const VerifyWalletPasswordFailure.invalidPassword());

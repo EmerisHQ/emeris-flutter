@@ -3,7 +3,7 @@ import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
-import 'package:flutter_app/domain/repositories/ibc_respository.dart';
+import 'package:flutter_app/domain/repositories/ibc_repository.dart';
 
 class GetBalancesUseCase {
   GetBalancesUseCase(this._bankRepository, this._ibcRepository);

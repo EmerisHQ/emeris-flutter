@@ -6,6 +6,7 @@ import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_initial_par
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_navigator.dart';
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_presentation_model.dart';
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_presenter.dart';
+import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
 import 'package:flutter_app/utils/mobx_aware_text_controller.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -57,9 +58,7 @@ class MnemonicImportPageState extends State<MnemonicImportPage> {
     final theme = CosmosTheme.of(context);
     return Observer(
       builder: (context) => Scaffold(
-        appBar: CosmosAppBar(
-          title: strings.importWalletTitle,
-        ),
+        appBar: const EmerisLogoAppBar(),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(

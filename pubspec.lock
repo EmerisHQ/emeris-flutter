@@ -183,6 +183,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  cosmos_auth:
+    dependency: "direct main"
+    description:
+      path: "packages/cosmos_auth"
+      ref: main
+      resolved-ref: "85f1324a2102162102c060420cb31851cff3c7df"
+      url: "https://github.com/tendermint/flutter.git"
+    source: git
+    version: "0.0.1"
   cosmos_ui_components:
     dependency: "direct main"
     description:
@@ -351,6 +360,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3+2"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.5"
   flutter_secure_storage:
     dependency: transitive
     description:
@@ -585,6 +601,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.2"
+  local_auth:
+    dependency: transitive
+    description:
+      name: local_auth
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.10"
   logging:
     dependency: transitive
     description:

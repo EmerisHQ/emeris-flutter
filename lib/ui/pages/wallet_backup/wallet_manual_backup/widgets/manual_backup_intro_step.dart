@@ -20,7 +20,7 @@ class ManualBackupIntroStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
     return Padding(
-      padding: EdgeInsets.all(theme.spacingL),
+      padding: EdgeInsets.symmetric(horizontal: theme.spacingL),
       child: Observer(
         builder: (context) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,7 +52,7 @@ class ManualBackupIntroStep extends StatelessWidget {
               controlAffinity: ListTileControlAffinity.leading,
               title: Text(strings.recoveryPhraseCheckbox),
             ),
-            SizedBox(height: theme.spacingM),
+            SizedBox(height: theme.spacingL),
             CosmosElevatedButton(
               text: strings.continueAction,
               onTap: model.confirmationChecked //

@@ -87,14 +87,14 @@ class WalletsListSheetState extends State<WalletsListSheet> {
                 _buildMainList(),
                 const CosmosDivider(),
                 SizedBox(height: theme.spacingL),
-                const CosmosCircleTextButton(
-                  onTap: showNotImplemented,
-                  text: 'Create account',
+                CosmosCircleTextButton(
+                  onTap: presenter.onTapCreateWallet,
+                  text: strings.createWalletAction,
                   asset: 'assets/images/plus_circle.png',
                 ),
-                const CosmosCircleTextButton(
-                  onTap: showNotImplemented,
-                  text: 'Import account',
+                CosmosCircleTextButton(
+                  onTap: presenter.onTapImportWallet,
+                  text: strings.importWalletAction,
                   asset: 'assets/images/arrow_down_circle.png',
                 ),
                 SizedBox(height: theme.spacingL),
