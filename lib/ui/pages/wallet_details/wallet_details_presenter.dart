@@ -1,5 +1,4 @@
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -32,9 +31,9 @@ class WalletDetailsPresenter {
         );
   }
 
-  void transferTapped({required Balance balance, required AssetDetails assetDetails}) => navigator.openAssetDetails(
+  void transferTapped({required Balance balance}) => navigator.openAssetDetails(
         balance: balance,
-        assetDetails: assetDetails,
+        assetDetails: _model.assetDetails,
         wallet: _model.wallet,
       );
 
