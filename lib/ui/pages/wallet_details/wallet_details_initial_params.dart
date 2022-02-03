@@ -1,7 +1,9 @@
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 
 class WalletDetailsInitialParams {
-  const WalletDetailsInitialParams(this.wallet);
+  const WalletDetailsInitialParams({
+    required this.wallet,
+  });
 
   final EmerisWallet wallet;
 }

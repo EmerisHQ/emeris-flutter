@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/domain/entities/send_money_message.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_presentation_model.dart';
@@ -33,9 +30,6 @@ class SendMoneySheet extends StatefulWidget {
 }
 
 class SendMoneySheetState extends State<SendMoneySheet> {
-  String _toAddress = '';
-  String _amount = '';
-
   late SendMoneyPresenter presenter;
 
   SendMoneyViewModel get model => presenter.viewModel;
@@ -67,9 +61,7 @@ class SendMoneySheetState extends State<SendMoneySheet> {
               labelText: strings.enterWalletAddress,
               border: const OutlineInputBorder(),
             ),
-            onChanged: (value) {
-              _toAddress = value;
-            },
+            onChanged: presenter.onChangedRecipient,
           ),
         ),
         ListTile(
@@ -78,29 +70,11 @@ class SendMoneySheetState extends State<SendMoneySheet> {
               labelText: strings.enterAmount,
               border: const OutlineInputBorder(),
             ),
-            onChanged: (value) {
-              _amount = value;
-            },
+            onChanged: presenter.onChangedAmount,
           ),
         ),
         ElevatedButton(
-          onPressed: () async {
-            final amount = Amount.fromString(_amount);
-            presenter.navigator.appNavigator.close(context);
-            await presenter.sendMoney(
-              SendMoneyMessage(
-                balance: Balance(
-                  denom: presenter.viewModel.denom,
-                  amount: Amount(amount.value),
-                  unitPrice: Amount.fromString('0'),
-                  dollarPrice: Amount.fromString('0'),
-                ),
-                walletType: widget.initialParams.walletType,
-                fromAddress: widget.initialParams.walletAddress,
-                toAddress: _toAddress,
-              ),
-            );
-          },
+          onPressed: presenter.onTapSendMoney,
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
           ),

@@ -52,36 +52,36 @@ class WalletNamePageState extends State<WalletNamePage> {
     final theme = CosmosTheme.of(context);
     return Scaffold(
       appBar: const EmerisLogoAppBar(),
-      body: CustomScrollView(
-        slivers: [
-          SliverFillRemaining(
-            child: Padding(
-              padding: EdgeInsets.all(theme.spacingL),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    strings.nameYourWalletTitle,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  SizedBox(height: theme.spacingL),
-                  Text(strings.nameYourWalletMessage),
-                  SizedBox(height: theme.spacingXL),
-                  TextFormField(
-                    autofocus: true,
-                    onChanged: presenter.onChanged,
-                    decoration: InputDecoration(
-                      hintText: strings.walletNameHint,
-                    ),
-                  ),
-                  const Spacer(),
-                  CosmosElevatedButton(text: strings.continueAction, onTap: presenter.onTapSubmit),
-                ],
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: theme.spacingL),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(height: theme.spacingL),
+              Text(
+                strings.nameYourWalletTitle,
+                style: Theme.of(context).textTheme.headline5,
               ),
-            ),
-          )
-        ],
+              SizedBox(height: theme.spacingL),
+              Text(strings.nameYourWalletMessage),
+              SizedBox(height: theme.spacingXL),
+              TextFormField(
+                autofocus: true,
+                onChanged: presenter.onChanged,
+                decoration: InputDecoration(
+                  hintText: strings.walletNameHint,
+                ),
+              ),
+              const Spacer(),
+              CosmosElevatedButton(
+                text: strings.continueAction,
+                onTap: presenter.onTapSubmit,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

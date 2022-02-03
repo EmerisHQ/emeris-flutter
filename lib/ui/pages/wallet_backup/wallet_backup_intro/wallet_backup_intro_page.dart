@@ -86,9 +86,15 @@ class WalletBackupIntroPageState extends State<WalletBackupIntroPage> {
               text: model.isIcloudAvailable ? strings.backUpIcloudAction : strings.backUpGoogleDriveAction,
               onTap: presenter.onTapCloudBackup,
             ),
+            SizedBox(
+              height: CosmosTheme.of(context).spacingM,
+            ),
             CosmosElevatedButton(
               text: strings.backUpManuallyAction,
               onTap: presenter.onTapManualBackup,
+            ),
+            SizedBox(
+              height: CosmosTheme.of(context).spacingM,
             ),
             CosmosTextButton(
               text: strings.backUpLaterAction,

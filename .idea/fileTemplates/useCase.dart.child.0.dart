@@ -2,21 +2,26 @@
 
 import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
 
-enum _${ClassName}FailureType {
+enum ${ClassName}FailureType {
   Unknown,
 }
 
 class ${ClassName}Failure {
-  final _${ClassName}FailureType _type;
-
   // ignore: avoid_field_initializers_in_const_classes
-  const ${ClassName}Failure.unknown() : _type = _${ClassName}FailureType.Unknown;
+  const ${ClassName}Failure.unknown([this.cause]) : type = ${ClassName}FailureType.Unknown;
+  
+  final ${ClassName}FailureType type;
+  final dynamic cause;
 
   DisplayableFailure displayableFailure() {
-    switch (_type) {
-      case _${ClassName}FailureType.Unknown:
+    switch (type) {
+      case ${ClassName}FailureType.Unknown:
         return DisplayableFailure.commonError();
     }
-    throw StateError("Cannot parse \$_type into DisplayableFailure");
+  }
+
+  @override
+  String toString() {
+    return '${ClassName}Failure{type: $type, cause: $cause}';
   }
 }

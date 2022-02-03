@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter_app/domain/entities/send_money_message.dart';
+import 'package:flutter_app/domain/entities/send_money_form_data.dart';
 import 'package:flutter_app/domain/entities/transaction.dart';
 import 'package:transaction_signing_gateway/model/signed_transaction.dart';
 import 'package:transaction_signing_gateway/model/unsigned_transaction.dart';
@@ -14,7 +14,7 @@ class EthereumTransaction implements UnsignedTransaction {
   static EthereumTransaction? fromDomain(Transaction transaction) {
     switch (transaction.transactionType) {
       case TransactionType.sendMoney:
-        final message = transaction.messages.whereType<SendMoneyMessage>().toList().first;
+        final message = transaction.messages.whereType<SendMoneyFormData>().toList().first;
         return EthereumTransaction(
           eth.Transaction(
             to: eth.EthereumAddress.fromHex(message.toAddress),

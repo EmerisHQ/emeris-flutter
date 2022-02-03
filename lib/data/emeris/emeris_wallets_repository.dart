@@ -2,6 +2,7 @@ import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/wallet_details.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_wallets_list_failure.dart';

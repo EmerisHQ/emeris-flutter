@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_app/domain/entities/passcode.dart';
 
 class WalletIdentifier extends Equatable {
   const WalletIdentifier({
@@ -6,6 +7,11 @@ class WalletIdentifier extends Equatable {
     required this.chainId,
     this.password,
   });
+
+  const WalletIdentifier.empty()
+      : walletId = '',
+        chainId = '',
+        password = '';
 
   final String walletId;
   final String chainId;
@@ -17,9 +23,9 @@ class WalletIdentifier extends Equatable {
         chainId,
       ];
 
-  WalletIdentifier byUpdatingPassword(String? password) => WalletIdentifier(
+  WalletIdentifier byUpdatingPasscode(Passcode? passcode) => WalletIdentifier(
         walletId: walletId,
         chainId: chainId,
-        password: password,
+        password: passcode?.value,
       );
 }

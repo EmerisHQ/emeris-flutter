@@ -40,9 +40,7 @@ class AddWalletPresenter {
       return navigator.close();
     }
     final passcode = await navigator.openPasscode(
-      const PasscodeInitialParams(
-        requirePasscodeConfirmation: true,
-      ),
+      const PasscodeInitialParams(),
     );
     if (passcode == null) {
       return navigator.close();

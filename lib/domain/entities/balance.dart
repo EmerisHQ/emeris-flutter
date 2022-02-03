@@ -13,6 +13,12 @@ class Balance extends Equatable {
   })  : unitPrice = unitPrice ?? Amount.zero,
         dollarPrice = dollarPrice ?? Amount.zero;
 
+  Balance.empty()
+      : denom = const Denom(''),
+        amount = Amount.zero,
+        unitPrice = Amount.zero,
+        dollarPrice = Amount.zero;
+
   final Denom denom;
   final Amount amount;
   final Amount unitPrice;
@@ -24,7 +30,12 @@ class Balance extends Equatable {
   }
 
   @override
-  List<Object> get props => [denom, amount, unitPrice, dollarPrice];
+  List<Object> get props => [
+        denom,
+        amount,
+        unitPrice,
+        dollarPrice,
+      ];
 
   Balance byUpdatingPriceAndVerifiedDenom(Price price, List<VerifiedDenom> verifiedDenoms) {
     final baseDenomDisplayText = verifiedDenoms.firstWhere((element) => element.name == denom.text).displayName;
