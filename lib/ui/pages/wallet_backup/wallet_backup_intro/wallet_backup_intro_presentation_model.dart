@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_setters_without_getters
-import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/model/mnemonic.dart';
 import 'package:flutter_app/domain/model/operating_system.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
@@ -24,7 +23,6 @@ class WalletBackupIntroPresentationModel
   bool get isIcloudAvailable => platformInfoStore.operatingSystem.isIcloudAvailable;
 
   Mnemonic get mnemonic => initialParams.mnemonic;
-
 }
 
 //////////////////BOILERPLATE

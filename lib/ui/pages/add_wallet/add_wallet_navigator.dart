@@ -11,7 +11,14 @@ import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_navigato
 import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_navigator.dart';
 
-class AddWalletNavigator with NoRoutes, CloseRoute<AddWalletResult>, PasscodeRoute, ErrorDialogRoute, WalletNameRoute, WalletBackupIntroRoute {
+class AddWalletNavigator
+    with
+        NoRoutes,
+        CloseRoute<AddWalletResult>,
+        PasscodeRoute,
+        ErrorDialogRoute,
+        WalletNameRoute,
+        WalletBackupIntroRoute {
   AddWalletNavigator(this.appNavigator);
 
   @override

@@ -3,7 +3,6 @@ import 'package:flutter_app/ui/pages/import_wallet/import_wallet_initial_params.
 import 'package:flutter_app/ui/pages/onboarding/onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_initial_params.dart';
 
 class OnboardingPresenter {
   OnboardingPresenter(
