@@ -143,5 +143,10 @@
   "stakedTitle": "Staked",
   "pooledTitle": "Pooled",
   "buyCryptoAction": "Buy crypto",
-  "chainsTitle": "Chains"
+  "chainsTitle": "Chains",
+  "passcodeTooShort": "Passcode is too short",
+  "passcodeTooLong": "Passcode is too long",
+  "passcodeIsEmpty": "Passcode is empty",
+  "invalidPasscodeMessage": "The passcode you provided is invalid",
+  "invalidAmountMessage": "Invalid Amount"
 }

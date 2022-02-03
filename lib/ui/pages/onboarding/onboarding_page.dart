@@ -63,9 +63,15 @@ class OnboardingPageState extends State<OnboardingPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Expanded(child: WelcomeSplash()),
+              SizedBox(
+                height: CosmosTheme.of(context).spacingL,
+              ),
               CosmosElevatedButton(
                 text: strings.createWalletAction,
                 onTap: presenter.onTapCreateWallet,
+              ),
+              SizedBox(
+                height: CosmosTheme.of(context).spacingM,
               ),
               CosmosOutlineButton(
                 text: strings.importWalletAction,

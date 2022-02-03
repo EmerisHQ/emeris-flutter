@@ -10,13 +10,13 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/pool.dart';
 import 'package:flutter_app/domain/entities/staking_balance.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
-import 'package:flutter_app/global.dart';
+import 'package:flutter_app/environment_config.dart';
 
 class EmerisBankRepository implements BankRepository {
   EmerisBankRepository(this._baseEnv, this._dio);
 
   final Dio _dio;
-  final BaseEnv _baseEnv;
+  final EnvironmentConfig _baseEnv;
 
   @override
   Future<Either<GeneralFailure, List<Balance>>> getBalances(EmerisWallet walletData) async {
@@ -24,7 +24,7 @@ class EmerisBankRepository implements BankRepository {
         '${_baseEnv.emerisBackendApiUrl}/v1/account/${bech32ToHex(walletData.walletDetails.walletAddress)}/balance';
     final response = await _dio.get(uri);
     final map = response.data as Map<String, dynamic>;
-    final balanceList = map['balances'] as List;
+    final balanceList = map['balances'] as List? ?? [];
 
     return right(
       balanceList

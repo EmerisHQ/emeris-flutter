@@ -25,7 +25,6 @@ class RoutingPresenter {
     if (_model.initializeApp) {
       await _appInitializer.init();
     }
-    navigator.close();
     if (_model.wallets.isEmpty) {
       await navigator.openOnboarding(const OnboardingInitialParams());
     } else {
@@ -33,7 +32,7 @@ class RoutingPresenter {
             (fail) => navigator.showError(fail.displayableFailure()),
             (success) => doNothing(),
           );
-      await navigator.openWalletDetails(_model.wallets.first);
+      await navigator.openWalletDetails(_model.wallets.first, replaceCurrent: true);
     }
   }
 }

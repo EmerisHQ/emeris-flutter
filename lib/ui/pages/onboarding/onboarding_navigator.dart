@@ -22,9 +22,9 @@ class OnboardingNavigator
 }
 
 mixin OnboardingRoute {
-  Future<void> openOnboarding(OnboardingInitialParams initialParams) async => appNavigator.push(
+  Future<void> openOnboarding(OnboardingInitialParams initialParams) async => appNavigator.pushReplacement(
         context,
-        materialRoute(OnboardingPage(initialParams: initialParams)),
+        fadeInRoute(OnboardingPage(initialParams: initialParams)),
       );
 
   AppNavigator get appNavigator;

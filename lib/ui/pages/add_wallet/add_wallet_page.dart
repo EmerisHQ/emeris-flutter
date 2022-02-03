@@ -45,7 +45,7 @@ class AddWalletPageState extends State<AddWalletPage> {
           param2: getIt<AddWalletNavigator>(),
         );
     presenter.navigator.context = context;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       presenter.init();
     });
   }

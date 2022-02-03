@@ -9,15 +9,15 @@ import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/price.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
-import 'package:flutter_app/domain/repositories/ibc_respository.dart';
-import 'package:flutter_app/global.dart';
+import 'package:flutter_app/domain/repositories/ibc_repository.dart';
+import 'package:flutter_app/environment_config.dart';
 
 /// TODO: None of these functions should return Json models.
 class RestApiIbcRepository implements IbcRepository {
   RestApiIbcRepository(this._dio, this._baseEnv);
 
   final Dio _dio;
-  final BaseEnv _baseEnv;
+  final EnvironmentConfig _baseEnv;
 
   @override
   Future<Either<GeneralFailure, VerifyTraceJson>> verifyTrace(String chainId, String hash) async {

@@ -38,11 +38,7 @@ class ImportWalletPresenter {
       if (mnemonic == null) {
         return navigator.close();
       }
-      final passcode = await navigator.openPasscode(
-        const PasscodeInitialParams(
-          requirePasscodeConfirmation: true,
-        ),
-      );
+      final passcode = await navigator.openPasscode(const PasscodeInitialParams());
       if (passcode == null) {
         return navigator.close();
       }

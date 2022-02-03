@@ -1,9 +1,11 @@
-import 'package:biometric_storage/biometric_storage.dart';
+import 'package:cosmos_auth/cosmos_auth.dart';
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/api_calls/cosmos_wallet_api.dart';
 import 'package:flutter_app/data/api_calls/ethereum_wallet_api.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
+import 'package:flutter_app/data/cosmos/cosmos_auth_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_bank_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_transactions_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_wallets_repository.dart';
@@ -12,20 +14,23 @@ import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
 import 'package:flutter_app/data/http/dio_builder.dart';
 import 'package:flutter_app/data/ibc/rest_api_ibc_repository.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
+import 'package:flutter_app/domain/repositories/auth_repository.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
-import 'package:flutter_app/domain/repositories/ibc_respository.dart';
+import 'package:flutter_app/domain/repositories/ibc_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
+import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
+import 'package:flutter_app/domain/use_cases/verify_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/verify_wallet_password_use_case.dart';
-import 'package:flutter_app/domain/utils/password_manager.dart';
-import 'package:flutter_app/global.dart';
+import 'package:flutter_app/environment_config.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/add_wallet/add_wallet_navigator.dart';
 import 'package:flutter_app/ui/pages/add_wallet/add_wallet_presentation_model.dart';
@@ -67,13 +72,12 @@ import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_m
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presenter.dart';
-import 'package:flutter_app/ui/pages/wallet_password_retriever/biometric_wallet_password_retriever.dart';
-import 'package:flutter_app/ui/pages/wallet_password_retriever/user_prompt_wallet_password_retriever.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presentation_model.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presenter.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/clipboard_manager.dart';
+import 'package:flutter_app/utils/strings.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
@@ -83,8 +87,8 @@ import 'package:wallet_core/wallet_core.dart';
 final getIt = GetIt.instance;
 
 /// registers all the dependencies in dependency graph in get_it package
-void configureDependencies(BaseEnv baseEnv) {
-  getIt.registerSingleton<BaseEnv>(baseEnv);
+void configureDependencies(EnvironmentConfig baseEnv) {
+  getIt.registerSingleton<EnvironmentConfig>(baseEnv);
   _configureGeneralDependencies();
   _configureTransactionSigningGateway();
   _configureRepositories();
@@ -95,15 +99,15 @@ void configureDependencies(BaseEnv baseEnv) {
 
 void _configureTransactionSigningGateway() {
   getIt
-    ..registerFactory<TransactionSummaryUI>(
-      MobileTransactionSummaryUI.new,
-    )
+    ..registerFactory<SecureDataStore>(FlutterSecureStorageDataStore.new)
+    ..registerFactory<PlainDataStore>(SharedPrefsPlainDataStore.new)
+    ..registerFactory<TransactionSummaryUI>(MobileTransactionSummaryUI.new)
     ..registerFactory<KeyInfoStorage>(
       () => kIsWeb
           ? WebKeyInfoStorage()
           : CosmosKeyInfoStorage(
-              plainDataStore: SharedPrefsPlainDataStore(),
-              secureDataStore: FlutterSecureStorageDataStore(),
+              plainDataStore: getIt(),
+              secureDataStore: getIt(),
               serializers: [
                 AlanCredentialsSerializer(),
                 EthereumCredentialsSerializer(),
@@ -115,11 +119,11 @@ void _configureTransactionSigningGateway() {
         transactionSummaryUI: getIt(),
         infoStorage: getIt(),
         signers: [
-          AlanTransactionSigner(getIt<BaseEnv>().networkInfo),
+          AlanTransactionSigner(getIt<EnvironmentConfig>().networkInfo),
           EthereumTransactionSigner(getIt()),
         ],
         broadcasters: [
-          AlanTransactionBroadcaster(getIt<BaseEnv>().networkInfo),
+          AlanTransactionBroadcaster(getIt<EnvironmentConfig>().networkInfo),
         ],
       ),
     );
@@ -147,6 +151,9 @@ void _configureRepositories() {
     )
     ..registerFactory<IbcRepository>(
       () => RestApiIbcRepository(getIt(), getIt()),
+    )
+    ..registerFactory<AuthRepository>(
+      () => CosmosAuthRepository(getIt(), getIt()),
     );
 }
 
@@ -157,19 +164,16 @@ void _configureStores() {
     )
     ..registerLazySingleton<PlatformInfoStore>(
       PlatformInfoStore.new,
+    )
+    ..registerLazySingleton<SettingsStore>(
+      SettingsStore.new,
     );
 }
 
 void _configureGeneralDependencies() {
   getIt
     ..registerFactory<Web3Client>(
-      () => Web3Client(getIt<BaseEnv>().baseEthUrl, Client()),
-    )
-    ..registerLazySingleton<PasswordManager>(
-      () => PasswordManager(
-        BiometricWalletPasswordRetriever(BiometricStorage()),
-        UserPromptWalletPasswordRetriever(getIt()),
-      ),
+      () => Web3Client(getIt<EnvironmentConfig>().baseEthUrl, Client()),
     )
     ..registerFactory<DioBuilder>(
       DioBuilder.new,
@@ -180,11 +184,25 @@ void _configureGeneralDependencies() {
     ..registerFactory<AppNavigator>(
       AppNavigator.new,
     )
+    ..registerFactory<AppLocalizationsInitializer>(
+      () => AppLocalizationsInitializer(
+        AppNavigator.navigatorKey.currentContext!,
+      ),
+    )
     ..registerFactory<AppInitializer>(
-      () => AppInitializer(getIt(), getIt()),
+      () => AppInitializer(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
     )
     ..registerFactory<ClipboardManager>(
       ClipboardManager.new,
+    )
+    ..registerFactory<CosmosAuth>(
+      CosmosAuth.new,
     );
 }
 
@@ -207,6 +225,12 @@ void _configureUseCases() {
     )
     ..registerFactory<ChangeCurrentWalletUseCase>(
       () => ChangeCurrentWalletUseCase(getIt()),
+    )
+    ..registerFactory<VerifyPasscodeUseCase>(
+      () => VerifyPasscodeUseCase(getIt()),
+    )
+    ..registerFactory<SavePasscodeUseCase>(
+      () => SavePasscodeUseCase(getIt(), getIt()),
     );
 }
 
@@ -249,7 +273,7 @@ void _configureMvp() {
       () => WalletNameNavigator(getIt()),
     )
     ..registerFactoryParam<PasscodePresenter, PasscodePresentationModel, dynamic>(
-      (_model, _) => PasscodePresenter(_model, getIt()),
+      (_model, _) => PasscodePresenter(_model, getIt(), getIt(), getIt()),
     )
     ..registerFactory<PasscodeNavigator>(
       () => PasscodeNavigator(getIt()),

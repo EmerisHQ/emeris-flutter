@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter_app/data/ethereum/ethereum_private_wallet_credentials.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/wallet_details.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';

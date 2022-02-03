@@ -25,12 +25,14 @@ mixin WalletDetailsRoute {
 
   AppNavigator get appNavigator;
 
-  Future<void> openWalletDetails(EmerisWallet wallet) => appNavigator.push(
-        context,
-        materialRoute(
-          WalletDetailsPage(
-            initialParams: WalletDetailsInitialParams(wallet),
-          ),
-        ),
-      );
+  Future<void> openWalletDetails(EmerisWallet wallet, {bool replaceCurrent = false}) {
+    final page = WalletDetailsPage(
+      initialParams: WalletDetailsInitialParams(wallet: wallet),
+    );
+    if (replaceCurrent) {
+      return appNavigator.pushReplacement(context, fadeInRoute(page));
+    } else {
+      return appNavigator.push(context, materialRoute(page));
+    }
+  }
 }

@@ -12,12 +12,16 @@ class AppNavigator {
   Future<R?> push<R>(BuildContext context, Route<R> route, {bool useRoot = false}) async {
     return _navigator(context, useRoot: useRoot).push(route);
   }
+  Future<R?> pushReplacement<R>(BuildContext context, Route<R> route, {bool useRoot = false}) async {
+    return _navigator(context, useRoot: useRoot).pushReplacement(route);
+  }
 
   void close(BuildContext context) => closeWithResult(context, null);
 
   void closeWithResult<T>(BuildContext context, T result) => _navigator(context).pop(result);
 
   void popUntilRoot(BuildContext context) => _navigator(context).popUntil((route) => route.isFirst);
+
 }
 
 Route<T> fadeInRoute<T>(Widget page, {int? durationMillis}) => PageRouteBuilder<T>(
