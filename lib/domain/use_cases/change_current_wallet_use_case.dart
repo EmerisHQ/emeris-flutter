@@ -10,7 +10,7 @@ class ChangeCurrentWalletUseCase {
   final WalletsStore _walletsStore;
 
   Future<Either<ChangeCurrentWalletFailure, Unit>> execute({required EmerisWallet wallet}) async {
-      _walletsStore.currentWallet = wallet;
-      return right(unit);
+    _walletsStore.currentWallet = wallet;
+    return right(unit);
   }
 }
