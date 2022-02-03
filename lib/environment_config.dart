@@ -1,4 +1,5 @@
 import 'package:alan/alan.dart';
+import 'package:cosmos_utils/cosmos_utils.dart';
 
 //TODO refactor this to an interface
 class EnvironmentConfig {
@@ -30,39 +31,30 @@ class EnvironmentConfig {
       host: lcdUrl ?? envLcdUrl,
       port: int.parse(lcdPort ?? envLcdPort),
     );
-    return EnvironmentConfig._(
-      NetworkInfo(
+    final environmentConfig = EnvironmentConfig._(
+      networkInfo: NetworkInfo(
         bech32Hrp: 'cosmos',
         lcdInfo: lcdInfo,
         grpcInfo: grpcInfo,
       ),
-      lcdInfo.fullUrl,
-      ethUrl ?? envEthUrl,
-      emerisUrl ?? envEmerisUrl,
+      baseEthUrl: ethUrl ?? envEthUrl,
+      emerisBackendApiUrl: emerisUrl ?? envEmerisUrl,
     );
+    debugLog('\n\nGRPC: ${environmentConfig.networkInfo.grpcInfo}');
+    debugLog('\n\nLCD: ${environmentConfig.networkInfo.lcdInfo}');
+    debugLog('\n\nEMERIS URL: ${environmentConfig.emerisBackendApiUrl}\n\n');
+    return environmentConfig;
   }
 
-  EnvironmentConfig._(
-    this._networkInfo,
-    this._baseApiUrl,
-    this._baseEthUrl,
-    this._emerisBackendApiUrl,
-  );
+  EnvironmentConfig._({
+    required this.networkInfo,
+    required this.baseEthUrl,
+    required this.emerisBackendApiUrl,
+  });
 
-  late NetworkInfo _networkInfo;
-  late String _baseApiUrl;
-
-  late String _baseEthUrl;
-
-  late String _emerisBackendApiUrl;
-
-  NetworkInfo get networkInfo => _networkInfo;
-
-  String get baseApiUrl => _baseApiUrl;
-
-  String get baseEthUrl => _baseEthUrl;
-
-  String get emerisBackendApiUrl => _emerisBackendApiUrl;
+  final NetworkInfo networkInfo;
+  final String baseEthUrl;
+  final String emerisBackendApiUrl;
 }
 
 abstract class SharedPreferencesKeys {
