@@ -8,7 +8,7 @@ class Balance extends Equatable {
   Balance({
     required this.denom,
     required this.amount,
-    required this.onChain,
+    this.onChain = '',
     Amount? unitPrice,
     Amount? dollarPrice,
   })  : unitPrice = unitPrice ?? Amount.zero,

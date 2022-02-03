@@ -23,7 +23,6 @@ Future<Either<GeneralFailure, PaginatedList<Balance>>> getEthereumBalances(
           Balance(
             denom: const Denom('ETH'),
             amount: Amount.fromString(balance.getValueInUnit(EtherUnit.ether).toString()),
-            onChain: '',
           ),
         ],
         pagination: EthereumPagination(),

@@ -88,7 +88,6 @@ class ActionHandler {
         amount: Amount.fromInt(0),
         unitPrice: Amount.fromString('0'),
         dollarPrice: Amount.fromString('0'),
-        onChain: '',
       ),
       chainId: '',
     );
