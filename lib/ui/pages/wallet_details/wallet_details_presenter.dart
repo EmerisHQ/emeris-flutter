@@ -1,5 +1,4 @@
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -21,6 +20,10 @@ class WalletDetailsPresenter {
 
   WalletDetailsViewModel get viewModel => _model;
 
+  Future<void> init() async {
+    await getWalletBalances(_model.wallet);
+  }
+
   Future<void> getWalletBalances(EmerisWallet walletData) async {
     _model.getAssetDetailsFuture = _getBalancesUseCase.execute(walletData: walletData).observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
@@ -28,8 +31,11 @@ class WalletDetailsPresenter {
         );
   }
 
-  void transferTapped({required Balance balance, required AssetDetails assetDetails}) =>
-      navigator.openAssetDetails(balance: balance, assetDetails: assetDetails);
+  void transferTapped({required Balance balance}) => navigator.openAssetDetails(
+        balance: balance,
+        assetDetails: _model.assetDetails,
+        wallet: _model.wallet,
+      );
 
   void onTapPortfolioHeading() => navigator.openWalletsList(const WalletsListInitialParams());
 

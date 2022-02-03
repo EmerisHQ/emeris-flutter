@@ -78,6 +78,7 @@ void main() {
         Balance(
           denom: const Denom('ATOM'),
           amount: model.amount,
+          onChain: 'cosmos-hub',
         ),
       );
     },

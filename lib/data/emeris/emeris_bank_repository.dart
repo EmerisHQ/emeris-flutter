@@ -41,8 +41,9 @@ class EmerisBankRepository implements BankRepository {
     final uri =
         '${_baseEnv.emerisBackendApiUrl}/v1/account/${bech32ToHex(walletData.walletDetails.walletAddress)}/stakingbalances';
     final response = await _dio.get(uri);
+
     final map = response.data as Map<String, dynamic>;
-    final stakingBalanceList = map['staking_balances'] as List;
+    final stakingBalanceList = map['staking_balances'] as List? ?? [];
 
     return right(
       stakingBalanceList
@@ -56,8 +57,9 @@ class EmerisBankRepository implements BankRepository {
   Future<Either<GeneralFailure, List<Pool>>> getPools(EmerisWallet walletData) async {
     final uri = '${_baseEnv.emerisBackendApiUrl}/v1/liquidity/cosmos/liquidity/v1beta1/pools';
     final response = await _dio.get(uri);
+
     final map = response.data as Map<String, dynamic>;
-    final pools = map['pools'] as List;
+    final pools = map['pools'] as List? ?? [];
 
     return right(
       pools.map((it) => PoolJson.fromJson(it as Map<String, dynamic>)).map((it) => it.toBalanceDomain()).toList(),

@@ -25,6 +25,7 @@ import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
@@ -231,6 +232,9 @@ void _configureUseCases() {
     )
     ..registerFactory<SavePasscodeUseCase>(
       () => SavePasscodeUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<GetStakedAmountUseCase>(
+      () => GetStakedAmountUseCase(getIt()),
     );
 }
 
@@ -320,7 +324,7 @@ void _configureMvp() {
       () => MnemonicImportNavigator(getIt()),
     )
     ..registerFactoryParam<AssetDetailsPresenter, AssetDetailsPresentationModel, dynamic>(
-      (_model, _) => AssetDetailsPresenter(_model, getIt()),
+      (_model, _) => AssetDetailsPresenter(_model, getIt(), getIt()),
     )
     ..registerFactory<AssetDetailsNavigator>(
       () => AssetDetailsNavigator(getIt()),

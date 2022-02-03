@@ -55,7 +55,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
           param2: getIt<WalletDetailsNavigator>(),
         );
     presenter.navigator.context = context;
-    presenter.getWalletBalances(widget.initialParams.wallet);
+    WidgetsBinding.instance?.addPostFrameCallback((_) => presenter.init());
   }
 
   @override
@@ -103,12 +103,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
                     .map(
                       (balance) => BalanceCard(
                         data: balance,
-                        onTap: model.isSendMoneyLoading
-                            ? null
-                            : () => presenter.transferTapped(
-                                  balance: balance,
-                                  assetDetails: model.assetDetails,
-                                ),
+                        onTap: model.isSendMoneyLoading ? null : () => presenter.transferTapped(balance: balance),
                       ),
                     )
                     .toList(),

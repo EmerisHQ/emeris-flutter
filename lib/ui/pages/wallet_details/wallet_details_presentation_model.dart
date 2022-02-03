@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
@@ -34,6 +35,8 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
 
   @override
   bool get isSendMoneyLoading => sendMoneyFuture?.status == FutureStatus.pending;
+
+  EmerisWallet get wallet => initialParams.wallet;
 }
 
 mixin WalletDetailsPresentationModelBase {

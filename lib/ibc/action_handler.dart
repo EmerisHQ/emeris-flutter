@@ -64,6 +64,7 @@ class ActionHandler {
         denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
         unitPrice: Amount.fromString('0'),
         dollarPrice: Amount.fromString('0'),
+        onChain: balance.onChain,
       ),
       baseDenom: Denom(
         await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _restApiIbcRepository),
@@ -316,6 +317,7 @@ extension ChainAmountOnTrace on VerifyTraceJson {
             ),
             unitPrice: Amount.fromString('0'),
             dollarPrice: Amount.fromString('0'),
+            onChain: balance.onChain,
           ),
           chainId: trace[trace.length - 1].counterpartyName,
         ),

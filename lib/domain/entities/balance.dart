@@ -8,6 +8,7 @@ class Balance extends Equatable {
   Balance({
     required this.denom,
     required this.amount,
+    this.onChain = '',
     Amount? unitPrice,
     Amount? dollarPrice,
   })  : unitPrice = unitPrice ?? Amount.zero,
@@ -17,12 +18,14 @@ class Balance extends Equatable {
       : denom = const Denom(''),
         amount = Amount.zero,
         unitPrice = Amount.zero,
-        dollarPrice = Amount.zero;
+        dollarPrice = Amount.zero,
+        onChain = '';
 
   final Denom denom;
   final Amount amount;
   final Amount unitPrice;
   final Amount dollarPrice;
+  final String onChain;
 
   @override
   String toString() {
@@ -48,6 +51,7 @@ class Balance extends Equatable {
       amount: amount,
       unitPrice: Amount.fromString(unitPrice.toStringAsFixed(2)),
       dollarPrice: Amount.fromString(dollarPrice.toStringAsFixed(2)),
+      onChain: onChain,
     );
   }
 }
