@@ -19,6 +19,7 @@ class WalletDetails extends Equatable {
 
   @override
   List<Object?> get props => [
+        walletIdentifier,
         walletAlias,
         walletAddress,
       ];

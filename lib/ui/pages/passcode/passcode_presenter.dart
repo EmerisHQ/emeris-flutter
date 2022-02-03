@@ -36,22 +36,15 @@ class PasscodePresenter {
         break;
       case PasscodeMode.confirmPasscode:
         _model.confirmPasscodeText = value;
-        if (_model.firstPasscodeText != _model.confirmPasscodeText) {
-          _showError(
-            const PasscodeFailure.passcodesDontMatch().displayableFailure(),
-          );
-          _model
-            ..firstPasscodeText = ''
-            ..confirmPasscodeText = ''
-            ..mode = PasscodeMode.firstPasscode;
-        } else {
-          _verifyPasscode();
-        }
+        _verifyPasscode();
         break;
     }
   }
 
   Future<void> _verifyPasscode() async {
+    final firstPass = Passcode(_model.firstPasscodeText);
+    final confirmPass = Passcode(_model.confirmPasscodeText);
+    final validationError = firstPass.validateError();
     switch (_model.mode) {
       case PasscodeMode.firstPasscode:
         await _verifyPasscodeUseCase.execute(_model.passcode).doOn(
@@ -68,9 +61,7 @@ class PasscodePresenter {
             );
         return;
       case PasscodeMode.confirmPasscode:
-        final firstPass = Passcode(_model.firstPasscodeText);
-        final confirmPass = Passcode(_model.confirmPasscodeText);
-        if (firstPass == confirmPass && firstPass.validateError() == null) {
+        if (firstPass == confirmPass && validationError == null) {
           _model.savePasscodeFuture = _savePasscodeUseCase
               .execute(firstPass) //
               .observableDoOn(
@@ -78,6 +69,12 @@ class PasscodePresenter {
                 (success) => navigator.closeWithResult(firstPass),
               );
           await _model.savePasscodeFuture;
+        } else {
+          await _showError(
+            validationError == null
+                ? const PasscodeFailure.passcodesDontMatch().displayableFailure()
+                : validationError.displayableFailure(),
+          );
         }
     }
   }

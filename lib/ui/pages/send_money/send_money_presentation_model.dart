@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/model/failures/send_money_failure.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';

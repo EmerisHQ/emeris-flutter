@@ -81,7 +81,9 @@ abstract class BackupLaterConfirmationRoute {
   Future<BackupLaterConfirmationResult> openBackupLaterConfirmation() async {
     final result = await showMaterialModalBottomSheet(
       context: context,
-      builder: (context) => const CosmosBottomSheetContainer(child: BackupLaterConfirmationSheet(),),
+      builder: (context) => const CosmosBottomSheetContainer(
+        child: BackupLaterConfirmationSheet(),
+      ),
     ) as BackupLaterConfirmationResult?;
     return result ?? BackupLaterConfirmationResult.backupNow;
   }

@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/domain/entities/send_money_form_data.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_presentation_model.dart';
@@ -33,7 +30,6 @@ class SendMoneySheet extends StatefulWidget {
 }
 
 class SendMoneySheetState extends State<SendMoneySheet> {
-
   late SendMoneyPresenter presenter;
 
   SendMoneyViewModel get model => presenter.viewModel;
@@ -78,9 +74,7 @@ class SendMoneySheetState extends State<SendMoneySheet> {
           ),
         ),
         ElevatedButton(
-          onPressed: () async {
-            await presenter.onTapSendMoney();
-          },
+          onPressed: presenter.onTapSendMoney,
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
           ),

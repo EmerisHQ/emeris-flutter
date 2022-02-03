@@ -15,6 +15,6 @@ class SavePasscodeUseCase {
     Passcode passcode,
   ) =>
       _authRepository.savePasscode(passcode).doOn(
-            success: (_) async => _settingsStore.hasPasscode = true,
+            success: (_) => _settingsStore.hasPasscode = true,
           );
 }
