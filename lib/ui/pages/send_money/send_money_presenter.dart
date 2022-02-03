@@ -42,6 +42,7 @@ class SendMoneyPresenter {
             balance: Balance(
               denom: viewModel.denom,
               amount: _model.amount,
+              onChain: '',
             ),
             walletType: _model.walletType,
             fromAddress: _model.senderAddress,

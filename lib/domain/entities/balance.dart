@@ -18,7 +18,8 @@ class Balance extends Equatable {
       : denom = const Denom(''),
         amount = Amount.zero,
         unitPrice = Amount.zero,
-        dollarPrice = Amount.zero;
+        dollarPrice = Amount.zero,
+        onChain = '';
 
   final Denom denom;
   final Amount amount;
