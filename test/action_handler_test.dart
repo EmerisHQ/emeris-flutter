@@ -34,7 +34,7 @@ void main() {
         (_) async => right(
           VerifyTraceJson.fromJson(
             (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>,
-          ),
+          ).toDomain(),
         ),
       );
 
@@ -91,7 +91,7 @@ void main() {
         (_) async => right(
           VerifyTraceJson.fromJson(
             (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>,
-          ),
+          ).toDomain(),
         ),
       );
 

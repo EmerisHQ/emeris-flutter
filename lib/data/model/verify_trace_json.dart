@@ -1,4 +1,5 @@
 import 'package:flutter_app/data/model/trace_json.dart';
+import 'package:flutter_app/domain/entities/verify_trace.dart';
 
 class VerifyTraceJson {
   VerifyTraceJson({
@@ -22,4 +23,12 @@ class VerifyTraceJson {
   final bool verified;
   final String path;
   final List<TraceJson> trace;
+
+  VerifyTrace toDomain() => VerifyTrace(
+        ibcDenom: ibcDenom,
+        baseDenom: baseDenom,
+        verified: verified,
+        path: path,
+        trace: trace.map((e) => e.toDomain()).toList(),
+      );
 }

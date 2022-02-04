@@ -1,5 +1,5 @@
 import 'package:flutter_app/data/model/gas_price_levels_json.dart';
-import 'package:flutter_app/domain/entities/gas_price_level.dart';
+import 'package:flutter_app/domain/entities/gas_price_levels.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
 class VerifiedDenomJson {
@@ -61,7 +61,7 @@ class VerifiedDenomJson {
         stakable: stakable,
         ticker: ticker,
         feeToken: feeToken,
-        gasPriceLevels: gasPriceLevels?.toDomain() ?? GasPriceLevel(low: 0, average: 0, high: 0),
+        gasPriceLevels: gasPriceLevels?.toDomain() ?? GasPriceLevels(low: 0, average: 0, high: 0),
         fetchPrice: fetchPrice,
         relayerDenom: relayerDenom,
         minimumThreshRelayerBalance: minimumThreshRelayerBalance,

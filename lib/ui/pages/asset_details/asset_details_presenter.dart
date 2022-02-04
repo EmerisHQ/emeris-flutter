@@ -30,7 +30,7 @@ class AssetDetailsPresenter {
 
   Future<void> getAssetSpecificChains(Denom baseDenom) async {
     _model.getAssetChainsDetails =
-        _getAssetChainsUseCase.execute(baseDenom: baseDenom, balances: _model.balances).observableDoOn(
+        _getAssetChainsUseCase.execute(balances: _model.balances, baseDenom: baseDenom).observableDoOn(
               (fail) => navigator.showError(fail.displayableFailure()),
               (chains) => _model.assetChains = chains,
             );

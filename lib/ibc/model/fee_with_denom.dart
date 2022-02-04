@@ -1,5 +1,5 @@
-import 'package:flutter_app/data/model/gas_price_levels_json.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
+import 'package:flutter_app/domain/entities/gas_price_levels.dart';
 
 class FeeWithDenom {
   FeeWithDenom({
@@ -8,7 +8,7 @@ class FeeWithDenom {
     required this.denom,
   });
 
-  final GasPriceLevelsJson? gasPriceLevels;
+  final GasPriceLevels gasPriceLevels;
   final String chainId;
   final Denom denom;
 }

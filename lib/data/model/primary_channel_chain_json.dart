@@ -1,3 +1,5 @@
+import 'package:flutter_app/domain/entities/primary_channel_chain.dart';
+
 class PrimaryChannelChainJson {
   PrimaryChannelChainJson({
     required this.akash,
@@ -20,4 +22,12 @@ class PrimaryChannelChainJson {
   final String cn2;
   final String cryptoCom;
   final String persistence;
+
+  PrimaryChannelChain toDomain() => PrimaryChannelChain(
+        akash: akash,
+        cn1: cn1,
+        cn2: cn2,
+        cryptoCom: cryptoCom,
+        persistence: persistence,
+      );
 }

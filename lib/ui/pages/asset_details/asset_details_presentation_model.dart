@@ -40,6 +40,8 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
 
   List<Balance> get balances => initialParams.assetDetails.balances;
 
+  Balance get selectedAsset => initialParams.balance;
+
   @override
   List<AssetChain> get assetChains => _assetChains.value;
 }

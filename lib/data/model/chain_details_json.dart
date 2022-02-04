@@ -1,4 +1,4 @@
-import 'package:flutter_app/domain/entities/chain_details.dart';
+import 'package:flutter_app/domain/entities/chain.dart';
 
 class ChainDetailsJson {
   ChainDetailsJson({
@@ -17,7 +17,7 @@ class ChainDetailsJson {
   final String logo;
   final String displayName;
 
-  ChainDetails toBalanceDomain() => ChainDetails(
+  Chain toBalanceDomain() => Chain(
         chainName: chainName,
         displayName: displayName,
         logo: logo,

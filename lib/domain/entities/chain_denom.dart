@@ -1,8 +1,7 @@
 import 'package:flutter_app/domain/entities/gas_price_levels.dart';
 
-class VerifiedDenom {
-  VerifiedDenom({
-    required this.chainName,
+class ChainDenom {
+  ChainDenom({
     required this.name,
     required this.displayName,
     required this.logo,
@@ -17,17 +16,16 @@ class VerifiedDenom {
     required this.minimumThreshRelayerBalance,
   });
 
-  String chainName;
-  String name;
-  String displayName;
-  String logo;
-  int precision;
-  bool verified;
-  bool stakable;
-  String ticker;
-  bool feeToken;
-  GasPriceLevels gasPriceLevels;
-  bool fetchPrice;
-  bool relayerDenom;
-  int minimumThreshRelayerBalance;
+  final String name;
+  final String displayName;
+  final String logo;
+  final int precision;
+  final bool verified;
+  final bool stakable;
+  final String ticker;
+  final bool feeToken;
+  final GasPriceLevels gasPriceLevels;
+  final bool fetchPrice;
+  final bool relayerDenom;
+  final int minimumThreshRelayerBalance;
 }

@@ -4,15 +4,15 @@ import 'package:cosmos_utils/extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/ibc/rest_api_ibc_repository.dart';
-import 'package:flutter_app/data/model/primary_channel_json.dart';
-import 'package:flutter_app/data/model/trace_json.dart';
-import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/redeem_failure.dart';
 import 'package:flutter_app/domain/entities/failures/transfer_failure.dart';
+import 'package:flutter_app/domain/entities/primary_channel.dart';
+import 'package:flutter_app/domain/entities/trace.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
+import 'package:flutter_app/domain/entities/verify_trace.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/ibc/helpers/ibc_transfer_recipient.dart';
 import 'package:flutter_app/ibc/model/chain_amount.dart';
@@ -56,8 +56,8 @@ class ActionHandler {
     }
   }
 
-  /// This step is built for each [TraceJson] returned by the verifyTrace API
-  Future<StepData> _buildStep(Balance balance, VerifyTraceJson verifyTrace, int i, TraceJson hop) async {
+  /// This step is built for each [Trace] returned by the verifyTrace API
+  Future<StepData> _buildStep(Balance balance, VerifyTrace verifyTrace, int i, Trace hop) async {
     return StepData(
       balance: Balance(
         amount: balance.amount,
@@ -241,7 +241,7 @@ class ActionHandler {
     List<TransferStep> steps,
     IbcTransferRecipient ibcTransferRecipient,
     Balance balance,
-    PrimaryChannelJson primaryChannelResult,
+    PrimaryChannel primaryChannelResult,
     Output output, {
     required bool mustAddFee,
   }) async {
@@ -294,19 +294,19 @@ class ActionHandler {
   }
 
   // TODO: Rename this whenever we get a domain-related suggestion from backend
-  bool isCounterPartyDestination(VerifyTraceJson verifyTrace, IbcTransferRecipient ibcTransferRecipient) =>
+  bool isCounterPartyDestination(VerifyTrace verifyTrace, IbcTransferRecipient ibcTransferRecipient) =>
       verifyTrace.trace[0].counterpartyName == ibcTransferRecipient.destinationChainId;
 
   // TODO: Rename this whenever we get a domain-related suggestion from backend
-  bool _isPrimaryChannelVerified(PrimaryChannelJson primaryChannelResult, VerifyTraceJson verifyTrace) =>
+  bool _isPrimaryChannelVerified(PrimaryChannel primaryChannelResult, VerifyTrace verifyTrace) =>
       primaryChannelResult.channelName == getChannel(verifyTrace.path, 0);
 
   // TODO: Rename this whenever we get a domain-related suggestion from backend
-  bool _isSingleSameChain(VerifyTraceJson verifyTrace, IbcTransferRecipient ibcTransferRecipient) =>
+  bool _isSingleSameChain(VerifyTrace verifyTrace, IbcTransferRecipient ibcTransferRecipient) =>
       verifyTrace.trace.length == 1 && ibcTransferRecipient.isSameChain;
 }
 
-extension ChainAmountOnTrace on VerifyTraceJson {
+extension ChainAmountOnTrace on VerifyTrace {
   ChainAmount toChainAmount(Balance balance, List<StepData> steps) => ChainAmount(
         steps: steps,
         output: Output(
@@ -356,14 +356,16 @@ Future<List<FeeWithDenom>> getFeeForChain(String chainId, RestApiIbcRepository i
   final fees = <FeeWithDenom>[];
 
   await chainDetails.fold<Future?>((l) => throw 'Could not get chain details', (r) {
-    for (final denom in r.denoms) {
-      fees.add(
-        FeeWithDenom(
-          gasPriceLevels: denom.gasPriceLevels,
-          denom: Denom(denom.name),
-          chainId: chainId,
-        ),
-      );
+    if (r.denoms != null) {
+      for (final denom in r.denoms!) {
+        fees.add(
+          FeeWithDenom(
+            gasPriceLevels: denom.gasPriceLevels,
+            denom: Denom(denom.name),
+            chainId: chainId,
+          ),
+        );
+      }
     }
   });
 
@@ -398,7 +400,7 @@ Future<String> getBaseDenom(String denom, String? chainId, RestApiIbcRepository 
     return denom;
   }
 
-  VerifyTraceJson? verifyTrace;
+  VerifyTrace? verifyTrace;
   final traceEither = await ibcRepository.verifyTrace(finalChainName, denomHash);
   await traceEither.fold<Future?>((l) => null, (r) {
     verifyTrace = r;
