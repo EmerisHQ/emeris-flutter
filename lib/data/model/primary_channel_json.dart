@@ -8,8 +8,11 @@ class PrimaryChannelJson {
         channelName: json['channel_name'] as String,
       );
 
-  final String counterParty;
-  final String channelName;
+  final String? counterParty;
+  final String? channelName;
 
-  PrimaryChannel toDomain() => PrimaryChannel(counterParty: counterParty, channelName: channelName);
+  PrimaryChannel toDomain() => PrimaryChannel(
+        counterParty: counterParty ?? '',
+        channelName: channelName ?? '',
+      );
 }
