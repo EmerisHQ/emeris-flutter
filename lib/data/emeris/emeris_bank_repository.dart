@@ -28,7 +28,7 @@ class EmerisBankRepository implements BankRepository {
       balanceList
           .map((e) => BalanceJson.fromJson(e as Map<String, dynamic>))
           .toList()
-          .where((element) => element.verified)
+          .where((element) => element.verified ?? false)
           .map((e) => e.toBalanceDomain())
           .toList(),
     );
