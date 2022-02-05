@@ -15,12 +15,12 @@ class StakingBalanceJson {
       );
 
   StakingBalance toDomain() => StakingBalance(
-        validatorAddress: validatorAddress,
-        amount: Amount.fromString(amount),
-        chainName: chainName,
+        validatorAddress: validatorAddress ?? '',
+        amount: Amount.fromString(amount ?? '0'),
+        chainName: chainName ?? '',
       );
 
-  final String validatorAddress;
-  final String amount;
-  final String chainName;
+  final String? validatorAddress;
+  final String? amount;
+  final String? chainName;
 }
