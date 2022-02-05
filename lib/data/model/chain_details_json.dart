@@ -13,13 +13,13 @@ class ChainDetailsJson {
         displayName: json['display_name'] as String? ?? '',
       );
 
-  final String chainName;
-  final String logo;
-  final String displayName;
+  final String? chainName;
+  final String? logo;
+  final String? displayName;
 
-  Chain toBalanceDomain() => Chain(
-        chainName: chainName,
-        displayName: displayName,
-        logo: logo,
+  Chain toDomain() => Chain(
+        chainName: chainName ?? '',
+        displayName: displayName ?? '',
+        logo: logo ?? '',
       );
 }

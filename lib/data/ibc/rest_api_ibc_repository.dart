@@ -106,7 +106,7 @@ class RestApiIbcRepository implements IbcRepository {
     return right(
       chains
           .map((it) => ChainDetailsJson.fromJson(it as Map<String, dynamic>))
-          .map((it) => it.toBalanceDomain())
+          .map((it) => it.toDomain())
           .toList(),
     );
   }
