@@ -10,7 +10,7 @@ extension PricesTranslator on PricesDataJson {
   Price toPrices() {
     return Price(
       data: TokenPriceData(
-        fiats: data?.fiats.map((e) => Fiat(symbol: e.symbol, price: e.price)).toList() ?? [],
+        fiats: data?.fiats.map((e) => Fiat(symbol: e.symbol ?? '', price: e.price ?? 0)).toList() ?? [],
         tokens: data?.tokens
                 .map(
                   (e) => Token(

@@ -6,6 +6,6 @@ class FiatJson {
         price: double.tryParse(json['Price'].toString()) ?? 0.0,
       );
 
-  final String symbol;
-  final double price;
+  final String? symbol;
+  final double? price;
 }
