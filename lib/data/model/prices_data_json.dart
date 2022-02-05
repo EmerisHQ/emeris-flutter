@@ -16,6 +16,6 @@ class PricesDataJson {
   }
 
   final TokenPriceDataJson? data;
-  final String message;
-  final int status;
+  final String? message;
+  final int? status;
 }

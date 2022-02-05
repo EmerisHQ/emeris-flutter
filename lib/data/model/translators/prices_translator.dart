@@ -23,7 +23,7 @@ extension PricesTranslator on PricesDataJson {
             [],
       ),
       message: message,
-      status: status,
+      status: status ?? 0,
     );
   }
 }
