@@ -14,9 +14,9 @@ extension PricesTranslator on PricesDataJson {
         tokens: data?.tokens
                 .map(
                   (e) => Token(
-                    denom: Denom(e.symbol),
+                    denom: Denom(e.symbol ?? ''),
                     amount: Amount.fromString(e.price.toString()),
-                    supply: e.supply.toDouble(),
+                    supply: e.supply?.toDouble() ?? 0,
                   ),
                 )
                 .toList() ??

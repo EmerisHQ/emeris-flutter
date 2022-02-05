@@ -9,7 +9,7 @@ class TokenJson {
     );
   }
 
-  final String symbol;
-  final num price;
-  final num supply;
+  final String? symbol;
+  final num? price;
+  final num? supply;
 }
