@@ -2,6 +2,7 @@ import 'package:flutter_app/data/model/denom_json.dart';
 import 'package:flutter_app/data/model/node_info_json.dart';
 import 'package:flutter_app/data/model/primary_channel_chain_json.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
+import 'package:flutter_app/domain/entities/primary_channel_chain.dart';
 
 class ChainJson {
   ChainJson({
@@ -34,25 +35,25 @@ class ChainJson {
         blockExplorer: json['block_explorer'] as String? ?? '',
       );
 
-  final bool enabled;
-  final String chainName;
-  final String logo;
-  final String displayName;
-  final PrimaryChannelChainJson primaryChannel;
-  final List<DenomJson> denoms;
-  final List<String> demerisAddresses;
-  final String genesisHash;
-  final NodeInfoJson nodeInfo;
-  final String validBlockThresh;
-  final String derivationPath;
-  final String blockExplorer;
+  final bool? enabled;
+  final String? chainName;
+  final String? logo;
+  final String? displayName;
+  final PrimaryChannelChainJson? primaryChannel;
+  final List<DenomJson>? denoms;
+  final List<String>? demerisAddresses;
+  final String? genesisHash;
+  final NodeInfoJson? nodeInfo;
+  final String? validBlockThresh;
+  final String? derivationPath;
+  final String? blockExplorer;
 
   Chain toDomain() => Chain(
         enabled: enabled,
-        chainName: chainName,
-        displayName: displayName,
-        primaryChannel: primaryChannel.toDomain(),
-        denoms: denoms.map((it) => it.toDomain()).toList(),
-        logo: logo,
+        chainName: chainName ?? '',
+        displayName: displayName ?? '',
+        primaryChannel: primaryChannel?.toDomain() ?? const PrimaryChannelChain.empty(),
+        denoms: denoms?.map((it) => it.toDomain()).toList(),
+        logo: logo ?? '',
       );
 }
