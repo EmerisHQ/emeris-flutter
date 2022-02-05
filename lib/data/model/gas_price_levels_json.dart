@@ -9,9 +9,13 @@ class GasPriceLevelsJson {
         high: double.tryParse(json['high'].toString()) ?? 0.0,
       );
 
-  final double low;
-  final double average;
-  final double high;
+  final double? low;
+  final double? average;
+  final double? high;
 
-  GasPriceLevels toDomain() => GasPriceLevels(low: low, average: average, high: high);
+  GasPriceLevels toDomain() => GasPriceLevels(
+        low: low ?? 0,
+        average: average ?? 0,
+        high: high ?? 0,
+      );
 }
