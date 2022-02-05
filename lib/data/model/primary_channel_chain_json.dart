@@ -17,17 +17,17 @@ class PrimaryChannelChainJson {
         persistence: json['persistence'] as String? ?? '',
       );
 
-  final String akash;
-  final String cn1;
-  final String cn2;
-  final String cryptoCom;
-  final String persistence;
+  final String? akash;
+  final String? cn1;
+  final String? cn2;
+  final String? cryptoCom;
+  final String? persistence;
 
   PrimaryChannelChain toDomain() => PrimaryChannelChain(
-        akash: akash,
-        cn1: cn1,
-        cn2: cn2,
-        cryptoCom: cryptoCom,
-        persistence: persistence,
+        akash: akash ?? '',
+        cn1: cn1 ?? '',
+        cn2: cn2 ?? '',
+        cryptoCom: cryptoCom ?? '',
+        persistence: persistence ?? '',
       );
 }
