@@ -15,7 +15,7 @@ class NodeInfoJson {
             : Bech32ConfigJson.fromJson(json['bech32_config'] as Map<String, dynamic>),
       );
 
-  final String endpoint;
-  final String chainId;
+  final String? endpoint;
+  final String? chainId;
   final Bech32ConfigJson? bech32Config;
 }
