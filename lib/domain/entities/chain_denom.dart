@@ -1,10 +1,8 @@
-import 'dart:html';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/gas_price_levels.dart';
 
 class ChainDenom extends Equatable {
-  ChainDenom({
+  const ChainDenom({
     required this.name,
     required this.displayName,
     required this.logo,
@@ -37,7 +35,7 @@ class ChainDenom extends Equatable {
         name,
         displayName,
         logo,
-        Element.pre(),
+        precision,
         verified,
         stakable,
         ticker,

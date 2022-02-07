@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/chain_denom.dart';
 
 class Chain extends Equatable {
-  Chain({
+  const Chain({
     required this.logo,
     required this.chainName,
     required this.displayName,

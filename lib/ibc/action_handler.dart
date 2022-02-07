@@ -70,7 +70,10 @@ class ActionHandler {
       ),
       baseDenom: Denom(
         await getBaseDenom(
-            getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _blockchainMetadataRepository),
+          getDenomHash(verifyTrace.path, verifyTrace.baseDenom),
+          hop.chainName,
+          _blockchainMetadataRepository,
+        ),
       ),
       fromChain: hop.chainName,
       toChain: hop.counterpartyName,
@@ -145,7 +148,10 @@ class ActionHandler {
                       fromChain: ibcTransferRecipient.chainId,
                       baseDenom: Denom(
                         await getBaseDenom(
-                            balance.denom.text, ibcTransferRecipient.chainId, _blockchainMetadataRepository),
+                          balance.denom.text,
+                          ibcTransferRecipient.chainId,
+                          _blockchainMetadataRepository,
+                        ),
                       ),
                       toChain: verifyTrace.trace[0].counterpartyName,
                       through: verifyTrace.trace[0].channel,
