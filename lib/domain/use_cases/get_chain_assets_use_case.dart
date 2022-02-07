@@ -7,8 +7,8 @@ import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/repositories/chains_repository.dart';
 
-class GetChainAssetUseCase {
-  GetChainAssetUseCase(this._chainsRepository);
+class GetChainAssetsUseCase {
+  GetChainAssetsUseCase(this._chainsRepository);
 
   final ChainsRepository _chainsRepository;
 

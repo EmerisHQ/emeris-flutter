@@ -1,6 +1,6 @@
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/use_cases/get_chain_asset_case.dart';
+import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
@@ -13,7 +13,7 @@ class AssetDetailsPresenter {
   final AssetDetailsPresentationModel _model;
   final AssetDetailsNavigator navigator;
   final GetStakedAmountUseCase _getStakedAmountUseCase;
-  final GetChainAssetUseCase _getChainAssetsUseCase;
+  final GetChainAssetsUseCase _getChainAssetsUseCase;
 
   AssetDetailsViewModel get viewModel => _model;
 
