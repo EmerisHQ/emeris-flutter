@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cosmos_utils/extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/ibc/rest_api_ibc_repository.dart';
+import 'package:flutter_app/data/blockchain/rest_api_blockchain_metadata_repository.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
@@ -23,9 +23,9 @@ import 'package:flutter_app/ibc/model/transfer_chain_amount.dart';
 import 'package:flutter_app/ibc/model/transfer_step.dart';
 
 class ActionHandler {
-  const ActionHandler(this._restApiIbcRepository, this._chainsRepository);
+  const ActionHandler(this._blockchainMetadataRepository, this._chainsRepository);
 
-  final RestApiIbcRepository _restApiIbcRepository;
+  final RestApiBlockchainMetadataRepository _blockchainMetadataRepository;
   final ChainsRepository _chainsRepository;
 
   /// This function has multiple steps to redeem the IBC token
@@ -38,7 +38,7 @@ class ActionHandler {
       return right(ChainAmount(output: Output(balance: balance, chainId: chainId)));
     } else {
       // Else get the trace for this IBC denom
-      return _restApiIbcRepository
+      return _blockchainMetadataRepository
           .verifyTrace(chainId, balance.denom.text.split('/')[1])
           .mapError(RedeemFailure.verifyTraceError)
           .flatMap(
@@ -69,7 +69,8 @@ class ActionHandler {
         onChain: balance.onChain,
       ),
       baseDenom: Denom(
-        await getBaseDenom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _restApiIbcRepository),
+        await getBaseDenom(
+            getDenomHash(verifyTrace.path, verifyTrace.baseDenom), hop.chainName, _blockchainMetadataRepository),
       ),
       fromChain: hop.chainName,
       toChain: hop.counterpartyName,
@@ -97,8 +98,8 @@ class ActionHandler {
       if (ibcTransferRecipient.chainId == ibcTransferRecipient.destinationChainId) {
         return addTransferStep(steps, ibcTransferRecipient, balance, output, mustAddFee: mustAddFee);
       } else {
-        if (await isVerified(balance.denom, ibcTransferRecipient.chainId, _restApiIbcRepository)) {
-          final primaryChannelTrace = await _restApiIbcRepository.getPrimaryChannel(
+        if (await isVerified(balance.denom, ibcTransferRecipient.chainId, _blockchainMetadataRepository)) {
+          final primaryChannelTrace = await _blockchainMetadataRepository.getPrimaryChannel(
             chainId: ibcTransferRecipient.chainId,
             destinationChainId: ibcTransferRecipient.destinationChainId,
           );
@@ -117,12 +118,12 @@ class ActionHandler {
       }
     }
     final verifyTraceEither =
-        await _restApiIbcRepository.verifyTrace(ibcTransferRecipient.chainId, balance.denom.text.split('/')[1]);
+        await _blockchainMetadataRepository.verifyTrace(ibcTransferRecipient.chainId, balance.denom.text.split('/')[1]);
     return verifyTraceEither.fold(
       (l) => left(TransferFailure.verifyTraceError(l.cause)),
       (verifyTrace) async {
         if (_isSingleSameChain(verifyTrace, ibcTransferRecipient)) {
-          final primaryChannelEither = await _restApiIbcRepository.getPrimaryChannel(
+          final primaryChannelEither = await _blockchainMetadataRepository.getPrimaryChannel(
             chainId: ibcTransferRecipient.chainId,
             destinationChainId: verifyTrace.trace[0].counterpartyName,
           );
@@ -143,7 +144,8 @@ class ActionHandler {
                       feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _chainsRepository),
                       fromChain: ibcTransferRecipient.chainId,
                       baseDenom: Denom(
-                        await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
+                        await getBaseDenom(
+                            balance.denom.text, ibcTransferRecipient.chainId, _blockchainMetadataRepository),
                       ),
                       toChain: verifyTrace.trace[0].counterpartyName,
                       through: verifyTrace.trace[0].channel,
@@ -182,7 +184,7 @@ class ActionHandler {
                   balance: balance,
                   fromChain: ibcTransferRecipient.chainId,
                   baseDenom: Denom(
-                    await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
+                    await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _blockchainMetadataRepository),
                   ),
                   toChain: verifyTrace.trace[0].counterpartyName,
                   through: verifyTrace.trace[0].channel,
@@ -199,13 +201,13 @@ class ActionHandler {
                   balance: balance,
                   fromChain: ibcTransferRecipient.chainId,
                   baseDenom: Denom(
-                    await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
+                    await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _blockchainMetadataRepository),
                   ),
                   toChain: verifyTrace.trace[0].counterpartyName,
                   through: verifyTrace.trace[0].channel,
                 ),
               );
-              final primaryChannelEither = await _restApiIbcRepository.getPrimaryChannel(
+              final primaryChannelEither = await _blockchainMetadataRepository.getPrimaryChannel(
                 chainId: verifyTrace.trace[0].counterpartyName,
                 destinationChainId: ibcTransferRecipient.destinationChainId,
               );
@@ -339,7 +341,7 @@ String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
   return 'ibc/${sha256.convert(utf8.encode(newPath)).toString().toUpperCase()}';
 }
 
-Future<bool> isVerified(Denom denom, String chainId, RestApiIbcRepository ibcRepository) async {
+Future<bool> isVerified(Denom denom, String chainId, RestApiBlockchainMetadataRepository ibcRepository) async {
   late bool isVerified;
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
   await verifiedDenoms.fold<Future?>((l) => throw 'Could not fetch verified denoms', (r) {
@@ -378,7 +380,7 @@ Future<List<FeeWithDenom>> getFeeForChain(String chainId, ChainsRepository chain
   return fees;
 }
 
-Future<String> getBaseDenom(String denom, String? chainId, RestApiIbcRepository ibcRepository) async {
+Future<String> getBaseDenom(String denom, String? chainId, RestApiBlockchainMetadataRepository ibcRepository) async {
   const cosmosHubChainId = 'cosmos-hub';
   final finalChainName = chainId ?? cosmosHubChainId;
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
