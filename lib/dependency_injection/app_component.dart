@@ -6,6 +6,7 @@ import 'package:flutter_app/data/api_calls/cosmos_wallet_api.dart';
 import 'package:flutter_app/data/api_calls/ethereum_wallet_api.dart';
 import 'package:flutter_app/data/api_calls/wallet_api.dart';
 import 'package:flutter_app/data/blockchain/rest_api_blockchain_metadata_repository.dart';
+import 'package:flutter_app/data/chains/rest_api_chains_repository.dart';
 import 'package:flutter_app/data/cosmos/cosmos_auth_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_bank_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_transactions_repository.dart';
@@ -13,10 +14,13 @@ import 'package:flutter_app/data/emeris/emeris_wallets_repository.dart';
 import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
 import 'package:flutter_app/data/http/dio_builder.dart';
+import 'package:flutter_app/data/liquidity_pools/rest_apliquidity_pools_repository.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
 import 'package:flutter_app/domain/repositories/blockchain_metadata_repository.dart';
+import 'package:flutter_app/domain/repositories/chains_repository.dart';
+import 'package:flutter_app/domain/repositories/liquidity_pools_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
@@ -153,6 +157,15 @@ void _configureRepositories() {
     )
     ..registerFactory<AuthRepository>(
       () => CosmosAuthRepository(getIt(), getIt()),
+    )
+    ..registerFactory<BlockchainMetadataRepository>(
+      () => RestApiBlockchainMetadataRepository(getIt(), getIt()),
+    )
+    ..registerFactory<LiquidityPoolsRepository>(
+      () => RestApiLiquidityPoolsRepository(getIt(), getIt()),
+    )
+    ..registerFactory<ChainsRepository>(
+      () => RestApiChainsRepository(getIt(), getIt()),
     );
 }
 
