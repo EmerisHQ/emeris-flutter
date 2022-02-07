@@ -104,12 +104,16 @@ Below you can find a diagram showing the flow of control for a basic scenario of
 
 ### General
 
-| Rule                                                                      | Explanation                                                                                   |
-|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| **Use trailing commas for method/constructor parameters and definitions** | This way each param is in a separate line and adding new params is much easier to read in PRs |
+| Rule                                                                      | Explanation                                                                                                                                                                                                      |
+|---------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Use trailing commas for method/constructor parameters and definitions** | This way each param is in a separate line and adding new params is much easier to read in PRs                                                                                                                    |
+| **Prefer named parameters**                                               | Whenever using more than one param, consider using named parameters, i.e: <font color="Red">Bad:</font>`getBalances(true,"1283184")`, <font color="Green">Bad:</font>`getBalances(id: "1283184", refresh: true)` |
 
 ### UseCase
-TODO
+- Performs business logic, communicates with outer world trough repositories
+- should contain single public `execute()` method optionally with runtime arguments that performs business logic
+- all compile-time dependencies should be injected trough constructor
+- never use json classes in usecases, always rely communication with APIs trough repositories
 
 ### Repository
 - Should be specified as an interface in the `domain/repositories` package, i.e: `UserRepository`
@@ -193,13 +197,34 @@ class User extends Equatable {
 ```
 
 ### Presenter
-TODO
+
+- reacts to user interaction, (i.e: all onTap methods are being forwarded to presenter)
+- calls use cases
+- updates presentation model with new data
+- never accesses initialParams from PresentationModel directly, but through the getters in presentationModel
+- does not store any data, all the data that it requires is being held inside the presentationModel
+
 ### ViewModel
-TODO
+
+- interface that exposes data from presentation model to pages
+- contains only getters, views are not supposed to mutate any state directly
+- should not expose data that is internal for presenters and should not be used by pages directly
+
 ### PresentationModel
-TODO
+
+- stores data used by presenter and pages
+- uses mobx to make all the fields observable
+- `*PresentationModelBase` is a base class we use to store mobx boilerplate code
+- accepts InitialParams as constructor param
+
 ### Page
-TODO
+
+- never accesses initialParams directly
+- routes all the user interaction to presenter, i.e: ```InkWell(onTap: () =>  presenter.onTapLogin()```
+- uses `Observer` widget to listen to changes in `ViewModel`
+- accesses data to display from `ViewModel` only
+- divides the UI into smaller widgets, extracted to a separate files
+- 
 ### Json classes
 
 - all fields in `*Json` classes should be nullable
