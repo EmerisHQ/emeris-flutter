@@ -24,7 +24,7 @@ import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
-import 'package:flutter_app/domain/use_cases/get_asset_chains_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_chain_asset_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
@@ -234,8 +234,8 @@ void _configureUseCases() {
     ..registerFactory<GetStakedAmountUseCase>(
       () => GetStakedAmountUseCase(getIt()),
     )
-    ..registerFactory<GetAssetChainsUseCase>(
-      () => GetAssetChainsUseCase(getIt()),
+    ..registerFactory<GetChainAssetUseCase>(
+      () => GetChainAssetUseCase(getIt()),
     );
 }
 

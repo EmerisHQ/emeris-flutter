@@ -1,6 +1,6 @@
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/use_cases/get_asset_chains_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_chain_asset_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
@@ -13,7 +13,7 @@ class AssetDetailsPresenter {
   final AssetDetailsPresentationModel _model;
   final AssetDetailsNavigator navigator;
   final GetStakedAmountUseCase _getStakedAmountUseCase;
-  final GetAssetChainsUseCase _getAssetChainsUseCase;
+  final GetChainAssetUseCase _getAssetChainsUseCase;
 
   AssetDetailsViewModel get viewModel => _model;
 
@@ -22,17 +22,26 @@ class AssetDetailsPresenter {
   void onSendPressed() => showNotImplemented();
 
   Future<void> getStakedAmount(EmerisWallet wallet, String onChain) async {
-    _model.getStakedAmountFuture = _getStakedAmountUseCase.execute(wallet: wallet, onChain: onChain).observableDoOn(
+    _model.getStakedAmountFuture = _getStakedAmountUseCase
+        .execute(
+          wallet: wallet,
+          onChain: onChain,
+        )
+        .observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
           (stakedAmount) => _model.stakedAmount = stakedAmount,
         );
   }
 
   Future<void> getAssetSpecificChains(Denom baseDenom) async {
-    _model.getAssetChainsDetails =
-        _getAssetChainsUseCase.execute(balances: _model.balances, baseDenom: baseDenom).observableDoOn(
-              (fail) => navigator.showError(fail.displayableFailure()),
-              (chains) => _model.assetChains = chains,
-            );
+    _model.getAssetChainsDetails = _getAssetChainsUseCase
+        .execute(
+          balances: _model.balances,
+          baseDenom: baseDenom,
+        )
+        .observableDoOn(
+          (fail) => navigator.showError(fail.displayableFailure()),
+          (chains) => _model.assetChains = chains,
+        );
   }
 }

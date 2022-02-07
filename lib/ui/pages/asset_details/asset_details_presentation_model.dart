@@ -14,7 +14,7 @@ abstract class AssetDetailsViewModel {
 
   bool get isChainListLoading;
 
-  List<AssetChain> get assetChains;
+  List<ChainAsset> get assetChains;
 }
 
 class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase implements AssetDetailsViewModel {
@@ -26,7 +26,7 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
 
   ObservableFuture<Either<GeneralFailure, Amount>>? get getStakedAmountFuture => _getStakedAmountFuture.value;
 
-  ObservableFuture<Either<GeneralFailure, List<AssetChain>>>? get getAssetChainsDetailsFuture =>
+  ObservableFuture<Either<GeneralFailure, List<ChainAsset>>>? get getAssetChainsDetailsFuture =>
       _getAssetChainsDetailsFuture.value;
 
   @override
@@ -43,26 +43,26 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
   Balance get selectedAsset => initialParams.balance;
 
   @override
-  List<AssetChain> get assetChains => _assetChains.value;
+  List<ChainAsset> get assetChains => _assetChains.value;
 }
 
 mixin AssetDetailsPresentationModelBase {
   final Observable<ObservableFuture<Either<GeneralFailure, Amount>>?> _getStakedAmountFuture = Observable(null);
 
-  final Observable<ObservableFuture<Either<GeneralFailure, List<AssetChain>>>?> _getAssetChainsDetailsFuture =
+  final Observable<ObservableFuture<Either<GeneralFailure, List<ChainAsset>>>?> _getAssetChainsDetailsFuture =
       Observable(null);
 
   set getStakedAmountFuture(ObservableFuture<Either<GeneralFailure, Amount>>? value) =>
       Action(() => _getStakedAmountFuture.value = value)();
 
-  set getAssetChainsDetails(ObservableFuture<Either<GeneralFailure, List<AssetChain>>>? value) =>
+  set getAssetChainsDetails(ObservableFuture<Either<GeneralFailure, List<ChainAsset>>>? value) =>
       Action(() => _getAssetChainsDetailsFuture.value = value)();
 
   final Observable<Amount> _stakedAmount = Observable(Amount.zero);
 
   set stakedAmount(Amount value) => Action(() => _stakedAmount.value = value)();
 
-  final Observable<List<AssetChain>> _assetChains = Observable([]);
+  final Observable<List<ChainAsset>> _assetChains = Observable([]);
 
-  set assetChains(List<AssetChain> value) => Action(() => _assetChains.value = value)();
+  set assetChains(List<ChainAsset> value) => Action(() => _assetChains.value = value)();
 }

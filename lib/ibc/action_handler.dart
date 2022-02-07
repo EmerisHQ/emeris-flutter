@@ -351,23 +351,28 @@ Future<bool> isVerified(Denom denom, String chainId, RestApiIbcRepository ibcRep
   return isVerified;
 }
 
+
+/// TODO: This method should return a Future<Either>
 Future<List<FeeWithDenom>> getFeeForChain(String chainId, RestApiIbcRepository ibcRepository) async {
   final chainDetails = await ibcRepository.getChainDetails(chainId);
   final fees = <FeeWithDenom>[];
 
-  await chainDetails.fold<Future?>((l) => throw 'Could not get chain details', (r) {
-    if (r.denoms != null) {
-      for (final denom in r.denoms!) {
-        fees.add(
-          FeeWithDenom(
-            gasPriceLevels: denom.gasPriceLevels,
-            denom: Denom(denom.name),
-            chainId: chainId,
-          ),
-        );
+  await chainDetails.fold<Future?>(
+    (fail) => throw 'Could not get chain details',
+    (details) {
+      if (details.denoms != null) {
+        for (final denom in details.denoms!) {
+          fees.add(
+            FeeWithDenom(
+              gasPriceLevels: denom.gasPriceLevels,
+              denom: Denom(denom.name),
+              chainId: chainId,
+            ),
+          );
+        }
       }
-    }
-  });
+    },
+  );
 
   return fees;
 }
