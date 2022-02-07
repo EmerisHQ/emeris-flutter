@@ -8,12 +8,12 @@ import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_mo
 import 'package:flutter_app/utils/utils.dart';
 
 class AssetDetailsPresenter {
-  AssetDetailsPresenter(this._model, this.navigator, this._getStakedAmountUseCase, this._getAssetChainsUseCase);
+  AssetDetailsPresenter(this._model, this.navigator, this._getStakedAmountUseCase, this._getChainAssetsUseCase);
 
   final AssetDetailsPresentationModel _model;
   final AssetDetailsNavigator navigator;
   final GetStakedAmountUseCase _getStakedAmountUseCase;
-  final GetChainAssetUseCase _getAssetChainsUseCase;
+  final GetChainAssetUseCase _getChainAssetsUseCase;
 
   AssetDetailsViewModel get viewModel => _model;
 
@@ -34,14 +34,14 @@ class AssetDetailsPresenter {
   }
 
   Future<void> getAssetSpecificChains(Denom baseDenom) async {
-    _model.getAssetChainsDetails = _getAssetChainsUseCase
+    _model.getChainAssetsDetails = _getChainAssetsUseCase
         .execute(
           balances: _model.balances,
           baseDenom: baseDenom,
         )
         .observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
-          (chains) => _model.assetChains = chains,
+          (chains) => _model.chainAssets = chains,
         );
   }
 }

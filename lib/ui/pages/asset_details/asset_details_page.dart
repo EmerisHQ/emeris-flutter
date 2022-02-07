@@ -139,7 +139,7 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
                   child: ContentStateSwitcher(
                     isLoading: model.isChainListLoading,
                     contentChild: ListView(
-                      children: model.assetChains.map((e) => ChainCard(assetChain: e)).toList(),
+                      children: model.chainAssets.map((e) => ChainCard(chainAsset: e)).toList(),
                     ),
                   ),
                 ),

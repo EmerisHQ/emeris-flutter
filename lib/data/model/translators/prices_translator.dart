@@ -7,7 +7,7 @@ import 'package:flutter_app/domain/entities/token.dart';
 import 'package:flutter_app/domain/entities/token_price_data.dart';
 
 extension PricesTranslator on PricesDataJson {
-  Price toPrices() {
+  Price toPrice() {
     return Price(
       data: TokenPriceData(
         fiats: data?.fiats?.map((e) => Fiat(symbol: e.symbol ?? '', price: e.price ?? 0)).toList() ?? [],

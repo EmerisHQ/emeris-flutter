@@ -7,7 +7,6 @@ class PrimaryChannel extends Equatable {
   final String channelName;
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         counterParty,
         channelName,

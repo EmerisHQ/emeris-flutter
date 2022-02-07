@@ -63,6 +63,6 @@ class RestApiBlockchainMetadataRepository implements BlockchainMetadataRepositor
     final uri = '${_baseEnv.emerisBackendApiUrl}/v1/oracle/prices';
     final response = await _dio.get(uri);
     final map = response.data as Map<String, dynamic>;
-    return right(PricesDataJson.fromJson(map).toPrices());
+    return right(PricesDataJson.fromJson(map).toPrice());
   }
 }
