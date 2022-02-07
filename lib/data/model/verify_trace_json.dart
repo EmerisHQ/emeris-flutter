@@ -18,17 +18,17 @@ class VerifyTraceJson {
         trace: (json['trace'] as List?)?.map((v) => TraceJson.fromJson(v as Map<String, dynamic>)).toList() ?? [],
       );
 
-  final String ibcDenom;
-  final String baseDenom;
-  final bool verified;
-  final String path;
-  final List<TraceJson> trace;
+  final String? ibcDenom;
+  final String? baseDenom;
+  final bool? verified;
+  final String? path;
+  final List<TraceJson>? trace;
 
   VerifyTrace toDomain() => VerifyTrace(
-        ibcDenom: ibcDenom,
-        baseDenom: baseDenom,
-        verified: verified,
-        path: path,
-        trace: trace.map((e) => e.toDomain()).toList(),
+        ibcDenom: ibcDenom ?? '',
+        baseDenom: baseDenom ?? '',
+        verified: verified ?? false,
+        path: path ?? '',
+        trace: trace?.map((e) => e.toDomain()).toList() ?? [],
       );
 }
