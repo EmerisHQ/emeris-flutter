@@ -158,9 +158,6 @@ void _configureRepositories() {
     ..registerFactory<AuthRepository>(
       () => CosmosAuthRepository(getIt(), getIt()),
     )
-    ..registerFactory<BlockchainMetadataRepository>(
-      () => RestApiBlockchainMetadataRepository(getIt(), getIt()),
-    )
     ..registerFactory<LiquidityPoolsRepository>(
       () => RestApiLiquidityPoolsRepository(getIt(), getIt()),
     )
