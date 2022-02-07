@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_app/data/model/chain_details_json.dart';
-import 'package:flutter_app/data/model/chain_json.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/pool_json.dart';
 import 'package:flutter_app/data/model/prices_data_json.dart';
@@ -9,7 +7,6 @@ import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/translators/prices_translator.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
-import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/pool.dart';
 import 'package:flutter_app/domain/entities/price.dart';
@@ -65,16 +62,6 @@ class RestApiIbcRepository implements IbcRepository {
   }
 
   @override
-  Future<Either<GeneralFailure, Chain>> getChainDetails(String chainId) async {
-    try {
-      final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId');
-      return right(ChainJson.fromJson((response.data as Map)['chain'] as Map<String, dynamic>).toDomain());
-    } catch (ex, stack) {
-      return left(GeneralFailure.unknown('Error while getting chain details', ex, stack));
-    }
-  }
-
-  @override
   Future<Either<GeneralFailure, Price>> getPricesData() async {
     final uri = '${_baseEnv.emerisBackendApiUrl}/v1/oracle/prices';
     final response = await _dio.get(uri);
@@ -92,22 +79,6 @@ class RestApiIbcRepository implements IbcRepository {
 
     return right(
       pools.map((it) => PoolJson.fromJson(it as Map<String, dynamic>)).map((it) => it.toBalanceDomain()).toList(),
-    );
-  }
-
-  @override
-  Future<Either<GeneralFailure, List<Chain>>> getChains() async {
-    final uri = '${_baseEnv.emerisBackendApiUrl}/v1/chains';
-    final response = await _dio.get(uri);
-
-    final map = response.data as Map<String, dynamic>;
-    final chains = map['chains'] as List? ?? [];
-
-    return right(
-      chains
-          .map((it) => ChainDetailsJson.fromJson(it as Map<String, dynamic>))
-          .map((it) => it.toDomain())
-          .toList(),
     );
   }
 }

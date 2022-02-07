@@ -11,6 +11,7 @@ import 'package:flutter_app/ibc/action_handler.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'mocks/chain_api_mock.dart';
 import 'mocks/ibc_api_mock.dart';
 
 void main() {
@@ -18,6 +19,7 @@ void main() {
   const chainId = 'cosmos-hub';
   const hash = '4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5';
   late IbcApiMock ibcApiMock;
+  late ChainsApiMock chainsApiMock;
 
   // Mocked these responses as return by the actual API
   const verifyTraceJson =
@@ -114,6 +116,7 @@ void main() {
 
   setUp(() {
     ibcApiMock = IbcApiMock();
-    actionHandler = ActionHandler(ibcApiMock);
+    chainsApiMock = ChainsApiMock();
+    actionHandler = ActionHandler(ibcApiMock, chainsApiMock);
   });
 }

@@ -13,6 +13,7 @@ import 'package:flutter_app/domain/entities/primary_channel.dart';
 import 'package:flutter_app/domain/entities/trace.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/domain/entities/verify_trace.dart';
+import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/ibc/helpers/ibc_transfer_recipient.dart';
 import 'package:flutter_app/ibc/model/chain_amount.dart';
@@ -22,9 +23,10 @@ import 'package:flutter_app/ibc/model/transfer_chain_amount.dart';
 import 'package:flutter_app/ibc/model/transfer_step.dart';
 
 class ActionHandler {
-  const ActionHandler(this._restApiIbcRepository);
+  const ActionHandler(this._restApiIbcRepository, this._chainsRepository);
 
   final RestApiIbcRepository _restApiIbcRepository;
+  final ChainsRepository _chainsRepository;
 
   /// This function has multiple steps to redeem the IBC token
   /// First: If the IBC denom is native, directly return the [ChainAmount] with the same values
@@ -138,7 +140,7 @@ class ActionHandler {
                       status: TransferStatus.Pending,
                       balance: balance,
                       addFee: true,
-                      feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
+                      feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _chainsRepository),
                       fromChain: ibcTransferRecipient.chainId,
                       baseDenom: Denom(
                         await getBaseDenom(balance.denom.text, ibcTransferRecipient.chainId, _restApiIbcRepository),
@@ -153,7 +155,7 @@ class ActionHandler {
                       status: TransferStatus.Pending,
                       balance: balance,
                       fromChain: ibcTransferRecipient.chainId,
-                      chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
+                      chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _chainsRepository),
                       toChain: ibcTransferRecipient.destinationChainId,
                       through: primaryChannelResult.channelName,
                     ),
@@ -193,7 +195,7 @@ class ActionHandler {
                   name: 'ibc_backward',
                   status: TransferStatus.Pending,
                   addFee: true,
-                  feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
+                  feeToAdd: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _chainsRepository),
                   balance: balance,
                   fromChain: ibcTransferRecipient.chainId,
                   baseDenom: Denom(
@@ -216,7 +218,7 @@ class ActionHandler {
                       status: TransferStatus.Pending,
                       balance: balance,
                       fromChain: verifyTrace.trace[0].counterpartyName,
-                      chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _restApiIbcRepository),
+                      chainFee: await getFeeForChain(verifyTrace.trace[0].counterpartyName, _chainsRepository),
                       toChain: ibcTransferRecipient.destinationChainId,
                       through: primaryChannelResult.channelName,
                     ),
@@ -247,7 +249,7 @@ class ActionHandler {
   }) async {
     var feeForChain = <FeeWithDenom>[];
     try {
-      feeForChain = await getFeeForChain(ibcTransferRecipient.chainId, _restApiIbcRepository);
+      feeForChain = await getFeeForChain(ibcTransferRecipient.chainId, _chainsRepository);
     } catch (ex) {
       return left(TransferFailure.feeChainError(ex));
     }
@@ -351,10 +353,9 @@ Future<bool> isVerified(Denom denom, String chainId, RestApiIbcRepository ibcRep
   return isVerified;
 }
 
-
 /// TODO: This method should return a Future<Either>
-Future<List<FeeWithDenom>> getFeeForChain(String chainId, RestApiIbcRepository ibcRepository) async {
-  final chainDetails = await ibcRepository.getChainDetails(chainId);
+Future<List<FeeWithDenom>> getFeeForChain(String chainId, ChainsRepository chainsRespository) async {
+  final chainDetails = await chainsRespository.getChainDetails(chainId);
   final fees = <FeeWithDenom>[];
 
   await chainDetails.fold<Future?>(

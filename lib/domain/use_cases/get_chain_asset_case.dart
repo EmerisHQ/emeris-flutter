@@ -5,18 +5,18 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
-import 'package:flutter_app/domain/repositories/ibc_repository.dart';
+import 'package:flutter_app/domain/repositories/chains_repository.dart';
 
 class GetChainAssetUseCase {
-  GetChainAssetUseCase(this._ibcRepository);
+  GetChainAssetUseCase(this._chainsRepository);
 
-  final IbcRepository _ibcRepository;
+  final ChainsRepository _chainsRepository;
 
   Future<Either<GeneralFailure, List<ChainAsset>>> execute({
     required Denom baseDenom,
     required List<Balance> balances,
   }) =>
-      _ibcRepository //
+      _chainsRepository //
           .getChains()
           .mapSuccess(
         (chains) {
