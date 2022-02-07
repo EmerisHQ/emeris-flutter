@@ -1,7 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/chain_denom.dart';
-import 'package:flutter_app/domain/entities/primary_channel_chain.dart';
 
-class Chain {
+class Chain extends Equatable {
   Chain({
     required this.logo,
     required this.chainName,
@@ -15,6 +15,16 @@ class Chain {
   final String chainName;
   final String logo;
   final String displayName;
-  final PrimaryChannelChain? primaryChannel;
+  final Map<String, dynamic>? primaryChannel;
   final List<ChainDenom>? denoms;
+
+  @override
+  List<Object?> get props => [
+        enabled,
+        chainName,
+        logo,
+        displayName,
+        primaryChannel,
+        denoms,
+      ];
 }

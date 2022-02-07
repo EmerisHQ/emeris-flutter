@@ -1,6 +1,9 @@
+import 'dart:html';
+
+import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/gas_price_levels.dart';
 
-class ChainDenom {
+class ChainDenom extends Equatable {
   ChainDenom({
     required this.name,
     required this.displayName,
@@ -28,4 +31,20 @@ class ChainDenom {
   final bool fetchPrice;
   final bool relayerDenom;
   final int minimumThreshRelayerBalance;
+
+  @override
+  List<Object?> get props => [
+        name,
+        displayName,
+        logo,
+        Element.pre(),
+        verified,
+        stakable,
+        ticker,
+        feeToken,
+        gasPriceLevels,
+        fetchPrice,
+        relayerDenom,
+        minimumThreshRelayerBalance,
+      ];
 }

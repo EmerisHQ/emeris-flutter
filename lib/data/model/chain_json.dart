@@ -1,8 +1,6 @@
 import 'package:flutter_app/data/model/denom_json.dart';
 import 'package:flutter_app/data/model/node_info_json.dart';
-import 'package:flutter_app/data/model/primary_channel_chain_json.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
-import 'package:flutter_app/domain/entities/primary_channel_chain.dart';
 
 class ChainJson {
   ChainJson({
@@ -25,11 +23,11 @@ class ChainJson {
         chainName: json['chain_name'] as String? ?? '',
         logo: json['logo'] as String? ?? '',
         displayName: json['display_name'] as String? ?? '',
-        primaryChannel: PrimaryChannelChainJson.fromJson(json['primary_channel'] as Map<String, dynamic>),
+        primaryChannel: json['primary_channel'] as Map<String, dynamic>,
         denoms: (json['denoms'] as List?)?.map((v) => DenomJson.fromJson(v as Map<String, dynamic>)).toList() ?? [],
         demerisAddresses: (json['demeris_addresses'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
         genesisHash: json['genesis_hash'] as String? ?? '',
-        nodeInfo: NodeInfoJson.fromJson(json['node_info'] as Map<String, dynamic>),
+        nodeInfo: json['node_info'] == null ? null : NodeInfoJson.fromJson(json['node_info'] as Map<String, dynamic>),
         validBlockThresh: json['valid_block_thresh'] as String? ?? '',
         derivationPath: json['derivation_path'] as String? ?? '',
         blockExplorer: json['block_explorer'] as String? ?? '',
@@ -39,7 +37,7 @@ class ChainJson {
   final String? chainName;
   final String? logo;
   final String? displayName;
-  final PrimaryChannelChainJson? primaryChannel;
+  final Map<String, dynamic>? primaryChannel;
   final List<DenomJson>? denoms;
   final List<String>? demerisAddresses;
   final String? genesisHash;
@@ -52,7 +50,7 @@ class ChainJson {
         enabled: enabled,
         chainName: chainName ?? '',
         displayName: displayName ?? '',
-        primaryChannel: primaryChannel?.toDomain() ?? const PrimaryChannelChain.empty(),
+        primaryChannel: primaryChannel,
         denoms: denoms?.map((it) => it.toDomain()).toList(),
         logo: logo ?? '',
       );

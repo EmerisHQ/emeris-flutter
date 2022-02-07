@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/trace.dart';
 
-class VerifyTrace {
-  VerifyTrace({
+class VerifyTrace extends Equatable {
+  const VerifyTrace({
     required this.ibcDenom,
     required this.baseDenom,
     required this.verified,
@@ -14,4 +15,13 @@ class VerifyTrace {
   final bool verified;
   final String path;
   final List<Trace> trace;
+
+  @override
+  List<Object?> get props => [
+        ibcDenom,
+        baseDenom,
+        verified,
+        path,
+        trace,
+      ];
 }
