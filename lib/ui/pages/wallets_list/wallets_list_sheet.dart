@@ -38,6 +38,12 @@ class WalletsListSheetState extends State<WalletsListSheet> {
 
   WalletsListViewModel get model => presenter.viewModel;
 
+  WalletInfo get selectedWallet => WalletInfo(
+        name: model.selectedWallet.walletDetails.walletAlias,
+        address: model.selectedWallet.walletDetails.walletAddress,
+        walletId: model.selectedWallet.walletDetails.walletIdentifier.walletId,
+      );
+
   List<WalletInfo> get walletInfos => model.wallets
       .map(
         (e) => WalletInfo(
@@ -84,7 +90,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
                   actions: [CosmosTextButton(text: 'Close', onTap: () => Navigator.of(context).pop())],
                 ),
                 SizedBox(height: theme.spacingXL),
-                _buildMainList(),
+                mainList(),
                 const CosmosDivider(),
                 SizedBox(height: theme.spacingL),
                 CosmosCircleTextButton(
@@ -106,11 +112,11 @@ class WalletsListSheetState extends State<WalletsListSheet> {
     );
   }
 
-  Expanded _buildMainList() {
+  Expanded mainList() {
     return Expanded(
       child: CosmosWalletsListView(
         list: walletInfos,
-        selectedWallet: walletInfos.first,
+        selectedWallet: selectedWallet,
         onClicked: (walletIndex) => presenter.walletClicked(model.wallets[walletIndex]),
         isEditing: model.isEditingAccountList,
         onEditIconPressed: (wallet) => showNotImplemented(),
@@ -124,6 +130,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
     properties
       ..add(DiagnosticsProperty<WalletsListPresenter>('presenter', presenter))
       ..add(IterableProperty<WalletInfo>('walletInfos', walletInfos))
-      ..add(DiagnosticsProperty<WalletsListViewModel>('model', model));
+      ..add(DiagnosticsProperty<WalletsListViewModel>('model', model))
+      ..add(DiagnosticsProperty<WalletInfo>('selectedWallet', selectedWallet));
   }
 }

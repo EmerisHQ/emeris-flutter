@@ -4,6 +4,7 @@ import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
 import 'package:mobx/mobx.dart';
@@ -14,14 +15,18 @@ abstract class WalletDetailsViewModel {
   bool get isSendMoneyLoading;
 
   AssetDetails get assetDetails;
+
+  EmerisWallet get wallet;
 }
 
 class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase implements WalletDetailsViewModel {
   WalletDetailsPresentationModel(
     this.initialParams,
+    this._walletsStore,
   );
 
   final WalletDetailsInitialParams initialParams;
+  final WalletsStore _walletsStore;
 
   ObservableFuture<Either<GeneralFailure, AssetDetails>>? get getAssetDetailsFuture => _getAssetDetailsFuture.value;
 
@@ -36,7 +41,8 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
   @override
   bool get isSendMoneyLoading => sendMoneyFuture?.status == FutureStatus.pending;
 
-  EmerisWallet get wallet => initialParams.wallet;
+  @override
+  EmerisWallet get wallet => _walletsStore.currentWallet ?? initialParams.wallet;
 }
 
 mixin WalletDetailsPresentationModelBase {
