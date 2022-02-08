@@ -15,7 +15,7 @@ class Chain extends Equatable {
   final String chainName;
   final String logo;
   final String displayName;
-  final Map<String, dynamic>? primaryChannel;
+  final Map<String, String>? primaryChannel;
   final List<ChainDenom>? denoms;
 
   @override
