@@ -21,5 +21,6 @@ class ChainDetailsJson {
         chainName: chainName ?? '',
         displayName: displayName ?? '',
         logo: logo ?? '',
+        primaryChannel: const {},
       );
 }

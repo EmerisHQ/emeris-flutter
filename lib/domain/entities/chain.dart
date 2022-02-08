@@ -6,8 +6,8 @@ class Chain extends Equatable {
     required this.logo,
     required this.chainName,
     required this.displayName,
+    required this.primaryChannel,
     this.enabled,
-    this.primaryChannel,
     this.denoms,
   });
 
@@ -15,7 +15,7 @@ class Chain extends Equatable {
   final String chainName;
   final String logo;
   final String displayName;
-  final Map<String, String>? primaryChannel;
+  final Map<String, String> primaryChannel;
   final List<ChainDenom>? denoms;
 
   @override
