@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
@@ -43,6 +44,14 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
 
   @override
   EmerisWallet get wallet => _walletsStore.currentWallet ?? initialParams.wallet;
+
+  ReactionDisposer? disposer;
+
+  void listenToWalletChanges(ValueChanged<EmerisWallet?> callback) {
+    disposer = _walletsStore.listenToWalletChanges(callback);
+  }
+
+  void dispose() => disposer?.call();
 }
 
 mixin WalletDetailsPresentationModelBase {

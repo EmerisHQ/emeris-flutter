@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:mobx/mobx.dart';
 
@@ -13,6 +14,11 @@ class WalletsStore with _WalletStoreBase {
   void addAllWallets(List<EmerisWallet> newWallets) => Action(() {
         wallets.addAll(newWallets);
       })();
+
+  ReactionDisposer listenToWalletChanges(ValueChanged<EmerisWallet?> callback) => reaction(
+        (_) => currentWallet,
+        callback,
+      );
 }
 
 mixin _WalletStoreBase {
