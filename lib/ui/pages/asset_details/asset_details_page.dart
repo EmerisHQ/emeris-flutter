@@ -10,6 +10,7 @@ import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presenter.dart';
+import 'package:flutter_app/ui/pages/asset_details/widgets/chain_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
 import 'package:flutter_app/utils/emeris_amount_formatter.dart';
@@ -52,7 +53,9 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
           param2: getIt<AssetDetailsNavigator>(),
         );
     presenter.navigator.context = context;
-    presenter.getStakedAmount(widget.initialParams.wallet, widget.initialParams.balance.onChain);
+    presenter
+      ..getStakedAmount(widget.initialParams.wallet, widget.initialParams.balance.onChain)
+      ..getAssetSpecificChains(widget.initialParams.balance.denom);
   }
 
   @override
@@ -132,13 +135,13 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
                     ),
                   ),
                 ),
-
-                /// TODO: Pick these up from the model after API integration
-                Column(
-                  children: [
-                    BalanceCard(data: widget.initialParams.balance),
-                    BalanceCard(data: widget.initialParams.balance),
-                  ],
+                Expanded(
+                  child: ContentStateSwitcher(
+                    isLoading: model.isChainListLoading,
+                    contentChild: ListView(
+                      children: model.chainAssets.map((e) => ChainCard(chainAsset: e)).toList(),
+                    ),
+                  ),
                 ),
                 const Spacer(),
                 CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),

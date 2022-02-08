@@ -11,6 +11,6 @@ class TokenPriceDataJson {
     );
   }
 
-  final List<TokenJson> tokens;
-  final List<FiatJson> fiats;
+  final List<TokenJson>? tokens;
+  final List<FiatJson>? fiats;
 }

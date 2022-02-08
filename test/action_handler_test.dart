@@ -10,14 +10,14 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/ibc/action_handler.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-
-import 'mocks/ibc_api_mock.dart';
+import 'mocks/mocks.dart';
 
 void main() {
   late ActionHandler actionHandler;
   const chainId = 'cosmos-hub';
   const hash = '4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5';
-  late IbcApiMock ibcApiMock;
+  late BlockchainMetadataMock ibcApiMock;
+  late ChainsApiMock chainsApiMock;
 
   // Mocked these responses as return by the actual API
   const verifyTraceJson =
@@ -34,7 +34,7 @@ void main() {
         (_) async => right(
           VerifyTraceJson.fromJson(
             (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>,
-          ),
+          ).toDomain(),
         ),
       );
 
@@ -91,7 +91,7 @@ void main() {
         (_) async => right(
           VerifyTraceJson.fromJson(
             (jsonDecode(verifyTraceJson) as Map<String, dynamic>)['verify_trace'] as Map<String, dynamic>,
-          ),
+          ).toDomain(),
         ),
       );
 
@@ -113,7 +113,8 @@ void main() {
   );
 
   setUp(() {
-    ibcApiMock = IbcApiMock();
-    actionHandler = ActionHandler(ibcApiMock);
+    ibcApiMock = BlockchainMetadataMock();
+    chainsApiMock = ChainsApiMock();
+    actionHandler = ActionHandler(ibcApiMock, chainsApiMock);
   });
 }

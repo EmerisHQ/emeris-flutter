@@ -1,5 +1,5 @@
 import 'package:flutter_app/data/model/gas_price_levels_json.dart';
-import 'package:flutter_app/domain/entities/gas_price_level.dart';
+import 'package:flutter_app/domain/entities/gas_price_levels.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
 class VerifiedDenomJson {
@@ -37,33 +37,33 @@ class VerifiedDenomJson {
         chainName: json['chain_name'] as String? ?? '',
       );
 
-  late String chainName;
-  final String name;
-  final String displayName;
-  final String logo;
-  final int precision;
-  final bool verified;
-  final bool stakable;
-  final String ticker;
-  final bool feeToken;
+  late String? chainName;
+  final String? name;
+  final String? displayName;
+  final String? logo;
+  final int? precision;
+  final bool? verified;
+  final bool? stakable;
+  final String? ticker;
+  final bool? feeToken;
   final GasPriceLevelsJson? gasPriceLevels;
-  final bool fetchPrice;
-  final bool relayerDenom;
-  final int minimumThreshRelayerBalance;
+  final bool? fetchPrice;
+  final bool? relayerDenom;
+  final int? minimumThreshRelayerBalance;
 
   VerifiedDenom toDomain() => VerifiedDenom(
-        chainName: chainName,
-        name: name,
-        displayName: displayName,
-        logo: logo,
-        precision: precision,
-        verified: verified,
-        stakable: stakable,
-        ticker: ticker,
-        feeToken: feeToken,
-        gasPriceLevels: gasPriceLevels?.toDomain() ?? GasPriceLevel(low: 0, average: 0, high: 0),
-        fetchPrice: fetchPrice,
-        relayerDenom: relayerDenom,
-        minimumThreshRelayerBalance: minimumThreshRelayerBalance,
+        chainName: chainName ?? '',
+        name: name ?? '',
+        displayName: displayName ?? '',
+        logo: logo ?? '',
+        precision: precision ?? 0,
+        verified: verified ?? false,
+        stakable: stakable ?? false,
+        ticker: ticker ?? '',
+        feeToken: feeToken ?? false,
+        gasPriceLevels: gasPriceLevels?.toDomain() ?? const GasPriceLevels.empty(),
+        fetchPrice: fetchPrice ?? false,
+        relayerDenom: relayerDenom ?? false,
+        minimumThreshRelayerBalance: minimumThreshRelayerBalance ?? 0,
       );
 }

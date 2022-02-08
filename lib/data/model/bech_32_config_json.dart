@@ -29,16 +29,16 @@ class Bech32ConfigJson {
         consPub: json['cons_pub'] as String? ?? '',
       );
 
-  final String mainPrefix;
-  final String prefixAccount;
-  final String prefixValidator;
-  final String prefixConsensus;
-  final String prefixPublic;
-  final String prefixOperator;
-  final String accAddr;
-  final String accPub;
-  final String valAddr;
-  final String valPub;
-  final String consAddr;
-  final String consPub;
+  final String? mainPrefix;
+  final String? prefixAccount;
+  final String? prefixValidator;
+  final String? prefixConsensus;
+  final String? prefixPublic;
+  final String? prefixOperator;
+  final String? accAddr;
+  final String? accPub;
+  final String? valAddr;
+  final String? valPub;
+  final String? consAddr;
+  final String? consPub;
 }

@@ -1,4 +1,6 @@
 import 'package:biometric_storage/biometric_storage.dart';
+import 'package:flutter_app/data/blockchain/rest_api_blockchain_metadata_repository.dart';
+import 'package:flutter_app/data/chains/rest_api_chains_repository.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
@@ -28,3 +30,7 @@ class MockAppInitializer extends Mock implements AppInitializer {}
 class MockChangeCurrentWalletUseCase extends Mock implements ChangeCurrentWalletUseCase {}
 
 class MockSendMoneyUseCase extends Mock implements SendMoneyUseCase {}
+
+class BlockchainMetadataMock extends Mock implements RestApiBlockchainMetadataRepository {}
+
+class ChainsApiMock extends Mock implements RestApiChainsRepository {}

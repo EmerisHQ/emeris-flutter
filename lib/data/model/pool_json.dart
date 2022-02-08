@@ -17,17 +17,17 @@ class PoolJson {
         poolCoinDenom: json['pool_coin_denom'] as String? ?? '',
       );
 
-  final String id;
-  final int typeId;
-  final List<String> reserveCoinDenoms;
-  final String reserveAccountAddress;
-  final String poolCoinDenom;
+  final String? id;
+  final int? typeId;
+  final List<String>? reserveCoinDenoms;
+  final String? reserveAccountAddress;
+  final String? poolCoinDenom;
 
   Pool toBalanceDomain() => Pool(
-        id: id,
-        typeId: typeId,
-        reserveCoinDenoms: reserveCoinDenoms,
-        reserveAccountAddress: reserveAccountAddress,
-        poolCoinDenom: poolCoinDenom,
+        id: id ?? '',
+        typeId: typeId ?? 0,
+        reserveCoinDenoms: reserveCoinDenoms ?? [],
+        reserveAccountAddress: reserveAccountAddress ?? '',
+        poolCoinDenom: poolCoinDenom ?? '',
       );
 }

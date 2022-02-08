@@ -1,4 +1,4 @@
-import 'package:flutter_app/domain/entities/gas_price_level.dart';
+import 'package:flutter_app/domain/entities/gas_price_levels.dart';
 
 class VerifiedDenom {
   VerifiedDenom({
@@ -26,7 +26,7 @@ class VerifiedDenom {
   bool stakable;
   String ticker;
   bool feeToken;
-  GasPriceLevel gasPriceLevels;
+  GasPriceLevels gasPriceLevels;
   bool fetchPrice;
   bool relayerDenom;
   int minimumThreshRelayerBalance;

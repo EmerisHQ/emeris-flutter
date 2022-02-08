@@ -6,6 +6,6 @@ class IbcJson {
         hash: json['hash'] as String? ?? '',
       );
 
-  final String path;
-  final String hash;
+  final String? path;
+  final String? hash;
 }
