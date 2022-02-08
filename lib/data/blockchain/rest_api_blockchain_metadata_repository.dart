@@ -44,10 +44,8 @@ class RestApiBlockchainMetadataRepository implements BlockchainMetadataRepositor
           .mapError((fail) => GeneralFailure.unknown('http failure', fail));
 
   @override
-  Future<Either<GeneralFailure, Price>> getPricesData() async {
-    return _httpService
-        .get('/v1/oracle/prices')
-        .execute((json) => PricesDataJson.fromJson(json).toPrice())
-        .mapError((fail) => GeneralFailure.unknown('http failure', fail));
-  }
+  Future<Either<GeneralFailure, Price>> getPricesData() async => _httpService
+      .get('/v1/oracle/prices')
+      .execute((json) => PricesDataJson.fromJson(json).toPrice())
+      .mapError((fail) => GeneralFailure.unknown('http failure', fail));
 }

@@ -151,7 +151,7 @@ void _configureRepositories() {
       () => EmerisWalletsRepository(getIt(), getIt()),
     )
     ..registerFactory<BankRepository>(
-      () => EmerisBankRepository(getIt(), getIt()),
+      () => EmerisBankRepository(getIt()),
     )
     ..registerFactory<BlockchainMetadataRepository>(
       () => RestApiBlockchainMetadataRepository(getIt()),
