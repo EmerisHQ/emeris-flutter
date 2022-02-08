@@ -3,7 +3,6 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presentation_model.dart';
@@ -87,7 +86,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
                     text: model.isEditingAccountList ? 'Done' : 'Edit',
                     onTap: presenter.editClicked,
                   ),
-                  actions: [CosmosTextButton(text: 'Close', onTap: () => Navigator.of(context).pop())],
+                  actions: [CosmosTextButton(text: 'Close', onTap: presenter.onTapClose)],
                 ),
                 SizedBox(height: theme.spacingXL),
                 mainList(),
@@ -119,7 +118,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
         selectedWallet: selectedWallet,
         onClicked: (walletIndex) => presenter.walletClicked(model.wallets[walletIndex]),
         isEditing: model.isEditingAccountList,
-        onEditIconPressed: (wallet) => showNotImplemented(),
+        onEditIconPressed: presenter.onTapEditWallet,
       ),
     );
   }

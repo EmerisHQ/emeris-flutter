@@ -1,3 +1,4 @@
+import 'package:cosmos_ui_components/components/template/cosmos_wallets_list_view.dart';
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
@@ -36,4 +37,8 @@ class WalletsListPresenter {
   void onTapImportWallet() => navigator.openImportWallet(const ImportWalletInitialParams());
 
   void onTapCreateWallet() => navigator.openAddWallet(const AddWalletInitialParams());
+
+  void onTapClose() => navigator.appNavigator.close(navigator.context);
+
+  void onTapEditWallet(WalletInfo wallet) => notImplemented(navigator.context);
 }
