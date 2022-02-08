@@ -23,7 +23,7 @@ class ChainJson {
         chainName: json['chain_name'] as String? ?? '',
         logo: json['logo'] as String? ?? '',
         displayName: json['display_name'] as String? ?? '',
-        primaryChannel: (json['primary_channel'] as Map<String, String>).cast(),
+        primaryChannel: (json['primary_channel'] as Map<String, dynamic>?)?.cast(),
         denoms: (json['denoms'] as List?)?.map((v) => DenomJson.fromJson(v as Map<String, dynamic>)).toList() ?? [],
         demerisAddresses: (json['demeris_addresses'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
         genesisHash: json['genesis_hash'] as String? ?? '',
