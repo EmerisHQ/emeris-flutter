@@ -14,6 +14,7 @@ import 'package:flutter_app/data/emeris/emeris_wallets_repository.dart';
 import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
 import 'package:flutter_app/data/http/dio_builder.dart';
+import 'package:flutter_app/data/http/http_service.dart';
 import 'package:flutter_app/data/liquidity_pools/rest_apliquidity_pools_repository.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
@@ -153,16 +154,16 @@ void _configureRepositories() {
       () => EmerisBankRepository(getIt(), getIt()),
     )
     ..registerFactory<BlockchainMetadataRepository>(
-      () => RestApiBlockchainMetadataRepository(getIt(), getIt()),
+      () => RestApiBlockchainMetadataRepository(getIt()),
     )
     ..registerFactory<AuthRepository>(
       () => CosmosAuthRepository(getIt(), getIt()),
     )
     ..registerFactory<LiquidityPoolsRepository>(
-      () => RestApiLiquidityPoolsRepository(getIt(), getIt()),
+      () => RestApiLiquidityPoolsRepository(getIt()),
     )
     ..registerFactory<ChainsRepository>(
-      () => RestApiChainsRepository(getIt(), getIt()),
+      () => RestApiChainsRepository(getIt()),
     );
 }
 
@@ -185,7 +186,7 @@ void _configureGeneralDependencies() {
       () => Web3Client(getIt<EnvironmentConfig>().baseEthUrl, Client()),
     )
     ..registerFactory<DioBuilder>(
-      DioBuilder.new,
+      () => DioBuilder(getIt()),
     )
     ..registerFactory<Dio>(
       () => getIt<DioBuilder>().build(),
@@ -212,6 +213,9 @@ void _configureGeneralDependencies() {
     )
     ..registerFactory<CosmosAuth>(
       CosmosAuth.new,
+    )
+    ..registerFactory<HttpService>(
+      () => HttpService(getIt()),
     );
 }
 

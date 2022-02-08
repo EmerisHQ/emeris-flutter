@@ -1,5 +1,6 @@
+import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter_app/data/http/http_service.dart';
 import 'package:flutter_app/data/model/prices_data_json.dart';
 import 'package:flutter_app/data/model/primary_channel_json.dart';
 import 'package:flutter_app/data/model/translators/prices_translator.dart';
@@ -11,58 +12,42 @@ import 'package:flutter_app/domain/entities/primary_channel.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/domain/entities/verify_trace.dart';
 import 'package:flutter_app/domain/repositories/blockchain_metadata_repository.dart';
-import 'package:flutter_app/environment_config.dart';
 
 class RestApiBlockchainMetadataRepository implements BlockchainMetadataRepository {
-  RestApiBlockchainMetadataRepository(this._dio, this._baseEnv);
+  RestApiBlockchainMetadataRepository(this._httpService);
 
-  final Dio _dio;
-  final EnvironmentConfig _baseEnv;
-
-  @override
-  Future<Either<GeneralFailure, VerifyTrace>> verifyTrace(String chainId, String hash) async {
-    try {
-      final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/denom/verify_trace/$hash');
-      return right(VerifyTraceJson.fromJson((response.data as Map)['verify_trace'] as Map<String, dynamic>).toDomain());
-    } catch (ex, stack) {
-      return left(GeneralFailure.unknown('error while verifying trace', ex, stack));
-    }
-  }
+  final HttpService _httpService;
 
   @override
-  Future<Either<GeneralFailure, List<VerifiedDenom>>> getVerifiedDenoms() async {
-    try {
-      final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/verified_denoms');
-      final denomsList = (response.data as Map)['verified_denoms'] as List;
-      return right(
-        denomsList.map((it) => VerifiedDenomJson.fromJson(it as Map<String, dynamic>).toDomain()).toList(),
-      );
-    } catch (ex, stack) {
-      return left(GeneralFailure.unknown('error while getting verified denoms', ex, stack));
-    }
-  }
+  Future<Either<GeneralFailure, VerifyTrace>> verifyTrace(String chainId, String hash) async => _httpService
+      .get('/v1/chain/$chainId/denom/verify_trace/$hash')
+      .responseSubKey('verify_trace')
+      .execute((json) => VerifyTraceJson.fromJson(json).toDomain())
+      .mapError((fail) => GeneralFailure.unknown('http failure', fail));
+
+  @override
+  Future<Either<GeneralFailure, List<VerifiedDenom>>> getVerifiedDenoms() async => _httpService
+      .get('/v1/verified_denoms')
+      .responseSubKey('verified_denoms')
+      .executeList((json) => VerifiedDenomJson.fromJson(json).toDomain())
+      .mapError((fail) => GeneralFailure.unknown('http failure', fail));
 
   @override
   Future<Either<GeneralFailure, PrimaryChannel>> getPrimaryChannel({
     required String chainId,
     required String destinationChainId,
-  }) async {
-    try {
-      final response =
-          await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId/primary_channel/$destinationChainId');
-      return right(
-        PrimaryChannelJson.fromJson((response.data as Map)['primary_channel'] as Map<String, dynamic>).toDomain(),
-      );
-    } catch (ex, stack) {
-      return left(GeneralFailure.unknown('error while getting primary channel', ex, stack));
-    }
-  }
+  }) async =>
+      _httpService
+          .get('/v1/chain/$chainId/primary_channel/$destinationChainId')
+          .responseSubKey('primary_channel')
+          .execute((json) => PrimaryChannelJson.fromJson(json).toDomain())
+          .mapError((fail) => GeneralFailure.unknown('http failure', fail));
 
   @override
   Future<Either<GeneralFailure, Price>> getPricesData() async {
-    final uri = '${_baseEnv.emerisBackendApiUrl}/v1/oracle/prices';
-    final response = await _dio.get(uri);
-    final map = response.data as Map<String, dynamic>;
-    return right(PricesDataJson.fromJson(map).toPrice());
+    return _httpService
+        .get('/v1/oracle/prices')
+        .execute((json) => PricesDataJson.fromJson(json).toPrice())
+        .mapError((fail) => GeneralFailure.unknown('http failure', fail));
   }
 }
