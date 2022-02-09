@@ -22,6 +22,11 @@ class WalletDetailsPresenter {
 
   Future<void> init() async {
     await getWalletBalances(_model.wallet);
+    _model.listenToWalletChanges(getWalletBalances);
+  }
+
+  void dispose() {
+    _model.dispose();
   }
 
   Future<void> getWalletBalances(EmerisWallet walletData) async {

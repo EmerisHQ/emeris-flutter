@@ -31,7 +31,7 @@ class SendMoneyPresentationModel with SendMoneyPresentationModelBase implements 
 
   ObservableFuture<Either<SendMoneyFailure, TransactionHash>>? get sendMoneyFuture => _sendMoneyFuture.value;
 
-  WalletIdentifier? get walletIdentifier => _walletsStore.currentWallet?.walletDetails.walletIdentifier;
+  WalletIdentifier get walletIdentifier => _walletsStore.currentWallet.walletDetails.walletIdentifier;
 
   @override
   WalletType get walletType => initialParams.walletType;

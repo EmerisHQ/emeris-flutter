@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
@@ -25,10 +24,8 @@ mixin WalletDetailsRoute {
 
   AppNavigator get appNavigator;
 
-  Future<void> openWalletDetails(EmerisWallet wallet, {bool replaceCurrent = false}) {
-    final page = WalletDetailsPage(
-      initialParams: WalletDetailsInitialParams(wallet: wallet),
-    );
+  Future<void> openWalletDetails({bool replaceCurrent = false}) {
+    const page = WalletDetailsPage(initialParams: WalletDetailsInitialParams());
     if (replaceCurrent) {
       return appNavigator.pushReplacement(context, fadeInRoute(page));
     } else {

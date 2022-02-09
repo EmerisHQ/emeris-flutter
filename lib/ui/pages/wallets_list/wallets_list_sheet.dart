@@ -2,8 +2,8 @@ import 'package:cosmos_ui_components/cosmos_text_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presentation_model.dart';
@@ -38,15 +38,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
 
   WalletsListViewModel get model => presenter.viewModel;
 
-  List<WalletInfo> get walletInfos => model.wallets
-      .map(
-        (e) => WalletInfo(
-          name: e.walletDetails.walletAlias,
-          address: e.walletDetails.walletAddress,
-          walletId: e.walletDetails.walletIdentifier.walletId,
-        ),
-      )
-      .toList();
+  List<WalletInfo> get walletInfos => model.wallets.map((it) => it.walletInfo).toList();
 
   @override
   void initState() {
@@ -81,10 +73,10 @@ class WalletsListSheetState extends State<WalletsListSheet> {
                     text: model.isEditingAccountList ? 'Done' : 'Edit',
                     onTap: presenter.editClicked,
                   ),
-                  actions: [CosmosTextButton(text: 'Close', onTap: () => Navigator.of(context).pop())],
+                  actions: [CosmosTextButton(text: 'Close', onTap: presenter.onTapClose)],
                 ),
                 SizedBox(height: theme.spacingXL),
-                _buildMainList(),
+                mainList(),
                 const CosmosDivider(),
                 SizedBox(height: theme.spacingL),
                 CosmosCircleTextButton(
@@ -106,14 +98,14 @@ class WalletsListSheetState extends State<WalletsListSheet> {
     );
   }
 
-  Expanded _buildMainList() {
+  Expanded mainList() {
     return Expanded(
       child: CosmosWalletsListView(
         list: walletInfos,
-        selectedWallet: walletInfos.first,
+        selectedWallet: model.selectedWallet.walletInfo,
         onClicked: (walletIndex) => presenter.walletClicked(model.wallets[walletIndex]),
         isEditing: model.isEditingAccountList,
-        onEditIconPressed: (wallet) => showNotImplemented(),
+        onEditIconPressed: presenter.onTapEditWallet,
       ),
     );
   }

@@ -32,7 +32,7 @@ class RoutingPresenter {
             (fail) => navigator.showError(fail.displayableFailure()),
             (success) => doNothing(),
           );
-      await navigator.openWalletDetails(_model.wallets.first, replaceCurrent: true);
+      await navigator.openWalletDetails(replaceCurrent: true);
     }
   }
 }
