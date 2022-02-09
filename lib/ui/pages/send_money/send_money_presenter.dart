@@ -3,7 +3,6 @@
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/invalid_amount_failure.dart';
 import 'package:flutter_app/domain/entities/failures/invalid_passcode_failure.dart';
-import 'package:flutter_app/domain/entities/failures/no_wallet_selected_failure.dart';
 import 'package:flutter_app/domain/entities/send_money_form_data.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
@@ -26,9 +25,7 @@ class SendMoneyPresenter {
 
   Future<void> onTapSendMoney() async {
     final walletId = _model.walletIdentifier;
-    if (walletId == null) {
-      return navigator.showError(const NoWalletSelectedFailure().displayableFailure());
-    }
+
     final passcode = await navigator.openPasscode(const PasscodeInitialParams());
     if (passcode == null) {
       return navigator.showError(const InvalidPasscodeFailure().displayableFailure());
