@@ -2,6 +2,7 @@ import 'package:cosmos_ui_components/cosmos_text_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
@@ -37,21 +38,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
 
   WalletsListViewModel get model => presenter.viewModel;
 
-  WalletInfo get selectedWallet => WalletInfo(
-        name: model.selectedWallet.walletDetails.walletAlias,
-        address: model.selectedWallet.walletDetails.walletAddress,
-        walletId: model.selectedWallet.walletDetails.walletIdentifier.walletId,
-      );
-
-  List<WalletInfo> get walletInfos => model.wallets
-      .map(
-        (e) => WalletInfo(
-          name: e.walletDetails.walletAlias,
-          address: e.walletDetails.walletAddress,
-          walletId: e.walletDetails.walletIdentifier.walletId,
-        ),
-      )
-      .toList();
+  List<WalletInfo> get walletInfos => model.wallets.map((it) => it.walletInfo).toList();
 
   @override
   void initState() {
@@ -115,7 +102,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
     return Expanded(
       child: CosmosWalletsListView(
         list: walletInfos,
-        selectedWallet: selectedWallet,
+        selectedWallet: model.selectedWallet.walletInfo,
         onClicked: (walletIndex) => presenter.walletClicked(model.wallets[walletIndex]),
         isEditing: model.isEditingAccountList,
         onEditIconPressed: presenter.onTapEditWallet,
@@ -129,7 +116,6 @@ class WalletsListSheetState extends State<WalletsListSheet> {
     properties
       ..add(DiagnosticsProperty<WalletsListPresenter>('presenter', presenter))
       ..add(IterableProperty<WalletInfo>('walletInfos', walletInfos))
-      ..add(DiagnosticsProperty<WalletsListViewModel>('model', model))
-      ..add(DiagnosticsProperty<WalletInfo>('selectedWallet', selectedWallet));
+      ..add(DiagnosticsProperty<WalletsListViewModel>('model', model));
   }
 }

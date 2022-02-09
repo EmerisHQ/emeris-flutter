@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 class WalletsStore with _WalletStoreBase {
   ObservableList<EmerisWallet> get wallets => _wallets.value;
 
-  EmerisWallet? get currentWallet => _currentWallet.value;
+  EmerisWallet get currentWallet => _currentWallet.value ?? const EmerisWallet.empty();
 
   void addWallet(EmerisWallet wallet) => Action(() {
         wallets.add(wallet);
@@ -15,7 +15,7 @@ class WalletsStore with _WalletStoreBase {
         wallets.addAll(newWallets);
       })();
 
-  ReactionDisposer listenToWalletChanges(ValueChanged<EmerisWallet?> callback) => reaction(
+  ReactionDisposer listenToWalletChanges(ValueChanged<EmerisWallet> callback) => reaction(
         (_) => currentWallet,
         callback,
       );
@@ -30,5 +30,5 @@ mixin _WalletStoreBase {
   //////////////////////////////////////
   final Observable<EmerisWallet?> _currentWallet = Observable(null);
 
-  set currentWallet(EmerisWallet? value) => Action(() => _currentWallet.value = value)();
+  set currentWallet(EmerisWallet value) => Action(() => _currentWallet.value = value)();
 }

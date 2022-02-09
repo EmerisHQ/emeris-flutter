@@ -26,7 +26,7 @@ class WalletsListPresentationModel with WalletsListPresentationModelBase impleme
   List<EmerisWallet> get wallets => _walletsStore.wallets;
 
   @override
-  EmerisWallet get selectedWallet => _walletsStore.currentWallet ?? _walletsStore.wallets.first;
+  EmerisWallet get selectedWallet => _walletsStore.currentWallet;
 
   @override
   bool get isEditingAccountList => _isEditingAccountList.value;

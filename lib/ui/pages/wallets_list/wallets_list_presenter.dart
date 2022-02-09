@@ -38,7 +38,7 @@ class WalletsListPresenter {
 
   void onTapCreateWallet() => navigator.openAddWallet(const AddWalletInitialParams());
 
-  void onTapClose() => navigator.appNavigator.close(navigator.context);
+  void onTapClose() => navigator.close();
 
-  void onTapEditWallet(WalletInfo wallet) => notImplemented(navigator.context);
+  void onTapEditWallet(WalletInfo wallet) => notImplemented(AppNavigator.navigatorKey.currentContext!);
 }

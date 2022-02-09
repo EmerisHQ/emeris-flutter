@@ -22,7 +22,7 @@ class WalletDetailsPresenter {
 
   Future<void> init() async {
     await getWalletBalances(_model.wallet);
-    _model.listenToWalletChanges((wallet) => getWalletBalances(wallet!));
+    _model.listenToWalletChanges(getWalletBalances);
   }
 
   void dispose() {

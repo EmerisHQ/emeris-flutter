@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presenter.dart';
@@ -18,12 +17,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class WalletDetailsPage extends StatefulWidget {
   const WalletDetailsPage({
-    required this.initialParams,
     Key? key,
     this.presenter,
   }) : super(key: key);
 
-  final WalletDetailsInitialParams initialParams;
   final WalletDetailsPresenter? presenter;
 
   @override
@@ -32,9 +29,7 @@ class WalletDetailsPage extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty<WalletDetailsInitialParams>('initialParams', initialParams))
-      ..add(DiagnosticsProperty<WalletDetailsPresenter?>('presenter', presenter));
+    properties.add(DiagnosticsProperty<WalletDetailsPresenter?>('presenter', presenter));
   }
 }
 
@@ -51,7 +46,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
     super.initState();
     presenter = widget.presenter ??
         getIt(
-          param1: WalletDetailsPresentationModel(widget.initialParams, getIt()),
+          param1: WalletDetailsPresentationModel(getIt()),
           param2: getIt<WalletDetailsNavigator>(),
         );
     presenter.navigator.context = context;
@@ -65,7 +60,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
       appBar: CosmosAppBar(
         leading: EmerisGradientAvatar(
           onTap: showNotImplemented,
-          address: model.wallet.walletDetails.walletAddress,
+          address: model.walletAddress,
         ),
         preferredHeight: appBarHeight,
         actions: const [
@@ -82,7 +77,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AssetPortfolioHeading(
-                title: strings.walletDetailsTitle(model.wallet.walletDetails.walletAlias),
+                title: strings.walletDetailsTitle(model.walletAlias),
                 onTap: presenter.onTapPortfolioHeading,
               ),
               Padding(
