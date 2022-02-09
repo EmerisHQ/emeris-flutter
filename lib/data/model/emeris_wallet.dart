@@ -25,8 +25,8 @@ class EmerisWallet extends Equatable {
 
 extension EmerisWalletInfo on EmerisWallet {
   WalletInfo get walletInfo => WalletInfo(
-    name: walletDetails.walletAlias,
-    address: walletDetails.walletAddress,
-    walletId: walletDetails.walletIdentifier.walletId,
-  );
+        name: walletDetails.walletAlias,
+        address: walletDetails.walletAddress,
+        walletId: walletDetails.walletIdentifier.walletId,
+      );
 }
