@@ -33,7 +33,7 @@ void main() {
       changeCurrentWalletUseCase,
     );
     when(() => navigator.openOnboarding(any())).thenAnswer((_) => Future.value());
-    when(() => navigator.openWalletDetails(any())).thenAnswer((_) => Future.value());
+    when(() => navigator.openWalletDetails()).thenAnswer((_) => Future.value());
   }
 
   test(

@@ -22,7 +22,7 @@ class WalletsListPresenter {
 
   WalletsListViewModel get viewModel => _model;
 
-  Future<void> addWalletClicked() async => notImplemented(AppNavigator.navigatorKey.currentContext!);
+  Future<void> addWalletClicked() async => showNotImplemented();
 
   void walletClicked(EmerisWallet wallet) {
     _changeCurrentWalletUseCase.execute(wallet: wallet).observableDoOn(
@@ -40,5 +40,5 @@ class WalletsListPresenter {
 
   void onTapClose() => navigator.close();
 
-  void onTapEditWallet(WalletInfo wallet) => notImplemented(AppNavigator.navigatorKey.currentContext!);
+  void onTapEditWallet(WalletInfo wallet) => showNotImplemented();
 }
