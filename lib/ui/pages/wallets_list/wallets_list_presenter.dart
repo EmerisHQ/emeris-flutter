@@ -29,7 +29,7 @@ class WalletsListPresenter {
           (fail) => navigator.showError(fail.displayableFailure()),
           (success) => doNothing(),
         );
-    navigator.appNavigator.close(navigator.context);
+    navigator.close();
   }
 
   void editClicked() => _model.isEditingAccountList = !_model.isEditingAccountList;
