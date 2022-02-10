@@ -51,7 +51,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
     super.initState();
     presenter = widget.presenter ??
         getIt(
-          param1: WalletDetailsPresentationModel(widget.initialParams),
+          param1: WalletDetailsPresentationModel(widget.initialParams, getIt()),
           param2: getIt<WalletDetailsNavigator>(),
         );
     presenter.navigator.context = context;
@@ -65,7 +65,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
       appBar: CosmosAppBar(
         leading: EmerisGradientAvatar(
           onTap: showNotImplemented,
-          address: widget.initialParams.wallet.walletDetails.walletAddress,
+          address: model.walletAddress,
         ),
         preferredHeight: appBarHeight,
         actions: const [
@@ -82,7 +82,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AssetPortfolioHeading(
-                title: strings.walletDetailsTitle(widget.initialParams.wallet.walletDetails.walletAlias),
+                title: strings.walletDetailsTitle(model.walletAlias),
                 onTap: presenter.onTapPortfolioHeading,
               ),
               Padding(
@@ -97,7 +97,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
               ),
               CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),
               Padding(padding: EdgeInsets.only(top: theme.spacingM)),
-              BalanceHeading(wallet: widget.initialParams.wallet),
+              BalanceHeading(wallet: model.wallet),
               Column(
                 children: model.assetDetails.balances
                     .map(

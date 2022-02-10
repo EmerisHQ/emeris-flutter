@@ -4,7 +4,6 @@ import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' hide when;
@@ -34,7 +33,7 @@ void main() {
       changeCurrentWalletUseCase,
     );
     when(() => navigator.openOnboarding(any())).thenAnswer((_) => Future.value());
-    when(() => navigator.openWalletDetails(any())).thenAnswer((_) => Future.value());
+    when(() => navigator.openWalletDetails()).thenAnswer((_) => Future.value());
   }
 
   test(
@@ -92,9 +91,6 @@ void main() {
   setUp(() {
     registerFallbackValue(const OnboardingInitialParams());
     registerFallbackValue(const EmerisWallet.empty());
-    registerFallbackValue(
-      const WalletDetailsInitialParams(wallet: EmerisWallet.empty()),
-    );
     appInitializer = MockAppInitializer();
     walletsStore = MockWalletsStore();
     changeCurrentWalletUseCase = MockChangeCurrentWalletUseCase();

@@ -9,6 +9,8 @@ abstract class WalletsListViewModel {
   bool get isEditingAccountList;
 
   List<EmerisWallet> get wallets;
+
+  EmerisWallet get selectedWallet;
 }
 
 class WalletsListPresentationModel with WalletsListPresentationModelBase implements WalletsListViewModel {
@@ -22,6 +24,9 @@ class WalletsListPresentationModel with WalletsListPresentationModelBase impleme
 
   @override
   List<EmerisWallet> get wallets => _walletsStore.wallets;
+
+  @override
+  EmerisWallet get selectedWallet => _walletsStore.currentWallet;
 
   @override
   bool get isEditingAccountList => _isEditingAccountList.value;
