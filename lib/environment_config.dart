@@ -55,6 +55,8 @@ class EnvironmentConfig {
   final NetworkInfo networkInfo;
   final String baseEthUrl;
   final String emerisBackendApiUrl;
+
+
 }
 
 abstract class SharedPreferencesKeys {
