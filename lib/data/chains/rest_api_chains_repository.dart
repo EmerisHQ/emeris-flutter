@@ -1,38 +1,28 @@
+import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter_app/data/http/http_service.dart';
 import 'package:flutter_app/data/model/chain_details_json.dart';
 import 'package:flutter_app/data/model/chain_json.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/repositories/chains_repository.dart';
-import 'package:flutter_app/environment_config.dart';
 
 class RestApiChainsRepository extends ChainsRepository {
-  RestApiChainsRepository(this._dio, this._baseEnv);
+  RestApiChainsRepository(this._httpService);
 
-  final Dio _dio;
-  final EnvironmentConfig _baseEnv;
-
-  @override
-  Future<Either<GeneralFailure, List<Chain>>> getChains() async {
-    final uri = '${_baseEnv.emerisBackendApiUrl}/v1/chains';
-    final response = await _dio.get(uri);
-
-    final map = response.data as Map<String, dynamic>;
-    final chains = map['chains'] as List? ?? [];
-
-    return right(
-      chains.map((it) => ChainDetailsJson.fromJson(it as Map<String, dynamic>)).map((it) => it.toDomain()).toList(),
-    );
-  }
+  final HttpService _httpService;
 
   @override
-  Future<Either<GeneralFailure, Chain>> getChainDetails(String chainId) async {
-    try {
-      final response = await _dio.get('${_baseEnv.emerisBackendApiUrl}/v1/chain/$chainId');
-      return right(ChainJson.fromJson((response.data as Map)['chain'] as Map<String, dynamic>).toDomain());
-    } catch (ex, stack) {
-      return left(GeneralFailure.unknown('Error while getting chain details', ex, stack));
-    }
-  }
+  Future<Either<GeneralFailure, List<Chain>>> getChains() async => _httpService
+      .get('/v1/chains')
+      .responseSubKey('chains')
+      .executeList((json) => ChainDetailsJson.fromJson(json).toDomain())
+      .mapError((fail) => GeneralFailure.unknown('Http failure', fail));
+
+  @override
+  Future<Either<GeneralFailure, Chain>> getChainDetails(String chainId) async => _httpService
+      .get('/v1/chain/$chainId')
+      .responseSubKey('chain')
+      .execute((json) => ChainJson.fromJson(json).toDomain())
+      .mapError((fail) => GeneralFailure.unknown('Http failure', fail));
 }
