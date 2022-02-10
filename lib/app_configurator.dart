@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/environment_config.dart';
 import 'package:flutter_app/utils/debug/debug_configurator.dart';
+import 'package:flutter_app/utils/debug/debug_configurator_view.dart';
 
 class AppConfigurator extends StatefulWidget {
   const AppConfigurator({
