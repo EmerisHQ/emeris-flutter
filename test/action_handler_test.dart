@@ -16,8 +16,8 @@ void main() {
   late ActionHandler actionHandler;
   const chainId = 'cosmos-hub';
   const hash = '4129EB76C01ED14052054BB975DE0C6C5010E12FFD9253C20C58BCD828BEE9A5';
-  late BlockchainMetadataMock ibcApiMock;
-  late ChainsApiMock chainsApiMock;
+  late MockBlockchainMetadataRepository ibcApiMock;
+  late MockChainsRepository chainsApiMock;
 
   // Mocked these responses as return by the actual API
   const verifyTraceJson =
@@ -113,8 +113,8 @@ void main() {
   );
 
   setUp(() {
-    ibcApiMock = BlockchainMetadataMock();
-    chainsApiMock = ChainsApiMock();
+    ibcApiMock = MockBlockchainMetadataRepository();
+    chainsApiMock = MockChainsRepository();
     actionHandler = ActionHandler(ibcApiMock, chainsApiMock);
   });
 }
