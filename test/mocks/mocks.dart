@@ -18,9 +18,9 @@ import 'package:mocktail/mocktail.dart';
 
 // Storages
 
-class BiometricStorageMock extends Mock implements BiometricStorage {}
+class MockBiometricStorage extends Mock implements BiometricStorage {}
 
-class BiometricStorageFileMock extends Mock implements BiometricStorageFile {}
+class MockBiometricStorageFile extends Mock implements BiometricStorageFile {}
 
 // Initializers
 
@@ -34,11 +34,11 @@ class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockWalletsRepository extends Mock implements WalletsRepository {}
 
-class BlockchainMetadataRepositoryMock extends Mock implements BlockchainMetadataRepository {}
+class MockBlockchainMetadataRepository extends Mock implements BlockchainMetadataRepository {}
 
-class ChainsRepositoryMock extends Mock implements ChainsRepository {}
+class MockChainsRepository extends Mock implements ChainsRepository {}
 
-class BankRepositoryMock extends Mock implements BankRepository {}
+class MockBankRepository extends Mock implements BankRepository {}
 
 // Stores
 
