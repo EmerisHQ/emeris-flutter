@@ -22,8 +22,6 @@ void main() {
   late WalletDetailsPresentationModel model;
   late WalletDetailsPresenter presenter;
   late WalletDetailsNavigator navigator;
-  late BankRepositoryMock bankRepository;
-  late BlockchainMetadataRepositoryMock blockchainMetadataRepository;
   late MockWalletsStore walletsStore;
   late MockGetBalancesUseCase getBalancesUseCase;
   late EmerisWallet myWallet;
@@ -43,70 +41,22 @@ void main() {
   }
 
   test(
-    'Getting balances should use data from presentationModel',
+    'Getting balances should fill the model data from inside the presentationModel',
     () async {
       // GIVEN
       _initMvp(initializeApp: true);
-      model.balanceList = AssetDetails(
-        balances: [
-          Balance(
-            denom: const Denom('ATOM'),
-            amount: Amount.fromInt(100),
-          ),
-        ],
-      );
-
-      // when(() async => blockchainMetadataRepository.getVerifiedDenoms()) //
-      //     .thenAnswer(
-      //   (_) => Future.value(
-      //     right(
-      //       [
-      //         VerifiedDenom(
-      //           chainName: 'cosmos-hub',
-      //           name: 'Cosmos Hub',
-      //           displayName: 'Cosmos Hub',
-      //           logo: '',
-      //           precision: 0,
-      //           verified: true,
-      //           stakable: true,
-      //           ticker: '',
-      //           feeToken: false,
-      //           gasPriceLevels: const GasPriceLevels(low: 0, average: 0, high: 0),
-      //           fetchPrice: false,
-      //           relayerDenom: false,
-      //           minimumThreshRelayerBalance: 0,
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // );
-      //
-      // when(() async => blockchainMetadataRepository.getPricesData()) //
-      //     .thenAnswer(
-      //   (_) => Future.value(
-      //     right(
-      //       Price(
-      //         data: TokenPriceData(
-      //           tokens: [Token(denom: const Denom('Atom'), amount: Amount.fromInt(0), supply: 0)],
-      //           fiats: [Fiat(symbol: '', price: 0)],
-      //         ),
-      //         message: 'message',
-      //         status: 0,
-      //       ),
-      //     ),
-      //   ),
-      // );
+      expect(model.assetDetails.balances.isEmpty, true);
       // WHEN
       await presenter.getWalletBalances(myWallet);
       //
       //THEN
-      final data = verify(
+      verify(
         () => getBalancesUseCase.execute(
           walletData: myWallet,
         ),
-      ).captured.first as AssetDetails;
+      );
       expect(
-        data.balances.first,
+        model.assetDetails.balances.first,
         Balance(
           denom: const Denom('ATOM'),
           amount: Amount.fromInt(100),
@@ -118,11 +68,8 @@ void main() {
   setUp(() {
     registerFallbackValue(DisplayableFailure.commonError());
     registerFallbackValue(const WalletDetailsInitialParams());
-    // registerFallbackValue(const EmerisWallet.empty());
     walletsStore = MockWalletsStore();
     getBalancesUseCase = MockGetBalancesUseCase();
-    bankRepository = BankRepositoryMock();
-    blockchainMetadataRepository = BlockchainMetadataRepositoryMock();
     myWallet = const EmerisWallet(
       walletDetails: WalletDetails(
         walletIdentifier: WalletIdentifier(
@@ -134,19 +81,15 @@ void main() {
       ),
       walletType: WalletType.Cosmos,
     );
-    when(() => walletsStore.currentWallet).thenReturn(myWallet);
-    // when(
-    //   () => getBalancesUseCase.execute(
-    //     walletData: myWallet,
-    //   ),
-    // ).thenAnswer(
-    //   (_) => successFuture(
-    //     AssetDetails(balances: [Balance(denom: const Denom('ATOM'), amount: Amount.fromInt(100))]),
-    //   ),
-    // );
-    print(myWallet.walletDetails.walletAlias);
-    when(() async => bankRepository.getBalances(myWallet)) //
-        .thenAnswer((_) => successFuture([Balance(denom: const Denom('ATOM'), amount: Amount.fromInt(100))]));
+    when(
+      () => getBalancesUseCase.execute(
+        walletData: myWallet,
+      ),
+    ).thenAnswer(
+      (_) => successFuture(
+        AssetDetails(balances: [Balance(denom: const Denom('ATOM'), amount: Amount.fromInt(100))]),
+      ),
+    );
   });
 
   tearDown(() {});
