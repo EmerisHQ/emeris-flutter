@@ -17,6 +17,10 @@ abstract class AssetDetailsViewModel {
   bool get isChainListLoading;
 
   List<ChainAsset> get chainAssets;
+
+  Balance get balance;
+
+  Amount get totalAmountInUSD;
 }
 
 class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase implements AssetDetailsViewModel {
@@ -52,6 +56,12 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
   String get onChain => initialParams.balance.onChain;
 
   Denom get baseDenom => initialParams.balance.denom;
+
+  @override
+  Balance get balance => initialParams.balance;
+
+  @override
+  Amount get totalAmountInUSD => initialParams.assetDetails.totalAmountInUSD;
 }
 
 mixin AssetDetailsPresentationModelBase {

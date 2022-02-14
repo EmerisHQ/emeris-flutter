@@ -16,25 +16,22 @@ class CosmosButtonBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
-    return Padding(
-      padding: EdgeInsets.all(theme.spacingM),
-      child: Row(
-        children: [
-          Expanded(
-            child: CosmosElevatedButton(
-              onTap: onTapReceive,
-              text: strings.receiveAction,
-            ),
+    return Row(
+      children: [
+        Expanded(
+          child: CosmosElevatedButton(
+            onTap: onTapReceive,
+            text: strings.receiveAction,
           ),
-          SizedBox(width: theme.spacingM),
-          Expanded(
-            child: CosmosOutlineButton(
-              text: strings.sendAction,
-              onTap: onTapSend,
-            ),
+        ),
+        SizedBox(width: theme.spacingM),
+        Expanded(
+          child: CosmosOutlineButton(
+            text: strings.sendAction,
+            onTap: onTapSend,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
