@@ -11,6 +11,7 @@ import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
+import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:mocktail/mocktail.dart';
@@ -46,3 +47,5 @@ class BankRepositoryMock extends Mock implements BankRepository {}
 class MockSendMoneyNavigator extends Mock implements SendMoneyNavigator {}
 
 class MockWalletDetailsNavigator extends Mock implements WalletDetailsNavigator {}
+
+class MockWalletsListNavigator extends Mock implements WalletsListNavigator {}
