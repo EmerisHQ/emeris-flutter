@@ -9,32 +9,40 @@ enum HttpFailureType {
 }
 
 class HttpFailure {
-  const HttpFailure.unknown(this.path)
-      : type = HttpFailureType.Unknown,
+  const HttpFailure.unknown(
+    this.path, [
+    this.cause,
+  ])  : type = HttpFailureType.Unknown,
         code = null,
         message = '';
 
-  const HttpFailure.unauthorized(this.path)
-      : type = HttpFailureType.Unauthorized,
+  const HttpFailure.unauthorized(
+    this.path, [
+    this.cause,
+  ])  : type = HttpFailureType.Unauthorized,
         code = 401,
         message = '';
 
-  const HttpFailure.networkError(this.path)
-      : type = HttpFailureType.Network,
+  const HttpFailure.networkError(
+    this.path, [
+    this.cause,
+  ])  : type = HttpFailureType.Network,
         code = null,
         message = '';
 
   const HttpFailure.apiError(
     this.path,
     this.code,
-    this.message,
-  ) : type = HttpFailureType.Api;
+    this.message, [
+    this.cause,
+  ]) : type = HttpFailureType.Api;
 
   HttpFailure.responseParseError(
     this.path,
     Response response,
-    Type expectedType,
-  )   : type = HttpFailureType.ResponseParse,
+    Type expectedType, [
+    this.cause,
+  ])  : type = HttpFailureType.ResponseParse,
         code = null,
         message =
             // ignore: avoid_dynamic_calls
@@ -46,4 +54,10 @@ class HttpFailure {
   final String path;
   final int? code;
   final String message;
+  final dynamic cause;
+
+  @override
+  String toString() {
+    return 'HttpFailure{type: $type, path: $path, code: $code\nmessage: $message\ncause: $cause}';
+  }
 }
