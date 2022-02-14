@@ -16,21 +16,37 @@ import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:mocktail/mocktail.dart';
 
+// Storages
+
 class BiometricStorageMock extends Mock implements BiometricStorage {}
 
 class BiometricStorageFileMock extends Mock implements BiometricStorageFile {}
+
+// Initializers
+
+class MockAppLocalizationsInitializer extends Mock implements AppLocalizationsInitializer {}
+
+class MockAppInitializer extends Mock implements AppInitializer {}
+
+// Repositories
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
 class MockWalletsRepository extends Mock implements WalletsRepository {}
 
+class BlockchainMetadataRepositoryMock extends Mock implements BlockchainMetadataRepository {}
+
+class ChainsRepositoryMock extends Mock implements ChainsRepository {}
+
+class BankRepositoryMock extends Mock implements BankRepository {}
+
+// Stores
+
 class MockWalletsStore extends Mock implements WalletsStore {}
 
 class MockSettingsStore extends Mock implements SettingsStore {}
 
-class MockAppLocalizationsInitializer extends Mock implements AppLocalizationsInitializer {}
-
-class MockAppInitializer extends Mock implements AppInitializer {}
+// Use cases
 
 class MockChangeCurrentWalletUseCase extends Mock implements ChangeCurrentWalletUseCase {}
 
@@ -38,11 +54,7 @@ class MockSendMoneyUseCase extends Mock implements SendMoneyUseCase {}
 
 class MockGetBalancesUseCase extends Mock implements GetBalancesUseCase {}
 
-class BlockchainMetadataRepositoryMock extends Mock implements BlockchainMetadataRepository {}
-
-class ChainsApiMock extends Mock implements ChainsRepository {}
-
-class BankRepositoryMock extends Mock implements BankRepository {}
+// Navigators
 
 class MockSendMoneyNavigator extends Mock implements SendMoneyNavigator {}
 
