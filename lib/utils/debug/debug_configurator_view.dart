@@ -104,7 +104,6 @@ class _DebugConfiguratorViewState extends State<DebugConfiguratorView> {
       );
 
   Future<void> onTapApply() async {
-
     await DebugConfigurator.saveConfig(
       EnvironmentConfig(
         emerisUrl: _emerisEnv.url,

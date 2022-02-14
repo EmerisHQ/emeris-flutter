@@ -92,7 +92,7 @@ class RequestBuilder {
     } catch (e, stack) {
       logError(e, stack);
       if (isNetworkError(e)) {
-        return left(HttpFailure.networkError(path,e));
+        return left(HttpFailure.networkError(path, e));
       } else if (e is DioError) {
         if (e.response?.statusCode == 401) {
           final failure = HttpFailure.unauthorized(path, e);
