@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
@@ -15,13 +16,15 @@ abstract class WalletDetailsViewModel {
 
   bool get isSendMoneyLoading;
 
-  AssetDetails get assetDetails;
-
   EmerisWallet get wallet;
 
   String get walletAddress;
 
   String get walletAlias;
+
+  List<Balance> get balances;
+
+  Amount get totalAmountInUSD;
 }
 
 class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase implements WalletDetailsViewModel {
@@ -37,7 +40,6 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
 
   ObservableFuture<Either<AddWalletFailure, Unit>>? get sendMoneyFuture => _sendMoneyFuture.value;
 
-  @override
   AssetDetails get assetDetails => _assetDetails.value;
 
   @override
@@ -62,6 +64,12 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
   }
 
   void dispose() => disposer?.call();
+
+  @override
+  List<Balance> get balances => assetDetails.balances;
+
+  @override
+  Amount get totalAmountInUSD => assetDetails.totalAmountInUSD;
 }
 
 mixin WalletDetailsPresentationModelBase {

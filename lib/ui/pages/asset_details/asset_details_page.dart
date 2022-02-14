@@ -53,9 +53,7 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
           param2: getIt<AssetDetailsNavigator>(),
         );
     presenter.navigator.context = context;
-    presenter
-      ..getStakedAmount(widget.initialParams.wallet, widget.initialParams.balance.onChain)
-      ..getAssetSpecificChains(widget.initialParams.balance.denom);
+    presenter.init();
   }
 
   @override
@@ -144,7 +142,7 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
                   ),
                 ),
                 const Spacer(),
-                CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),
+                CosmosButtonBar(onTapReceive: presenter.onTapReceive, onTapSend: presenter.onTapSend),
               ],
             ),
           ),

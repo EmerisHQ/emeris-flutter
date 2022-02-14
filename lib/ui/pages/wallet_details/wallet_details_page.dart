@@ -8,8 +8,8 @@ import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dar
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/asset_portfolio_heading.dart';
-import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
+import 'package:flutter_app/ui/pages/wallet_details/widgets/balances_list.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
 import 'package:flutter_app/ui/widgets/emeris_gradient_avatar.dart';
 import 'package:flutter_app/utils/emeris_amount_formatter.dart';
@@ -78,6 +78,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
       ),
       body: Observer(
         builder: (context) => ContentStateSwitcher(
+          isLoading: model.isLoading,
           contentChild: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,25 +89,28 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
               Padding(
                 padding: EdgeInsets.only(left: theme.spacingL),
                 child: Text(
-                  formatEmerisAmount(model.assetDetails.totalAmountInUSD),
+                  formatEmerisAmount(model.totalAmountInUSD),
                   style: TextStyle(
                     fontSize: theme.fontSizeXXL,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ),
-              CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),
-              Padding(padding: EdgeInsets.only(top: theme.spacingM)),
-              BalanceHeading(wallet: model.wallet),
-              Column(
-                children: model.assetDetails.balances
-                    .map(
-                      (balance) => BalanceCard(
-                        data: balance,
-                        onTap: model.isSendMoneyLoading ? null : () => presenter.transferTapped(balance: balance),
-                      ),
-                    )
-                    .toList(),
+              CosmosButtonBar(
+                onTapReceive: presenter.onTapReceive,
+                onTapSend: presenter.onTapSend,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: theme.spacingM),
+              ),
+              BalanceHeading(
+                wallet: model.wallet,
+              ),
+              BalancesList(
+                balances: model.balances,
+                onTapBalance: model.isSendMoneyLoading //
+                    ? null
+                    : (balance) => presenter.onTapTransfer(balance: balance),
               ),
               if (model.isSendMoneyLoading)
                 Padding(
@@ -120,7 +124,6 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
                 ),
             ],
           ),
-          isLoading: model.isLoading,
         ),
       ),
     );
