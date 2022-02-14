@@ -28,9 +28,7 @@ void main() {
   late Balance balance;
   const fromAddress = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
 
-  void _initMvp({
-    bool initializeApp = false,
-  }) {
+  void _initMvp() {
     initParams = const WalletDetailsInitialParams();
     model = WalletDetailsPresentationModel(initParams, walletsStore);
     navigator = MockWalletDetailsNavigator();
@@ -45,7 +43,7 @@ void main() {
     'Getting balances should fill the model data from inside the presentationModel',
     () async {
       // GIVEN
-      _initMvp(initializeApp: true);
+      _initMvp();
       expect(model.assetDetails.balances.isEmpty, true);
       // WHEN
       await presenter.getWalletBalances(myWallet);

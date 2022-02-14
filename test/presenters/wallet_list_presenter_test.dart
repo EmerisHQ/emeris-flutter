@@ -23,9 +23,7 @@ void main() {
   late EmerisWallet myWallet;
   const fromAddress = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
 
-  void _initMvp({
-    bool initializeApp = false,
-  }) {
+  void _initMvp() {
     initParams = const WalletsListInitialParams();
     model = WalletsListPresentationModel(walletsStore, initParams);
     navigator = MockWalletsListNavigator();
@@ -40,7 +38,7 @@ void main() {
     'Changing the current wallet should fill the `selectedWallet` inside the presentationModel',
     () async {
       // GIVEN
-      _initMvp(initializeApp: true);
+      _initMvp();
       // WHEN
       presenter.walletClicked(myWallet);
       //
