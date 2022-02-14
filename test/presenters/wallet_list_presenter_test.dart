@@ -2,9 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_details.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presentation_model.dart';
@@ -60,8 +58,6 @@ void main() {
   );
 
   setUp(() {
-    registerFallbackValue(DisplayableFailure.commonError());
-    registerFallbackValue(const WalletDetailsInitialParams());
     walletsStore = MockWalletsStore();
     changeCurrentWalletUseCase = MockChangeCurrentWalletUseCase();
     myWallet = const EmerisWallet(
@@ -82,6 +78,4 @@ void main() {
       (_) => successFuture(unit),
     );
   });
-
-  tearDown(() {});
 }

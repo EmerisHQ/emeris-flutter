@@ -25,6 +25,7 @@ void main() {
   late MockWalletsStore walletsStore;
   late MockGetBalancesUseCase getBalancesUseCase;
   late EmerisWallet myWallet;
+  late Balance balance;
   const fromAddress = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
 
   void _initMvp({
@@ -57,10 +58,7 @@ void main() {
       );
       expect(
         model.assetDetails.balances.first,
-        Balance(
-          denom: const Denom('ATOM'),
-          amount: Amount.fromInt(100),
-        ),
+        balance,
       );
     },
   );
@@ -70,6 +68,10 @@ void main() {
     registerFallbackValue(const WalletDetailsInitialParams());
     walletsStore = MockWalletsStore();
     getBalancesUseCase = MockGetBalancesUseCase();
+    balance = Balance(
+      denom: const Denom('ATOM'),
+      amount: Amount.fromInt(100),
+    );
     myWallet = const EmerisWallet(
       walletDetails: WalletDetails(
         walletIdentifier: WalletIdentifier(
@@ -87,10 +89,8 @@ void main() {
       ),
     ).thenAnswer(
       (_) => successFuture(
-        AssetDetails(balances: [Balance(denom: const Denom('ATOM'), amount: Amount.fromInt(100))]),
+        AssetDetails(balances: [balance]),
       ),
     );
   });
-
-  tearDown(() {});
 }
