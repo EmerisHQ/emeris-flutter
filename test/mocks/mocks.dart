@@ -1,12 +1,16 @@
 import 'package:biometric_storage/biometric_storage.dart';
-import 'package:flutter_app/data/blockchain/rest_api_blockchain_metadata_repository.dart';
-import 'package:flutter_app/data/chains/rest_api_chains_repository.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
+import 'package:flutter_app/domain/repositories/bank_repository.dart';
+import 'package:flutter_app/domain/repositories/blockchain_metadata_repository.dart';
+import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
+import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:mocktail/mocktail.dart';
@@ -31,6 +35,14 @@ class MockChangeCurrentWalletUseCase extends Mock implements ChangeCurrentWallet
 
 class MockSendMoneyUseCase extends Mock implements SendMoneyUseCase {}
 
-class BlockchainMetadataMock extends Mock implements RestApiBlockchainMetadataRepository {}
+class MockGetBalancesUseCase extends Mock implements GetBalancesUseCase {}
 
-class ChainsApiMock extends Mock implements RestApiChainsRepository {}
+class BlockchainMetadataRepositoryMock extends Mock implements BlockchainMetadataRepository {}
+
+class ChainsApiMock extends Mock implements ChainsRepository {}
+
+class BankRepositoryMock extends Mock implements BankRepository {}
+
+class MockSendMoneyNavigator extends Mock implements SendMoneyNavigator {}
+
+class MockWalletDetailsNavigator extends Mock implements WalletDetailsNavigator {}

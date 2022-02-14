@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cosmos_utils/extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/blockchain/rest_api_blockchain_metadata_repository.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_app/domain/entities/primary_channel.dart';
 import 'package:flutter_app/domain/entities/trace.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/domain/entities/verify_trace.dart';
+import 'package:flutter_app/domain/repositories/blockchain_metadata_repository.dart';
 import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/ibc/helpers/ibc_transfer_recipient.dart';
@@ -25,7 +25,7 @@ import 'package:flutter_app/ibc/model/transfer_step.dart';
 class ActionHandler {
   const ActionHandler(this._blockchainMetadataRepository, this._chainsRepository);
 
-  final RestApiBlockchainMetadataRepository _blockchainMetadataRepository;
+  final BlockchainMetadataRepository _blockchainMetadataRepository;
   final ChainsRepository _chainsRepository;
 
   /// This function has multiple steps to redeem the IBC token
@@ -347,7 +347,7 @@ String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
   return 'ibc/${sha256.convert(utf8.encode(newPath)).toString().toUpperCase()}';
 }
 
-Future<bool> isVerified(Denom denom, String chainId, RestApiBlockchainMetadataRepository ibcRepository) async {
+Future<bool> isVerified(Denom denom, String chainId, BlockchainMetadataRepository ibcRepository) async {
   late bool isVerified;
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
   await verifiedDenoms.fold<Future?>((l) => throw 'Could not fetch verified denoms', (r) {
@@ -386,7 +386,7 @@ Future<List<FeeWithDenom>> getFeeForChain(String chainId, ChainsRepository chain
   return fees;
 }
 
-Future<String> getBaseDenom(String denom, String? chainId, RestApiBlockchainMetadataRepository ibcRepository) async {
+Future<String> getBaseDenom(String denom, String? chainId, BlockchainMetadataRepository ibcRepository) async {
   const cosmosHubChainId = 'cosmos-hub';
   final finalChainName = chainId ?? cosmosHubChainId;
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();

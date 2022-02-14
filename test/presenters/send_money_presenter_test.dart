@@ -119,5 +119,3 @@ void main() {
 
   tearDown(() {});
 }
-
-class MockSendMoneyNavigator extends Mock implements SendMoneyNavigator {}
