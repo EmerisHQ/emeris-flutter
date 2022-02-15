@@ -1,5 +1,5 @@
 import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
-import 'package:flutter_app/domain/model/failures/passcode_validation_failure.dart';
+import 'package:flutter_app/domain/entities/failures/passcode_validation_failure.dart';
 
 enum SavePasscodeFailureType {
   Unknown,

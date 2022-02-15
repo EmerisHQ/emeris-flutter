@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class EmerisGradientAvatar extends StatelessWidget {
   const EmerisGradientAvatar({
-    required this.onTap,
     required this.address,
+    this.onTap,
     Key? key,
     this.height = 35,
   }) : super(key: key);
 
   final String address;
   final double height;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {

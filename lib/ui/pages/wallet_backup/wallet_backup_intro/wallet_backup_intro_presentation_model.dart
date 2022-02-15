@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_setters_without_getters
-import 'package:flutter_app/domain/model/mnemonic.dart';
-import 'package:flutter_app/domain/model/operating_system.dart';
+import 'package:flutter_app/domain/entities/mnemonic.dart';
+import 'package:flutter_app/domain/entities/operating_system.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_initial_params.dart';
 

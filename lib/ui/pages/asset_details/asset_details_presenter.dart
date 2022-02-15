@@ -3,6 +3,7 @@ import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
+import 'package:flutter_app/ui/pages/receive/receive_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
 
 class AssetDetailsPresenter {
@@ -49,7 +50,11 @@ class AssetDetailsPresenter {
         );
   }
 
-  void onTapReceive() => showNotImplemented();
+  void onTapReceive() => navigator.openReceive(
+        ReceiveInitialParams(
+          wallet: _model.wallet,
+        ),
+      );
 
   void onTapSend() => showNotImplemented();
 }

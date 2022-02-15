@@ -1,7 +1,7 @@
 import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/domain/entities/failures/save_passcode_failure.dart';
 import 'package:flutter_app/domain/entities/passcode.dart';
-import 'package:flutter_app/domain/model/failures/save_passcode_failure.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 

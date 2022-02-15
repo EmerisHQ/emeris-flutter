@@ -1,4 +1,4 @@
-import 'package:flutter_app/domain/model/mnemonic.dart';
+import 'package:flutter_app/domain/entities/mnemonic.dart';
 
 class WalletManualBackupInitialParams {
   const WalletManualBackupInitialParams({required this.mnemonic});

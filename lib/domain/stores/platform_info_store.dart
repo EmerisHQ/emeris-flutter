@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app/domain/model/operating_system.dart';
+import 'package:flutter_app/domain/entities/operating_system.dart';
 
 class PlatformInfoStore {
   OperatingSystem get operatingSystem {
