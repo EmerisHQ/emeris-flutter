@@ -8,8 +8,8 @@ import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dar
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presenter.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/asset_portfolio_heading.dart';
-import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart';
+import 'package:flutter_app/ui/pages/wallet_details/widgets/balances_list.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
 import 'package:flutter_app/ui/widgets/emeris_gradient_avatar.dart';
 import 'package:flutter_app/utils/emeris_amount_formatter.dart';
@@ -61,68 +61,72 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
-    return Scaffold(
-      appBar: CosmosAppBar(
-        leading: EmerisGradientAvatar(
-          onTap: showNotImplemented,
-          address: model.walletAddress,
-        ),
-        preferredHeight: appBarHeight,
-        actions: const [
-          IconButton(
-            /// TODO: Pick this up from the design after Figma is finalised
-            icon: Icon(Icons.qr_code_scanner_sharp),
-            onPressed: showNotImplemented,
-          ),
-        ],
-      ),
-      body: Observer(
-        builder: (context) => ContentStateSwitcher(
-          contentChild: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AssetPortfolioHeading(
-                title: strings.walletDetailsTitle(model.walletAlias),
-                onTap: presenter.onTapPortfolioHeading,
+    return Observer(
+      builder: (context) {
+        return Scaffold(
+          appBar: CosmosAppBar(
+            leading: EmerisGradientAvatar(
+              onTap: showNotImplemented,
+              address: model.walletAddress,
+            ),
+            preferredHeight: appBarHeight,
+            actions: const [
+              IconButton(
+                /// TODO: Pick this up from the design after Figma is finalised
+                icon: Icon(Icons.qr_code_scanner_sharp),
+                onPressed: showNotImplemented,
               ),
-              Padding(
-                padding: EdgeInsets.only(left: theme.spacingL),
-                child: Text(
-                  formatEmerisAmount(model.assetDetails.totalAmountInUSD),
-                  style: TextStyle(
-                    fontSize: theme.fontSizeXXL,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ),
-              ),
-              CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),
-              Padding(padding: EdgeInsets.only(top: theme.spacingM)),
-              BalanceHeading(wallet: model.wallet),
-              Column(
-                children: model.assetDetails.balances
-                    .map(
-                      (balance) => BalanceCard(
-                        data: balance,
-                        onTap: model.isSendMoneyLoading ? null : () => presenter.transferTapped(balance: balance),
-                      ),
-                    )
-                    .toList(),
-              ),
-              if (model.isSendMoneyLoading)
-                Padding(
-                  padding: EdgeInsets.only(top: theme.spacingS),
-                  child: Center(
-                    child: Text(
-                      strings.sendingMoney,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
             ],
           ),
-          isLoading: model.isLoading,
-        ),
-      ),
+          body: ContentStateSwitcher(
+            isLoading: model.isLoading,
+            contentChild: Padding(
+              padding: EdgeInsets.symmetric(horizontal: theme.spacingL),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: theme.spacingM),
+                  AssetPortfolioHeading(
+                    title: strings.walletDetailsTitle(model.walletAlias),
+                    onTap: presenter.onTapPortfolioHeading,
+                  ),
+                  Text(
+                    formatEmerisAmount(model.totalAmountInUSD),
+                    style: TextStyle(
+                      fontSize: theme.fontSizeXXL,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                  SizedBox(height: theme.spacingL),
+                  CosmosButtonBar(
+                    onTapReceive: presenter.onTapReceive,
+                    onTapSend: presenter.onTapSend,
+                  ),
+                  SizedBox(height: theme.spacingL),
+                  BalanceHeading(
+                    wallet: model.wallet,
+                  ),
+                  BalancesList(
+                    balances: model.balances,
+                    onTapBalance: model.isSendMoneyLoading //
+                        ? null
+                        : (balance) => presenter.onTapTransfer(balance: balance),
+                  ),
+                  if (model.isSendMoneyLoading) ...[
+                    SizedBox(height: theme.spacingS),
+                    Center(
+                      child: Text(
+                        strings.sendingMoney,
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

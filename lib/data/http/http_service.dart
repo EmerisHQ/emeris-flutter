@@ -116,7 +116,7 @@ class RequestBuilder {
     T Function(Map<String, dynamic> json) itemMapper,
   ) async =>
       _execute().flatMap((response) async {
-        final data = _getData(response);
+        final data = _getData(response) ?? [];
         if (data is! List) {
           return left(HttpFailure.responseParseError(path, response, typeOf<List>()));
         }

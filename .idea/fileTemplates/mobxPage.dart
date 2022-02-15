@@ -1,5 +1,6 @@
 #set( $ClassName = ${StringUtils.removeAndHump(${NAME}, "_")})
 #set( $parentPackage = "#if(${PARENT.isEmpty()})#else${PARENT}/#end")
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/${parentPackage}${NAME}/${NAME}_presenter.dart';
@@ -8,17 +9,25 @@ import 'package:flutter_app/ui/pages/${parentPackage}${NAME}/${NAME}_navigator.d
 import 'package:flutter_app/ui/pages/${parentPackage}${NAME}/${NAME}_presentation_model.dart';
 
 class ${ClassName}Page extends StatefulWidget {
-  final ${ClassName}InitialParams initialParams;
-  final ${ClassName}Presenter? presenter;
-  
   const ${ClassName}Page({
-    Key? key, 
     required this.initialParams,
     this.presenter, // useful for tests
+    Key? key, 
   }): super(key: key);
+  
+  final ${ClassName}InitialParams initialParams;
+  final ${ClassName}Presenter? presenter;
       
   @override
-  _${ClassName}PageState createState() => _${ClassName}PageState();
+  State<${ClassName}Page> createState() => _${ClassName}PageState();
+  
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<${ClassName}InitialParams>('initialParams', initialParams))
+      ..add(DiagnosticsProperty<${ClassName}Presenter?>('presenter', presenter));
+  }
 }
 
 class _${ClassName}PageState extends State<${ClassName}Page> {
@@ -41,8 +50,16 @@ class _${ClassName}PageState extends State<${ClassName}Page> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("${ClassName} Page"),
+        child: Text('${ClassName} Page'),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<${ClassName}Presenter>('presenter', presenter))
+      ..add(DiagnosticsProperty<${ClassName}ViewModel>('model', model));
   }
 }
