@@ -66,6 +66,7 @@ class _ReceivePageState extends State<ReceivePage> {
               data: model.walletAddress,
             ),
           ),
+          SizedBox(height: theme.spacingXL),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
