@@ -23,11 +23,11 @@ abstract class EmerisApiEnvironment implements WithTitle {
 }
 
 class DevEmerisApiEnvironment extends EmerisApiEnvironment {
-  const DevEmerisApiEnvironment() : super('Dev', 'https://dev.emeris.com');
+  const DevEmerisApiEnvironment() : super('Dev', 'https://dev.demeris.io');
 }
 
 class StagingEmerisApiEnvironment extends EmerisApiEnvironment {
-  const StagingEmerisApiEnvironment() : super('Staging', 'https://staging.emeris.com');
+  const StagingEmerisApiEnvironment() : super('Staging', 'https://staging.demeris.io');
 }
 
 class ProductionEmerisApiEnvironment extends EmerisApiEnvironment {

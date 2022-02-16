@@ -13,6 +13,7 @@ class ChainCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
     return ListTile(
+      contentPadding: EdgeInsets.zero,
       title: Text(chainAsset.chainDetails.displayName),
       leading: CircleAvatar(
         backgroundColor: theme.colors.background,

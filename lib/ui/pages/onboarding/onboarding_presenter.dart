@@ -18,7 +18,6 @@ class OnboardingPresenter {
   Future<void> onTapCreateWallet() async {
     final creationResult = await navigator.openAddWallet(const AddWalletInitialParams());
     if (creationResult != null) {
-      navigator.close();
       await navigator.openRouting(const RoutingInitialParams());
     }
   }
@@ -26,7 +25,6 @@ class OnboardingPresenter {
   Future<void> onTapImportWallet() async {
     final result = await navigator.openImportWallet(const ImportWalletInitialParams());
     if (result != null) {
-      navigator.close();
       await navigator.openRouting(const RoutingInitialParams());
     }
   }

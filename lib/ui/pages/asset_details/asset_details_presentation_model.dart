@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/asset_chain.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
@@ -15,6 +17,10 @@ abstract class AssetDetailsViewModel {
   bool get isChainListLoading;
 
   List<ChainAsset> get chainAssets;
+
+  Balance get balance;
+
+  Amount get totalAmountInUSD;
 }
 
 class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase implements AssetDetailsViewModel {
@@ -44,6 +50,18 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
 
   @override
   List<ChainAsset> get chainAssets => _chainAssets.value;
+
+  EmerisWallet get wallet => initialParams.wallet;
+
+  String get onChain => initialParams.balance.onChain;
+
+  Denom get baseDenom => initialParams.balance.denom;
+
+  @override
+  Balance get balance => initialParams.balance;
+
+  @override
+  Amount get totalAmountInUSD => initialParams.assetDetails.totalAmountInUSD;
 }
 
 mixin AssetDetailsPresentationModelBase {
@@ -55,7 +73,7 @@ mixin AssetDetailsPresentationModelBase {
   set getStakedAmountFuture(ObservableFuture<Either<GeneralFailure, Amount>>? value) =>
       Action(() => _getStakedAmountFuture.value = value)();
 
-  set getChainAssetsDetails(ObservableFuture<Either<GeneralFailure, List<ChainAsset>>>? value) =>
+  set getChainAssetsDetailsFuture(ObservableFuture<Either<GeneralFailure, List<ChainAsset>>>? value) =>
       Action(() => _getChainAssetsDetailsFuture.value = value)();
 
   final Observable<Amount> _stakedAmount = Observable(Amount.zero);

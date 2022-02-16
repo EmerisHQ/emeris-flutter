@@ -5,26 +5,33 @@ import 'package:flutter_app/utils/strings.dart';
 
 class CosmosButtonBar extends StatelessWidget {
   const CosmosButtonBar({
-    required this.onReceivePressed,
-    required this.onSendPressed,
+    required this.onTapReceive,
+    required this.onTapSend,
     Key? key,
   }) : super(key: key);
 
-  final VoidCallback onSendPressed;
-  final VoidCallback onReceivePressed;
+  final VoidCallback onTapSend;
+  final VoidCallback onTapReceive;
 
   @override
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
-    return Padding(
-      padding: EdgeInsets.all(theme.spacingM),
-      child: Row(
-        children: [
-          Expanded(child: CosmosElevatedButton(onTap: () {}, text: strings.receiveAction)),
-          SizedBox(width: theme.spacingM),
-          Expanded(child: CosmosOutlineButton(text: strings.sendAction, onTap: onSendPressed)),
-        ],
-      ),
+    return Row(
+      children: [
+        Expanded(
+          child: CosmosElevatedButton(
+            onTap: onTapReceive,
+            text: strings.receiveAction,
+          ),
+        ),
+        SizedBox(width: theme.spacingM),
+        Expanded(
+          child: CosmosOutlineButton(
+            text: strings.sendAction,
+            onTap: onTapSend,
+          ),
+        ),
+      ],
     );
   }
 
@@ -32,7 +39,7 @@ class CosmosButtonBar extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(ObjectFlagProperty<VoidCallback>.has('onSendPressed', onSendPressed))
-      ..add(ObjectFlagProperty<VoidCallback>.has('onReceivePressed', onReceivePressed));
+      ..add(ObjectFlagProperty<VoidCallback>.has('onSendPressed', onTapSend))
+      ..add(ObjectFlagProperty<VoidCallback>.has('onReceivePressed', onTapReceive));
   }
 }

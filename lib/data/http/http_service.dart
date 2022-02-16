@@ -92,16 +92,17 @@ class RequestBuilder {
     } catch (e, stack) {
       logError(e, stack);
       if (isNetworkError(e)) {
-        return left(HttpFailure.networkError(path));
+        return left(HttpFailure.networkError(path, e));
       } else if (e is DioError) {
         if (e.response?.statusCode == 401) {
-          final failure = HttpFailure.unauthorized(path);
+          final failure = HttpFailure.unauthorized(path, e);
           return left(failure);
         } else {
           final apiFailure = HttpFailure.apiError(
             path,
             e.response?.statusCode,
             e.response?.statusMessage ?? '',
+            e,
           );
           return left(apiFailure);
         }
@@ -115,7 +116,7 @@ class RequestBuilder {
     T Function(Map<String, dynamic> json) itemMapper,
   ) async =>
       _execute().flatMap((response) async {
-        final data = _getData(response);
+        final data = _getData(response) ?? [];
         if (data is! List) {
           return left(HttpFailure.responseParseError(path, response, typeOf<List>()));
         }

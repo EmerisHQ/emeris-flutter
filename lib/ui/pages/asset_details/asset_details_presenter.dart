@@ -1,5 +1,3 @@
-import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -8,7 +6,12 @@ import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_mo
 import 'package:flutter_app/utils/utils.dart';
 
 class AssetDetailsPresenter {
-  AssetDetailsPresenter(this._model, this.navigator, this._getStakedAmountUseCase, this._getChainAssetsUseCase);
+  AssetDetailsPresenter(
+    this._model,
+    this.navigator,
+    this._getStakedAmountUseCase,
+    this._getChainAssetsUseCase,
+  );
 
   final AssetDetailsPresentationModel _model;
   final AssetDetailsNavigator navigator;
@@ -17,15 +20,16 @@ class AssetDetailsPresenter {
 
   AssetDetailsViewModel get viewModel => _model;
 
-  void onReceivePressed() => showNotImplemented();
+  void init() {
+    _getStakedAmount();
+    _getAssetSpecificChains();
+  }
 
-  void onSendPressed() => showNotImplemented();
-
-  Future<void> getStakedAmount(EmerisWallet wallet, String onChain) async {
+  Future<void> _getStakedAmount() async {
     _model.getStakedAmountFuture = _getStakedAmountUseCase
         .execute(
-          wallet: wallet,
-          onChain: onChain,
+          wallet: _model.wallet,
+          onChain: _model.onChain,
         )
         .observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
@@ -33,15 +37,19 @@ class AssetDetailsPresenter {
         );
   }
 
-  Future<void> getAssetSpecificChains(Denom baseDenom) async {
-    _model.getChainAssetsDetails = _getChainAssetsUseCase
+  Future<void> _getAssetSpecificChains() async {
+    _model.getChainAssetsDetailsFuture = _getChainAssetsUseCase
         .execute(
           balances: _model.balances,
-          baseDenom: baseDenom,
+          baseDenom: _model.baseDenom,
         )
         .observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
           (chains) => _model.chainAssets = chains,
         );
   }
+
+  void onTapReceive() => showNotImplemented();
+
+  void onTapSend() => showNotImplemented();
 }

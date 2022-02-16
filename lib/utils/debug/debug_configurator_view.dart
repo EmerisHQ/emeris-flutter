@@ -103,9 +103,8 @@ class _DebugConfiguratorViewState extends State<DebugConfiguratorView> {
         ],
       );
 
-  void onTapApply() {
-    AppRestarter.restartApp();
-    DebugConfigurator.saveConfig(
+  Future<void> onTapApply() async {
+    await DebugConfigurator.saveConfig(
       EnvironmentConfig(
         emerisUrl: _emerisEnv.url,
         lcdUrl: _blockchainEnv.lcdUrl,
@@ -114,6 +113,7 @@ class _DebugConfiguratorViewState extends State<DebugConfiguratorView> {
         grpcPort: _blockchainEnv.grpcPort,
       ),
     );
+    AppRestarter.restartApp();
   }
 
   void onEmerisEnvChanged(EmerisApiEnvironment? item) =>

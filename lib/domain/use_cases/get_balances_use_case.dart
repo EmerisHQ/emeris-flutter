@@ -23,17 +23,15 @@ class GetBalancesUseCase {
         return verifiedDenoms.fold(
           (l) => left(GeneralFailure.unknown(l.message, l.cause, l.stack)),
           (verifiedDenoms) async {
-            return balanceList.fold((l) => left(GeneralFailure.unknown(l.message, l.cause, l.stack)), (r) {
-              final balances = r.map((it) => it.byUpdatingPriceAndVerifiedDenom(prices, verifiedDenoms)).toList();
-              // var newMap = groupBy(balances, (Balance obj) => obj.denom);
-              // var tempBalances = [];
-              // newMap.forEach((key, value) {
-              //   tempBalances.add(Balance(denom: value.first.denom, amount: ));
-              // });
-              return right(
-                AssetDetails(balances: balances),
-              );
-            });
+            return balanceList.fold(
+              (l) => left(GeneralFailure.unknown(l.message, l.cause, l.stack)),
+              (r) {
+                final balances = r.map((it) => it.byUpdatingPriceAndVerifiedDenom(prices, verifiedDenoms)).toList();
+                return right(
+                  AssetDetails(balances: balances),
+                );
+              },
+            );
           },
         );
       },
