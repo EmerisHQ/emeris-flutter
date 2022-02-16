@@ -19,7 +19,10 @@ class ShareButton extends StatelessWidget {
     final color = CosmosTheme.of(context).colors.link;
     return CosmosTextButton(
       onTap: onTap,
-      leadingIcon: Icon(Platform.isIOS ? CupertinoIcons.share : Icons.share, color: color,),
+      leadingIcon: Icon(
+        Platform.isIOS ? CupertinoIcons.share : Icons.share,
+        color: color,
+      ),
       text: strings.shareAction,
       color: color,
     );
