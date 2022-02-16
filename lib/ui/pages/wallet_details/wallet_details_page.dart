@@ -98,15 +98,17 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
               CosmosButtonBar(onReceivePressed: presenter.onReceivePressed, onSendPressed: presenter.onSendPressed),
               Padding(padding: EdgeInsets.only(top: theme.spacingM)),
               BalanceHeading(wallet: model.wallet),
-              Column(
-                children: model.assetDetails.balances
-                    .map(
-                      (balance) => BalanceCard(
-                        data: balance,
-                        onTap: model.isSendMoneyLoading ? null : () => presenter.transferTapped(balance: balance),
-                      ),
-                    )
-                    .toList(),
+              Expanded(
+                child: ListView(
+                  children: model.assetDetails.balances
+                      .map(
+                        (balance) => BalanceCard(
+                          data: balance,
+                          onTap: model.isSendMoneyLoading ? null : () => presenter.transferTapped(balance: balance),
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
               if (model.isSendMoneyLoading)
                 Padding(

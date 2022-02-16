@@ -30,7 +30,7 @@ class BalanceJson {
   final IbcJson? ibc;
 
   Balance toBalanceDomain() => Balance(
-        amount: Amount.fromString(amount?.replaceAll(baseDenom ?? '', '') ?? '0'),
+        amount: Amount.fromString(amount?.replaceAll(baseDenom ?? '', '').split('ibc/')[0] ?? '0'),
         denom: Denom(baseDenom ?? ''),
         onChain: onChain ?? '',
       );

@@ -25,6 +25,7 @@ dependencies:
   crypto: 3.0.1
   pinput: 1.2.2
   firebase_core: 1.11.0
+  collection: 1.15.0
   firebase_crashlytics: 2.4.5
   modal_bottom_sheet: 2.0.0
   flutter_phoenix: 1.0.0

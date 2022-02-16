@@ -1,4 +1,6 @@
+import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/price.dart';
@@ -43,7 +45,12 @@ class Balance extends Equatable {
   Balance byUpdatingPriceAndVerifiedDenom(Price price, List<VerifiedDenom> verifiedDenoms) {
     final baseDenomDisplayText = verifiedDenoms.firstWhere((element) => element.name == denom.text).displayName;
     final ticker = '${verifiedDenoms.firstWhere((element) => element.name == denom.text).ticker}USDT';
-    final unitPrice = price.data.tokens.firstWhere((element) => element.denom.text == ticker).amount.value;
+    var unitPrice = Decimal.zero;
+    try {
+      unitPrice = price.data.tokens.firstWhere((element) => element.denom.text == ticker).amount.value;
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
     final dollarPrice = amount.value * unitPrice;
 
     return Balance(
