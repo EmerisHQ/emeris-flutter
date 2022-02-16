@@ -22,7 +22,7 @@ class EnvironmentConfig {
     // ignore: do_not_use_environment
     const envEthUrl = String.fromEnvironment('ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
     // ignore: do_not_use_environment
-    const envEmerisUrl = String.fromEnvironment('EMERIS_URL', defaultValue: 'https://dev.demeris.io');
+    const envEmerisUrl = String.fromEnvironment('EMERIS_URL', defaultValue: 'https://staging.demeris.io');
     final grpcInfo = GRPCInfo(
       host: grpcUrl ?? envGrpcUrl,
       port: int.parse(grpcPort ?? envGrpcPort),

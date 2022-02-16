@@ -23,6 +23,21 @@ class Balance extends Equatable {
         dollarPrice = Amount.zero,
         onChain = '';
 
+  Balance copyWith({
+    Denom? denom,
+    Amount? amount,
+    String? onChain,
+    Amount? unitPrice,
+    Amount? dollarPrice,
+  }) =>
+      Balance(
+        denom: denom ?? this.denom,
+        amount: amount ?? this.amount,
+        onChain: onChain ?? this.onChain,
+        unitPrice: unitPrice ?? this.unitPrice,
+        dollarPrice: dollarPrice ?? this.dollarPrice,
+      );
+
   final Denom denom;
   final Amount amount;
   final Amount unitPrice;
@@ -45,6 +60,8 @@ class Balance extends Equatable {
   Balance byUpdatingPriceAndVerifiedDenom(Price price, List<VerifiedDenom> verifiedDenoms) {
     final baseDenomDisplayText = verifiedDenoms.firstWhere((element) => element.name == denom.text).displayName;
     final ticker = '${verifiedDenoms.firstWhere((element) => element.name == denom.text).ticker}USDT';
+
+    /// TODO: Pick up the pool token prices from the API or calculate it as done in the web
     var unitPrice = Decimal.zero;
     try {
       unitPrice = price.data.tokens.firstWhere((element) => element.denom.text == ticker).amount.value;
