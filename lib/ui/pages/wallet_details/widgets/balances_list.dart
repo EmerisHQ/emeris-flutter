@@ -16,17 +16,15 @@ class BalancesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        children: balances
-            .map(
-              (balance) => BalanceCard(
-                data: balance,
-                onTap: () => onTapBalance?.call(balance),
-              ),
-            )
-            .toList(),
-      ),
+    return ListView(
+      children: balances
+          .map(
+            (balance) => BalanceCard(
+              data: balance,
+              onTap: () => onTapBalance?.call(balance),
+            ),
+          )
+          .toList(),
     );
   }
 

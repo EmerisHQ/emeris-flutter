@@ -1,6 +1,6 @@
+import 'package:cosmos_utils/extensions.dart';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/price.dart';
@@ -62,12 +62,8 @@ class Balance extends Equatable {
     final ticker = '${verifiedDenoms.firstWhere((element) => element.name == denom.text).ticker}USDT';
 
     /// TODO: Pick up the pool token prices from the API or calculate it as done in the web
-    var unitPrice = Decimal.zero;
-    try {
-      unitPrice = price.data.tokens.firstWhere((element) => element.denom.text == ticker).amount.value;
-    } catch (ex) {
-      debugPrint(ex.toString());
-    }
+    final unitPrice =
+        price.data.tokens.firstOrNull(where: (it) => it.denom.text == ticker)?.amount.value ?? Decimal.zero;
     final dollarPrice = amount.value * unitPrice;
 
     return Balance(
@@ -78,4 +74,10 @@ class Balance extends Equatable {
       onChain: onChain,
     );
   }
+}
+
+extension TotalAmount on Iterable<Balance> {
+  Amount get totalAmount => Amount(
+        map((it) => it.amount.value).reduce((a, b) => a + b),
+      );
 }

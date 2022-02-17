@@ -13,7 +13,7 @@ class Mnemonic extends Equatable {
             .mapIndexed((index, word) => MnemonicWord(index: index, word: word))
             .toList();
 
-  static const numberOfWords = 12;
+  static const numberOfWords = [12, 14];
   final List<MnemonicWord> words;
 
   String get stringRepresentation => words.map((it) => it.word).join(' ');
@@ -25,7 +25,7 @@ class Mnemonic extends Equatable {
 
   List<String> get stringWords => words.map((e) => e.word).toList();
 
-  bool get isEnoughWords => words.length >= numberOfWords;
+  bool get isEnoughWords => numberOfWords.contains(words.length);
 
   List<MnemonicWord> filteredOutSelectedWords(List<MnemonicWord> selectedWords) => words
       .map(

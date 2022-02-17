@@ -6,7 +6,6 @@ import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
 import 'package:flutter_app/domain/repositories/blockchain_metadata_repository.dart';
-import 'package:flutter_app/domain/utils/extensions/balance_list_extension.dart';
 
 class GetBalancesUseCase {
   GetBalancesUseCase(this._bankRepository, this._blockchainMetadataRepository);
