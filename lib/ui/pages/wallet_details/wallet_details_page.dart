@@ -106,11 +106,13 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
                   BalanceHeading(
                     wallet: model.wallet,
                   ),
-                  BalancesList(
-                    balances: model.balances,
-                    onTapBalance: model.isSendMoneyLoading //
-                        ? null
-                        : (balance) => presenter.onTapTransfer(balance: balance),
+                  Expanded(
+                    child: BalancesList(
+                      balances: model.balances,
+                      onTapBalance: model.isSendMoneyLoading //
+                          ? null
+                          : (balance) => presenter.onTapTransfer(balance: balance),
+                    ),
                   ),
                   if (model.isSendMoneyLoading) ...[
                     SizedBox(height: theme.spacingS),

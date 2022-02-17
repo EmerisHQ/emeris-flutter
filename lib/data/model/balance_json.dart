@@ -1,5 +1,5 @@
 import 'package:flutter_app/data/model/ibc_json.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/data/utils/amount_parser.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 
@@ -30,7 +30,7 @@ class BalanceJson {
   final IbcJson? ibc;
 
   Balance toBalanceDomain() => Balance(
-        amount: Amount.fromString(amount?.replaceAll(baseDenom ?? '', '') ?? '0'),
+        amount: parseEmerisAmount(amount ?? '0', baseDenom ?? ''),
         denom: Denom(baseDenom ?? ''),
         onChain: onChain ?? '',
       );
