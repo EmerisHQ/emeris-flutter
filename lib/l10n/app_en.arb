@@ -148,5 +148,9 @@
   "passcodeTooLong": "Passcode is too long",
   "passcodeIsEmpty": "Passcode is empty",
   "invalidPasscodeMessage": "The passcode you provided is invalid",
-  "invalidAmountMessage": "Invalid Amount"
+  "invalidAmountMessage": "Invalid Amount",
+  "closeAction": "Close",
+  "shareAction": "Share",
+  "copyAddressAction": "Copy Address",
+  "copiedAddressToClipboardMessage": "Wallet Address copied to clipboard"
 }

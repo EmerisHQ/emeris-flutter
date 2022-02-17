@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/domain/model/mnemonic.dart';
+import 'package:flutter_app/domain/entities/mnemonic.dart';
 
 class ImportWalletFormData extends Equatable {
   const ImportWalletFormData({

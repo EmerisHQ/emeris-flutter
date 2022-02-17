@@ -2,7 +2,7 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:cosmos_utils/extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/model/mnemonic.dart';
+import 'package:flutter_app/domain/entities/mnemonic.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class SelectedMnemonicWordsArea extends StatelessWidget {

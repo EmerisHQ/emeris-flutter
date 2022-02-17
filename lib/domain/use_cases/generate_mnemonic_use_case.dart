@@ -1,7 +1,7 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/domain/model/failures/generate_mnemonic_failure.dart';
-import 'package:flutter_app/domain/model/mnemonic.dart';
+import 'package:flutter_app/domain/entities/failures/generate_mnemonic_failure.dart';
+import 'package:flutter_app/domain/entities/mnemonic.dart';
 
 class GenerateMnemonicUseCase {
   Future<Either<GenerateMnemonicFailure, Mnemonic>> execute() async {

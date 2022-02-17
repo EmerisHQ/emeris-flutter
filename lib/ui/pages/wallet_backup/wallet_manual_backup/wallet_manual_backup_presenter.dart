@@ -1,18 +1,18 @@
+import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_presentation_model.dart';
-import 'package:flutter_app/utils/clipboard_manager.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class WalletManualBackupPresenter {
   WalletManualBackupPresenter(
     this._model,
     this.navigator,
-    this.clipboardManager,
+    this._copyToClipboardUseCase,
   );
 
   final WalletManualBackupPresentationModel _model;
   final WalletManualBackupNavigator navigator;
-  final ClipboardManager clipboardManager;
+  final CopyToClipboardUseCase _copyToClipboardUseCase;
 
   WalletManualBackupViewModel get viewModel => _model;
 
@@ -35,7 +35,7 @@ class WalletManualBackupPresenter {
   }
 
   Future<void> onTapCopyToClipboard() async {
-    await clipboardManager.copyToClipboard(_model.mnemonic.stringRepresentation);
+    await _copyToClipboardUseCase.execute(data: _model.mnemonic.stringRepresentation);
     await navigator.showSnackBar(strings.copiedToClipboardMessage);
   }
 

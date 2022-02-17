@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/model/mnemonic.dart';
+import 'package:flutter_app/domain/entities/mnemonic.dart';
 
 class AddWalletResult extends Equatable {
   const AddWalletResult({

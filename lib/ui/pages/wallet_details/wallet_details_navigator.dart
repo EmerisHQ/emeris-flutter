@@ -4,13 +4,21 @@ import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
+import 'package:flutter_app/ui/pages/receive/receive_navigator.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_page.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 
 class WalletDetailsNavigator
-    with NoRoutes, SendMoneyRoute, ErrorDialogRoute, WalletDetailsRoute, WalletsListRoute, AssetDetailsRoute {
+    with
+        NoRoutes,
+        SendMoneyRoute,
+        ErrorDialogRoute,
+        WalletDetailsRoute,
+        WalletsListRoute,
+        AssetDetailsRoute,
+        ReceiveRoute {
   WalletDetailsNavigator(this.appNavigator);
 
   @override
