@@ -13,7 +13,7 @@ class Mnemonic extends Equatable {
             .mapIndexed((index, word) => MnemonicWord(index: index, word: word))
             .toList();
 
-  static const numberOfWords = [12, 14];
+  static const numberOfWords = [12, 24];
   final List<MnemonicWord> words;
 
   String get stringRepresentation => words.map((it) => it.word).join(' ');
