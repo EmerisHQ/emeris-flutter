@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_setters_without_getters
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/domain/entities/failures/save_passcode_failure.dart';
 import 'package:flutter_app/domain/entities/passcode.dart';
-import 'package:flutter_app/domain/model/failures/save_passcode_failure.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';

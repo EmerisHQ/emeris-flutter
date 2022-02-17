@@ -2,7 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
-import 'package:flutter_app/domain/model/mnemonic.dart';
+import 'package:flutter_app/domain/entities/mnemonic.dart';
 import 'package:flutter_app/ui/pages/add_wallet/add_wallet_initial_params.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_app/utils/utils.dart';

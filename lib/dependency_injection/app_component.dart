@@ -28,6 +28,7 @@ import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
@@ -35,6 +36,7 @@ import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
+import 'package:flutter_app/domain/use_cases/share_data_use_case.dart';
 import 'package:flutter_app/domain/use_cases/verify_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/verify_wallet_password_use_case.dart';
 import 'package:flutter_app/environment_config.dart';
@@ -60,6 +62,9 @@ import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_presentation_model.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_presenter.dart';
+import 'package:flutter_app/ui/pages/receive/receive_navigator.dart';
+import 'package:flutter_app/ui/pages/receive/receive_presentation_model.dart';
+import 'package:flutter_app/ui/pages/receive/receive_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
@@ -84,6 +89,7 @@ import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presentation_mode
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presenter.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/clipboard_manager.dart';
+import 'package:flutter_app/utils/share_manager.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
@@ -211,6 +217,9 @@ void _configureGeneralDependencies() {
     ..registerFactory<ClipboardManager>(
       ClipboardManager.new,
     )
+    ..registerFactory<ShareManager>(
+      ShareManager.new,
+    )
     ..registerFactory<CosmosAuth>(
       CosmosAuth.new,
     )
@@ -250,6 +259,12 @@ void _configureUseCases() {
     )
     ..registerFactory<GetChainAssetsUseCase>(
       () => GetChainAssetsUseCase(getIt()),
+    )
+    ..registerFactory<CopyToClipboardUseCase>(
+      () => CopyToClipboardUseCase(getIt()),
+    )
+    ..registerFactory<ShareDataUseCase>(
+      () => ShareDataUseCase(getIt()),
     );
 }
 
@@ -343,5 +358,11 @@ void _configureMvp() {
     )
     ..registerFactory<AssetDetailsNavigator>(
       () => AssetDetailsNavigator(getIt()),
+    )
+    ..registerFactoryParam<ReceivePresenter, ReceivePresentationModel, dynamic>(
+      (_model, _) => ReceivePresenter(_model, getIt(), getIt(), getIt()),
+    )
+    ..registerFactory<ReceiveNavigator>(
+      () => ReceiveNavigator(getIt()),
     );
 }

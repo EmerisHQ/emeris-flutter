@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_app/domain/model/failures/passcode_validation_failure.dart';
+import 'package:flutter_app/domain/entities/failures/passcode_validation_failure.dart';
 
 class Passcode extends Equatable {
   const Passcode(
