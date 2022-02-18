@@ -68,7 +68,9 @@ import 'package:flutter_app/ui/pages/receive/receive_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money_page.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_presentation_model.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_presenter.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
@@ -282,12 +284,6 @@ void _configureMvp() {
     ..registerFactory<WalletDetailsNavigator>(
       () => WalletDetailsNavigator(getIt()),
     )
-    ..registerFactoryParam<SendMoneyPresenter, SendMoneyPresentationModel, dynamic>(
-      (_model, _) => SendMoneyPresenter(_model, getIt(), getIt()),
-    )
-    ..registerFactory<SendMoneyNavigator>(
-      () => SendMoneyNavigator(getIt()),
-    )
     ..registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
       (_model, _) => RoutingPresenter(_model, getIt(), getIt(), getIt()),
     )
@@ -364,5 +360,22 @@ void _configureMvp() {
     )
     ..registerFactory<ReceiveNavigator>(
       () => ReceiveNavigator(getIt()),
+    )
+    ..registerFactory<SendMoneyNavigator>(
+      () => SendMoneyNavigator(getIt()),
+    )
+    ..registerFactoryParam<SendMoneyPresentationModel, SendMoneyInitialParams, dynamic>(
+      (_params, _) => SendMoneyPresentationModel(_params),
+    )
+    ..registerFactoryParam<SendMoneyPresenter, SendMoneyInitialParams, dynamic>(
+      (initialParams, _) => SendMoneyPresenter(
+        getIt(param1: initialParams),
+        getIt(),
+      ),
+    )
+    ..registerFactoryParam<SendMoneyPage, SendMoneyInitialParams, dynamic>(
+      (initialParams, _) => SendMoneyPage(
+        presenter: getIt(param1: initialParams),
+      ),
     );
 }
