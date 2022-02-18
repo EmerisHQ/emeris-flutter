@@ -5,6 +5,7 @@ import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/price.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
+import 'package:flutter_app/domain/utils/amount_with_precision_calculator.dart';
 
 class Balance extends Equatable {
   Balance({
@@ -68,7 +69,7 @@ class Balance extends Equatable {
 
     return Balance(
       denom: Denom(baseDenom.displayName),
-      amount: Amount(amount.value / Decimal.fromInt(10).pow(baseDenom.precision)),
+      amount: getAmountWithPrecision(amount, baseDenom.precision),
       unitPrice: Amount.fromString(unitPrice.toStringAsFixed(2)),
       dollarPrice: Amount.fromString(dollarPrice.toStringAsFixed(2)),
       onChain: onChain,
