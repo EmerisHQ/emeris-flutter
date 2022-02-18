@@ -95,27 +95,20 @@ Below you can find a diagram showing the flow of control for a basic scenario of
 
 ### Pull Requests checklist
 
-| Rule                                                                               | Explanation                                                                                                                                                |
-|------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add proper prefix to the PR title (`feat: `, `fix: `, `chore: `
-, `refactor: `)** | [Link](https://www.conventionalcommits.org/en/v1.0.0/)                                                                                                     |
-| **review your own PR
-first**                                                       | reading trough your own pr helps spot obvious errors and it saves time for the reviewer                                                                    |
-| **Make sure all CI checks
-pass**                                                   | CI is meant to catch formatting and lint errors, make use of that and don't force others to do the machine's job :)                                        |                                                                     
-| **Run the app and test it
-yourself**                                               | Before reviewing a PR or when issuing your own code, make sure to run the app and test it making sure the code doesn't break anything and works correctly  |
-| **Don't be afraid to ask
-questions** | Code review is meant not only to find errors in someone's code, but it's also about making sure you understand the code and know what is going on. Don't be afraid to ask questions, if anything looks unclear to you, don't assume that it's your fault, ask a question! :) |
+| Rule | Explanation |
+|---|---|
+| **Add proper prefix to the PR title (`feat: `, `fix: `, `chore: `, `refactor: `)** | [Link](https://www.conventionalcommits.org/en/v1.0.0/) |
+| **review your own PR first** | reading trough your own pr helps spot obvious errors and it saves time for the reviewer |
+| **Make sure all CI checks pass** | CI is meant to catch formatting and lint errors, make use of that and don't force others to do the machine's job :) |    
+| **Run the app and test it yourself** | Before reviewing a PR or when issuing your own code, make sure to run the app and test it making sure the code doesn't break anything and works correctly |
+| **Don't be afraid to ask questions** | Code review is meant not only to find errors in someone's code, but it's also about making sure you understand the code and know what is going on. Don't be afraid to ask questions, if anything looks unclear to you, don't assume that it's your fault, ask a question! :) |
 
 ### General
 
-| Rule                                                                      | Explanation                                                                                                                                                                                                      |
-|---------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Use trailing commas for method/constructor parameters and
-definitions** | This way each param is in a separate line and adding new params is much easier to read in PRs                                                                                                                    |
-| **Prefer named
-parameters**                                               | Whenever using more than one param, consider using named parameters, i.e: <font color="Red">Bad:</font>`getBalances(true,"1283184")`, <font color="Green">Bad:</font>`getBalances(id: "1283184", refresh: true)` |
+| Rule | Explanation |
+|---|---|
+| **Use trailing commas for method/constructor parameters and definitions** | This way each param is in a separate line and adding new params is much easier to read in PRs |
+| **Prefer named parameters** | Whenever using more than one param, consider using named parameters, i.e: <font color="Red">Bad:</font>`getBalances(true,"1283184")`, <font color="Green">Bad:</font>`getBalances(id: "1283184", refresh: true)` |
 
 ### UseCase
 
