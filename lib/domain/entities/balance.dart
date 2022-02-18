@@ -59,7 +59,6 @@ class Balance extends Equatable {
 
   Balance byUpdatingPriceAndVerifiedDenom(Price price, List<VerifiedDenom> verifiedDenoms) {
     final baseDenom = verifiedDenoms.firstWhere((element) => element.name == denom.text);
-    final baseDenomDisplayText = baseDenom.displayName;
     final ticker = '${verifiedDenoms.firstWhere((element) => element.name == denom.text).ticker}USDT';
 
     /// TODO: Pick up the pool token prices from the API or calculate it as done in the web
@@ -68,7 +67,7 @@ class Balance extends Equatable {
     final dollarPrice = amount.value * unitPrice;
 
     return Balance(
-      denom: Denom(baseDenomDisplayText),
+      denom: Denom(baseDenom.displayName),
       amount: Amount(amount.value / Decimal.fromInt(10).pow(baseDenom.precision)),
       unitPrice: Amount.fromString(unitPrice.toStringAsFixed(2)),
       dollarPrice: Amount.fromString(dollarPrice.toStringAsFixed(2)),
