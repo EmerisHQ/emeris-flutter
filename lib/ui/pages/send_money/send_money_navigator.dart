@@ -1,15 +1,12 @@
-import 'package:cosmos_ui_components/components/cosmos_bottom_sheet_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
-import 'package:flutter_app/navigation/close_route.dart';
-import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
-import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_bottom_sheet.dart';
 import 'package:flutter_app/ui/pages/send_money/send_money_initial_params.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_app/ui/pages/send_money/send_money_page.dart';
 
-class SendMoneyNavigator with NoRoutes, ErrorDialogRoute, PasscodeRoute, CloseRoute {
+class SendMoneyNavigator with NoRoutes {
   SendMoneyNavigator(this.appNavigator);
 
   @override
@@ -19,18 +16,14 @@ class SendMoneyNavigator with NoRoutes, ErrorDialogRoute, PasscodeRoute, CloseRo
 }
 
 mixin SendMoneyRoute {
-  BuildContext get context;
+  Future<void> openSendMoney(SendMoneyInitialParams initialParams) {
+    return appNavigator.push(
+      context,
+      materialRoute(getIt<SendMoneyPage>(param1: initialParams)),
+    );
+  }
 
   AppNavigator get appNavigator;
 
-  Future<void> openSendMoneySheet(SendMoneyInitialParams initialParams) async {
-    await showMaterialModalBottomSheet(
-      context: context,
-      builder: (context) => CosmosBottomSheetContainer(
-        child: SendMoneySheet(
-          initialParams: initialParams,
-        ),
-      ),
-    );
-  }
+  BuildContext get context;
 }
