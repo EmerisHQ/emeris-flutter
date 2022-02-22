@@ -152,5 +152,15 @@
   "closeAction": "Close",
   "shareAction": "Share",
   "copyAddressAction": "Copy Address",
-  "copiedAddressToClipboardMessage": "Wallet Address copied to clipboard"
+  "copiedAddressToClipboardMessage": "Wallet Address copied to clipboard",
+  "recipientStepTitle": "Send",
+  "amountStepTitle": "Enter Amount",
+  "reviewStepTitle": "Review",
+  "recipientToLabel": "To",
+  "recipientToHint": "Specify Address",
+  "referenceLabel": "Reference (memo)",
+  "referenceHint": "Add reference (optional)",
+  "confirmRecipientCheckbox": "I have reviewed the address and understand that if it is incorrect, my sent funds may be lost."
+
+
 }

@@ -21,7 +21,10 @@ class ImportWalletNavigator
 }
 
 mixin ImportWalletRoute {
-  Future<EmerisWallet?> openImportWallet(ImportWalletInitialParams initialParams) async => appNavigator.push(
+  Future<EmerisWallet?> openImportWallet(
+    ImportWalletInitialParams initialParams,
+  ) async =>
+      appNavigator.push(
         context,
         materialRoute(
           ImportWalletPage(initialParams: initialParams),

@@ -1,0 +1,3 @@
+class SendTokensInitialParams {
+  const SendTokensInitialParams();
+}

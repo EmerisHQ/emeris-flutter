@@ -38,6 +38,8 @@ mixin ImportWalletPresentationModelBase {
   //////////////////////////////////////
   final Observable<ObservableFuture<Either<AddWalletFailure, EmerisWallet>>?> _importWalletFuture = Observable(null);
 
-  set importWalletFuture(ObservableFuture<Either<AddWalletFailure, EmerisWallet>>? value) =>
+  set importWalletFuture(
+    ObservableFuture<Either<AddWalletFailure, EmerisWallet>>? value,
+  ) =>
       Action(() => _importWalletFuture.value = value)();
 }

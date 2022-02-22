@@ -1,25 +1,25 @@
 import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
 
-enum SendMoneyFailureType {
+enum SendTokensFailureType {
   Unknown,
 }
 
-class SendMoneyFailure {
+class SendTokensFailure {
   // ignore: avoid_field_initializers_in_const_classes
-  const SendMoneyFailure.unknown([this.cause]) : type = SendMoneyFailureType.Unknown;
+  const SendTokensFailure.unknown([this.cause]) : type = SendTokensFailureType.Unknown;
 
-  final SendMoneyFailureType type;
+  final SendTokensFailureType type;
   final dynamic cause;
 
   DisplayableFailure displayableFailure() {
     switch (type) {
-      case SendMoneyFailureType.Unknown:
+      case SendTokensFailureType.Unknown:
         return DisplayableFailure.commonError();
     }
   }
 
   @override
   String toString() {
-    return 'SendMoneyFailure{type: $type, cause: $cause}';
+    return 'SendTokensFailure{type: $type, cause: $cause}';
   }
 }

@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_initial_params.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_page.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_page.dart';
 
-class SendMoneyNavigator with NoRoutes {
-  SendMoneyNavigator(this.appNavigator);
+class SendTokensNavigator with NoRoutes {
+  SendTokensNavigator(this.appNavigator);
 
   @override
   late BuildContext context;
@@ -15,11 +15,11 @@ class SendMoneyNavigator with NoRoutes {
   final AppNavigator appNavigator;
 }
 
-mixin SendMoneyRoute {
-  Future<void> openSendMoney(SendMoneyInitialParams initialParams) {
+mixin SendTokensRoute {
+  Future<void> openSendTokens(SendTokensInitialParams initialParams) {
     return appNavigator.push(
       context,
-      materialRoute(getIt<SendMoneyPage>(param1: initialParams)),
+      materialRoute(getIt<SendTokensPage>(param1: initialParams)),
     );
   }
 

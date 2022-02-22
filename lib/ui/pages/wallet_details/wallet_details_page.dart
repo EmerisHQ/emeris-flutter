@@ -109,12 +109,12 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
                   Expanded(
                     child: BalancesList(
                       balances: model.balances,
-                      onTapBalance: model.isSendMoneyLoading //
+                      onTapBalance: model.isSendTokensLoading //
                           ? null
                           : (balance) => presenter.onTapTransfer(balance: balance),
                     ),
                   ),
-                  if (model.isSendMoneyLoading) ...[
+                  if (model.isSendTokensLoading) ...[
                     SizedBox(height: theme.spacingS),
                     Center(
                       child: Text(

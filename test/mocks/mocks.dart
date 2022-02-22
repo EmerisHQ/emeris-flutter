@@ -8,8 +8,8 @@ import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
-import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
+import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
@@ -50,13 +50,13 @@ class MockSettingsStore extends Mock implements SettingsStore {}
 
 class MockChangeCurrentWalletUseCase extends Mock implements ChangeCurrentWalletUseCase {}
 
-class MockSendMoneyUseCase extends Mock implements SendMoneyUseCase {}
+class MockSendTokensUseCase extends Mock implements SendTokensUseCase {}
 
 class MockGetBalancesUseCase extends Mock implements GetBalancesUseCase {}
 
 // Navigators
 
-class MockSendMoneyNavigator extends Mock implements SendMoneyNavigator {}
+class MockSendTokensNavigator extends Mock implements SendTokensNavigator {}
 
 class MockWalletDetailsNavigator extends Mock implements WalletDetailsNavigator {}
 

@@ -14,7 +14,7 @@ import 'package:mobx/mobx.dart';
 abstract class WalletDetailsViewModel {
   bool get isLoading;
 
-  bool get isSendMoneyLoading;
+  bool get isSendTokensLoading;
 
   EmerisWallet get wallet;
 
@@ -38,7 +38,7 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
 
   ObservableFuture<Either<GeneralFailure, AssetDetails>>? get getAssetDetailsFuture => _getAssetDetailsFuture.value;
 
-  ObservableFuture<Either<AddWalletFailure, Unit>>? get sendMoneyFuture => _sendMoneyFuture.value;
+  ObservableFuture<Either<AddWalletFailure, Unit>>? get SendTokensFuture => _SendTokensFuture.value;
 
   AssetDetails get assetDetails => _assetDetails.value;
 
@@ -46,7 +46,7 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
   bool get isLoading => isFutureInProgress(getAssetDetailsFuture);
 
   @override
-  bool get isSendMoneyLoading => sendMoneyFuture?.status == FutureStatus.pending;
+  bool get isSendTokensLoading => SendTokensFuture?.status == FutureStatus.pending;
 
   @override
   EmerisWallet get wallet => _walletsStore.currentWallet;
@@ -75,10 +75,10 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
 mixin WalletDetailsPresentationModelBase {
   final Observable<ObservableFuture<Either<GeneralFailure, AssetDetails>>?> _getAssetDetailsFuture = Observable(null);
 
-  final Observable<ObservableFuture<Either<AddWalletFailure, Unit>>?> _sendMoneyFuture = Observable(null);
+  final Observable<ObservableFuture<Either<AddWalletFailure, Unit>>?> _SendTokensFuture = Observable(null);
 
-  set sendMoneyFuture(ObservableFuture<Either<AddWalletFailure, Unit>>? value) =>
-      Action(() => _sendMoneyFuture.value = value)();
+  set SendTokensFuture(ObservableFuture<Either<AddWalletFailure, Unit>>? value) =>
+      Action(() => _SendTokensFuture.value = value)();
 
   set getAssetDetailsFuture(ObservableFuture<Either<GeneralFailure, AssetDetails>>? value) =>
       Action(() => _getAssetDetailsFuture.value = value)();
