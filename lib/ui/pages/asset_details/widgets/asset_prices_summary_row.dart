@@ -2,7 +2,7 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/utils/emeris_amount_formatter.dart';
+import 'package:flutter_app/utils/prices_formatter.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class AssetPricesSummaryRow extends StatelessWidget {

@@ -2,12 +2,16 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/asset_chain.dart';
-import 'package:flutter_app/utils/emeris_amount_formatter.dart';
 
 class ChainCard extends StatelessWidget {
-  const ChainCard({required this.chainAsset, Key? key}) : super(key: key);
+  const ChainCard({
+    required this.chainAsset,
+    required this.totalPriceText,
+    Key? key,
+  }) : super(key: key);
 
   final ChainAsset chainAsset;
+  final String totalPriceText;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +29,11 @@ class ChainCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            formatEmerisAmount(chainAsset.balance.dollarPrice),
+            totalPriceText,
             style: TextStyle(color: theme.colors.text),
           ),
           Text(
-            '${formatEmerisAmount(chainAsset.balance.amount, symbol: '')} ${chainAsset.balance.denom.text}',
+            chainAsset.balance.amountWithDenomText,
             style: TextStyle(color: theme.colors.text),
           ),
         ],
@@ -40,6 +44,8 @@ class ChainCard extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<ChainAsset>('chainAsset', chainAsset));
+    properties
+      ..add(DiagnosticsProperty<ChainAsset>('chainAsset', chainAsset))
+      ..add(StringProperty('totalPriceText', totalPriceText));
   }
 }

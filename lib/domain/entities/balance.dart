@@ -1,49 +1,29 @@
-import 'package:cosmos_utils/extensions.dart';
-import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/price.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
+import 'package:flutter_app/domain/entities/token_pair.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/domain/utils/amount_with_precision_calculator.dart';
+import 'package:flutter_app/utils/prices_formatter.dart';
 
 class Balance extends Equatable {
   Balance({
     required this.denom,
     required this.amount,
     this.onChain = '',
-    Amount? unitPrice,
-    Amount? dollarPrice,
-  })  : unitPrice = unitPrice ?? Amount.zero,
-        dollarPrice = dollarPrice ?? Amount.zero;
+  });
 
   Balance.empty()
-      : denom = const Denom(''),
+      : denom = const Denom.empty(),
         amount = Amount.zero,
-        unitPrice = Amount.zero,
-        dollarPrice = Amount.zero,
         onChain = '';
-
-  Balance copyWith({
-    Denom? denom,
-    Amount? amount,
-    String? onChain,
-    Amount? unitPrice,
-    Amount? dollarPrice,
-  }) =>
-      Balance(
-        denom: denom ?? this.denom,
-        amount: amount ?? this.amount,
-        onChain: onChain ?? this.onChain,
-        unitPrice: unitPrice ?? this.unitPrice,
-        dollarPrice: dollarPrice ?? this.dollarPrice,
-      );
 
   final Denom denom;
   final Amount amount;
-  final Amount unitPrice;
-  final Amount dollarPrice;
   final String onChain;
+
+  Amount totalPrice(Prices prices) => prices.priceForDenom(denom)?.totalPriceAmount(amount) ?? Amount.zero;
 
   @override
   String toString() {
@@ -54,27 +34,48 @@ class Balance extends Equatable {
   List<Object> get props => [
         denom,
         amount,
-        unitPrice,
-        dollarPrice,
       ];
 
-  Balance byUpdatingPriceAndVerifiedDenom(Price price, List<VerifiedDenom> verifiedDenoms) {
+  Balance byUpdatingPriceAndVerifiedDenom(
+    Prices prices,
+    List<VerifiedDenom> verifiedDenoms,
+  ) {
     final baseDenom = verifiedDenoms.firstWhere((element) => element.name == denom.text);
-    final ticker = '${verifiedDenoms.firstWhere((element) => element.name == denom.text).ticker}USDT';
 
     /// TODO: Pick up the pool token prices from the API or calculate it as done in the web
-    final unitPrice =
-        price.data.tokens.firstOrNull(where: (it) => it.denom.text == ticker)?.amount.value ?? Decimal.zero;
-    final dollarPrice = amount.value * unitPrice;
+    TokenPair.zero(denom);
 
     return Balance(
       denom: Denom(baseDenom.displayName),
       amount: getAmountWithPrecision(amount, baseDenom.precision),
-      unitPrice: Amount.fromString(unitPrice.toStringAsFixed(2)),
-      dollarPrice: Amount.fromString(dollarPrice.toStringAsFixed(2)),
       onChain: onChain,
     );
   }
+
+  Balance copyWith({
+    Denom? denom,
+    Amount? amount,
+    TokenPair? tokenPrice,
+    String? onChain,
+  }) {
+    return Balance(
+      denom: denom ?? this.denom,
+      amount: amount ?? this.amount,
+      onChain: onChain ?? this.onChain,
+    );
+  }
+
+  String totalPriceText(Prices prices) => formatTokenPrice(
+        amount,
+        prices.priceForDenom(denom) ?? TokenPair.zero(denom),
+      );
+
+  String unitPriceText(Prices prices) => formatTokenPrice(
+        Amount.one,
+        prices.priceForDenom(denom) ?? TokenPair.zero(denom),
+      );
+
+  String get amountWithDenomText => '${formatEmerisAmount(amount, symbol: '')} ${denom.text}';
 }
 
 extension TotalAmount on Iterable<Balance> {

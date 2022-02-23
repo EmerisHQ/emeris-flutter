@@ -7,7 +7,8 @@ import 'package:flutter_app/data/model/translators/prices_translator.dart';
 import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
-import 'package:flutter_app/domain/entities/price.dart';
+import 'package:flutter_app/domain/entities/failures/get_prices_failure.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/domain/entities/primary_channel.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/domain/entities/verify_trace.dart';
@@ -44,8 +45,8 @@ class RestApiBlockchainMetadataRepository implements BlockchainMetadataRepositor
           .mapError((fail) => GeneralFailure.unknown('http failure', fail));
 
   @override
-  Future<Either<GeneralFailure, Price>> getPricesData() async => _httpService
+  Future<Either<GetPricesFailure, Prices>> getPrices() async => _httpService
       .get('/v1/oracle/prices')
-      .execute((json) => PricesDataJson.fromJson(json).toPrice())
-      .mapError((fail) => GeneralFailure.unknown('http failure', fail));
+      .execute((json) => PricesDataJson.fromJson(json).toPrices())
+      .mapError(GetPricesFailure.unknown);
 }

@@ -62,9 +62,9 @@ dependencies:
 
 ## convenient overrides for development to reference packages on local disk, just uncomment following lines and make sure
 ## it points to the location of the checked out tendermint/flutter repository
-#dependency_overrides:
-#  cosmos_utils:
-#    path: ../flutter-public/packages/cosmos_utils
+dependency_overrides:
+  cosmos_utils:
+    path: ../flutter-public/packages/cosmos_utils
 #  transaction_signing_gateway:
 #    path: ../flutter-public/packages/transaction_signing_gateway
 #  cosmos_ui_components:

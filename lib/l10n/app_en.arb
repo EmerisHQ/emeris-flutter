@@ -160,7 +160,6 @@
   "recipientToHint": "Specify Address",
   "referenceLabel": "Reference (memo)",
   "referenceHint": "Add reference (optional)",
-  "confirmRecipientCheckbox": "I have reviewed the address and understand that if it is incorrect, my sent funds may be lost."
-
-
+  "confirmRecipientCheckbox": "I have reviewed the address and understand that if it is incorrect, my sent funds may be lost.",
+  "maxAction": "Max"
 }

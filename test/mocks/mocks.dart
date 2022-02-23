@@ -4,6 +4,7 @@ import 'package:flutter_app/domain/repositories/bank_repository.dart';
 import 'package:flutter_app/domain/repositories/blockchain_metadata_repository.dart';
 import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
+import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
@@ -45,6 +46,8 @@ class MockBankRepository extends Mock implements BankRepository {}
 class MockWalletsStore extends Mock implements WalletsStore {}
 
 class MockSettingsStore extends Mock implements SettingsStore {}
+
+class MockBlockchainMetadataStore extends Mock implements BlockchainMetadataStore {}
 
 // Use cases
 

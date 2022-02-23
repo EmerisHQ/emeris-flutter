@@ -12,7 +12,6 @@ import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_heading.dart
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balances_list.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
 import 'package:flutter_app/ui/widgets/emeris_gradient_avatar.dart';
-import 'package:flutter_app/utils/emeris_amount_formatter.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -51,7 +50,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
     super.initState();
     presenter = widget.presenter ??
         getIt(
-          param1: WalletDetailsPresentationModel(widget.initialParams, getIt()),
+          param1: WalletDetailsPresentationModel(widget.initialParams, getIt(), getIt()),
           param2: getIt<WalletDetailsNavigator>(),
         );
     presenter.navigator.context = context;
@@ -91,7 +90,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
                     onTap: presenter.onTapPortfolioHeading,
                   ),
                   Text(
-                    formatEmerisAmount(model.totalAmountInUSD),
+                    model.totalAmountInUSD,
                     style: TextStyle(
                       fontSize: theme.fontSizeXXL,
                       color: Theme.of(context).colorScheme.secondary,
@@ -112,6 +111,7 @@ class WalletDetailsPageState extends State<WalletDetailsPage> {
                       onTapBalance: model.isSendTokensLoading //
                           ? null
                           : (balance) => presenter.onTapTransfer(balance: balance),
+                      prices: model.prices,
                     ),
                   ),
                   if (model.isSendTokensLoading) ...[
