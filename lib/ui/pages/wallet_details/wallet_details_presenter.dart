@@ -1,9 +1,9 @@
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
-import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/receive/receive_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/wallets_list/wallets_list_initial_params.dart';
@@ -52,5 +52,5 @@ class WalletDetailsPresenter {
 
   void onTapReceive() => navigator.openReceive(ReceiveInitialParams(wallet: _model.wallet));
 
-  void onTapSend() => showNotImplemented();
+  void onTapSend() => navigator.openSendTokens(const SendTokensInitialParams());
 }

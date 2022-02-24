@@ -35,7 +35,9 @@ class AssetDetailsPage extends StatefulWidget {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty<AssetDetailsInitialParams>('initialParams', initialParams))
-      ..add(DiagnosticsProperty<AssetDetailsPresenter?>('presenter', presenter));
+      ..add(
+        DiagnosticsProperty<AssetDetailsPresenter?>('presenter', presenter),
+      );
   }
 }
 

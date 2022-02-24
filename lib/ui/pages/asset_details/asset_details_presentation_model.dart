@@ -73,7 +73,9 @@ mixin AssetDetailsPresentationModelBase {
   set getStakedAmountFuture(ObservableFuture<Either<GeneralFailure, Amount>>? value) =>
       Action(() => _getStakedAmountFuture.value = value)();
 
-  set getChainAssetsDetailsFuture(ObservableFuture<Either<GeneralFailure, List<ChainAsset>>>? value) =>
+  set getChainAssetsDetailsFuture(
+    ObservableFuture<Either<GeneralFailure, List<ChainAsset>>>? value,
+  ) =>
       Action(() => _getChainAssetsDetailsFuture.value = value)();
 
   final Observable<Amount> _stakedAmount = Observable(Amount.zero);

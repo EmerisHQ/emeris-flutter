@@ -15,7 +15,7 @@ import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
 import 'package:flutter_app/data/http/dio_builder.dart';
 import 'package:flutter_app/data/http/http_service.dart';
-import 'package:flutter_app/data/liquidity_pools/rest_apliquidity_pools_repository.dart';
+import 'package:flutter_app/data/liquidity_pools/rest_api_liquidity_pools_repository.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
@@ -34,8 +34,9 @@ import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/paste_from_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
-import 'package:flutter_app/domain/use_cases/send_money_use_case.dart';
+import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/domain/use_cases/share_data_use_case.dart';
 import 'package:flutter_app/domain/use_cases/verify_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/verify_wallet_password_use_case.dart';
@@ -68,11 +69,11 @@ import 'package:flutter_app/ui/pages/receive/receive_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_initial_params.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_navigator.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_page.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_presentation_model.dart';
-import 'package:flutter_app/ui/pages/send_money/send_money_presenter.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_page.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presentation_model.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presenter.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_navigator.dart';
 import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_presentation_model.dart';
@@ -238,8 +239,8 @@ void _configureUseCases() {
     ..registerFactory<GetBalancesUseCase>(
       () => GetBalancesUseCase(getIt(), getIt()),
     )
-    ..registerFactory<SendMoneyUseCase>(
-      () => SendMoneyUseCase(getIt(), getIt()),
+    ..registerFactory<SendTokensUseCase>(
+      () => SendTokensUseCase(getIt(), getIt()),
     )
     ..registerFactory<GenerateMnemonicUseCase>(
       GenerateMnemonicUseCase.new,
@@ -264,6 +265,9 @@ void _configureUseCases() {
     )
     ..registerFactory<CopyToClipboardUseCase>(
       () => CopyToClipboardUseCase(getIt()),
+    )
+    ..registerFactory<PasteFromClipboardUseCase>(
+      () => PasteFromClipboardUseCase(getIt()),
     )
     ..registerFactory<ShareDataUseCase>(
       () => ShareDataUseCase(getIt()),
@@ -361,20 +365,21 @@ void _configureMvp() {
     ..registerFactory<ReceiveNavigator>(
       () => ReceiveNavigator(getIt()),
     )
-    ..registerFactory<SendMoneyNavigator>(
-      () => SendMoneyNavigator(getIt()),
+    ..registerFactory<SendTokensNavigator>(
+      () => SendTokensNavigator(getIt()),
     )
-    ..registerFactoryParam<SendMoneyPresentationModel, SendMoneyInitialParams, dynamic>(
-      (_params, _) => SendMoneyPresentationModel(_params),
+    ..registerFactoryParam<SendTokensPresentationModel, SendTokensInitialParams, dynamic>(
+      (_params, _) => SendTokensPresentationModel(_params),
     )
-    ..registerFactoryParam<SendMoneyPresenter, SendMoneyInitialParams, dynamic>(
-      (initialParams, _) => SendMoneyPresenter(
+    ..registerFactoryParam<SendTokensPresenter, SendTokensInitialParams, dynamic>(
+      (initialParams, _) => SendTokensPresenter(
         getIt(param1: initialParams),
+        getIt(),
         getIt(),
       ),
     )
-    ..registerFactoryParam<SendMoneyPage, SendMoneyInitialParams, dynamic>(
-      (initialParams, _) => SendMoneyPage(
+    ..registerFactoryParam<SendTokensPage, SendTokensInitialParams, dynamic>(
+      (initialParams, _) => SendTokensPage(
         presenter: getIt(param1: initialParams),
       ),
     );
