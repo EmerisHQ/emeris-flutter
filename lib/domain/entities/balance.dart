@@ -1,3 +1,4 @@
+import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_app/domain/utils/amount_with_precision_calculator.dart';
 import 'package:flutter_app/utils/prices_formatter.dart';
 
 class Balance extends Equatable {
-  Balance({
+  const Balance({
     required this.denom,
     required this.amount,
     this.onChain = '',
@@ -75,7 +76,8 @@ class Balance extends Equatable {
         prices.priceForDenom(denom) ?? TokenPair.zero(denom),
       );
 
-  String get amountWithDenomText => '${formatEmerisAmount(amount, symbol: '')} ${denom.text}';
+  /// TODO use 'precision' for determining the format
+  String get amountWithDenomText => '${formatAmount(amount.value.toDouble(), symbol: '')} ${denom.text}';
 }
 
 extension TotalAmount on Iterable<Balance> {

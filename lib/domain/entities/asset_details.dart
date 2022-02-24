@@ -1,9 +1,9 @@
+import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:cosmos_utils/extensions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
-import 'package:flutter_app/utils/prices_formatter.dart';
 
 class AssetDetails extends Equatable {
   const AssetDetails({required this.balances});
@@ -30,6 +30,8 @@ class AssetDetails extends Equatable {
     if (pair == null) {
       return '';
     }
-    return formatTokenPrice(totalAmountInUSD(prices), pair);
+    return formatAmount(
+      totalAmountInUSD(prices).value.toDouble(),
+    );
   }
 }

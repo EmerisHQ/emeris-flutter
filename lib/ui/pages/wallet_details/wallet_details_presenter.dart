@@ -1,4 +1,3 @@
-import 'package:cosmos_utils/extensions.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
@@ -56,8 +55,6 @@ class WalletDetailsPresenter {
   void onTapReceive() => navigator.openReceive(ReceiveInitialParams(wallet: _model.wallet));
 
   void onTapSend() => navigator.openSendTokens(
-        SendTokensInitialParams(
-          _model.balances.firstOrNull() ?? Balance.empty(),
-        ),
+        const SendTokensInitialParams(),
       );
 }

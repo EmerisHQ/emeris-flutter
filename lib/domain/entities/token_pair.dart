@@ -25,5 +25,7 @@ class TokenPair extends Equatable {
         supply,
       ];
 
+  String get symbol => ticker.endsWith('USDT') ? r'$' : '';
+
   Amount totalPriceAmount(Amount amount) => amount * unitPrice;
 }
