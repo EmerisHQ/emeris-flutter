@@ -5,6 +5,8 @@ class Denom extends Equatable {
     this.text,
   );
 
+  const Denom.empty() : text = '';
+
   final String text;
 
   @override

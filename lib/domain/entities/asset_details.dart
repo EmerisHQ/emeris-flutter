@@ -1,16 +1,37 @@
-import 'package:decimal/decimal.dart';
+import 'package:cosmos_utils/amount_formatter.dart';
+import 'package:cosmos_utils/extensions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
 
 class AssetDetails extends Equatable {
   const AssetDetails({required this.balances});
 
   final List<Balance> balances;
 
-  Amount get totalAmountInUSD =>
-      Amount(balances.isEmpty ? Decimal.zero : balances.map((it) => it.dollarPrice.value).reduce((a, b) => a + b));
+  Amount totalAmountInUSD(Prices prices) => balances.isEmpty //
+      ? Amount.zero
+      : balances //
+          .map((it) => it.totalPrice(prices))
+          .reduce((a, b) => a + b);
 
   @override
-  List<Object?> get props => [balances, totalAmountInUSD];
+  List<Object?> get props => [
+        balances,
+      ];
+
+  String totalAmountInUSDText(Prices prices) {
+    final balance = balances.firstOrNull();
+    if (balance == null) {
+      return '';
+    }
+    final pair = prices.priceForDenom(balance.denom);
+    if (pair == null) {
+      return '';
+    }
+    return formatAmount(
+      totalAmountInUSD(prices).value.toDouble(),
+    );
+  }
 }

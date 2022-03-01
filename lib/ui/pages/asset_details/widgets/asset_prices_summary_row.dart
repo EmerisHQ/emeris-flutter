@@ -1,8 +1,8 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/utils/emeris_amount_formatter.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class AssetPricesSummaryRow extends StatelessWidget {
@@ -33,7 +33,7 @@ class AssetPricesSummaryRow extends StatelessWidget {
           contentChild: Column(
             children: [
               Text(strings.stakedTitle),
-              Text(formatEmerisAmount(stakedAmount)),
+              Text(formatAmount(stakedAmount.value.toDouble(), symbol: '')),
             ],
           ),
         ),

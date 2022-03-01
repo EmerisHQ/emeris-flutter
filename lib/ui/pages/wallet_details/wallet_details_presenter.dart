@@ -24,7 +24,7 @@ class WalletDetailsPresenter {
 
   Future<void> init() async {
     await getWalletBalances(_model.wallet);
-    _model.listenToWalletChanges(getWalletBalances);
+    _model.listenToWalletChanges(doOnChange: getWalletBalances);
   }
 
   void dispose() {
@@ -32,7 +32,9 @@ class WalletDetailsPresenter {
   }
 
   Future<void> getWalletBalances(EmerisWallet wallet) async {
-    _model.getAssetDetailsFuture = _getBalancesUseCase.execute(walletData: wallet).observableDoOn(
+    _model.getAssetDetailsFuture = _getBalancesUseCase //
+        .execute(walletData: wallet)
+        .observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
           (balances) => _model.balanceList = balances,
         );
@@ -52,5 +54,7 @@ class WalletDetailsPresenter {
 
   void onTapReceive() => navigator.openReceive(ReceiveInitialParams(wallet: _model.wallet));
 
-  void onTapSend() => navigator.openSendTokens(const SendTokensInitialParams());
+  void onTapSend() => navigator.openSendTokens(
+        const SendTokensInitialParams(),
+      );
 }

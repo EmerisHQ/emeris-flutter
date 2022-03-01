@@ -23,6 +23,7 @@ void main() {
   late WalletDetailsPresenter presenter;
   late WalletDetailsNavigator navigator;
   late MockWalletsStore walletsStore;
+  late MockBlockchainMetadataStore blockchainMetadataStore;
   late MockGetBalancesUseCase getBalancesUseCase;
   late EmerisWallet myWallet;
   late Balance balance;
@@ -30,7 +31,11 @@ void main() {
 
   void _initMvp() {
     initParams = const WalletDetailsInitialParams();
-    model = WalletDetailsPresentationModel(initParams, walletsStore);
+    model = WalletDetailsPresentationModel(
+      initParams,
+      walletsStore,
+      blockchainMetadataStore,
+    );
     navigator = MockWalletDetailsNavigator();
     presenter = WalletDetailsPresenter(
       model,
@@ -65,6 +70,7 @@ void main() {
     registerFallbackValue(DisplayableFailure.commonError());
     registerFallbackValue(const WalletDetailsInitialParams());
     walletsStore = MockWalletsStore();
+    blockchainMetadataStore = MockBlockchainMetadataStore();
     getBalancesUseCase = MockGetBalancesUseCase();
     balance = Balance(
       denom: const Denom('ATOM'),
