@@ -20,6 +20,7 @@ void main() {
   late WalletsListNavigator navigator;
   late MockWalletsStore walletsStore;
   late MockChangeCurrentWalletUseCase changeCurrentWalletUseCase;
+  late MockDeleteWalletUseCase deleteWalletUseCase;
   late EmerisWallet myWallet;
   const fromAddress = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
 
@@ -31,6 +32,7 @@ void main() {
       model,
       navigator,
       changeCurrentWalletUseCase,
+      deleteWalletUseCase,
     );
   }
 
@@ -58,6 +60,7 @@ void main() {
   setUp(() {
     walletsStore = MockWalletsStore();
     changeCurrentWalletUseCase = MockChangeCurrentWalletUseCase();
+    deleteWalletUseCase = MockDeleteWalletUseCase();
     myWallet = const EmerisWallet(
       walletDetails: WalletDetails(
         walletIdentifier: WalletIdentifier(

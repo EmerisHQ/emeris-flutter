@@ -7,6 +7,7 @@ import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/delete_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
@@ -53,6 +54,8 @@ class MockChangeCurrentWalletUseCase extends Mock implements ChangeCurrentWallet
 class MockSendTokensUseCase extends Mock implements SendTokensUseCase {}
 
 class MockGetBalancesUseCase extends Mock implements GetBalancesUseCase {}
+
+class MockDeleteWalletUseCase extends Mock implements DeleteWalletUseCase {}
 
 // Navigators
 

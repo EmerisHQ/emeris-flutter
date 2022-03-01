@@ -5,6 +5,7 @@ import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_details.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
+import 'package:flutter_app/domain/entities/failures/delete_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_wallets_list_failure.dart';
 import 'package:flutter_app/domain/entities/failures/verify_wallet_password_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
@@ -67,6 +68,22 @@ class EmerisWalletsRepository implements WalletsRepository {
               : left(const VerifyWalletPasswordFailure.invalidPassword()),
         );
   }
+
+  @override
+  Future<Either<DeleteWalletFailure, Unit>> deleteWallet(WalletIdentifier walletIdentifier) => _signingGateway
+      .deleteWalletCredentials(
+        publicInfo: WalletPublicInfo(
+          name: '',
+          publicAddress: '',
+          walletId: walletIdentifier.walletId,
+          chainId: walletIdentifier.chainId,
+        ),
+      )
+      .leftMap(
+        (_) => left(
+          const DeleteWalletFailure.unknown(),
+        ),
+      );
 }
 
 extension WalletPublicInfoTranslator on WalletPublicInfo {
