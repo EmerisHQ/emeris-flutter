@@ -1,6 +1,7 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/utils/strings.dart';
 
 mixin EditWalletRoute {
   Future<void> openEditWalletSheet({
@@ -12,11 +13,11 @@ mixin EditWalletRoute {
         context: context,
         actions: [
           CosmosModalAction(
-            text: 'Rename Account',
+            text: strings.renameAccountAction,
             onPressed: onTapRename ?? showNotImplemented,
           ),
           CosmosModalAction(
-            text: 'Delete Account',
+            text: strings.deleteAccountAction,
             onPressed: onTapDelete ?? showNotImplemented,
             isCriticalAction: true,
           ),
