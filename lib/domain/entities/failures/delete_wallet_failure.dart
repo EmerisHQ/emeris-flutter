@@ -24,6 +24,6 @@ class DeleteWalletFailure {
 
   @override
   String toString() {
-    return 'AddWalletFailure{cause: $cause}';
+    return 'DeleteWalletFailure{cause: $cause}';
   }
 }
