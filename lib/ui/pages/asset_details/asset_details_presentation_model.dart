@@ -5,6 +5,8 @@ import 'package:flutter_app/domain/entities/asset_chain.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
+import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
 import 'package:mobx/mobx.dart';
@@ -20,14 +22,18 @@ abstract class AssetDetailsViewModel {
 
   Balance get balance;
 
-  Amount get totalAmountInUSD;
+  String get totalAmountInUSD;
+
+  Prices get prices;
 }
 
 class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase implements AssetDetailsViewModel {
   AssetDetailsPresentationModel(
     this.initialParams,
+    this._blockchainMetadataStore,
   );
 
+  final BlockchainMetadataStore _blockchainMetadataStore;
   final AssetDetailsInitialParams initialParams;
 
   ObservableFuture<Either<GeneralFailure, Amount>>? get getStakedAmountFuture => _getStakedAmountFuture.value;
@@ -61,7 +67,10 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
   Balance get balance => initialParams.balance;
 
   @override
-  Amount get totalAmountInUSD => initialParams.assetDetails.totalAmountInUSD;
+  String get totalAmountInUSD => initialParams.assetDetails.totalAmountInUSDText(prices);
+
+  @override
+  Prices get prices => _blockchainMetadataStore.prices;
 }
 
 mixin AssetDetailsPresentationModelBase {

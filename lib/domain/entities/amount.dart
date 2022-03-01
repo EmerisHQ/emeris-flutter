@@ -8,7 +8,15 @@ class Amount extends Equatable {
 
   Amount.fromInt(int int) : value = Decimal.fromInt(int);
 
+  Amount.fromNum(num num) : value = Decimal.parse(num.toString());
+
+  static Amount? tryParse(String string) {
+    final value = Decimal.tryParse(string);
+    return value == null ? null : Amount(value);
+  }
+
   static final zero = Amount(Decimal.zero);
+  static final one = Amount(Decimal.one);
 
   final Decimal value;
 
@@ -25,6 +33,10 @@ class Amount extends Equatable {
       return false;
     }
   }
+
+  Amount operator *(Amount other) => Amount(value * other.value);
+
+  Amount operator +(Amount other) => Amount(value + other.value);
 
   @override
   List<Object?> get props => [

@@ -24,6 +24,7 @@ import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/repositories/liquidity_pools_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
+import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
@@ -32,6 +33,7 @@ import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/paste_from_clipboard_use_case.dart';
@@ -186,6 +188,9 @@ void _configureStores() {
     )
     ..registerLazySingleton<SettingsStore>(
       SettingsStore.new,
+    )
+    ..registerLazySingleton<BlockchainMetadataStore>(
+      BlockchainMetadataStore.new,
     );
 }
 
@@ -237,7 +242,7 @@ void _configureUseCases() {
       () => ImportWalletUseCase(getIt(), getIt(), getIt()),
     )
     ..registerFactory<GetBalancesUseCase>(
-      () => GetBalancesUseCase(getIt(), getIt()),
+      () => GetBalancesUseCase(getIt(), getIt(), getIt(), getIt()),
     )
     ..registerFactory<SendTokensUseCase>(
       () => SendTokensUseCase(getIt(), getIt()),
@@ -271,6 +276,9 @@ void _configureUseCases() {
     )
     ..registerFactory<ShareDataUseCase>(
       () => ShareDataUseCase(getIt()),
+    )
+    ..registerFactory<GetPricesUseCase>(
+      () => GetPricesUseCase(getIt(), getIt()),
     );
 }
 

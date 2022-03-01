@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cosmos_utils/extensions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/redeem_failure.dart';
@@ -64,8 +63,6 @@ class ActionHandler {
       balance: Balance(
         amount: balance.amount,
         denom: Denom(getDenomHash(verifyTrace.path, verifyTrace.baseDenom, hopsToRemove: i)),
-        unitPrice: Amount.fromString('0'),
-        dollarPrice: Amount.fromString('0'),
         onChain: balance.onChain,
       ),
       baseDenom: Denom(
@@ -89,12 +86,7 @@ class ActionHandler {
     final steps = <TransferStep>[];
     var mustAddFee = false;
     final output = Output(
-      balance: Balance(
-        denom: const Denom(''),
-        amount: Amount.fromInt(0),
-        unitPrice: Amount.fromString('0'),
-        dollarPrice: Amount.fromString('0'),
-      ),
+      balance: Balance.empty(),
       chainId: '',
     );
     if (isNative(balance.denom.text)) {
@@ -322,11 +314,7 @@ extension ChainAmountOnTrace on VerifyTrace {
         output: Output(
           balance: Balance(
             amount: balance.amount,
-            denom: Denom(
-              baseDenom,
-            ),
-            unitPrice: Amount.fromString('0'),
-            dollarPrice: Amount.fromString('0'),
+            denom: Denom(baseDenom),
             onChain: balance.onChain,
           ),
           chainId: trace[trace.length - 1].counterpartyName,
@@ -362,8 +350,8 @@ Future<bool> isVerified(Denom denom, String chainId, BlockchainMetadataRepositor
 }
 
 /// TODO: This method should return a Future<Either>
-Future<List<FeeWithDenom>> getFeeForChain(String chainId, ChainsRepository chainsRespository) async {
-  final chainDetails = await chainsRespository.getChainDetails(chainId);
+Future<List<FeeWithDenom>> getFeeForChain(String chainId, ChainsRepository chainsRepository) async {
+  final chainDetails = await chainsRepository.getChainDetails(chainId);
   final fees = <FeeWithDenom>[];
 
   await chainDetails.fold<Future?>(

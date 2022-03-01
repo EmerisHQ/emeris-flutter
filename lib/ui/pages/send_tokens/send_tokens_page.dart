@@ -53,33 +53,40 @@ class _SendTokensPageState extends State<SendTokensPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) => Scaffold(
-        appBar: CosmosAppBar(
-          leading: const CosmosBackButton(text: ''),
-          title: model.title,
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(CosmosTheme.of(context).spacingL),
-          child: Observer(
-            builder: (context) => SendTokensWizardForm(
-              step: model.step,
-              steps: [
-                Observer(
-                  builder: (context) => RecipientSendTokensStep(
-                    recipientTextController: recipientController,
-                    onChangedRecipientAddress: presenter.onChangedRecipientAddress,
-                    recipientConfirmed: model.recipientConfirmed,
-                    onTapConfirmRecipientCheckbox: presenter.onTapConfirmRecipientCheckbox,
-                    onTapPaste: presenter.onTapPaste,
-                    onTapScanCode: presenter.onTapScanRecipientAddress,
-                    onChangedMemo: presenter.onChangeMemo,
-                    onTapContinue: model.continueButtonEnabled ? presenter.onTapContinue : null,
+    return WillPopScope(
+      onWillPop: presenter.onWillPop,
+      child: Observer(
+        builder: (context) => Scaffold(
+          appBar: CosmosAppBar(
+            leading: CosmosBackButton(
+              text: '',
+              onTap: presenter.onTapBack,
+            ),
+            title: model.title,
+          ),
+          body: Padding(
+            padding: EdgeInsets.all(CosmosTheme.of(context).spacingL),
+            child: Observer(
+              builder: (context) => SendTokensWizardForm(
+                step: model.step,
+                steps: [
+                  Observer(
+                    builder: (context) => RecipientSendTokensStep(
+                      recipientTextController: recipientController,
+                      memoTextController: memoController,
+                      onChangedRecipientAddress: presenter.onChangedRecipientAddress,
+                      recipientConfirmed: model.recipientConfirmed,
+                      onTapConfirmRecipientCheckbox: presenter.onTapConfirmRecipientCheckbox,
+                      onTapPaste: presenter.onTapPaste,
+                      onTapScanCode: presenter.onTapScanRecipientAddress,
+                      onChangedMemo: presenter.onChangeMemo,
+                      onTapContinue: model.continueButtonEnabled ? presenter.onTapContinue : null,
+                    ),
                   ),
-                ),
-                const AmountSendTokensStep(),
-                const ReviewSendTokensStep(),
-              ],
+                  const AmountSendTokensStep(),
+                  const ReviewSendTokensStep(),
+                ],
+              ),
             ),
           ),
         ),

@@ -11,6 +11,7 @@ class RecipientSendTokensStep extends StatelessWidget {
     required this.onTapPaste,
     required this.onTapScanCode,
     required this.recipientTextController,
+    required this.memoTextController,
     required this.onChangedMemo,
     required this.onTapContinue,
     Key? key,
@@ -23,6 +24,7 @@ class RecipientSendTokensStep extends StatelessWidget {
   final VoidCallback onTapScanCode;
   final bool recipientConfirmed;
   final TextEditingController recipientTextController;
+  final TextEditingController memoTextController;
   final VoidCallback? onTapContinue;
 
   @override
@@ -64,6 +66,7 @@ class RecipientSendTokensStep extends StatelessWidget {
           Text(strings.referenceLabel),
           CosmosTextField(
             onChanged: onChangedMemo,
+            controller: memoTextController,
             hint: strings.referenceHint,
           ),
           const Spacer(),
@@ -93,6 +96,7 @@ class RecipientSendTokensStep extends StatelessWidget {
       ..add(ObjectFlagProperty<VoidCallback>.has('onTapQrCode', onTapScanCode))
       ..add(DiagnosticsProperty<TextEditingController>('recipientTextController', recipientTextController))
       ..add(ObjectFlagProperty<ValueChanged<String>>.has('onChangedMemo', onChangedMemo))
-      ..add(ObjectFlagProperty<VoidCallback?>.has('onTapContinue', onTapContinue));
+      ..add(ObjectFlagProperty<VoidCallback?>.has('onTapContinue', onTapContinue))
+      ..add(DiagnosticsProperty<TextEditingController>('memoTextController', memoTextController));
   }
 }

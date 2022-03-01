@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
+import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
@@ -24,17 +25,21 @@ abstract class WalletDetailsViewModel {
 
   List<Balance> get balances;
 
-  Amount get totalAmountInUSD;
+  String get totalAmountInUSD;
+
+  Prices get prices;
 }
 
 class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase implements WalletDetailsViewModel {
   WalletDetailsPresentationModel(
     this.initialParams,
     this._walletsStore,
+    this._blockchainMetadataStore,
   );
 
   final WalletDetailsInitialParams initialParams;
   final WalletsStore _walletsStore;
+  final BlockchainMetadataStore _blockchainMetadataStore;
 
   ObservableFuture<Either<GeneralFailure, AssetDetails>>? get getAssetDetailsFuture => _getAssetDetailsFuture.value;
 
@@ -59,8 +64,8 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
 
   ReactionDisposer? disposer;
 
-  void listenToWalletChanges(ValueChanged<EmerisWallet> callback) {
-    disposer = _walletsStore.listenToWalletChanges(callback);
+  void listenToWalletChanges({required ValueChanged<EmerisWallet> doOnChange}) {
+    disposer = _walletsStore.listenToWalletChanges(doOnChange);
   }
 
   void dispose() => disposer?.call();
@@ -69,7 +74,10 @@ class WalletDetailsPresentationModel with WalletDetailsPresentationModelBase imp
   List<Balance> get balances => assetDetails.balances;
 
   @override
-  Amount get totalAmountInUSD => assetDetails.totalAmountInUSD;
+  String get totalAmountInUSD => assetDetails.totalAmountInUSDText(prices);
+
+  @override
+  Prices get prices => _blockchainMetadataStore.prices;
 }
 
 mixin WalletDetailsPresentationModelBase {

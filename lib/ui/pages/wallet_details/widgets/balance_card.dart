@@ -1,16 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/utils/emeris_amount_formatter.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
 
 class BalanceCard extends StatelessWidget {
   const BalanceCard({
-    required this.data,
+    required this.balance,
+    required this.prices,
     this.onTap,
     Key? key,
   }) : super(key: key);
 
-  final Balance data;
+  final Balance balance;
+  final Prices prices;
   final VoidCallback? onTap;
 
   @override
@@ -18,9 +20,9 @@ class BalanceCard extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       onTap: onTap,
-      title: Text(data.denom.text.toUpperCase()),
+      title: Text(balance.denom.text.toUpperCase()),
       subtitle: Text(
-        '\$${data.unitPrice.value.toStringAsFixed(2)}',
+        balance.unitPriceText(prices),
         style: TextStyle(color: Theme.of(context).colorScheme.secondary),
       ),
       leading: CircleAvatar(backgroundColor: Theme.of(context).colorScheme.secondary),
@@ -29,11 +31,11 @@ class BalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            formatEmerisAmount(data.dollarPrice),
+            balance.totalPriceText(prices),
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           Text(
-            '${formatEmerisAmount(data.amount, symbol: '')} ${data.denom.text}',
+            balance.amountWithDenomText,
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
         ],
@@ -45,7 +47,8 @@ class BalanceCard extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty<Balance>('data', data))
-      ..add(ObjectFlagProperty<VoidCallback?>.has('onTap', onTap));
+      ..add(DiagnosticsProperty<Balance>('data', balance))
+      ..add(ObjectFlagProperty<VoidCallback?>.has('onTap', onTap))
+      ..add(DiagnosticsProperty<Prices>('prices', prices));
   }
 }

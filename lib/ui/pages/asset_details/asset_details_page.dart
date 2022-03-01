@@ -13,7 +13,6 @@ import 'package:flutter_app/ui/pages/asset_details/widgets/asset_prices_summary_
 import 'package:flutter_app/ui/pages/asset_details/widgets/chains_list.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
 import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
-import 'package:flutter_app/utils/emeris_amount_formatter.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -51,7 +50,7 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
     super.initState();
     presenter = widget.presenter ??
         getIt(
-          param1: AssetDetailsPresentationModel(widget.initialParams),
+          param1: AssetDetailsPresentationModel(widget.initialParams, getIt()),
           param2: getIt<AssetDetailsNavigator>(),
         );
     presenter.navigator.context = context;
@@ -73,12 +72,13 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
                   leading: CosmosBackButton(),
                 ),
                 BalanceCard(
-                  data: model.balance,
+                  balance: model.balance,
+                  prices: model.prices,
                 ),
                 SizedBox(height: theme.spacingL),
                 Text(strings.balanceTitle),
                 Text(
-                  formatEmerisAmount(model.totalAmountInUSD),
+                  model.totalAmountInUSD,
                   style: TextStyle(
                     fontSize: theme.fontSizeXXL,
                     color: Theme.of(context).colorScheme.secondary,
@@ -106,6 +106,7 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
                   child: ChainsList(
                     chainAssets: model.chainAssets,
                     isChainListLoading: model.isChainListLoading,
+                    prices: model.prices,
                   ),
                 ),
                 const Spacer(),
