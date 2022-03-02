@@ -123,7 +123,7 @@ SPEC CHECKSUMS:
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  local_auth: ef62030a2731330b95df7ef1331bd15f6a64b8a6
+  local_auth: 1740f55d7af0a2e2a8684ce225fe79d8931e808c
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58

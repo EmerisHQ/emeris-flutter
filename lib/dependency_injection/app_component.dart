@@ -30,6 +30,7 @@ import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/stores/wallets_store.dart';
 import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
+import 'package:flutter_app/domain/use_cases/delete_wallet_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
@@ -279,13 +280,16 @@ void _configureUseCases() {
     )
     ..registerFactory<GetPricesUseCase>(
       () => GetPricesUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<DeleteWalletUseCase>(
+      () => DeleteWalletUseCase(getIt(), getIt(), getIt()),
     );
 }
 
 void _configureMvp() {
   getIt
     ..registerFactoryParam<WalletsListPresenter, WalletsListPresentationModel, dynamic>(
-      (_model, _) => WalletsListPresenter(_model, getIt(), getIt()),
+      (_model, _) => WalletsListPresenter(_model, getIt(), getIt(), getIt()),
     )
     ..registerFactory<WalletsListNavigator>(
       () => WalletsListNavigator(getIt()),

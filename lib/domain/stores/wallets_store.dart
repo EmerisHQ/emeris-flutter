@@ -11,6 +11,10 @@ class WalletsStore with _WalletStoreBase {
         wallets.add(wallet);
       })();
 
+  void removeWallet(EmerisWallet wallet) => Action(() {
+        wallets.remove(wallet);
+      })();
+
   void addAllWallets(List<EmerisWallet> newWallets) => Action(() {
         wallets.addAll(newWallets);
       })();
