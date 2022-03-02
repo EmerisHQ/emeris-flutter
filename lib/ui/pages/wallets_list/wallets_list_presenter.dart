@@ -49,10 +49,10 @@ class WalletsListPresenter {
 
   void onTapEditWallet(WalletInfo wallet) => navigator.openEditWalletSheet(
         title: wallet.name,
-        onTapDelete: () => _onDeleteCallback(wallet),
+        onTapDelete: () => _deleteWallet(wallet),
       );
 
-  Future<void> _onDeleteCallback(WalletInfo wallet) async {
+  Future<void> _deleteWallet(WalletInfo wallet) async {
     final passcode = await navigator.openPasscode(const PasscodeInitialParams());
     if (passcode == null) {
       return navigator.close();

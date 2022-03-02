@@ -79,10 +79,8 @@ class EmerisWalletsRepository implements WalletsRepository {
           chainId: walletIdentifier.chainId,
         ),
       )
-      .leftMap(
-        (_) => left(
-          const DeleteWalletFailure.unknown(),
-        ),
+      .mapError(
+        (fail) => DeleteWalletFailure.unknown(cause: fail),
       );
 }
 
