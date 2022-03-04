@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/utils/app_initializer.dart';
+import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' hide when;
 import 'package:mocktail/mocktail.dart';
@@ -7,17 +7,20 @@ import 'package:mocktail/mocktail.dart';
 import 'mocks/mocks.dart';
 
 void main() {
-  late AppInitializer initializer;
+  late AppInitUseCase initializer;
   late MockWalletsRepository walletsRepository;
   late MockWalletsStore walletsStore;
   late MockSettingsStore settingsStore;
   late MockAuthRepository authRepository;
   late MockAppLocalizationsInitializer appLocalizationsInitializer;
+  late MockGetChainsUseCase getChainsUseCase;
+  late MockGetPricesUseCase getPricesUseCase;
+  late MockGetVerifiedDenomsUseCase getVerifiedDenomsUseCase;
   //
   test(
     'should initialize settings on start',
     () async {
-      await initializer.init();
+      await initializer.execute();
       verify(() => settingsStore.init(authRepository));
     },
   );
@@ -29,12 +32,18 @@ void main() {
     walletsStore = MockWalletsStore();
     settingsStore = MockSettingsStore();
     authRepository = MockAuthRepository();
-    initializer = AppInitializer(
+    getPricesUseCase = MockGetPricesUseCase();
+    getChainsUseCase = MockGetChainsUseCase();
+    getVerifiedDenomsUseCase = MockGetVerifiedDenomsUseCase();
+    initializer = AppInitUseCase(
       appLocalizationsInitializer,
       walletsRepository,
       walletsStore,
       settingsStore,
       authRepository,
+      getPricesUseCase,
+      getChainsUseCase,
+      getVerifiedDenomsUseCase,
     );
     when(() => settingsStore.init(authRepository)) //
         .thenAnswer((invocation) => Future.value());

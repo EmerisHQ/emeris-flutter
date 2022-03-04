@@ -1,4 +1,5 @@
 import 'package:cosmos_utils/amount_formatter.dart';
+import 'package:cosmos_utils/extensions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
@@ -66,9 +67,9 @@ class Balance extends Equatable {
     );
   }
 
-  String totalPriceText(Prices prices) => formatTokenPrice(
+  String totalPriceText(TokenPair tokenPair) => formatTokenPrice(
         amount,
-        prices.priceForDenom(denom) ?? TokenPair.zero(denom),
+        tokenPair,
       );
 
   String unitPriceText(Prices prices) => formatTokenPrice(
@@ -84,4 +85,22 @@ extension TotalAmount on Iterable<Balance> {
   Amount get totalAmount => Amount(
         map((it) => it.amount.value).reduce((a, b) => a + b),
       );
+
+  Amount totalAmountInUSD(Prices prices) => isEmpty //
+      ? Amount.zero
+      : map((it) => it.totalPrice(prices)).reduce((a, b) => a + b);
+
+  String totalAmountInUSDText(Prices prices) {
+    final balance = firstOrNull();
+    if (balance == null) {
+      return '';
+    }
+    final pair = prices.priceForDenom(balance.denom);
+    if (pair == null) {
+      return '';
+    }
+    return formatAmount(
+      totalAmountInUSD(prices).value.toDouble(),
+    );
+  }
 }

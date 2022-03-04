@@ -7,9 +7,11 @@ import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/failures/get_verified_denoms_failure.dart';
 import 'package:flutter_app/ibc/action_handler.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+
 import 'mocks/mocks.dart';
 
 void main() {
@@ -97,7 +99,7 @@ void main() {
 
       when(() => ibcApiMock.getVerifiedDenoms()).thenAnswer(
         (_) async => left(
-          GeneralFailure.unknown('Could not fetch verified denoms'),
+          const GetVerifiedDenomsFailure.unknown(),
         ),
       );
 

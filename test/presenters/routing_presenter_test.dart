@@ -1,10 +1,11 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
-import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' hide when;
 import 'package:mocktail/mocktail.dart';
@@ -16,7 +17,7 @@ void main() {
   late RoutingPresentationModel model;
   late RoutingPresenter presenter;
   late RoutingNavigator navigator;
-  late AppInitializer appInitializer;
+  late AppInitUseCase appInitializer;
   late MockWalletsStore walletsStore;
   late MockChangeCurrentWalletUseCase changeCurrentWalletUseCase;
 
@@ -45,7 +46,7 @@ void main() {
       // WHEN
       await presenter.init();
       //THEN
-      verify(() => appInitializer.init());
+      verify(() => appInitializer.execute());
     },
   );
 
@@ -58,7 +59,7 @@ void main() {
       // WHEN
       await presenter.init();
       //THEN
-      verifyNever(() => appInitializer.init());
+      verifyNever(() => appInitializer.execute());
     },
   );
 
@@ -71,7 +72,7 @@ void main() {
       // WHEN
       await presenter.init();
       //THEN
-      verify(() => appInitializer.init());
+      verify(() => appInitializer.execute());
     },
   );
 
@@ -94,7 +95,7 @@ void main() {
     appInitializer = MockAppInitializer();
     walletsStore = MockWalletsStore();
     changeCurrentWalletUseCase = MockChangeCurrentWalletUseCase();
-    when(() => appInitializer.init()).thenAnswer((invocation) => Future.value());
+    when(() => appInitializer.execute()).thenAnswer((invocation) => Future.value(right(unit)));
   });
 
   tearDown(() {});

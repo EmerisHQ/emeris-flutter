@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/domain/entities/asset_chain.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
@@ -50,24 +50,24 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
   @override
   Amount get stakedAmount => _stakedAmount.value;
 
-  List<Balance> get balances => initialParams.assetDetails.balances;
+  List<Balance> get balances => initialParams.chainBalances;
 
-  Balance get selectedAsset => initialParams.balance;
+  Balance get selectedAsset => initialParams.totalBalance;
 
   @override
   List<ChainAsset> get chainAssets => _chainAssets.value;
 
   EmerisWallet get wallet => initialParams.wallet;
 
-  String get onChain => initialParams.balance.onChain;
+  String get onChain => initialParams.totalBalance.onChain;
 
-  Denom get baseDenom => initialParams.balance.denom;
-
-  @override
-  Balance get balance => initialParams.balance;
+  Denom get baseDenom => initialParams.totalBalance.denom;
 
   @override
-  String get totalAmountInUSD => initialParams.assetDetails.totalAmountInUSDText(prices);
+  Balance get balance => initialParams.totalBalance;
+
+  @override
+  String get totalAmountInUSD => initialParams.chainBalances.totalAmountInUSDText(prices);
 
   @override
   Prices get prices => _blockchainMetadataStore.prices;

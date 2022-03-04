@@ -21,9 +21,9 @@ class Amount extends Equatable {
   final Decimal value;
 
   @override
-  String toString() => value.toStringAsPrecision(10);
+  String toString() => value.toString();
 
-  String get displayText => value.toStringAsPrecision(10);
+  String get displayText => value.toString();
 
   static bool validate(String text) {
     try {
@@ -35,6 +35,8 @@ class Amount extends Equatable {
   }
 
   Amount operator *(Amount other) => Amount(value * other.value);
+
+  Amount operator /(Amount other) => Amount(value / other.value);
 
   Amount operator +(Amount other) => Amount(value + other.value);
 
