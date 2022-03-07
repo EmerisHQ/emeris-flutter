@@ -4,7 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' hide when;
 import 'package:mocktail/mocktail.dart';
 
-import 'mocks/mocks.dart';
+import '../mocks/mocks.dart';
+import '../test_utils.dart';
 
 void main() {
   late AppInitUseCase initializer;
@@ -51,5 +52,11 @@ void main() {
         .thenAnswer((invocation) => Future.value(right([])));
     when(() => walletsStore.wallets) //
         .thenAnswer((invocation) => ObservableList());
+    when(() => getPricesUseCase.execute()) //
+        .thenAnswer((invocation) => successFuture(unit));
+    when(() => getChainsUseCase.execute()) //
+        .thenAnswer((invocation) => successFuture(unit));
+    when(() => getVerifiedDenomsUseCase.execute()) //
+        .thenAnswer((invocation) => successFuture(unit));
   });
 }
