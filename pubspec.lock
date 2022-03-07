@@ -186,23 +186,29 @@ packages:
   cosmos_auth:
     dependency: "direct main"
     description:
-      path: "../flutter-public/packages/cosmos_auth"
-      relative: true
-    source: path
+      path: "packages/cosmos_auth"
+      ref: main
+      resolved-ref: b68ac1dc262df3c70756f8df50f90558a012ae37
+      url: "https://github.com/tendermint/flutter.git"
+    source: git
     version: "0.0.1"
   cosmos_ui_components:
     dependency: "direct main"
     description:
-      path: "../flutter-public/packages/cosmos_ui_components"
-      relative: true
-    source: path
+      path: "packages/cosmos_ui_components"
+      ref: main
+      resolved-ref: b68ac1dc262df3c70756f8df50f90558a012ae37
+      url: "https://github.com/tendermint/flutter.git"
+    source: git
     version: "0.0.1"
   cosmos_utils:
     dependency: "direct main"
     description:
-      path: "../flutter-public/packages/cosmos_utils"
-      relative: true
-    source: path
+      path: "packages/cosmos_utils"
+      ref: main
+      resolved-ref: b68ac1dc262df3c70756f8df50f90558a012ae37
+      url: "https://github.com/tendermint/flutter.git"
+    source: git
     version: "0.0.1"
   coverage:
     dependency: transitive
@@ -1051,9 +1057,11 @@ packages:
   transaction_signing_gateway:
     dependency: "direct main"
     description:
-      path: "../flutter-public/packages/transaction_signing_gateway"
-      relative: true
-    source: path
+      path: "packages/transaction_signing_gateway"
+      ref: main
+      resolved-ref: b68ac1dc262df3c70756f8df50f90558a012ae37
+      url: "https://github.com/tendermint/flutter.git"
+    source: git
     version: "0.0.1"
   typed_data:
     dependency: transitive
