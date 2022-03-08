@@ -1,4 +1,4 @@
-import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:cosmos_ui_components/models/account_info.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/model/wallet_details.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
@@ -24,9 +24,9 @@ class EmerisWallet extends Equatable {
 }
 
 extension EmerisWalletInfo on EmerisWallet {
-  WalletInfo get walletInfo => WalletInfo(
+  AccountInfo get walletInfo => AccountInfo(
         name: walletDetails.walletAlias,
         address: walletDetails.walletAddress,
-        walletId: walletDetails.walletIdentifier.walletId,
+        accountId: walletDetails.walletIdentifier.walletId,
       );
 }

@@ -1,5 +1,4 @@
-import 'package:cosmos_ui_components/components/template/cosmos_wallets_list_view.dart';
-import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:cosmos_ui_components/models/account_info.dart';
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
@@ -47,12 +46,12 @@ class WalletsListPresenter {
 
   void onTapClose() => navigator.close();
 
-  void onTapEditWallet(WalletInfo wallet) => navigator.openEditWalletSheet(
+  void onTapEditWallet(AccountInfo wallet) => navigator.openEditWalletSheet(
         title: wallet.name,
         onTapDelete: () => _deleteWallet(wallet),
       );
 
-  Future<void> _deleteWallet(WalletInfo wallet) async {
+  Future<void> _deleteWallet(AccountInfo wallet) async {
     final passcode = await navigator.openPasscode(const PasscodeInitialParams());
     if (passcode == null) {
       return navigator.close();

@@ -1,5 +1,6 @@
 import 'package:cosmos_ui_components/cosmos_text_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:cosmos_ui_components/models/account_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/emeris_wallet.dart';
@@ -38,7 +39,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
 
   WalletsListViewModel get model => presenter.viewModel;
 
-  List<WalletInfo> get walletInfos => model.wallets.map((it) => it.walletInfo).toList();
+  List<AccountInfo> get walletInfos => model.wallets.map((it) => it.walletInfo).toList();
 
   @override
   void initState() {
@@ -100,9 +101,9 @@ class WalletsListSheetState extends State<WalletsListSheet> {
 
   Expanded mainList() {
     return Expanded(
-      child: CosmosWalletsListView(
+      child: CosmosAccountsListView(
         list: walletInfos,
-        selectedWallet: model.selectedWallet.walletInfo,
+        selectedAccount: model.selectedWallet.walletInfo,
         onClicked: (walletIndex) => presenter.walletClicked(model.wallets[walletIndex]),
         isEditing: model.isEditingAccountList,
         onEditIconPressed: presenter.onTapEditWallet,
@@ -115,7 +116,7 @@ class WalletsListSheetState extends State<WalletsListSheet> {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty<WalletsListPresenter>('presenter', presenter))
-      ..add(IterableProperty<WalletInfo>('walletInfos', walletInfos))
+      ..add(IterableProperty<AccountInfo>('walletInfos', walletInfos))
       ..add(DiagnosticsProperty<WalletsListViewModel>('model', model));
   }
 }

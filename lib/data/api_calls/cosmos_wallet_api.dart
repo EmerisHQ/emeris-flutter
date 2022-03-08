@@ -13,8 +13,8 @@ import 'package:flutter_app/domain/entities/transaction.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:flutter_app/environment_config.dart';
+import 'package:transaction_signing_gateway/model/account_lookup_key.dart';
 import 'package:transaction_signing_gateway/model/transaction_hash.dart';
-import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 
 class CosmosWalletApi implements WalletApi {
@@ -49,21 +49,21 @@ class CosmosWalletApi implements WalletApi {
     if (password == null) {
       return left(GeneralFailure.unknown('There was no password provided'));
     }
-    final walletLookupKey = WalletLookupKey(
-      walletId: walletIdentifier.walletId,
+    final walletLookupKey = AccountLookupKey(
+      accountId: walletIdentifier.walletId,
       chainId: walletIdentifier.chainId,
       password: password,
     );
     return _signingGateway
         .signTransaction(
           transaction: saccoTx,
-          walletLookupKey: walletLookupKey,
+          accountLookupKey: walletLookupKey,
         )
         .leftMap((signingFailure) => left(GeneralFailure.unknown('$signingFailure')))
         .flatMap(
           (transaction) => _signingGateway
               .broadcastTransaction(
-                walletLookupKey: walletLookupKey,
+                accountLookupKey: walletLookupKey,
                 transaction: transaction as SignedAlanTransaction,
               )
               .leftMap(

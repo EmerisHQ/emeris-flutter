@@ -22,16 +22,16 @@ Future<Either<AddWalletFailure, EmerisWallet>> importAlanWallet(
   } catch (e) {
     return left(AddWalletFailure.invalidMnemonic(e));
   }
-  final creds = AlanPrivateWalletCredentials(
-    publicInfo: WalletPublicInfo(
+  final creds = AlanPrivateAccountCredentials(
+    publicInfo: AccountPublicInfo(
       chainId: walletFormData.walletType.stringVal,
-      walletId: const Uuid().v4(),
+      accountId: const Uuid().v4(),
       name: walletFormData.name,
       publicAddress: wallet.bech32Address,
     ),
     mnemonic: walletFormData.mnemonic.stringRepresentation,
   );
-  final result = await signingGateway.storeWalletCredentials(
+  final result = await signingGateway.storeAccountCredentials(
     credentials: creds,
     password: walletFormData.password,
   );
@@ -41,7 +41,7 @@ Future<Either<AddWalletFailure, EmerisWallet>> importAlanWallet(
       EmerisWallet(
         walletDetails: WalletDetails(
           walletIdentifier: WalletIdentifier(
-            walletId: creds.publicInfo.walletId,
+            walletId: creds.publicInfo.accountId,
             chainId: creds.publicInfo.chainId,
           ),
           walletAlias: walletFormData.name,

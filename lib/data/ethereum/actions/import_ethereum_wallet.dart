@@ -11,7 +11,7 @@ import 'package:flutter_app/domain/entities/failures/add_wallet_failure.dart';
 import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
-import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
+import 'package:transaction_signing_gateway/model/account_public_info.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wallet_core/wallet_core.dart';
 
@@ -32,8 +32,8 @@ Future<Either<AddWalletFailure, EmerisWallet>> importEthereumWallet(
   }
   final creds = EthereumPrivateWalletCredentials(
     mnemonic: walletFormData.mnemonic.stringRepresentation,
-    publicInfo: WalletPublicInfo(
-      walletId: const Uuid().v4(),
+    publicInfo: AccountPublicInfo(
+      accountId: const Uuid().v4(),
       chainId: walletFormData.walletType.stringVal,
       name: walletFormData.name,
       publicAddress: (await wallet.privateKey.extractAddress()).hex,
@@ -41,7 +41,7 @@ Future<Either<AddWalletFailure, EmerisWallet>> importEthereumWallet(
     walletCoreJson: wallet.toJson(),
     walletCorePassword: corePassword,
   );
-  final result = await signingGateway.storeWalletCredentials(
+  final result = await signingGateway.storeAccountCredentials(
     credentials: creds,
     password: walletFormData.password,
   );
@@ -53,7 +53,7 @@ Future<Either<AddWalletFailure, EmerisWallet>> importEthereumWallet(
         walletDetails: WalletDetails(
           walletIdentifier: WalletIdentifier(
             chainId: creds.publicInfo.chainId,
-            walletId: creds.publicInfo.walletId,
+            walletId: creds.publicInfo.accountId,
           ),
           walletAlias: walletFormData.name,
           walletAddress: wallet.privateKey.address.hex,

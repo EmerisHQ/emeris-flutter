@@ -2,7 +2,7 @@ import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 import 'package:wallet_core/wallet_core.dart' as core;
 
-class EthereumPrivateWalletCredentials implements PrivateWalletCredentials {
+class EthereumPrivateWalletCredentials implements PrivateAccountCredentials {
   EthereumPrivateWalletCredentials({
     required this.mnemonic,
     required this.publicInfo,
@@ -14,7 +14,7 @@ class EthereumPrivateWalletCredentials implements PrivateWalletCredentials {
   String get serializerIdentifier => EthereumCredentialsSerializer.id;
 
   @override
-  final WalletPublicInfo publicInfo;
+  final AccountPublicInfo publicInfo;
 
   @override
   final String mnemonic;

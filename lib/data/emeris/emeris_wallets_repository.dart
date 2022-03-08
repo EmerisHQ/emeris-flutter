@@ -12,8 +12,8 @@ import 'package:flutter_app/domain/entities/import_wallet_form_data.dart';
 import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/repositories/wallets_repository.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
-import 'package:transaction_signing_gateway/model/wallet_lookup_key.dart';
-import 'package:transaction_signing_gateway/model/wallet_public_info.dart';
+import 'package:transaction_signing_gateway/model/account_lookup_key.dart';
+import 'package:transaction_signing_gateway/model/account_public_info.dart';
 
 class EmerisWalletsRepository implements WalletsRepository {
   EmerisWalletsRepository(this._walletApis, this._signingGateway);
@@ -35,7 +35,7 @@ class EmerisWalletsRepository implements WalletsRepository {
 
   @override
   Future<Either<GetWalletsListFailure, List<EmerisWallet>>> getWalletsList() async {
-    return _signingGateway.getWalletsList() //
+    return _signingGateway.getAccountsList() //
         .map(
       (walletsList) {
         final emerisList = walletsList.map((wallet) => wallet.toEmerisWallet()).toList();
@@ -53,9 +53,9 @@ class EmerisWalletsRepository implements WalletsRepository {
   Future<Either<VerifyWalletPasswordFailure, bool>> verifyPassword(WalletIdentifier walletIdentifier) async {
     return _signingGateway
         .verifyLookupKey(
-          WalletLookupKey(
+          AccountLookupKey(
             chainId: walletIdentifier.chainId,
-            walletId: walletIdentifier.walletId,
+            accountId: walletIdentifier.walletId,
             password: walletIdentifier.password ?? '',
           ),
         )
@@ -71,11 +71,11 @@ class EmerisWalletsRepository implements WalletsRepository {
 
   @override
   Future<Either<DeleteWalletFailure, Unit>> deleteWallet(WalletIdentifier walletIdentifier) => _signingGateway
-      .deleteWalletCredentials(
-        publicInfo: WalletPublicInfo(
+      .deleteAccountCredentials(
+        publicInfo: AccountPublicInfo(
           name: '',
           publicAddress: '',
-          walletId: walletIdentifier.walletId,
+          accountId: walletIdentifier.walletId,
           chainId: walletIdentifier.chainId,
         ),
       )
@@ -84,12 +84,12 @@ class EmerisWalletsRepository implements WalletsRepository {
       );
 }
 
-extension WalletPublicInfoTranslator on WalletPublicInfo {
+extension WalletPublicInfoTranslator on AccountPublicInfo {
   EmerisWallet toEmerisWallet() {
     return EmerisWallet(
       walletDetails: WalletDetails(
         walletIdentifier: WalletIdentifier(
-          walletId: walletId,
+          walletId: accountId,
           chainId: chainId,
         ),
         walletAddress: publicAddress,
