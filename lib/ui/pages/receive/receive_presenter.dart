@@ -23,10 +23,10 @@ class ReceivePresenter {
 
   void onTapClose() => navigator.close();
 
-  void onTapCopyAddress() => _copyToClipboardUseCase.execute(data: _model.walletAddress).observableDoOn(
+  void onTapCopyAddress() => _copyToClipboardUseCase.execute(data: _model.accountAddress).observableDoOn(
         (fail) => navigator.showError(fail.displayableFailure()),
         (success) => navigator.showSnackBar(strings.copiedAddressToClipboardMessage),
       );
 
-  void onTapShare() => _shareDataUseCase.execute(data: TextShareData(text: _model.walletAddress));
+  void onTapShare() => _shareDataUseCase.execute(data: TextShareData(text: _model.accountAddress));
 }

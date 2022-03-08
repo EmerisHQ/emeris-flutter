@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/data/model/wallet_details.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
-import 'package:flutter_app/domain/entities/wallet_identifier.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_initial_params.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presentation_model.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presenter.dart';
+import 'package:flutter_app/data/model/account_details.dart';
+import 'package:flutter_app/data/model/account_type.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/domain/entities/account_identifier.dart';
+import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
+import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
+import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presentation_model.dart';
+import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presenter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -14,67 +14,67 @@ import '../mocks/mocks.dart';
 import '../test_utils.dart';
 
 void main() {
-  late WalletsListInitialParams initParams;
-  late WalletsListPresentationModel model;
-  late WalletsListPresenter presenter;
-  late WalletsListNavigator navigator;
-  late MockWalletsStore walletsStore;
-  late MockChangeCurrentWalletUseCase changeCurrentWalletUseCase;
-  late MockDeleteWalletUseCase deleteWalletUseCase;
-  late EmerisWallet myWallet;
+  late AccountsListInitialParams initParams;
+  late AccountsListPresentationModel model;
+  late AccountsListPresenter presenter;
+  late AccountsListNavigator navigator;
+  late MockAccountsStore accountsStore;
+  late MockChangeCurrentAccountUseCase changeCurrentAccountUseCase;
+  late MockDeleteAccountUseCase deleteAccountUseCase;
+  late EmerisAccount myAccount;
   const fromAddress = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
 
   void _initMvp() {
-    initParams = const WalletsListInitialParams();
-    model = WalletsListPresentationModel(walletsStore, initParams);
-    navigator = MockWalletsListNavigator();
-    presenter = WalletsListPresenter(
+    initParams = const AccountsListInitialParams();
+    model = AccountsListPresentationModel(accountsStore, initParams);
+    navigator = MockAccountsListNavigator();
+    presenter = AccountsListPresenter(
       model,
       navigator,
-      changeCurrentWalletUseCase,
-      deleteWalletUseCase,
+      changeCurrentAccountUseCase,
+      deleteAccountUseCase,
     );
   }
 
   test(
-    'Changing the current wallet should fill the `selectedWallet` inside the presentationModel',
+    'Changing the current account should fill the `selectedAccount` inside the presentationModel',
     () async {
       // GIVEN
       _initMvp();
       // WHEN
-      presenter.walletClicked(myWallet);
+      presenter.accountClicked(myAccount);
       //
       //THEN
       verify(
-        () => changeCurrentWalletUseCase.execute(
-          wallet: myWallet,
+        () => changeCurrentAccountUseCase.execute(
+          account: myAccount,
         ),
       );
       expect(
-        model.selectedWallet,
-        myWallet,
+        model.selectedAccount,
+        myAccount,
       );
     },
   );
 
   setUp(() {
-    walletsStore = MockWalletsStore();
-    changeCurrentWalletUseCase = MockChangeCurrentWalletUseCase();
-    deleteWalletUseCase = MockDeleteWalletUseCase();
-    myWallet = const EmerisWallet(
-      walletDetails: WalletDetails(
-        walletIdentifier: WalletIdentifier(
-          walletId: 'walletId',
+    accountsStore = MockAccountsStore();
+    changeCurrentAccountUseCase = MockChangeCurrentAccountUseCase();
+    deleteAccountUseCase = MockDeleteAccountUseCase();
+    myAccount = const EmerisAccount(
+      accountDetails: AccountDetails(
+        accountIdentifier: AccountIdentifier(
+          accountId: 'accountId',
           chainId: 'cosmos',
         ),
-        walletAlias: 'Name of the wallet',
-        walletAddress: fromAddress,
+        accountAlias: 'Name of the account',
+        accountAddress: fromAddress,
       ),
-      walletType: WalletType.Cosmos,
+      accountType: AccountType.Cosmos,
     );
-    when(() => walletsStore.currentWallet).thenReturn(myWallet);
+    when(() => accountsStore.currentAccount).thenReturn(myAccount);
     when(
-      () => changeCurrentWalletUseCase.execute(wallet: myWallet),
+      () => changeCurrentAccountUseCase.execute(account: myAccount),
     ).thenAnswer(
       (_) => successFuture(unit),
     );

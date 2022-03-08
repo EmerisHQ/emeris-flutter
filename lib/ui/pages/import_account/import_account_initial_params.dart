@@ -1,0 +1,3 @@
+class ImportAccountInitialParams {
+  const ImportAccountInitialParams();
+}

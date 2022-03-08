@@ -1,16 +1,16 @@
-import 'package:flutter_app/data/model/emeris_wallet.dart';
-import 'package:flutter_app/data/model/wallet_details.dart';
-import 'package:flutter_app/data/model/wallet_type.dart';
+import 'package:flutter_app/data/model/account_details.dart';
+import 'package:flutter_app/data/model/account_type.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
-import 'package:flutter_app/domain/entities/wallet_identifier.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_initial_params.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presentation_model.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presenter.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_initial_params.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_presenter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -18,26 +18,26 @@ import '../mocks/mocks.dart';
 import '../test_utils.dart';
 
 void main() {
-  late WalletDetailsInitialParams initParams;
-  late WalletDetailsPresentationModel model;
-  late WalletDetailsPresenter presenter;
-  late WalletDetailsNavigator navigator;
-  late MockWalletsStore walletsStore;
+  late AccountDetailsInitialParams initParams;
+  late AccountDetailsPresentationModel model;
+  late AccountDetailsPresenter presenter;
+  late AccountDetailsNavigator navigator;
+  late MockAccountsStore accountsStore;
   late MockBlockchainMetadataStore blockchainMetadataStore;
   late MockGetBalancesUseCase getBalancesUseCase;
-  late EmerisWallet myWallet;
+  late EmerisAccount myAccount;
   late Balance balance;
   const fromAddress = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
 
   void _initMvp() {
-    initParams = const WalletDetailsInitialParams();
-    model = WalletDetailsPresentationModel(
+    initParams = const AccountDetailsInitialParams();
+    model = AccountDetailsPresentationModel(
       initParams,
-      walletsStore,
+      accountsStore,
       blockchainMetadataStore,
     );
-    navigator = MockWalletDetailsNavigator();
-    presenter = WalletDetailsPresenter(
+    navigator = MockAccountDetailsNavigator();
+    presenter = AccountDetailsPresenter(
       model,
       navigator,
       getBalancesUseCase,
@@ -51,12 +51,12 @@ void main() {
       _initMvp();
       expect(model.assetDetails.balances.isEmpty, true);
       // WHEN
-      await presenter.getWalletBalances(myWallet);
+      await presenter.getAccountBalances(myAccount);
       //
       //THEN
       verify(
         () => getBalancesUseCase.execute(
-          walletData: myWallet,
+          accountData: myAccount,
         ),
       );
       expect(
@@ -68,28 +68,28 @@ void main() {
 
   setUp(() {
     registerFallbackValue(DisplayableFailure.commonError());
-    registerFallbackValue(const WalletDetailsInitialParams());
-    walletsStore = MockWalletsStore();
+    registerFallbackValue(const AccountDetailsInitialParams());
+    accountsStore = MockAccountsStore();
     blockchainMetadataStore = MockBlockchainMetadataStore();
     getBalancesUseCase = MockGetBalancesUseCase();
     balance = Balance(
       denom: const Denom('ATOM'),
       amount: Amount.fromInt(100),
     );
-    myWallet = const EmerisWallet(
-      walletDetails: WalletDetails(
-        walletIdentifier: WalletIdentifier(
-          walletId: 'walletId',
+    myAccount = const EmerisAccount(
+      accountDetails: AccountDetails(
+        accountIdentifier: AccountIdentifier(
+          accountId: 'accountId',
           chainId: 'cosmos',
         ),
-        walletAlias: 'Name of the wallet',
-        walletAddress: fromAddress,
+        accountAlias: 'Name of the account',
+        accountAddress: fromAddress,
       ),
-      walletType: WalletType.Cosmos,
+      accountType: AccountType.Cosmos,
     );
     when(
       () => getBalancesUseCase.execute(
-        walletData: myWallet,
+        accountData: myAccount,
       ),
     ).thenAnswer(
       (_) => successFuture(

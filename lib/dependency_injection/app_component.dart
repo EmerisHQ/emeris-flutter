@@ -2,61 +2,76 @@ import 'package:cosmos_auth/cosmos_auth.dart';
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app/data/api_calls/cosmos_wallet_api.dart';
-import 'package:flutter_app/data/api_calls/ethereum_wallet_api.dart';
-import 'package:flutter_app/data/api_calls/wallet_api.dart';
+import 'package:flutter_app/data/api_calls/account_api.dart';
+import 'package:flutter_app/data/api_calls/cosmos_account_api.dart';
+import 'package:flutter_app/data/api_calls/ethereum_account_api.dart';
 import 'package:flutter_app/data/blockchain/rest_api_blockchain_metadata_repository.dart';
 import 'package:flutter_app/data/chains/rest_api_chains_repository.dart';
 import 'package:flutter_app/data/cosmos/cosmos_auth_repository.dart';
+import 'package:flutter_app/data/emeris/emeris_accounts_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_bank_repository.dart';
 import 'package:flutter_app/data/emeris/emeris_transactions_repository.dart';
-import 'package:flutter_app/data/emeris/emeris_wallets_repository.dart';
 import 'package:flutter_app/data/ethereum/ethereum_credentials_serializer.dart';
 import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
 import 'package:flutter_app/data/http/dio_builder.dart';
 import 'package:flutter_app/data/http/http_service.dart';
 import 'package:flutter_app/data/liquidity_pools/rest_api_liquidity_pools_repository.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
+import 'package:flutter_app/domain/repositories/accounts_repository.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
 import 'package:flutter_app/domain/repositories/blockchain_metadata_repository.dart';
 import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/repositories/liquidity_pools_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
-import 'package:flutter_app/domain/repositories/wallets_repository.dart';
+import 'package:flutter_app/domain/stores/accounts_store.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
-import 'package:flutter_app/domain/stores/wallets_store.dart';
-import 'package:flutter_app/domain/use_cases/change_current_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/change_current_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
-import 'package:flutter_app/domain/use_cases/delete_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/delete_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
-import 'package:flutter_app/domain/use_cases/import_wallet_use_case.dart';
+import 'package:flutter_app/domain/use_cases/import_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/paste_from_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/domain/use_cases/share_data_use_case.dart';
+import 'package:flutter_app/domain/use_cases/verify_account_password_use_case.dart';
 import 'package:flutter_app/domain/use_cases/verify_passcode_use_case.dart';
-import 'package:flutter_app/domain/use_cases/verify_wallet_password_use_case.dart';
 import 'package:flutter_app/environment_config.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
-import 'package:flutter_app/ui/pages/add_wallet/add_wallet_navigator.dart';
-import 'package:flutter_app/ui/pages/add_wallet/add_wallet_presentation_model.dart';
-import 'package:flutter_app/ui/pages/add_wallet/add_wallet_presenter.dart';
-import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_navigator.dart';
-import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presentation_model.dart';
-import 'package:flutter_app/ui/pages/add_wallet/wallet_name/wallet_name_presenter.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account_backup_intro_navigator.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account_backup_intro_presentation_model.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account_backup_intro_presenter.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_cloud_backup/account_cloud_backup_navigator.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_cloud_backup/account_cloud_backup_presentation_model.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_cloud_backup/account_cloud_backup_presenter.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_navigator.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_presentation_model.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_presenter.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_presenter.dart';
+import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
+import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presentation_model.dart';
+import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presenter.dart';
+import 'package:flutter_app/ui/pages/add_account/account_name/account_name_navigator.dart';
+import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presentation_model.dart';
+import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presenter.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_navigator.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_presentation_model.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_presenter.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presenter.dart';
-import 'package:flutter_app/ui/pages/import_wallet/import_wallet_navigator.dart';
-import 'package:flutter_app/ui/pages/import_wallet/import_wallet_presentation_model.dart';
-import 'package:flutter_app/ui/pages/import_wallet/import_wallet_presenter.dart';
+import 'package:flutter_app/ui/pages/import_account/import_account_navigator.dart';
+import 'package:flutter_app/ui/pages/import_account/import_account_presentation_model.dart';
+import 'package:flutter_app/ui/pages/import_account/import_account_presenter.dart';
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_navigator.dart';
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_presentation_model.dart';
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_presenter.dart';
@@ -78,21 +93,6 @@ import 'package:flutter_app/ui/pages/send_tokens/send_tokens_page.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presentation_model.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presenter.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_navigator.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_presentation_model.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_backup_intro/wallet_backup_intro_presenter.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_cloud_backup/wallet_cloud_backup_navigator.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_cloud_backup/wallet_cloud_backup_presentation_model.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_cloud_backup/wallet_cloud_backup_presenter.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_navigator.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_presentation_model.dart';
-import 'package:flutter_app/ui/pages/wallet_backup/wallet_manual_backup/wallet_manual_backup_presenter.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presentation_model.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_presenter.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presentation_model.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_presenter.dart';
 import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/clipboard_manager.dart';
 import 'package:flutter_app/utils/share_manager.dart';
@@ -150,17 +150,17 @@ void _configureTransactionSigningGateway() {
 
 void _configureRepositories() {
   getIt
-    ..registerFactory<List<WalletApi>>(
+    ..registerFactory<List<AccountApi>>(
       () => [
-        CosmosWalletApi(getIt(), getIt()),
-        EthereumWalletApi(getIt(), getIt()),
+        CosmosAccountApi(getIt(), getIt()),
+        EthereumAccountApi(getIt(), getIt()),
       ],
     )
     ..registerFactory<TransactionsRepository>(
       () => EmerisTransactionsRepository(getIt()),
     )
-    ..registerFactory<WalletsRepository>(
-      () => EmerisWalletsRepository(getIt(), getIt()),
+    ..registerFactory<AccountsRepository>(
+      () => EmerisAccountsRepository(getIt(), getIt()),
     )
     ..registerFactory<BankRepository>(
       () => EmerisBankRepository(getIt()),
@@ -181,8 +181,8 @@ void _configureRepositories() {
 
 void _configureStores() {
   getIt
-    ..registerLazySingleton<WalletsStore>(
-      WalletsStore.new,
+    ..registerLazySingleton<AccountsStore>(
+      AccountsStore.new,
     )
     ..registerLazySingleton<PlatformInfoStore>(
       PlatformInfoStore.new,
@@ -239,8 +239,8 @@ void _configureGeneralDependencies() {
 
 void _configureUseCases() {
   getIt
-    ..registerFactory<ImportWalletUseCase>(
-      () => ImportWalletUseCase(getIt(), getIt(), getIt()),
+    ..registerFactory<ImportAccountUseCase>(
+      () => ImportAccountUseCase(getIt(), getIt(), getIt()),
     )
     ..registerFactory<GetBalancesUseCase>(
       () => GetBalancesUseCase(getIt(), getIt(), getIt(), getIt()),
@@ -251,11 +251,11 @@ void _configureUseCases() {
     ..registerFactory<GenerateMnemonicUseCase>(
       GenerateMnemonicUseCase.new,
     )
-    ..registerFactory<VerifyWalletPasswordUseCase>(
-      () => VerifyWalletPasswordUseCase(getIt()),
+    ..registerFactory<VerifyAccountPasswordUseCase>(
+      () => VerifyAccountPasswordUseCase(getIt()),
     )
-    ..registerFactory<ChangeCurrentWalletUseCase>(
-      () => ChangeCurrentWalletUseCase(getIt()),
+    ..registerFactory<ChangeCurrentAccountUseCase>(
+      () => ChangeCurrentAccountUseCase(getIt()),
     )
     ..registerFactory<VerifyPasscodeUseCase>(
       () => VerifyPasscodeUseCase(getIt()),
@@ -281,24 +281,24 @@ void _configureUseCases() {
     ..registerFactory<GetPricesUseCase>(
       () => GetPricesUseCase(getIt(), getIt()),
     )
-    ..registerFactory<DeleteWalletUseCase>(
-      () => DeleteWalletUseCase(getIt(), getIt(), getIt()),
+    ..registerFactory<DeleteAccountUseCase>(
+      () => DeleteAccountUseCase(getIt(), getIt(), getIt()),
     );
 }
 
 void _configureMvp() {
   getIt
-    ..registerFactoryParam<WalletsListPresenter, WalletsListPresentationModel, dynamic>(
-      (_model, _) => WalletsListPresenter(_model, getIt(), getIt(), getIt()),
+    ..registerFactoryParam<AccountsListPresenter, AccountsListPresentationModel, dynamic>(
+      (_model, _) => AccountsListPresenter(_model, getIt(), getIt(), getIt()),
     )
-    ..registerFactory<WalletsListNavigator>(
-      () => WalletsListNavigator(getIt()),
+    ..registerFactory<AccountsListNavigator>(
+      () => AccountsListNavigator(getIt()),
     )
-    ..registerFactoryParam<WalletDetailsPresenter, WalletDetailsPresentationModel, dynamic>(
-      (_model, _) => WalletDetailsPresenter(_model, getIt(), getIt()),
+    ..registerFactoryParam<AccountDetailsPresenter, AccountDetailsPresentationModel, dynamic>(
+      (_model, _) => AccountDetailsPresenter(_model, getIt(), getIt()),
     )
-    ..registerFactory<WalletDetailsNavigator>(
-      () => WalletDetailsNavigator(getIt()),
+    ..registerFactory<AccountDetailsNavigator>(
+      () => AccountDetailsNavigator(getIt()),
     )
     ..registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
       (_model, _) => RoutingPresenter(_model, getIt(), getIt(), getIt()),
@@ -312,11 +312,11 @@ void _configureMvp() {
     ..registerFactory<OnboardingNavigator>(
       () => OnboardingNavigator(getIt()),
     )
-    ..registerFactoryParam<WalletNamePresenter, WalletNamePresentationModel, dynamic>(
-      (_model, _) => WalletNamePresenter(_model, getIt()),
+    ..registerFactoryParam<AccountNamePresenter, AccountNamePresentationModel, dynamic>(
+      (_model, _) => AccountNamePresenter(_model, getIt()),
     )
-    ..registerFactory<WalletNameNavigator>(
-      () => WalletNameNavigator(getIt()),
+    ..registerFactory<AccountNameNavigator>(
+      () => AccountNameNavigator(getIt()),
     )
     ..registerFactoryParam<PasscodePresenter, PasscodePresentationModel, dynamic>(
       (_model, _) => PasscodePresenter(_model, getIt(), getIt(), getIt()),
@@ -324,40 +324,40 @@ void _configureMvp() {
     ..registerFactory<PasscodeNavigator>(
       () => PasscodeNavigator(getIt()),
     )
-    ..registerFactoryParam<WalletBackupIntroPresenter, WalletBackupIntroPresentationModel, dynamic>(
-      (_model, _) => WalletBackupIntroPresenter(_model, getIt()),
+    ..registerFactoryParam<AccountBackupIntroPresenter, AccountBackupIntroPresentationModel, dynamic>(
+      (_model, _) => AccountBackupIntroPresenter(_model, getIt()),
     )
-    ..registerFactory<WalletBackupIntroNavigator>(
-      () => WalletBackupIntroNavigator(getIt()),
+    ..registerFactory<AccountBackupIntroNavigator>(
+      () => AccountBackupIntroNavigator(getIt()),
     )
-    ..registerFactoryParam<WalletCloudBackupPresenter, WalletCloudBackupPresentationModel, dynamic>(
-      (_model, _) => WalletCloudBackupPresenter(_model, getIt()),
+    ..registerFactoryParam<AccountCloudBackupPresenter, AccountCloudBackupPresentationModel, dynamic>(
+      (_model, _) => AccountCloudBackupPresenter(_model, getIt()),
     )
-    ..registerFactory<WalletCloudBackupNavigator>(
-      () => WalletCloudBackupNavigator(getIt()),
+    ..registerFactory<AccountCloudBackupNavigator>(
+      () => AccountCloudBackupNavigator(getIt()),
     )
-    ..registerFactoryParam<WalletManualBackupPresenter, WalletManualBackupPresentationModel, dynamic>(
-      (_model, _) => WalletManualBackupPresenter(_model, getIt(), getIt()),
+    ..registerFactoryParam<AccountManualBackupPresenter, AccountManualBackupPresentationModel, dynamic>(
+      (_model, _) => AccountManualBackupPresenter(_model, getIt(), getIt()),
     )
-    ..registerFactory<WalletManualBackupNavigator>(
-      () => WalletManualBackupNavigator(getIt()),
+    ..registerFactory<AccountManualBackupNavigator>(
+      () => AccountManualBackupNavigator(getIt()),
     )
-    ..registerFactoryParam<AddWalletPresenter, AddWalletPresentationModel, dynamic>(
-      (_model, _) => AddWalletPresenter(
+    ..registerFactoryParam<AddAccountPresenter, AddAccountPresentationModel, dynamic>(
+      (_model, _) => AddAccountPresenter(
         _model,
         getIt(),
         getIt(),
         getIt(),
       ),
     )
-    ..registerFactory<AddWalletNavigator>(
-      () => AddWalletNavigator(getIt()),
+    ..registerFactory<AddAccountNavigator>(
+      () => AddAccountNavigator(getIt()),
     )
-    ..registerFactoryParam<ImportWalletPresenter, ImportWalletPresentationModel, dynamic>(
-      (_model, _) => ImportWalletPresenter(_model, getIt(), getIt()),
+    ..registerFactoryParam<ImportAccountPresenter, ImportAccountPresentationModel, dynamic>(
+      (_model, _) => ImportAccountPresenter(_model, getIt(), getIt()),
     )
-    ..registerFactory<ImportWalletNavigator>(
-      () => ImportWalletNavigator(getIt()),
+    ..registerFactory<ImportAccountNavigator>(
+      () => ImportAccountNavigator(getIt()),
     )
     ..registerFactoryParam<MnemonicImportPresenter, MnemonicImportPresentationModel, dynamic>(
       (_model, _) => MnemonicImportPresenter(_model, getIt(), getIt()),

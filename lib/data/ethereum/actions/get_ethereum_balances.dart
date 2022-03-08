@@ -10,11 +10,11 @@ import 'package:web3dart/web3dart.dart';
 
 Future<Either<GeneralFailure, PaginatedList<Balance>>> getEthereumBalances(
   Web3Client ethClient,
-  String walletAddress,
+  String accountAddress,
 ) async {
   try {
     final balance = await ethClient.getBalance(
-      EthereumAddress.fromHex(walletAddress),
+      EthereumAddress.fromHex(accountAddress),
     );
 
     return right(

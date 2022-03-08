@@ -67,15 +67,15 @@ class OnboardingPageState extends State<OnboardingPage> {
                 height: CosmosTheme.of(context).spacingL,
               ),
               CosmosElevatedButton(
-                text: strings.createWalletAction,
-                onTap: presenter.onTapCreateWallet,
+                text: strings.createAccountAction,
+                onTap: presenter.onTapCreateAccount,
               ),
               SizedBox(
                 height: CosmosTheme.of(context).spacingM,
               ),
               CosmosOutlineButton(
-                text: strings.importWalletAction,
-                onTap: presenter.onTapImportWallet,
+                text: strings.importAccountAction,
+                onTap: presenter.onTapImportAccount,
               ),
             ],
           ),

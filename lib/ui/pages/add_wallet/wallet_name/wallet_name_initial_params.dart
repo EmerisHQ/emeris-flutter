@@ -1,3 +1,0 @@
-class WalletNameInitialParams {
-  const WalletNameInitialParams();
-}

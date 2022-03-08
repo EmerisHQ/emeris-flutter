@@ -1,0 +1,3 @@
+class AccountCloudBackupInitialParams {
+  const AccountCloudBackupInitialParams();
+}

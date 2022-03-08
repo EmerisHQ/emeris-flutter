@@ -1,9 +1,9 @@
-import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 
 class ReceiveInitialParams {
   const ReceiveInitialParams({
-    required this.wallet,
+    required this.account,
   });
 
-  final EmerisWallet wallet;
+  final EmerisAccount account;
 }

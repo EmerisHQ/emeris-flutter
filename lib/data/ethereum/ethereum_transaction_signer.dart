@@ -1,6 +1,6 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/ethereum/ethereum_private_wallet_credentials.dart';
+import 'package:flutter_app/data/ethereum/ethereum_private_account_credentials.dart';
 import 'package:flutter_app/data/ethereum/ethereum_transaction.dart';
 import 'package:transaction_signing_gateway/model/private_account_credentials.dart';
 import 'package:transaction_signing_gateway/model/signed_transaction.dart';
@@ -25,15 +25,15 @@ class EthereumTransactionSigner implements TransactionSigner {
     if (transaction is! EthereumTransaction) {
       return left(EthereumTransactionSigningFailure('passed transaction is not $EthereumTransaction'));
     }
-    if (privateCredentials is! EthereumPrivateWalletCredentials) {
+    if (privateCredentials is! EthereumPrivateAccountCredentials) {
       return left(
-        EthereumTransactionSigningFailure('passed privateCredentials is not $EthereumPrivateWalletCredentials'),
+        EthereumTransactionSigningFailure('passed privateCredentials is not $EthereumPrivateAccountCredentials'),
       );
     }
 
     try {
       final signedTx = await _web3client.signTransaction(
-        privateCredentials.wallet.privateKey,
+        privateCredentials.account.privateKey,
         transaction.unsignedTransaction,
       );
       return right(EthereumSignedTransaction(signedTx));

@@ -3,8 +3,8 @@
   "@appTitle": {
     "description": "Title of the application"
   },
-  "createNewWallet": "Create a new wallet",
-  "@createNewWallet": {
+  "createNewAccount": "Create a new account",
+  "@createNewAccount": {
     "description": "Button text for mnemonic onboarding"
   },
   "proceed": "Proceed",
@@ -27,16 +27,16 @@
   "@passwordHelperText": {
     "description": "Helper text for password field"
   },
-  "walletDetailsTitle": "{alias} Wallet",
-  "@walletDetailsTitle": {
-    "description": "Wallet details page dynamic title",
+  "accountDetailsTitle": "{alias} Account",
+  "@accountDetailsTitle": {
+    "description": "Account details page dynamic title",
     "placeholders": {
       "alias": {}
     }
   },
-  "walletAddress": "Wallet address",
-  "@walletAddress": {
-    "description": "Wallet address text"
+  "accountAddress": "Account address",
+  "@accountAddress": {
+    "description": "Account address text"
   },
   "balances": "Balances",
   "@balances": {
@@ -57,9 +57,9 @@
       "denom": {}
     }
   },
-  "enterWalletAddress": "Enter wallet address",
-  "@enterWalletAddress": {
-    "description": "Wallet address field hint text"
+  "enterAccountAddress": "Enter account address",
+  "@enterAccountAddress": {
+    "description": "Account address field hint text"
   },
   "enterAmount": "Enter Amount",
   "@enterAmount": {
@@ -77,56 +77,56 @@
   "@enterAlias": {
     "description": "Hint text for alias field"
   },
-  "addWallet": "Add wallet",
-  "@addWallet": {
-    "description": "Button text for add wallet"
+  "addAccount": "Add account",
+  "@addAccount": {
+    "description": "Button text for add account"
   },
-  "walletListEmptyText": "No wallets found. Add one.",
-  "@walletListEmptyText": {
-    "description": "Empty text for wallet listing"
+  "accountListEmptyText": "No accounts found. Add one.",
+  "@accountListEmptyText": {
+    "description": "Empty text for account listing"
   },
-  "noWalletSelectedTitle": "No Wallet",
-  "@noWalletSelectedTitle": {
-    "description": "no wallet error title"
+  "noAccountSelectedTitle": "No Account",
+  "@noAccountSelectedTitle": {
+    "description": "no account error title"
   },
-  "noWalletSelectedMessage": "You have to import or create wallet first in order to do that",
-  "@noWalletSelectedMessage": {
-    "description": "no wallet error message"
+  "noAccountSelectedMessage": "You have to import or create account first in order to do that",
+  "@noAccountSelectedMessage": {
+    "description": "no account error message"
   },
   "okAction": "Ok",
   "verifyPasswordErrorTitle": "Invalid Password",
   "verifyPasswordErrorMessage": "You've provided an invalid password, please try again",
   "welcomeToEmerisTitle": "Welcome to Emeris",
   "splashLargeTitle": "Experience the power of cross-chain DeFi",
-  "createWalletAction": "Create Wallet",
-  "importWalletAction": "Import Wallet",
-  "importWalletTitle": "Import Wallet",
+  "createAccountAction": "Create Account",
+  "importAccountAction": "Import Account",
+  "importAccountTitle": "Import Account",
   "passcodeTitle": "Enter your passcode",
   "confirmPasscodeTitle": "Confirm passcode",
   "passcodeMatchFailureTitle": "Invalid Passcode",
   "passcodeMatchFailureMessage": "The passcodes you've entered don't match",
-  "nameYourWalletTitle": "Name your wallet",
-  "nameYourWalletMessage": "If you have multiple wallets, this will help you find the right one",
+  "nameYourAccountTitle": "Name your account",
+  "nameYourAccountMessage": "If you have multiple accounts, this will help you find the right one",
   "continueAction": "Continue",
-  "walletNameHint": "Wallet name",
-  "importingWalletProgressMessage": "Importing wallet...",
+  "accountNameHint": "Account name",
+  "importingAccountProgressMessage": "Importing account...",
   "generatingMnemonicProgressMessage": "Generating mnemonic...",
   "assetTitle": "Assets",
   "receiveAction": "Receive",
   "sendAction": "Send",
   "balanceTitle": "Balance",
-  "backUpYourWalletTitle": "Backup your wallet",
-  "backUpYourWalletMessage": "If your device is lost or stolen, you will be able to recover your wallet",
-  "backUpWalletInfoMessage1": "Emeris wallet will never ask you to share your recovery phrase,",
-  "backUpWalletInfoMessage2": "Never share your recovery phrase with anyone, store it securely,",
-  "backUpWalletInfoMessage3": "If you don't backup your wallet, or loose your recovery phrase, you will not be able to recover your wallet.",
+  "backUpYourAccountTitle": "Backup your account",
+  "backUpYourAccountMessage": "If your device is lost or stolen, you will be able to recover your account",
+  "backUpAccountInfoMessage1": "Emeris account will never ask you to share your recovery phrase,",
+  "backUpAccountInfoMessage2": "Never share your recovery phrase with anyone, store it securely,",
+  "backUpAccountInfoMessage3": "If you don't backup your account, or loose your recovery phrase, you will not be able to recover your account.",
   "backUpIcloudAction": "Backup to iCloud",
   "backUpGoogleDriveAction": "Backup to Google Drive",
   "backUpManuallyAction": "Back up manually",
   "backUpLaterAction": "Back up later",
   "backUpNowAction": "Back up now",
-  "walletSkipBackupConfirmationTitle": "Back up later",
-  "walletSkipBackupConfirmationMessage": "I understand if I don't back up my wallet, or if I lost my recovery phrase,  I will not be able to access my wallet anymore",
+  "accountSkipBackupConfirmationTitle": "Back up later",
+  "accountSkipBackupConfirmationMessage": "I understand if I don't back up my account, or if I lost my recovery phrase,  I will not be able to access my account anymore",
   "recoveryPhraseTitle": "Recovery Phrase",
   "recoveryPhraseMessage": "Please write down your 12 words in a safe space manually on paper.",
   "recoveryPhraseCheckbox": "I have backed up my recovery phrase, I understand that if I loose my recovery phrase, I will loose my funds",
@@ -134,7 +134,7 @@
   "copiedToClipboardMessage": "Copied to clipboard",
   "writeRecoveryPhraseTitle": "Write your recovery phrase",
   "invalidOrderMessage": "Invalid order",
-  "walletCreatedSuccessMessage": "Your wallet is created",
+  "accountCreatedSuccessMessage": "Your account is created",
   "enterRecoveryPhraseHint": "Enter your recovery phrase",
   "importAction": "Import",
   "pasteAction": "Paste",
@@ -152,7 +152,7 @@
   "closeAction": "Close",
   "shareAction": "Share",
   "copyAddressAction": "Copy Address",
-  "copiedAddressToClipboardMessage": "Wallet Address copied to clipboard",
+  "copiedAddressToClipboardMessage": "Account Address copied to clipboard",
   "recipientStepTitle": "Send",
   "amountStepTitle": "Enter Amount",
   "reviewStepTitle": "Review",
