@@ -1,5 +1,6 @@
 import 'package:cosmos_utils/extensions.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/fiat.dart';
 import 'package:flutter_app/domain/entities/token_pair.dart';
@@ -25,4 +26,8 @@ class Prices extends Equatable {
 
   TokenPair? priceForDenom(Denom denom) => tokens //
       .firstOrNull(where: (it) => it.ticker.startsWith(denom.text));
+
+  String totalPriceText(Balance balance) => balance.totalPriceText(
+        priceForDenom(balance.denom) ?? TokenPair.zero(balance.denom),
+      );
 }

@@ -1,7 +1,7 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/entities/asset_chain.dart';
+import 'package:flutter_app/domain/entities/chain_asset.dart';
 
 class ChainCard extends StatelessWidget {
   const ChainCard({
@@ -18,11 +18,11 @@ class ChainCard extends StatelessWidget {
     final theme = CosmosTheme.of(context);
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      title: Text(chainAsset.chainDetails.displayName),
+      title: Text(chainAsset.chain.displayName),
       leading: CircleAvatar(
         backgroundColor: theme.colors.background,
         foregroundColor: theme.colors.text,
-        child: Text(chainAsset.chainDetails.displayName[0]),
+        child: Text(chainAsset.chain.displayName[0]),
       ),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,

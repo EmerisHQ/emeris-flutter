@@ -5,6 +5,7 @@ import 'package:flutter_app/data/model/chain_details_json.dart';
 import 'package:flutter_app/data/model/chain_json.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
+import 'package:flutter_app/domain/entities/failures/get_chains_failure.dart';
 import 'package:flutter_app/domain/repositories/chains_repository.dart';
 
 class RestApiChainsRepository extends ChainsRepository {
@@ -13,11 +14,11 @@ class RestApiChainsRepository extends ChainsRepository {
   final HttpService _httpService;
 
   @override
-  Future<Either<GeneralFailure, List<Chain>>> getChains() async => _httpService
+  Future<Either<GetChainsFailure, List<Chain>>> getChains() async => _httpService
       .get('/v1/chains')
       .responseSubKey('chains')
       .executeList((json) => ChainDetailsJson.fromJson(json).toDomain())
-      .mapError((fail) => GeneralFailure.unknown('Http failure', fail));
+      .mapError(GetChainsFailure.unknown);
 
   @override
   Future<Either<GeneralFailure, Chain>> getChainDetails(String chainId) async => _httpService

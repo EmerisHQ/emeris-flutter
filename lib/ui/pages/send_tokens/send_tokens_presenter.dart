@@ -59,4 +59,13 @@ class SendTokensPresenter {
       return true;
     }
   }
+
+  // ignore: use_setters_to_change_properties
+  void onChangedAmount(String amount) => _model.amountText = amount;
+
+  void onTapMaxAmount() => _model.setMaxAmount();
+
+  void onTapCurrencySwitch() => _model.switchCurrency();
+
+  void onTapBalanceSelector() => showNotImplemented();
 }

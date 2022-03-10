@@ -22,6 +22,6 @@ class ${ClassName}Failure {
 
   @override
   String toString() {
-    return '${ClassName}Failure{type: $type, cause: $cause}';
+    return '${ClassName}Failure{type: \$type, cause: \$cause}';
   }
 }

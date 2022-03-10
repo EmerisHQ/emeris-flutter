@@ -2,7 +2,6 @@ import 'package:flutter_app/data/model/emeris_wallet.dart';
 import 'package:flutter_app/data/model/wallet_details.dart';
 import 'package:flutter_app/data/model/wallet_type.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/failures/displayable_failure.dart';
@@ -49,7 +48,7 @@ void main() {
     () async {
       // GIVEN
       _initMvp();
-      expect(model.assetDetails.balances.isEmpty, true);
+      expect(model.balances.isEmpty, true);
       // WHEN
       await presenter.getWalletBalances(myWallet);
       //
@@ -60,7 +59,7 @@ void main() {
         ),
       );
       expect(
-        model.assetDetails.balances.first,
+        model.balances.first,
         balance,
       );
     },
@@ -93,7 +92,7 @@ void main() {
       ),
     ).thenAnswer(
       (_) => successFuture(
-        AssetDetails(balances: [balance]),
+        [balance],
       ),
     );
   });

@@ -4,17 +4,17 @@ import 'package:flutter_app/domain/entities/chain.dart';
 
 class ChainAsset extends Equatable {
   const ChainAsset({
-    required this.chainDetails,
+    required this.chain,
     required this.balance,
   });
 
   final Balance balance;
-  final Chain chainDetails;
+  final Chain chain;
 
   @override
   // TODO: implement props
   List<Object?> get props => [
         balance,
-        chainDetails,
+        chain,
       ];
 }
