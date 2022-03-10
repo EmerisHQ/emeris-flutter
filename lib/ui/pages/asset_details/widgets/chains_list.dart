@@ -1,7 +1,7 @@
 import 'package:cosmos_ui_components/components/content_state_switcher.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/entities/asset_chain.dart';
+import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/ui/pages/asset_details/widgets/chain_card.dart';
 
@@ -26,7 +26,7 @@ class ChainsList extends StatelessWidget {
             .map(
               (it) => ChainCard(
                 chainAsset: it,
-                totalPriceText: it.balance.totalPriceText(prices),
+                totalPriceText: prices.totalPriceText(it.balance),
               ),
             )
             .toList(),

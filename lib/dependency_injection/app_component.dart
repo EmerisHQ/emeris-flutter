@@ -28,14 +28,17 @@ import 'package:flutter_app/domain/stores/accounts_store.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
+import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
 import 'package:flutter_app/domain/use_cases/change_current_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/delete_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/paste_from_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
@@ -214,15 +217,6 @@ void _configureGeneralDependencies() {
         AppNavigator.navigatorKey.currentContext!,
       ),
     )
-    ..registerFactory<AppInitializer>(
-      () => AppInitializer(
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-      ),
-    )
     ..registerFactory<ClipboardManager>(
       ClipboardManager.new,
     )
@@ -267,7 +261,7 @@ void _configureUseCases() {
       () => GetStakedAmountUseCase(getIt()),
     )
     ..registerFactory<GetChainAssetsUseCase>(
-      () => GetChainAssetsUseCase(getIt()),
+      () => GetChainAssetsUseCase(getIt(), getIt()),
     )
     ..registerFactory<CopyToClipboardUseCase>(
       () => CopyToClipboardUseCase(getIt()),
@@ -283,6 +277,24 @@ void _configureUseCases() {
     )
     ..registerFactory<DeleteAccountUseCase>(
       () => DeleteAccountUseCase(getIt(), getIt(), getIt()),
+    )
+    ..registerFactory<AppInitUseCase>(
+      () => AppInitUseCase(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
+    )
+    ..registerFactory<GetChainsUseCase>(
+      () => GetChainsUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<GetVerifiedDenomsUseCase>(
+      () => GetVerifiedDenomsUseCase(getIt(), getIt()),
     );
 }
 
@@ -381,7 +393,7 @@ void _configureMvp() {
       () => SendTokensNavigator(getIt()),
     )
     ..registerFactoryParam<SendTokensPresentationModel, SendTokensInitialParams, dynamic>(
-      (_params, _) => SendTokensPresentationModel(_params),
+      (_params, _) => SendTokensPresentationModel(_params, getIt()),
     )
     ..registerFactoryParam<SendTokensPresenter, SendTokensInitialParams, dynamic>(
       (initialParams, _) => SendTokensPresenter(

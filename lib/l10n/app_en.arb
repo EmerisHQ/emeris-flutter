@@ -163,5 +163,12 @@
   "confirmRecipientCheckbox": "I have reviewed the address and understand that if it is incorrect, my sent funds may be lost.",
   "renameAccountAction": "Rename Account",
   "deleteAccountAction": "Delete Account",
-  "maxAction": "Max"
+  "maxAction": "Max",
+  "tokenAvailableFormat": "{total} available",
+  "@tokenAvailableFormat": {
+    "placeholders": {
+      "total": {}
+    }
+  },
+  "feesIncluded": "Fees (included)"
 }

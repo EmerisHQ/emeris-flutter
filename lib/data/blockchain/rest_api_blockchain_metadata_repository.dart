@@ -8,6 +8,7 @@ import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/data/model/verify_trace_json.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_prices_failure.dart';
+import 'package:flutter_app/domain/entities/failures/get_verified_denoms_failure.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/domain/entities/primary_channel.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
@@ -27,11 +28,11 @@ class RestApiBlockchainMetadataRepository implements BlockchainMetadataRepositor
       .mapError((fail) => GeneralFailure.unknown('http failure', fail));
 
   @override
-  Future<Either<GeneralFailure, List<VerifiedDenom>>> getVerifiedDenoms() async => _httpService
+  Future<Either<GetVerifiedDenomsFailure, List<VerifiedDenom>>> getVerifiedDenoms() async => _httpService
       .get('/v1/verified_denoms')
       .responseSubKey('verified_denoms')
       .executeList((json) => VerifiedDenomJson.fromJson(json).toDomain())
-      .mapError((fail) => GeneralFailure.unknown('http failure', fail));
+      .mapError(GetVerifiedDenomsFailure.unknown);
 
   @override
   Future<Either<GeneralFailure, PrimaryChannel>> getPrimaryChannel({

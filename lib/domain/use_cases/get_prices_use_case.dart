@@ -13,7 +13,8 @@ class GetPricesUseCase {
   final BlockchainMetadataRepository _blockchainMetadataRepository;
   final BlockchainMetadataStore _blockchainMetadataStore;
 
-  Future<Either<GetPricesFailure, Unit>> execute() async => _blockchainMetadataRepository.getPrices() //
+  Future<Either<GetPricesFailure, Unit>> execute({bool forceLoadFromNetwork = true}) async =>
+      _blockchainMetadataRepository.getPrices() //
           .mapSuccess(
         (prices) {
           _blockchainMetadataStore.prices = prices;

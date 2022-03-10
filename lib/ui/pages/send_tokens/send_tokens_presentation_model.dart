@@ -1,6 +1,14 @@
 // ignore_for_file: avoid_setters_without_getters
+import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/balance_with_price_info.dart';
+import 'package:flutter_app/domain/entities/chain.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
+import 'package:flutter_app/domain/entities/token_pair.dart';
+import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_form_step.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
+import 'package:flutter_app/utils/price_converter.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:mobx/mobx.dart';
 
@@ -16,10 +24,35 @@ abstract class SendTokensViewModel {
   String get memo;
 
   bool get continueButtonEnabled;
+
+  String get amountText;
+
+  String get secondaryPriceText;
+
+  PriceType get priceType;
+
+  String get switchPriceTypeText;
+
+  String get primaryAmountSymbol;
+
+  BalanceWithPriceInfo get balanceWithPriceInfo;
+
+  Chain get chain;
 }
 
 class SendTokensPresentationModel with SendTokensPresentationModelBase implements SendTokensViewModel {
-  SendTokensPresentationModel(this._initialParams);
+  SendTokensPresentationModel(
+    this._initialParams,
+    this._blockchainMetadataStore,
+  ) {
+    final denom = _initialParams.chainAsset.balance.denom;
+    priceConverter = PriceConverter(
+      _blockchainMetadataStore.prices.priceForDenom(denom) ?? TokenPair.zero(denom),
+      denom,
+    );
+  }
+
+  final BlockchainMetadataStore _blockchainMetadataStore;
 
   // ignore: unused_field
   final SendTokensInitialParams _initialParams;
@@ -54,17 +87,92 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
       case SendTokensFormStep.recipient:
         return recipientConfirmed && recipientAddress.isNotEmpty;
       case SendTokensFormStep.amount:
-        // TODO: Handle this case.
-        return false;
+        return tokenAmount != Amount.zero;
       case SendTokensFormStep.review:
         // TODO: Handle this case.
         return false;
     }
   }
+
+  @override
+  String get amountText => priceConverter.primaryText;
+
+  Denom get denom => priceConverter.denom;
+
+  Amount get tokenAmount => priceConverter.primaryAmountType == PriceType.token
+      ? priceConverter.primaryAmount
+      : priceConverter.secondaryAmount;
+
+  /// Balance to be sent based on the form input
+  Balance get sendBalance => Balance(
+        denom: denom,
+        amount: tokenAmount,
+      );
+
+  /// Balance currently available in the account
+  Balance get walletBalance => _initialParams.chainAsset.balance;
+
+  @override
+  String get secondaryPriceText => priceConverter.secondaryPriceText;
+
+  @override
+  PriceType get priceType => priceConverter.primaryAmountType;
+
+  PriceConverter get priceConverter => _priceConverter.value;
+
+  @override
+  String get switchPriceTypeText {
+    switch (priceConverter.primaryAmountType) {
+      case PriceType.token:
+        return priceConverter.tokenPair.symbol;
+      case PriceType.fiat:
+        return denom.text;
+    }
+  }
+
+  set amountText(String amount) => priceConverter.primaryText = amount;
+
+  void switchCurrency() {
+    priceConverter..primaryAmountType = priceConverter.secondaryAmountType;
+  }
+
+  void setMaxAmount() {
+    final type = priceConverter.primaryAmountType;
+    priceConverter
+      ..primaryAmountType = PriceType.token
+      ..primaryText = walletBalance.amount.displayText
+      ..primaryAmountType = type;
+  }
+
+  @override
+  String get primaryAmountSymbol {
+    switch (priceType) {
+      case PriceType.token:
+        return denom.text;
+      case PriceType.fiat:
+        return priceConverter.tokenPair.symbol;
+    }
+  }
+
+  TokenPair get tokenPair => _blockchainMetadataStore.prices.priceForDenom(denom) ?? TokenPair.zero(denom);
+
+  @override
+  BalanceWithPriceInfo get balanceWithPriceInfo => BalanceWithPriceInfo(
+        balance: walletBalance,
+        tokenPair: tokenPair,
+      );
+
+  @override
+  Chain get chain => _initialParams.chainAsset.chain;
 }
 
 //////////////////BOILERPLATE
 abstract class SendTokensPresentationModelBase {
+  //////////////////////////////////////
+  final Observable<PriceConverter> _priceConverter = Observable(PriceConverter.empty());
+
+  set priceConverter(PriceConverter value) => Action(() => _priceConverter.value = value)();
+
   //////////////////////////////////////
   final Observable<SendTokensFormStep> _step = Observable(SendTokensFormStep.recipient);
 

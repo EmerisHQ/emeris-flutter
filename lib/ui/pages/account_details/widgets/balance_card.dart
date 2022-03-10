@@ -31,7 +31,7 @@ class BalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            balance.totalPriceText(prices),
+            prices.totalPriceText(balance),
             style: TextStyle(color: Theme.of(context).colorScheme.secondary),
           ),
           Text(

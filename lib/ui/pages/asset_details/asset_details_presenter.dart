@@ -1,9 +1,10 @@
+import 'package:cosmos_utils/extensions.dart';
 import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
-import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/receive/receive_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
 
 class AssetDetailsPresenter {
@@ -56,5 +57,10 @@ class AssetDetailsPresenter {
         ),
       );
 
-  void onTapSend() => showNotImplemented();
+  void onTapSend() {
+    final asset = _model.chainAssets.firstOrNull();
+    if (asset != null) {
+      navigator.openSendTokens(SendTokensInitialParams(asset));
+    }
+  }
 }

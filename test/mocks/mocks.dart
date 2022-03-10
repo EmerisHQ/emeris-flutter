@@ -7,9 +7,13 @@ import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/stores/accounts_store.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
+import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
 import 'package:flutter_app/domain/use_cases/change_current_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/delete_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
+import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
@@ -28,7 +32,7 @@ class MockBiometricStorageFile extends Mock implements BiometricStorageFile {}
 
 class MockAppLocalizationsInitializer extends Mock implements AppLocalizationsInitializer {}
 
-class MockAppInitializer extends Mock implements AppInitializer {}
+class MockAppInitializer extends Mock implements AppInitUseCase {}
 
 // Repositories
 
@@ -60,6 +64,11 @@ class MockGetBalancesUseCase extends Mock implements GetBalancesUseCase {}
 
 class MockDeleteAccountUseCase extends Mock implements DeleteAccountUseCase {}
 
+class MockGetPricesUseCase extends Mock implements GetPricesUseCase {}
+
+class MockGetChainsUseCase extends Mock implements GetChainsUseCase {}
+
+class MockGetVerifiedDenomsUseCase extends Mock implements GetVerifiedDenomsUseCase {}
 // Navigators
 
 class MockSendTokensNavigator extends Mock implements SendTokensNavigator {}

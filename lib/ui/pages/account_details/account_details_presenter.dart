@@ -4,6 +4,7 @@ import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
+import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/receive/receive_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
@@ -32,18 +33,18 @@ class AccountDetailsPresenter {
   }
 
   Future<void> getAccountBalances(EmerisAccount account) async {
-    _model.getAssetDetailsFuture = _getBalancesUseCase //
+    _model.getBalancesFuture = _getBalancesUseCase //
         .execute(accountData: account)
         .observableDoOn(
           (fail) => navigator.showError(fail.displayableFailure()),
-          (balances) => _model.balanceList = balances,
+          (balances) => _model.balances = balances,
         );
   }
 
   void onTapTransfer({required Balance balance}) => navigator.openAssetDetails(
         AssetDetailsInitialParams(
-          balance: balance,
-          assetDetails: _model.assetDetails,
+          totalBalance: balance,
+          chainBalances: _model.balances,
           account: _model.account,
         ),
       );
@@ -54,7 +55,5 @@ class AccountDetailsPresenter {
 
   void onTapReceive() => navigator.openReceive(ReceiveInitialParams(account: _model.account));
 
-  void onTapSend() => navigator.openSendTokens(
-        const SendTokensInitialParams(),
-      );
+  void onTapSend() => showNotImplemented(); // TODO make it possible to open sendTokensPage using only denom
 }

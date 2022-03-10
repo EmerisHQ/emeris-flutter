@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
-import 'package:flutter_app/domain/entities/asset_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
@@ -41,14 +40,12 @@ class AccountDetailsPresentationModel with AccountDetailsPresentationModelBase i
   final AccountsStore _accountsStore;
   final BlockchainMetadataStore _blockchainMetadataStore;
 
-  ObservableFuture<Either<GeneralFailure, AssetDetails>>? get getAssetDetailsFuture => _getAssetDetailsFuture.value;
+  ObservableFuture<Either<GeneralFailure, List<Balance>>>? get getBalancesFuture => _getBalancesFuture.value;
 
   ObservableFuture<Either<AddAccountFailure, Unit>>? get SendTokensFuture => _SendTokensFuture.value;
 
-  AssetDetails get assetDetails => _assetDetails.value;
-
   @override
-  bool get isLoading => isFutureInProgress(getAssetDetailsFuture);
+  bool get isLoading => isFutureInProgress(getBalancesFuture);
 
   @override
   bool get isSendTokensLoading => SendTokensFuture?.status == FutureStatus.pending;
@@ -71,27 +68,28 @@ class AccountDetailsPresentationModel with AccountDetailsPresentationModelBase i
   void dispose() => disposer?.call();
 
   @override
-  List<Balance> get balances => assetDetails.balances;
+  List<Balance> get balances => _balances.value;
 
   @override
-  String get totalAmountInUSD => assetDetails.totalAmountInUSDText(prices);
+  String get totalAmountInUSD => balances.totalAmountInUSDText(prices);
 
   @override
   Prices get prices => _blockchainMetadataStore.prices;
 }
 
 mixin AccountDetailsPresentationModelBase {
-  final Observable<ObservableFuture<Either<GeneralFailure, AssetDetails>>?> _getAssetDetailsFuture = Observable(null);
+  final Observable<ObservableFuture<Either<GeneralFailure, List<Balance>>>?> _getBalancesFuture = Observable(null);
 
   final Observable<ObservableFuture<Either<AddAccountFailure, Unit>>?> _SendTokensFuture = Observable(null);
 
   set SendTokensFuture(ObservableFuture<Either<AddAccountFailure, Unit>>? value) =>
       Action(() => _SendTokensFuture.value = value)();
 
-  set getAssetDetailsFuture(ObservableFuture<Either<GeneralFailure, AssetDetails>>? value) =>
-      Action(() => _getAssetDetailsFuture.value = value)();
+  set getBalancesFuture(ObservableFuture<Either<GeneralFailure, List<Balance>>>? value) =>
+      Action(() => _getBalancesFuture.value = value)();
 
-  final Observable<AssetDetails> _assetDetails = Observable(const AssetDetails(balances: <Balance>[]));
+  //////////////////////////////////////
+  final Observable<List<Balance>> _balances = Observable([]);
 
-  set balanceList(AssetDetails value) => Action(() => _assetDetails.value = value)();
+  set balances(List<Balance> value) => Action(() => _balances.value = value)();
 }
