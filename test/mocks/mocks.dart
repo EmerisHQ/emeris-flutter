@@ -18,7 +18,6 @@ import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
-import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:mocktail/mocktail.dart';
 

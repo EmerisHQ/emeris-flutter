@@ -96,7 +96,6 @@ import 'package:flutter_app/ui/pages/send_tokens/send_tokens_page.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presentation_model.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presenter.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
-import 'package:flutter_app/utils/app_initializer.dart';
 import 'package:flutter_app/utils/clipboard_manager.dart';
 import 'package:flutter_app/utils/share_manager.dart';
 import 'package:flutter_app/utils/strings.dart';
