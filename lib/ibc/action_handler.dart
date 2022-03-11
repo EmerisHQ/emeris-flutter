@@ -338,7 +338,7 @@ String getDenomHash(String path, String baseDenom, {int hopsToRemove = 0}) {
 Future<bool> isVerified(Denom denom, String chainId, BlockchainMetadataRepository ibcRepository) async {
   late bool isVerified;
   final verifiedDenoms = await ibcRepository.getVerifiedDenoms();
-  await verifiedDenoms.fold<Future?>((l) => throw 'Could not fetch verified denoms', (r) {
+  await verifiedDenoms.fold<Future?>((l) => throw 'Could not fetch verified denoms', (r) async {
     try {
       isVerified = r.firstWhere((element) => element.name == chainId).verified;
     } catch (ex) {
@@ -356,7 +356,7 @@ Future<List<FeeWithDenom>> getFeeForChain(String chainId, ChainsRepository chain
 
   await chainDetails.fold<Future?>(
     (fail) => throw 'Could not get chain details',
-    (details) {
+    (details) async {
       if (details.denoms != null) {
         for (final denom in details.denoms!) {
           fees.add(
@@ -404,7 +404,7 @@ Future<String> getBaseDenom(String denom, String? chainId, BlockchainMetadataRep
 
   VerifyTrace? verifyTrace;
   final traceEither = await ibcRepository.verifyTrace(finalChainName, denomHash);
-  await traceEither.fold<Future?>((l) => null, (r) {
+  await traceEither.fold<Future?>((l) => null, (r) async {
     verifyTrace = r;
   });
   if (verifyTrace != null) {
