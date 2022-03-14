@@ -14,8 +14,8 @@ void main() {
         'tiny kitchen artefact label morning axis disorder buffalo fiscal keen valid taxi',
       );
       final privateEthCredentials = EthPrivateKey.fromHex(privateKey);
-      final wallet = Wallet.createNew(privateEthCredentials, 'Hello', rng);
-      debugPrint(wallet.toJson());
+      final account = Wallet.createNew(privateEthCredentials, 'Hello', rng);
+      debugPrint(account.toJson());
 
 //      const apiUrl = "HTTP://127.0.0.1:7545"; // localhost
       const apiUrl = 'https://ropsten.infura.io/v3/96ac5dcb92d545b6a7ffc3d8af21fde0'; // publicly hosted
@@ -24,10 +24,10 @@ void main() {
       final ethClient = Web3Client(apiUrl, httpClient);
 
       final balance = await ethClient.getBalance(
-        EthereumAddress.fromHex(wallet.privateKey.address.hex),
+        EthereumAddress.fromHex(account.privateKey.address.hex),
       );
 
-      debugPrint(wallet.privateKey.address.hex);
+      debugPrint(account.privateKey.address.hex);
       debugPrint(privateEthCredentials.address.hex);
       debugPrint('${balance.getValueInUnit(EtherUnit.ether)}');
       await ethClient.sendTransaction(

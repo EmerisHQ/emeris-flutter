@@ -9,8 +9,8 @@ import '../test_utils.dart';
 
 void main() {
   late AppInitUseCase initializer;
-  late MockWalletsRepository walletsRepository;
-  late MockWalletsStore walletsStore;
+  late MockAccountsRepository accountsRepository;
+  late MockAccountsStore accountsStore;
   late MockSettingsStore settingsStore;
   late MockAuthRepository authRepository;
   late MockAppLocalizationsInitializer appLocalizationsInitializer;
@@ -29,8 +29,8 @@ void main() {
 
   setUp(() {
     appLocalizationsInitializer = MockAppLocalizationsInitializer();
-    walletsRepository = MockWalletsRepository();
-    walletsStore = MockWalletsStore();
+    accountsRepository = MockAccountsRepository();
+    accountsStore = MockAccountsStore();
     settingsStore = MockSettingsStore();
     authRepository = MockAuthRepository();
     getPricesUseCase = MockGetPricesUseCase();
@@ -38,8 +38,8 @@ void main() {
     getVerifiedDenomsUseCase = MockGetVerifiedDenomsUseCase();
     initializer = AppInitUseCase(
       appLocalizationsInitializer,
-      walletsRepository,
-      walletsStore,
+      accountsRepository,
+      accountsStore,
       settingsStore,
       authRepository,
       getPricesUseCase,
@@ -48,9 +48,9 @@ void main() {
     );
     when(() => settingsStore.init(authRepository)) //
         .thenAnswer((invocation) => Future.value());
-    when(() => walletsRepository.getWalletsList()) //
+    when(() => accountsRepository.getAccountsList()) //
         .thenAnswer((invocation) => Future.value(right([])));
-    when(() => walletsStore.wallets) //
+    when(() => accountsStore.accounts) //
         .thenAnswer((invocation) => ObservableList());
     when(() => getPricesUseCase.execute()) //
         .thenAnswer((invocation) => successFuture(unit));

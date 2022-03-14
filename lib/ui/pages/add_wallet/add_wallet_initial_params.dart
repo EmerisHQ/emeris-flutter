@@ -1,3 +1,0 @@
-class AddWalletInitialParams {
-  const AddWalletInitialParams();
-}

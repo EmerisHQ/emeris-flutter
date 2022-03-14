@@ -1,7 +1,7 @@
 import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/http/http_service.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/data/model/pool_json.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/pool.dart';
@@ -15,7 +15,7 @@ class RestApiLiquidityPoolsRepository extends LiquidityPoolsRepository {
   final HttpService _httpService;
 
   @override
-  Future<Either<GeneralFailure, List<Pool>>> getPools(EmerisWallet walletData) async {
+  Future<Either<GeneralFailure, List<Pool>>> getPools(EmerisAccount accountData) async {
     return _httpService
         .get('/v1/liquidity/cosmos/liquidity/v1beta1/pools')
         .responseSubKey('pools')

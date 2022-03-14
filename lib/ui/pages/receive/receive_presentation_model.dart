@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_setters_without_getters
-import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/ui/pages/receive/receive_initial_params.dart';
 
 abstract class ReceiveViewModel {
-  String get walletAddress;
+  String get accountAddress;
 
-  String get walletAlias;
+  String get accountAlias;
 }
 
 class ReceivePresentationModel with ReceivePresentationModelBase implements ReceiveViewModel {
@@ -13,13 +13,13 @@ class ReceivePresentationModel with ReceivePresentationModelBase implements Rece
 
   final ReceiveInitialParams initialParams;
 
-  EmerisWallet get wallet => initialParams.wallet;
+  EmerisAccount get account => initialParams.account;
 
   @override
-  String get walletAddress => wallet.walletDetails.walletAddress;
+  String get accountAddress => account.accountDetails.accountAddress;
 
   @override
-  String get walletAlias => wallet.walletDetails.walletAlias;
+  String get accountAlias => account.accountDetails.accountAlias;
 }
 
 //////////////////BOILERPLATE

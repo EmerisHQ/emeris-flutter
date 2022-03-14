@@ -1,6 +1,6 @@
 import 'package:cosmos_utils/group_by_extension.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
@@ -22,13 +22,13 @@ class GetBalancesUseCase {
   final GetVerifiedDenomsUseCase _getVerifiedDenomsUseCase;
 
   Future<Either<GeneralFailure, List<Balance>>> execute({
-    required EmerisWallet walletData,
+    required EmerisAccount accountData,
   }) async {
     await Future.wait([
       _getPricesUseCase.execute(),
       _getVerifiedDenomsUseCase.execute(),
     ]);
-    final balanceList = await _bankRepository.getBalances(walletData);
+    final balanceList = await _bankRepository.getBalances(accountData);
 
     final verifiedDenoms = _blockchainMetadataStore.denoms;
     return balanceList.fold(

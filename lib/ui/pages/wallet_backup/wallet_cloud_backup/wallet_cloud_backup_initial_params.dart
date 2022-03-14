@@ -1,3 +1,0 @@
-class WalletCloudBackupInitialParams {
-  const WalletCloudBackupInitialParams();
-}

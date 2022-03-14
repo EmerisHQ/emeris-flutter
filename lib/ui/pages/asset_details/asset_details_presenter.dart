@@ -30,7 +30,7 @@ class AssetDetailsPresenter {
   Future<void> _getStakedAmount() async {
     _model.getStakedAmountFuture = _getStakedAmountUseCase
         .execute(
-          wallet: _model.wallet,
+          account: _model.account,
           onChain: _model.onChain,
         )
         .observableDoOn(
@@ -53,7 +53,7 @@ class AssetDetailsPresenter {
 
   void onTapReceive() => navigator.openReceive(
         ReceiveInitialParams(
-          wallet: _model.wallet,
+          account: _model.account,
         ),
       );
 

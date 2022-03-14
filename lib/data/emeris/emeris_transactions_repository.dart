@@ -1,28 +1,28 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/api_calls/wallet_api.dart';
+import 'package:flutter_app/data/api_calls/account_api.dart';
+import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/transaction.dart';
-import 'package:flutter_app/domain/entities/wallet_identifier.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:transaction_signing_gateway/model/transaction_hash.dart';
 
 class EmerisTransactionsRepository implements TransactionsRepository {
-  EmerisTransactionsRepository(this._walletApis);
+  EmerisTransactionsRepository(this._accountApis);
 
-  final List<WalletApi> _walletApis;
+  final List<AccountApi> _accountApis;
 
   @override
   Future<Either<GeneralFailure, TransactionHash>> signAndBroadcast({
     required Transaction transaction,
-    required WalletIdentifier walletIdentifier,
+    required AccountIdentifier accountIdentifier,
   }) =>
-      WalletApi.forType(_walletApis, transaction.walletType)?.signAndBroadcast(
+      AccountApi.forType(_accountApis, transaction.accountType)?.signAndBroadcast(
         transaction: transaction,
-        walletIdentifier: walletIdentifier,
+        accountIdentifier: accountIdentifier,
       ) ??
       Future.value(
         left(
-          GeneralFailure.unknown('Could not find wallet api for ${transaction.walletType}'),
+          GeneralFailure.unknown('Could not find account api for ${transaction.accountType}'),
         ),
       );
 }

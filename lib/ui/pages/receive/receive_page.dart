@@ -63,7 +63,7 @@ class _ReceivePageState extends State<ReceivePage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 5),
             child: CosmosQrImage(
-              data: model.walletAddress,
+              data: model.accountAddress,
             ),
           ),
           SizedBox(height: theme.spacingXL),
@@ -71,10 +71,10 @@ class _ReceivePageState extends State<ReceivePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               EmerisGradientAvatar(
-                address: model.walletAddress,
+                address: model.accountAddress,
               ),
               Text(
-                model.walletAlias,
+                model.accountAlias,
                 style: CosmosTextTheme.title1Medium,
               )
             ],

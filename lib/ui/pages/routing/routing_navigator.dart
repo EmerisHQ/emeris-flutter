@@ -3,13 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/close_route.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
+import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_page.dart';
-import 'package:flutter_app/ui/pages/wallet_details/wallet_details_navigator.dart';
-import 'package:flutter_app/ui/pages/wallets_list/wallets_list_navigator.dart';
 
-class RoutingNavigator with OnboardingRoute, WalletsListRoute, CloseRoute, WalletDetailsRoute, ErrorDialogRoute {
+class RoutingNavigator with OnboardingRoute, AccountsListRoute, CloseRoute, AccountDetailsRoute, ErrorDialogRoute {
   RoutingNavigator(this.appNavigator);
 
   @override

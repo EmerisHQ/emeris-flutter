@@ -5,14 +5,14 @@ import 'package:cosmos_ui_components/cosmos_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/ui/pages/account_details/widgets/balance_card.dart';
+import 'package:flutter_app/ui/pages/account_details/widgets/button_bar.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presenter.dart';
 import 'package:flutter_app/ui/pages/asset_details/widgets/asset_prices_summary_row.dart';
 import 'package:flutter_app/ui/pages/asset_details/widgets/chains_list.dart';
-import 'package:flutter_app/ui/pages/wallet_details/widgets/balance_card.dart';
-import 'package:flutter_app/ui/pages/wallet_details/widgets/button_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/chain_asset.dart';
@@ -57,7 +57,7 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
   @override
   List<ChainAsset> get chainAssets => _chainAssets.value;
 
-  EmerisWallet get wallet => initialParams.wallet;
+  EmerisAccount get account => initialParams.account;
 
   String get onChain => initialParams.totalBalance.onChain;
 

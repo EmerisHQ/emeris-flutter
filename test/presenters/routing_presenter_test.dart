@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
@@ -18,23 +18,23 @@ void main() {
   late RoutingPresenter presenter;
   late RoutingNavigator navigator;
   late AppInitUseCase appInitializer;
-  late MockWalletsStore walletsStore;
-  late MockChangeCurrentWalletUseCase changeCurrentWalletUseCase;
+  late MockAccountsStore accountsStore;
+  late MockChangeCurrentAccountUseCase changeCurrentAccountUseCase;
 
   void _initMvp({
     bool initializeApp = false,
   }) {
     initParams = RoutingInitialParams(initializeApp: initializeApp);
-    model = RoutingPresentationModel(initParams, walletsStore);
+    model = RoutingPresentationModel(initParams, accountsStore);
     navigator = MockRoutingNavigator();
     presenter = RoutingPresenter(
       model,
       navigator,
       appInitializer,
-      changeCurrentWalletUseCase,
+      changeCurrentAccountUseCase,
     );
     when(() => navigator.openOnboarding(any())).thenAnswer((_) => Future.value());
-    when(() => navigator.openWalletDetails()).thenAnswer((_) => Future.value());
+    when(() => navigator.openAccountDetails()).thenAnswer((_) => Future.value());
   }
 
   test(
@@ -42,7 +42,7 @@ void main() {
     () async {
       // GIVEN
       _initMvp(initializeApp: true);
-      when(() => walletsStore.wallets).thenReturn(ObservableList());
+      when(() => accountsStore.accounts).thenReturn(ObservableList());
       // WHEN
       await presenter.init();
       //THEN
@@ -55,7 +55,7 @@ void main() {
     () async {
       // GIVEN
       _initMvp();
-      when(() => walletsStore.wallets).thenReturn(ObservableList());
+      when(() => accountsStore.accounts).thenReturn(ObservableList());
       // WHEN
       await presenter.init();
       //THEN
@@ -68,7 +68,7 @@ void main() {
     () async {
       // GIVEN
       _initMvp(initializeApp: true);
-      when(() => walletsStore.wallets).thenReturn(ObservableList());
+      when(() => accountsStore.accounts).thenReturn(ObservableList());
       // WHEN
       await presenter.init();
       //THEN
@@ -77,11 +77,11 @@ void main() {
   );
 
   test(
-    'no wallets should open onboardingPage',
+    'no accounts should open onboardingPage',
     () async {
       // GIVEN
       _initMvp();
-      when(() => walletsStore.wallets).thenReturn(ObservableList());
+      when(() => accountsStore.accounts).thenReturn(ObservableList());
       // WHEN
       await presenter.init();
       //THEN
@@ -91,10 +91,10 @@ void main() {
 
   setUp(() {
     registerFallbackValue(const OnboardingInitialParams());
-    registerFallbackValue(const EmerisWallet.empty());
+    registerFallbackValue(const EmerisAccount.empty());
     appInitializer = MockAppInitializer();
-    walletsStore = MockWalletsStore();
-    changeCurrentWalletUseCase = MockChangeCurrentWalletUseCase();
+    accountsStore = MockAccountsStore();
+    changeCurrentAccountUseCase = MockChangeCurrentAccountUseCase();
     when(() => appInitializer.execute()).thenAnswer((invocation) => Future.value(right(unit)));
   });
 

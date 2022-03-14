@@ -3,7 +3,7 @@ import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/http/http_service.dart';
 import 'package:flutter_app/data/model/balance_json.dart';
-import 'package:flutter_app/data/model/emeris_wallet.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/data/model/staking_balance_json.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
@@ -16,8 +16,8 @@ class EmerisBankRepository implements BankRepository {
   final HttpService _httpService;
 
   @override
-  Future<Either<GeneralFailure, List<Balance>>> getBalances(EmerisWallet walletData) async => _httpService
-      .get('/v1/account/${bech32ToHex(walletData.walletDetails.walletAddress)}/balance')
+  Future<Either<GeneralFailure, List<Balance>>> getBalances(EmerisAccount accountData) async => _httpService
+      .get('/v1/account/${bech32ToHex(accountData.accountDetails.accountAddress)}/balance')
       .responseSubKey('balances')
       .executeList(BalanceJson.fromJson)
       .mapSuccess(
@@ -29,9 +29,10 @@ class EmerisBankRepository implements BankRepository {
       .mapError((fail) => GeneralFailure.unknown('Http failure', fail));
 
   @override
-  Future<Either<GeneralFailure, List<StakingBalance>>> getStakingBalances(EmerisWallet walletData) async => _httpService
-      .get('/v1/account/${bech32ToHex(walletData.walletDetails.walletAddress)}/stakingbalances')
-      .responseSubKey('staking_balances')
-      .executeList((json) => StakingBalanceJson.fromJson(json).toDomain())
-      .mapError((fail) => GeneralFailure.unknown('Http failure', fail));
+  Future<Either<GeneralFailure, List<StakingBalance>>> getStakingBalances(EmerisAccount accountData) async =>
+      _httpService
+          .get('/v1/account/${bech32ToHex(accountData.accountDetails.accountAddress)}/stakingbalances')
+          .responseSubKey('staking_balances')
+          .executeList((json) => StakingBalanceJson.fromJson(json).toDomain())
+          .mapError((fail) => GeneralFailure.unknown('Http failure', fail));
 }
