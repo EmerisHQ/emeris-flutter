@@ -3,7 +3,7 @@ name: Pull Request Worfklow
 on: [pull_request]
 
 env:
-  FLUTTER_VERSION: '2.8.1'
+  FLUTTER_VERSION: '2.10.3'
   JAVA_VERSION: '12'
   RUBY_VERSION: '2.7'
   LC_ALL: en_US.UTF-8
