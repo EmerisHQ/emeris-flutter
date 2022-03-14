@@ -2,7 +2,6 @@
 import 'package:cosmos_utils/extensions.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
-import 'package:flutter_app/domain/entities/balance_with_price_info.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
@@ -37,7 +36,6 @@ abstract class SendTokensViewModel {
 
   String get primaryAmountSymbol;
 
-  BalanceWithPriceInfo get balanceWithPriceInfo;
 
   Chain get chain;
 }
@@ -158,12 +156,6 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
   }
 
   TokenPair get tokenPair => _blockchainMetadataStore.prices.priceForDenom(denom) ?? TokenPair.zero(denom);
-
-  @override
-  BalanceWithPriceInfo get balanceWithPriceInfo => BalanceWithPriceInfo(
-        balance: walletBalance,
-        tokenPair: tokenPair,
-      );
 
   @override
   Chain get chain => selectedAsset.chain;
