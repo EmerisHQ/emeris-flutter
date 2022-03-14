@@ -5,6 +5,7 @@ import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
+/// An asset on a specific chain, i.e: ATOM on Cosmos Hub chain only
 class ChainAsset extends Equatable {
   const ChainAsset({
     required this.chain,

@@ -5,6 +5,8 @@ import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
+/// Denotes a single coin asset that can span across multiple chains, i.e: ATOM with balances on the
+/// Cosmos Hub and Osmosis chains
 class Asset extends Equatable {
   const Asset({
     required this.verifiedDenom,
