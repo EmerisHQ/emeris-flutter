@@ -21,5 +21,5 @@ class Denom extends Equatable {
       ];
 
   @override
-  String toString() => '${displayName ?? ''}($id)';
+  String toString() => '$displayName($id)';
 }
