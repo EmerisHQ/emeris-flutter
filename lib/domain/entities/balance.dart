@@ -55,9 +55,9 @@ class Balance extends Equatable {
   /// TODO use 'precision' for determining the format
   String get amountWithDenomText => '${formatAmount(amount.value.toDouble(), symbol: '')} ${denom.displayName}';
 
-  ChainAsset toChainAsset(BlockchainMetadataStore store) => ChainAsset(
+  ChainAsset toChainAsset(BlockchainMetadataStore store, {VerifiedDenom? verifiedDenom}) => ChainAsset(
         chain: store.chainForName(onChain) ?? const Chain.empty(),
-        verifiedDenom: store.verifiedDenom(denom) ?? const VerifiedDenom.empty(),
+        verifiedDenom: verifiedDenom ?? store.verifiedDenom(denom) ?? const VerifiedDenom.empty(),
         balance: this,
       );
 
@@ -101,13 +101,14 @@ extension BalancesListExtensions on Iterable<Balance> {
     BlockchainMetadataStore store,
   ) {
     final map = groupBy((obj) => obj.denom);
-    return map.entries
-        .map(
-          (entry) => Asset(
-            verifiedDenom: store.verifiedDenom(entry.key) ?? const VerifiedDenom.empty(),
-            chainAssets: entry.value.map((balance) => balance.toChainAsset(store)).toList(),
-          ),
-        )
-        .toList();
+    return map.entries.map(
+      (entry) {
+        final verifiedDenom = store.verifiedDenom(entry.key) ?? const VerifiedDenom.empty();
+        return Asset(
+          verifiedDenom: verifiedDenom,
+          chainAssets: entry.value.map((balance) => balance.toChainAsset(store, verifiedDenom: verifiedDenom)).toList(),
+        );
+      },
+    ).toList();
   }
 }
