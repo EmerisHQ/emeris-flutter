@@ -1,4 +1,6 @@
+import 'package:cosmos_utils/extensions.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
+import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:mobx/mobx.dart';
@@ -9,6 +11,10 @@ class BlockchainMetadataStore extends _BlockchainMetadataStoreBase {
   Prices get prices => _prices.value;
 
   List<Chain> get chains => _chains.value;
+
+  VerifiedDenom? verifiedDenom(Denom denom) => denoms.firstOrNull(where: (it) => it.name == denom.id);
+
+  Chain? chainForName(String name) => chains.firstOrNull(where: (it) => it.chainName == name);
 }
 
 abstract class _BlockchainMetadataStoreBase {

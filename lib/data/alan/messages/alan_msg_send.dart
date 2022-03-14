@@ -10,7 +10,7 @@ extension AlanMsgSend on MsgSend {
       ..toAddress = moneyMessage.toAddress;
     msgSend.amount.add(
       Coin.create()
-        ..denom = moneyMessage.balance.denom.text
+        ..denom = moneyMessage.balance.denom.id
         ..amount = moneyMessage.balance.amount.displayText,
     );
     return msgSend;

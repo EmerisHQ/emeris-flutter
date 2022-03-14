@@ -1,19 +1,25 @@
 import 'package:equatable/equatable.dart';
 
 class Denom extends Equatable {
-  const Denom(
-    this.text,
-  );
+  const Denom({
+    required this.id,
+    this.displayName = '',
+  });
 
-  const Denom.empty() : text = '';
+  const Denom.id(this.id) : displayName = id;
 
-  final String text;
+  const Denom.empty()
+      : id = '',
+        displayName = '';
+
+  final String displayName;
+  final String id;
 
   @override
   List<Object> get props => [
-        text,
+        id,
       ];
 
   @override
-  String toString() => text;
+  String toString() => '${displayName ?? ''}($id)';
 }

@@ -25,7 +25,7 @@ class Prices extends Equatable {
       ];
 
   TokenPair? priceForDenom(Denom denom) => tokens //
-      .firstOrNull(where: (it) => it.ticker.startsWith(denom.text));
+      .firstOrNull(where: (it) => it.ticker.startsWith(denom.displayName));
 
   String totalPriceText(Balance balance) => balance.totalPriceText(
         priceForDenom(balance.denom) ?? TokenPair.zero(balance.denom),

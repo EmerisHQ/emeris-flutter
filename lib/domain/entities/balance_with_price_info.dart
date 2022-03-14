@@ -15,7 +15,7 @@ class BalanceWithPriceInfo extends Equatable {
 
   Denom get denom => balance.denom;
 
-  String get denomText => denom.text;
+  String get denomText => denom.displayName;
 
   @override
   List<Object> get props => [

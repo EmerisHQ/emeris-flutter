@@ -11,6 +11,14 @@ class Chain extends Equatable {
     this.denoms,
   });
 
+  const Chain.empty()
+      : logo = '',
+        chainName = '',
+        displayName = '',
+        primaryChannel = const {},
+        enabled = null,
+        denoms = null;
+
   final bool? enabled;
   final String chainName;
   final String logo;

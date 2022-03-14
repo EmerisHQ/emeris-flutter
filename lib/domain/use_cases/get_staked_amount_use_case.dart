@@ -12,11 +12,9 @@ class GetStakedAmountUseCase {
 
   Future<Either<GeneralFailure, Amount>> execute({
     required EmerisAccount account,
-    required String onChain,
   }) =>
       _bankRepository.getStakingBalances(account).mapSuccess((balances) {
         final amountDecimal = balances
-            .where((element) => element.chainName == onChain)
             .map((e) => e.amount.value)
             .reduce((a, b) => a + b);
         return Amount(amountDecimal);

@@ -1,9 +1,10 @@
-import 'package:cosmos_utils/group_by_extension.dart';
+import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/repositories/bank_repository.dart';
+import 'package:flutter_app/domain/stores/assets_store.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
@@ -14,49 +15,36 @@ class GetBalancesUseCase {
     this._getPricesUseCase,
     this._blockchainMetadataStore,
     this._getVerifiedDenomsUseCase,
+    this._assetsStore,
   );
 
   final BankRepository _bankRepository;
   final GetPricesUseCase _getPricesUseCase;
   final BlockchainMetadataStore _blockchainMetadataStore;
   final GetVerifiedDenomsUseCase _getVerifiedDenomsUseCase;
+  final AssetsStore _assetsStore;
 
-  Future<Either<GeneralFailure, List<Balance>>> execute({
-    required EmerisAccount accountData,
+  Future<Either<GeneralFailure, Unit>> execute({
+    required AccountDetails details,
   }) async {
     await Future.wait([
-      _getPricesUseCase.execute(),
-      _getVerifiedDenomsUseCase.execute(),
+      _getPricesUseCase.execute(forceLoadFromNetwork: false),
+      _getVerifiedDenomsUseCase.execute(forceLoadFromNetwork: false),
     ]);
-    final balanceList = await _bankRepository.getBalances(accountData);
-
-    final verifiedDenoms = _blockchainMetadataStore.denoms;
-    return balanceList.fold(
-      (fail) => left(GeneralFailure.unknown(fail.message, fail.cause, fail.stack)),
-      (balanceList) {
-        final balances = balanceList
-            .map(
-              (it) => it.byUpdatingPriceAndVerifiedDenom(
-                _blockchainMetadataStore.prices,
-                verifiedDenoms,
-              ),
-            )
-            .toList();
-        return right(groupByDenom(balances));
-      },
-    );
+    return _bankRepository
+        .getBalances(
+          details.accountAddress,
+        )
+        .doOn(success: (it) => _updateAssetsStore(details, it))
+        .mapSuccess((response) => unit);
   }
 
-  List<Balance> groupByDenom(List<Balance> balances) => balances
-      .groupBy((obj) => obj.denom)
-      .map(
-        (key, denomBalances) => MapEntry(
-          key,
-          denomBalances.first.copyWith(
-            amount: denomBalances.totalAmount,
-          ),
-        ),
-      )
-      .values
-      .toList();
+  void _updateAssetsStore(AccountDetails details, List<Balance> it) {
+    return _assetsStore.updateAssets(
+      details.accountIdentifier,
+      it.groupIntoAssets(
+        _blockchainMetadataStore,
+      ),
+    );
+  }
 }

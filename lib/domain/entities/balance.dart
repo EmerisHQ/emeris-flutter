@@ -1,12 +1,16 @@
 import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:cosmos_utils/extensions.dart';
+import 'package:cosmos_utils/group_by_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/domain/entities/asset.dart';
+import 'package:flutter_app/domain/entities/chain.dart';
+import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/domain/entities/token_pair.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
-import 'package:flutter_app/domain/utils/amount_with_precision_calculator.dart';
+import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/utils/prices_formatter.dart';
 
 class Balance extends Equatable {
@@ -38,35 +42,6 @@ class Balance extends Equatable {
         amount,
       ];
 
-  Balance byUpdatingPriceAndVerifiedDenom(
-    Prices prices,
-    List<VerifiedDenom> verifiedDenoms,
-  ) {
-    final baseDenom = verifiedDenoms.firstWhere((element) => element.name == denom.text);
-
-    /// TODO: Pick up the pool token prices from the API or calculate it as done in the web
-    TokenPair.zero(denom);
-
-    return Balance(
-      denom: Denom(baseDenom.displayName),
-      amount: getAmountWithPrecision(amount, baseDenom.precision),
-      onChain: onChain,
-    );
-  }
-
-  Balance copyWith({
-    Denom? denom,
-    Amount? amount,
-    TokenPair? tokenPrice,
-    String? onChain,
-  }) {
-    return Balance(
-      denom: denom ?? this.denom,
-      amount: amount ?? this.amount,
-      onChain: onChain ?? this.onChain,
-    );
-  }
-
   String totalPriceText(TokenPair tokenPair) => formatTokenPrice(
         amount,
         tokenPair,
@@ -78,10 +53,28 @@ class Balance extends Equatable {
       );
 
   /// TODO use 'precision' for determining the format
-  String get amountWithDenomText => '${formatAmount(amount.value.toDouble(), symbol: '')} ${denom.text}';
+  String get amountWithDenomText => '${formatAmount(amount.value.toDouble(), symbol: '')} ${denom.displayName}';
+
+  ChainAsset toChainAsset(BlockchainMetadataStore store) => ChainAsset(
+        chain: store.chainForName(onChain) ?? const Chain.empty(),
+        verifiedDenom: store.verifiedDenom(denom) ?? const VerifiedDenom.empty(),
+        balance: this,
+      );
+
+  Balance copyWith({
+    Denom? denom,
+    Amount? amount,
+    String? onChain,
+  }) {
+    return Balance(
+      denom: denom ?? this.denom,
+      amount: amount ?? this.amount,
+      onChain: onChain ?? this.onChain,
+    );
+  }
 }
 
-extension TotalAmount on Iterable<Balance> {
+extension BalancesListExtensions on Iterable<Balance> {
   Amount get totalAmount => Amount(
         map((it) => it.amount.value).reduce((a, b) => a + b),
       );
@@ -102,5 +95,19 @@ extension TotalAmount on Iterable<Balance> {
     return formatAmount(
       totalAmountInUSD(prices).value.toDouble(),
     );
+  }
+
+  List<Asset> groupIntoAssets(
+    BlockchainMetadataStore store,
+  ) {
+    final map = groupBy((obj) => obj.denom);
+    return map.entries
+        .map(
+          (entry) => Asset(
+            verifiedDenom: store.verifiedDenom(entry.key) ?? const VerifiedDenom.empty(),
+            chainAssets: entry.value.map((balance) => balance.toChainAsset(store)).toList(),
+          ),
+        )
+        .toList();
   }
 }
