@@ -1,7 +1,9 @@
 import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/domain/entities/token_pair.dart';
 import 'package:mobx/mobx.dart';
 
@@ -11,22 +13,11 @@ enum PriceType {
 }
 
 class PriceConverter extends _PriceConverterBase with EquatableMixin {
-  PriceConverter(
-    this.tokenPair,
-    this.denom, [
-    String primaryText = '',
-    PriceType primaryAmountType = PriceType.token,
-  ]) {
-    this.primaryText = primaryText;
-    this.primaryAmountType = primaryAmountType;
-  }
+  PriceConverter();
 
-  PriceConverter.empty()
-      : tokenPair = TokenPair.zero(),
-        denom = const Denom.empty();
+  Denom get denom => _denom.value;
 
-  final TokenPair tokenPair;
-  final Denom denom;
+  TokenPair get tokenPair => _tokenPair.value;
 
   String get primaryText => _primaryText.value;
 
@@ -55,7 +46,7 @@ class PriceConverter extends _PriceConverterBase with EquatableMixin {
       case PriceType.token:
         return tokenPair.totalPriceAmount(primaryAmount);
       case PriceType.fiat:
-        return primaryAmount / tokenPair.unitPrice;
+        return tokenPair.unitPrice.isZero ? Amount.zero : primaryAmount / tokenPair.unitPrice;
     }
   }
 
@@ -79,6 +70,16 @@ class PriceConverter extends _PriceConverterBase with EquatableMixin {
         primaryText,
         primaryAmountType,
       ];
+
+  void setTokenUsingChainAsset(ChainAsset asset, Prices prices) => Action(() {
+        _denom.value = asset.balance.denom;
+        _tokenPair.value = prices.priceForDenom(denom) ?? TokenPair.zero(denom);
+      })();
+
+  void setTokenUsingDenom(Denom denom, TokenPair tokenPair) => Action(() {
+        _denom.value = denom;
+        _tokenPair.value = tokenPair;
+      })();
 }
 
 abstract class _PriceConverterBase {
@@ -89,4 +90,10 @@ abstract class _PriceConverterBase {
 
   //////////////////////////////////////
   final Observable<PriceType> _primaryAmountType = Observable(PriceType.token);
+
+  //////////////////////////////////////
+  final Observable<Denom> _denom = Observable(const Denom.empty());
+
+  //////////////////////////////////////
+  final Observable<TokenPair> _tokenPair = Observable(TokenPair.zero());
 }

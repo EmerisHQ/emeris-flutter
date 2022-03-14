@@ -1,8 +1,10 @@
 // ignore_for_file: avoid_setters_without_getters
+import 'package:cosmos_utils/extensions.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/balance_with_price_info.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
+import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/token_pair.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
@@ -44,13 +46,16 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
   SendTokensPresentationModel(
     this._initialParams,
     this._blockchainMetadataStore,
+    this.priceConverter,
   ) {
-    final denom = _initialParams.chainAsset.balance.denom;
-    priceConverter = PriceConverter(
-      _blockchainMetadataStore.prices.priceForDenom(denom) ?? TokenPair.zero(denom),
-      denom,
+    selectedAsset = _initialParams.asset.chainAssets.firstOrNull() ?? ChainAsset.empty();
+    priceConverter.setTokenUsingChainAsset(
+      selectedAsset,
+      _blockchainMetadataStore.prices,
     );
   }
+
+  final PriceConverter priceConverter;
 
   final BlockchainMetadataStore _blockchainMetadataStore;
 
@@ -110,7 +115,7 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
       );
 
   /// Balance currently available in the account
-  Balance get walletBalance => _initialParams.chainAsset.balance;
+  Balance get walletBalance => selectedAsset.balance;
 
   @override
   String get secondaryPriceText => priceConverter.secondaryPriceText;
@@ -118,15 +123,13 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
   @override
   PriceType get priceType => priceConverter.primaryAmountType;
 
-  PriceConverter get priceConverter => _priceConverter.value;
-
   @override
   String get switchPriceTypeText {
     switch (priceConverter.primaryAmountType) {
       case PriceType.token:
         return priceConverter.tokenPair.symbol;
       case PriceType.fiat:
-        return denom.text;
+        return denom.displayName;
     }
   }
 
@@ -148,7 +151,7 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
   String get primaryAmountSymbol {
     switch (priceType) {
       case PriceType.token:
-        return denom.text;
+        return denom.displayName;
       case PriceType.fiat:
         return priceConverter.tokenPair.symbol;
     }
@@ -163,16 +166,18 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
       );
 
   @override
-  Chain get chain => _initialParams.chainAsset.chain;
+  Chain get chain => selectedAsset.chain;
+
+  ChainAsset get selectedAsset => _selectedAsset.value;
+
+  set selectedAsset(ChainAsset value) => Action(() {
+        priceConverter.setTokenUsingChainAsset(value, _blockchainMetadataStore.prices);
+        _selectedAsset.value = value;
+      })();
 }
 
 //////////////////BOILERPLATE
 abstract class SendTokensPresentationModelBase {
-  //////////////////////////////////////
-  final Observable<PriceConverter> _priceConverter = Observable(PriceConverter.empty());
-
-  set priceConverter(PriceConverter value) => Action(() => _priceConverter.value = value)();
-
   //////////////////////////////////////
   final Observable<SendTokensFormStep> _step = Observable(SendTokensFormStep.recipient);
 
@@ -192,4 +197,7 @@ abstract class SendTokensPresentationModelBase {
   final Observable<String> _memo = Observable('');
 
   set memo(String value) => Action(() => _memo.value = value)();
+
+  //////////////////////////////////////
+  final Observable<ChainAsset> _selectedAsset = Observable(ChainAsset.empty());
 }
