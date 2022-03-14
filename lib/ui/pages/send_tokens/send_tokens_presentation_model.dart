@@ -36,7 +36,6 @@ abstract class SendTokensViewModel {
 
   String get primaryAmountSymbol;
 
-
   Chain get chain;
 }
 

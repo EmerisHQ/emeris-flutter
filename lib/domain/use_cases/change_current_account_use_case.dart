@@ -13,6 +13,8 @@ class ChangeCurrentAccountUseCase {
 
   Future<Either<ChangeCurrentAccountFailure, Unit>> execute({required EmerisAccount account}) async {
     _walletsStore.currentAccount = account;
+
+    // this fetches balances for the newly selected account and saves it into the assetsStore
     return _getBalancesUseCase
         .execute(details: account.accountDetails)
         .mapError(ChangeCurrentAccountFailure.unknown)

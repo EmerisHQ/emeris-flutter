@@ -51,7 +51,7 @@ class AssetDetailsPresentationModel with AssetDetailsPresentationModelBase imple
   Balance get balance => initialParams.asset.totalBalance;
 
   @override
-  String get totalAmountInUSD => initialParams.asset.chainAssets.totalAmountInUSDText(prices);
+  String get totalAmountInUSD => initialParams.asset.totalAmountInUSDText(prices);
 
   @override
   Prices get prices => _blockchainMetadataStore.prices;

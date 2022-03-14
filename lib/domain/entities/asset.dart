@@ -28,6 +28,8 @@ class Asset extends Equatable {
         denom: verifiedDenom.denom,
         amount: chainAssets.map((it) => it.balance).totalAmount,
       );
+
+  String totalAmountInUSDText(Prices prices) => chainAssets.totalAmountInUSDText(prices);
 }
 
 extension AssetIterableExtensions on Iterable<Asset> {

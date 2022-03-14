@@ -14,9 +14,7 @@ class GetStakedAmountUseCase {
     required EmerisAccount account,
   }) =>
       _bankRepository.getStakingBalances(account).mapSuccess((balances) {
-        final amountDecimal = balances
-            .map((e) => e.amount.value)
-            .reduce((a, b) => a + b);
+        final amountDecimal = balances.map((e) => e.amount.value).reduce((a, b) => a + b);
         return Amount(amountDecimal);
       });
 }
