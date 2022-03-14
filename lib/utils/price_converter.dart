@@ -57,7 +57,7 @@ class PriceConverter extends _PriceConverterBase with EquatableMixin {
   String _formatPrice(PriceType type, Amount amount) {
     switch (type) {
       case PriceType.token:
-        return '${amount.displayText} $denom';
+        return '${amount.displayText} ${denom.displayName}';
       case PriceType.fiat:
         return formatAmount(amount.value.toDouble(), symbol: tokenPair.symbol);
     }
