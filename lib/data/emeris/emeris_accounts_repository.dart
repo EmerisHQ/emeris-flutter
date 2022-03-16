@@ -8,6 +8,7 @@ import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_accounts_list_failure.dart';
+import 'package:flutter_app/domain/entities/failures/rename_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/verify_account_password_failure.dart';
 import 'package:flutter_app/domain/entities/import_account_form_data.dart';
 import 'package:flutter_app/domain/repositories/accounts_repository.dart';
@@ -82,6 +83,12 @@ class EmerisAccountsRepository implements AccountsRepository {
       .mapError(
         (fail) => DeleteAccountFailure.unknown(cause: fail),
       );
+
+  @override
+  Future<Either<RenameAccountFailure, Unit>> renameAccount(AccountPublicInfo accountPublicInfo) =>
+      _signingGateway.updateAccountPublicInfo(info: accountPublicInfo).mapError(
+            (fail) => RenameAccountFailure.unknown(cause: fail),
+          );
 }
 
 extension AccountPublicInfoTranslator on AccountPublicInfo {

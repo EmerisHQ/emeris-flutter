@@ -10,6 +10,7 @@ import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presentation_mo
 import 'package:flutter_app/ui/pages/add_account/add_account_initial_params.dart';
 import 'package:flutter_app/ui/pages/import_account/import_account_initial_params.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
+import 'package:flutter_app/ui/pages/rename_account/rename_account_initial_parameters.dart';
 import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
 
@@ -49,6 +50,7 @@ class AccountsListPresenter {
   void onTapEditAccount(AccountInfo account) => navigator.openEditAccountSheet(
         title: account.name,
         onTapDelete: () => _deleteAccount(account),
+        onTapRename: () => _renameAccount(account),
       );
 
   Future<void> _deleteAccount(AccountInfo account) async {
@@ -70,6 +72,17 @@ class AccountsListPresenter {
         }
         return right(true);
       },
+    );
+  }
+
+  void _renameAccount(AccountInfo accountInfo) {
+    navigator.openRenameAccount(
+      RenameAccountInitialParams(
+        name: accountInfo.name,
+        accountInfo: _model.accounts
+            .firstWhere((it) => it.accountDetails.accountAddress == accountInfo.address)
+            .publicAccountInfo,
+      ),
     );
   }
 }
