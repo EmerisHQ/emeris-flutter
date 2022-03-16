@@ -33,47 +33,56 @@ class RecipientSendTokensStep extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(strings.recipientToLabel),
-              IconButton(
-                icon: const Icon(Icons.qr_code),
-                onPressed: onTapScanCode,
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: CosmosTextField(
-                  controller: recipientTextController,
-                  onChanged: onChangedRecipientAddress,
-                  hint: strings.recipientToHint,
-                ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(strings.recipientToLabel),
+                      IconButton(
+                        icon: const Icon(Icons.qr_code),
+                        onPressed: onTapScanCode,
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CosmosTextField(
+                          controller: recipientTextController,
+                          onChanged: onChangedRecipientAddress,
+                          hint: strings.recipientToHint,
+                        ),
+                      ),
+                      SizedBox(
+                        width: CosmosTheme.of(context).spacingM,
+                      ),
+                      CosmosOutlineButton(
+                        text: strings.pasteAction,
+                        onTap: onTapPaste,
+                        height: 40,
+                      )
+                    ],
+                  ),
+                  SizedBox(height: CosmosTheme.of(context).spacingXXXL),
+                  Text(strings.referenceLabel),
+                  CosmosTextField(
+                    onChanged: onChangedMemo,
+                    controller: memoTextController,
+                    hint: strings.referenceHint,
+                  ),
+                  SizedBox(height: CosmosTheme.of(context).spacingXL),
+                  CosmosCheckboxTile(
+                    text: strings.confirmRecipientCheckbox,
+                    onTap: onTapConfirmRecipientCheckbox,
+                    checked: recipientConfirmed,
+                  ),
+                ],
               ),
-              SizedBox(
-                width: CosmosTheme.of(context).spacingM,
-              ),
-              CosmosOutlineButton(
-                text: strings.pasteAction,
-                onTap: onTapPaste,
-                height: 40,
-              )
-            ],
-          ),
-          SizedBox(height: CosmosTheme.of(context).spacingXXXL),
-          Text(strings.referenceLabel),
-          CosmosTextField(
-            onChanged: onChangedMemo,
-            controller: memoTextController,
-            hint: strings.referenceHint,
-          ),
-          const Spacer(),
-          CosmosCheckboxTile(
-            text: strings.confirmRecipientCheckbox,
-            onTap: onTapConfirmRecipientCheckbox,
-            checked: recipientConfirmed,
+            ),
           ),
           SizedBox(height: CosmosTheme.of(context).spacingL),
           CosmosElevatedButton(

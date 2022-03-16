@@ -105,7 +105,7 @@ class AssetDetailsPageState extends State<AssetDetailsPage> {
                 Expanded(
                   child: ChainsList(
                     chainAssets: model.chainAssets,
-                    isChainListLoading: model.isChainListLoading,
+                    isChainListLoading: false,
                     prices: model.prices,
                   ),
                 ),

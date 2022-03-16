@@ -60,9 +60,10 @@ dependencies:
   cupertino_icons: 1.0.4
 
 
-## convenient overrides for development to reference packages on local disk, just uncomment following lines and make sure
-## it points to the location of the checked out tendermint/flutter repository
-#dependency_overrides:
+
+dependency_overrides:
+  ## convenient overrides for development to reference packages on local disk, just uncomment following lines and make sure
+  ## it points to the location of the checked out tendermint/flutter repository
 #  cosmos_utils:
 #    path: ../flutter-public/packages/cosmos_utils
 #  transaction_signing_gateway:
@@ -71,15 +72,13 @@ dependencies:
 #    path: ../flutter-public/packages/cosmos_ui_components
 #  cosmos_auth:
 #    path: ../flutter-public/packages/cosmos_auth
+  analyzer: 3.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: 1.8.2
-  mocktail: 0.3.0
-
-dependency_overrides:
-  analyzer: 3.3.1
+  mocktail: ^0.3.0
 
 flutter:
 

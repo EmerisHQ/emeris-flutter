@@ -10,6 +10,8 @@ class Amount extends Equatable {
 
   Amount.fromNum(num num) : value = Decimal.parse(num.toString());
 
+  bool get isZero => this == Amount.zero;
+
   static Amount? tryParse(String string) {
     final value = Decimal.tryParse(string);
     return value == null ? null : Amount(value);
