@@ -6,14 +6,20 @@ enum _GenerateCurrentAccountFailureType {
 
 class ChangeCurrentAccountFailure {
   // ignore: avoid_field_initializers_in_const_classes
-  const ChangeCurrentAccountFailure.unknown() : _type = _GenerateCurrentAccountFailureType.Unknown;
+  const ChangeCurrentAccountFailure.unknown([this.cause]) : _type = _GenerateCurrentAccountFailureType.Unknown;
 
   final _GenerateCurrentAccountFailureType _type;
+  final dynamic cause;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {
       case _GenerateCurrentAccountFailureType.Unknown:
         return DisplayableFailure.commonError();
     }
+  }
+
+  @override
+  String toString() {
+    return 'ChangeCurrentAccountFailure{_type: $_type, cause: $cause}';
   }
 }

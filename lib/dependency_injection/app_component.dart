@@ -25,6 +25,7 @@ import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/repositories/liquidity_pools_repository.dart';
 import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/stores/accounts_store.dart';
+import 'package:flutter_app/domain/stores/assets_store.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
@@ -34,7 +35,6 @@ import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/delete_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
-import 'package:flutter_app/domain/use_cases/get_chain_assets_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
@@ -97,6 +97,7 @@ import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presentation_model.
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presenter.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
 import 'package:flutter_app/utils/clipboard_manager.dart';
+import 'package:flutter_app/utils/price_converter.dart';
 import 'package:flutter_app/utils/share_manager.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:get_it/get_it.dart';
@@ -165,7 +166,7 @@ void _configureRepositories() {
       () => EmerisAccountsRepository(getIt(), getIt()),
     )
     ..registerFactory<BankRepository>(
-      () => EmerisBankRepository(getIt()),
+      () => EmerisBankRepository(getIt(), getIt()),
     )
     ..registerFactory<BlockchainMetadataRepository>(
       () => RestApiBlockchainMetadataRepository(getIt()),
@@ -194,6 +195,9 @@ void _configureStores() {
     )
     ..registerLazySingleton<BlockchainMetadataStore>(
       BlockchainMetadataStore.new,
+    )
+    ..registerLazySingleton<AssetsStore>(
+      AssetsStore.new,
     );
 }
 
@@ -227,6 +231,9 @@ void _configureGeneralDependencies() {
     )
     ..registerFactory<HttpService>(
       () => HttpService(getIt()),
+    )
+    ..registerFactory<PriceConverter>(
+      PriceConverter.new,
     );
 }
 
@@ -236,7 +243,7 @@ void _configureUseCases() {
       () => ImportAccountUseCase(getIt(), getIt(), getIt()),
     )
     ..registerFactory<GetBalancesUseCase>(
-      () => GetBalancesUseCase(getIt(), getIt(), getIt(), getIt()),
+      () => GetBalancesUseCase(getIt(), getIt(), getIt(), getIt(), getIt()),
     )
     ..registerFactory<SendTokensUseCase>(
       () => SendTokensUseCase(getIt(), getIt()),
@@ -248,7 +255,7 @@ void _configureUseCases() {
       () => VerifyAccountPasswordUseCase(getIt()),
     )
     ..registerFactory<ChangeCurrentAccountUseCase>(
-      () => ChangeCurrentAccountUseCase(getIt()),
+      () => ChangeCurrentAccountUseCase(getIt(), getIt()),
     )
     ..registerFactory<VerifyPasscodeUseCase>(
       () => VerifyPasscodeUseCase(getIt()),
@@ -258,9 +265,6 @@ void _configureUseCases() {
     )
     ..registerFactory<GetStakedAmountUseCase>(
       () => GetStakedAmountUseCase(getIt()),
-    )
-    ..registerFactory<GetChainAssetsUseCase>(
-      () => GetChainAssetsUseCase(getIt(), getIt()),
     )
     ..registerFactory<CopyToClipboardUseCase>(
       () => CopyToClipboardUseCase(getIt()),
@@ -306,7 +310,7 @@ void _configureMvp() {
       () => AccountsListNavigator(getIt()),
     )
     ..registerFactoryParam<AccountDetailsPresenter, AccountDetailsPresentationModel, dynamic>(
-      (_model, _) => AccountDetailsPresenter(_model, getIt(), getIt()),
+      (_model, _) => AccountDetailsPresenter(_model, getIt()),
     )
     ..registerFactory<AccountDetailsNavigator>(
       () => AccountDetailsNavigator(getIt()),
@@ -377,7 +381,7 @@ void _configureMvp() {
       () => MnemonicImportNavigator(getIt()),
     )
     ..registerFactoryParam<AssetDetailsPresenter, AssetDetailsPresentationModel, dynamic>(
-      (_model, _) => AssetDetailsPresenter(_model, getIt(), getIt(), getIt()),
+      (_model, _) => AssetDetailsPresenter(_model, getIt(), getIt()),
     )
     ..registerFactory<AssetDetailsNavigator>(
       () => AssetDetailsNavigator(getIt()),
@@ -388,11 +392,12 @@ void _configureMvp() {
     ..registerFactory<ReceiveNavigator>(
       () => ReceiveNavigator(getIt()),
     )
+    //////////////////////////////////////////
     ..registerFactory<SendTokensNavigator>(
       () => SendTokensNavigator(getIt()),
     )
     ..registerFactoryParam<SendTokensPresentationModel, SendTokensInitialParams, dynamic>(
-      (_params, _) => SendTokensPresentationModel(_params, getIt()),
+      (_params, _) => SendTokensPresentationModel(_params, getIt(), getIt()),
     )
     ..registerFactoryParam<SendTokensPresenter, SendTokensInitialParams, dynamic>(
       (initialParams, _) => SendTokensPresenter(

@@ -5,6 +5,7 @@ import 'package:flutter_app/domain/repositories/bank_repository.dart';
 import 'package:flutter_app/domain/repositories/blockchain_metadata_repository.dart';
 import 'package:flutter_app/domain/repositories/chains_repository.dart';
 import 'package:flutter_app/domain/stores/accounts_store.dart';
+import 'package:flutter_app/domain/stores/assets_store.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
@@ -52,6 +53,8 @@ class MockAccountsStore extends Mock implements AccountsStore {}
 class MockSettingsStore extends Mock implements SettingsStore {}
 
 class MockBlockchainMetadataStore extends Mock implements BlockchainMetadataStore {}
+
+class MockAssetsStore extends Mock implements AssetsStore {}
 
 // Use cases
 

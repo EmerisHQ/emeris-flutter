@@ -1,7 +1,7 @@
-import 'package:flutter_app/domain/entities/chain_asset.dart';
+import 'package:flutter_app/domain/entities/asset.dart';
 
 class SendTokensInitialParams {
-  const SendTokensInitialParams(this.chainAsset);
+  const SendTokensInitialParams(this.asset);
 
-  final ChainAsset chainAsset;
+  final Asset asset;
 }

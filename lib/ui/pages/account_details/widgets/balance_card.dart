@@ -20,7 +20,7 @@ class BalanceCard extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       onTap: onTap,
-      title: Text(balance.denom.text.toUpperCase()),
+      title: Text(balance.denom.displayName.toUpperCase()),
       subtitle: Text(
         balance.unitPriceText(prices),
         style: TextStyle(color: Theme.of(context).colorScheme.secondary),

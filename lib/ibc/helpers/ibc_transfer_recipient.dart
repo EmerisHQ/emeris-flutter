@@ -30,7 +30,7 @@ class IbcTransferRecipient extends Equatable {
     required TransferStatus status,
     required Balance balance,
     List<FeeWithDenom> chainFee = const [],
-    Denom baseDenom = const Denom(''),
+    Denom baseDenom = const Denom.id(''),
     String fromChain = '',
     String through = '',
     String toChain = '',

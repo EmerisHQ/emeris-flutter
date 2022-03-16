@@ -50,11 +50,15 @@ class AccountDetailsPageState extends State<AccountDetailsPage> {
     super.initState();
     presenter = widget.presenter ??
         getIt(
-          param1: AccountDetailsPresentationModel(widget.initialParams, getIt(), getIt()),
+          param1: AccountDetailsPresentationModel(
+            getIt(),
+            getIt(),
+            getIt(),
+            widget.initialParams,
+          ),
           param2: getIt<AccountDetailsNavigator>(),
         );
     presenter.navigator.context = context;
-    WidgetsBinding.instance?.addPostFrameCallback((_) => presenter.init());
   }
 
   @override
@@ -77,54 +81,51 @@ class AccountDetailsPageState extends State<AccountDetailsPage> {
               ),
             ],
           ),
-          body: ContentStateSwitcher(
-            isLoading: model.isLoading,
-            contentChild: Padding(
-              padding: EdgeInsets.symmetric(horizontal: theme.spacingL),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: theme.spacingM),
-                  AssetPortfolioHeading(
-                    title: strings.accountDetailsTitle(model.accountAlias),
-                    onTap: presenter.onTapPortfolioHeading,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: theme.spacingL),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: theme.spacingM),
+                AssetPortfolioHeading(
+                  title: strings.accountDetailsTitle(model.accountAlias),
+                  onTap: presenter.onTapPortfolioHeading,
+                ),
+                Text(
+                  model.totalAmountInUSD,
+                  style: TextStyle(
+                    fontSize: theme.fontSizeXXL,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
-                  Text(
-                    model.totalAmountInUSD,
-                    style: TextStyle(
-                      fontSize: theme.fontSizeXXL,
-                      color: Theme.of(context).colorScheme.secondary,
+                ),
+                SizedBox(height: theme.spacingL),
+                CosmosButtonBar(
+                  onTapReceive: presenter.onTapReceive,
+                  onTapSend: presenter.onTapSend,
+                ),
+                SizedBox(height: theme.spacingL),
+                BalanceHeading(
+                  account: model.account,
+                ),
+                Expanded(
+                  child: BalancesList(
+                    assets: model.assets,
+                    onTapBalance: model.isSendTokensLoading //
+                        ? null
+                        : presenter.onTapTransfer,
+                    prices: model.prices,
+                  ),
+                ),
+                if (model.isSendTokensLoading) ...[
+                  SizedBox(height: theme.spacingS),
+                  Center(
+                    child: Text(
+                      strings.sendingMoney,
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                  SizedBox(height: theme.spacingL),
-                  CosmosButtonBar(
-                    onTapReceive: presenter.onTapReceive,
-                    onTapSend: presenter.onTapSend,
-                  ),
-                  SizedBox(height: theme.spacingL),
-                  BalanceHeading(
-                    account: model.account,
-                  ),
-                  Expanded(
-                    child: BalancesList(
-                      balances: model.balances,
-                      onTapBalance: model.isSendTokensLoading //
-                          ? null
-                          : (balance) => presenter.onTapTransfer(balance: balance),
-                      prices: model.prices,
-                    ),
-                  ),
-                  if (model.isSendTokensLoading) ...[
-                    SizedBox(height: theme.spacingS),
-                    Center(
-                      child: Text(
-                        strings.sendingMoney,
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
+                  )
                 ],
-              ),
+              ],
             ),
           ),
         );
