@@ -1,11 +1,7 @@
-import 'package:transaction_signing_gateway/model/transaction_response.dart';
+import 'package:flutter_app/domain/entities/transaction_hash.dart';
 
 class BroadcastTransaction {
-  const BroadcastTransaction({required this.transactionHashValue});
+  const BroadcastTransaction({required this.transactionHash});
 
-  final String transactionHashValue;
-}
-
-extension TransactionResponseToBroadcastTransaction on TransactionResponse {
-  BroadcastTransaction get broadcastTransaction => BroadcastTransaction(transactionHashValue: hash.hash);
+  final TransactionHash transactionHash;
 }

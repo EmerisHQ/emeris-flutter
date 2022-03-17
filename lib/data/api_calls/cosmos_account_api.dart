@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/alan/actions/import_alan_account.dart';
 import 'package:flutter_app/data/alan/alan_transaction.dart';
 import 'package:flutter_app/data/api_calls/account_api.dart';
+import 'package:flutter_app/data/extensions/transaction_response.dart';
 import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
@@ -71,7 +72,7 @@ class CosmosAccountApi implements AccountApi {
                   GeneralFailure.unknown('$broadcastingFailure'),
                 ),
               )
-              .flatMap((transactionResponse) async => right(transactionResponse.broadcastTransaction)),
+              .flatMap((transactionResponse) async => right(transactionResponse.toDomain)),
         );
   }
 }
