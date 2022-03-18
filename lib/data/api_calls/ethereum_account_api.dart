@@ -8,6 +8,7 @@ import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/broadcast_transaction.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/import_account_form_data.dart';
@@ -16,7 +17,6 @@ import 'package:flutter_app/domain/entities/transaction.dart';
 import 'package:flutter_app/domain/utils/future_either.dart';
 import 'package:transaction_signing_gateway/gateway/transaction_signing_gateway.dart';
 import 'package:transaction_signing_gateway/model/account_lookup_key.dart';
-import 'package:transaction_signing_gateway/model/transaction_hash.dart';
 import 'package:web3dart/web3dart.dart' as eth;
 
 class EthereumAccountApi implements AccountApi {
@@ -42,7 +42,7 @@ class EthereumAccountApi implements AccountApi {
       getEthereumBalances(_web3client, accountAddress);
 
   @override
-  Future<Either<GeneralFailure, TransactionHash>> signAndBroadcast({
+  Future<Either<GeneralFailure, BroadcastTransaction>> signAndBroadcast({
     required AccountIdentifier accountIdentifier,
     required Transaction transaction,
   }) async {
