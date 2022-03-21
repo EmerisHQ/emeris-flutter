@@ -5,7 +5,9 @@ import 'package:flutter_app/domain/stores/accounts_store.dart';
 import 'package:flutter_app/domain/stores/assets_store.dart';
 import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_initial_params.dart';
 
-abstract class BalanceSelectorViewModel {}
+abstract class BalanceSelectorViewModel {
+  List<Asset> get assets;
+}
 
 class BalanceSelectorPresentationModel with BalanceSelectorPresentationModelBase implements BalanceSelectorViewModel {
   BalanceSelectorPresentationModel(
@@ -22,7 +24,10 @@ class BalanceSelectorPresentationModel with BalanceSelectorPresentationModelBase
 
   EmerisAccount get account => _accountsStore.currentAccount;
 
-  List<Asset> get balances => _assetsStore.getAssets(account.accountDetails.accountIdentifier);
+  List<Asset> get balances => _assetsStore.getAssets(account.id);
+
+  @override
+  List<Asset> get assets => _assetsStore.getAssets(account.id);
 }
 
 //////////////////BOILERPLATE

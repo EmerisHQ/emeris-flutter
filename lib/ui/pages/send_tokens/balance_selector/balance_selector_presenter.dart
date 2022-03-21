@@ -1,8 +1,9 @@
+import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_presentation_model.dart';
 
 class BalanceSelectorPresenter {
-  BalanceSelectorPresenter(
+  const BalanceSelectorPresenter(
     this._model,
     this.navigator,
   );
@@ -12,5 +13,5 @@ class BalanceSelectorPresenter {
 
   BalanceSelectorViewModel get viewModel => _model;
 
-  void init() {}
+  void onSelectedChainAsset(ChainAsset chainAsset) => navigator.closeWithResult(chainAsset);
 }

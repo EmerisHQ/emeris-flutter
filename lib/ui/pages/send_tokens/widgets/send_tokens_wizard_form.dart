@@ -26,11 +26,21 @@ class SendTokensWizardForm extends StatefulWidget {
 
 class _SendTokensWizardFormState extends State<SendTokensWizardForm> {
   late PageController _controller;
+  int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
     _controller = PageController(initialPage: widget.step.index);
+    _controller.addListener(_onPageControllerChange);
+  }
+
+  void _onPageControllerChange() {
+    final newPage = _controller.page?.round() ?? 0;
+    if (_currentPage != newPage) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      _currentPage = newPage;
+    }
   }
 
   @override
@@ -48,6 +58,7 @@ class _SendTokensWizardFormState extends State<SendTokensWizardForm> {
   @override
   Widget build(BuildContext context) {
     return PageView(
+      allowImplicitScrolling: true,
       controller: _controller,
       physics: const NeverScrollableScrollPhysics(),
       children: widget.steps,

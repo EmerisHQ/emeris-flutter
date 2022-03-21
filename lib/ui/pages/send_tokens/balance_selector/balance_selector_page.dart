@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_presentation_model.dart';
 import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_presenter.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/widgets/balance_selector_list.dart';
 
 class BalanceSelectorPage extends StatefulWidget {
   const BalanceSelectorPage({
@@ -30,16 +31,13 @@ class _BalanceSelectorPageState extends State<BalanceSelectorPage> {
   void initState() {
     super.initState();
     presenter.navigator.context = context;
-    presenter.init();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Text('BalanceSelector Page'),
-      ),
+    return BalanceSelectorList(
+      assets: model.assets,
+      onTapChainAsset: presenter.onSelectedChainAsset,
     );
   }
 
