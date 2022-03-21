@@ -107,9 +107,7 @@ class AccountsListSheetState extends State<AccountsListSheet> {
         onClicked: (accountIndex) => presenter.accountClicked(model.accounts[accountIndex]),
         isEditing: model.isEditingAccountList,
         onEditIconPressed: (accountInfo) => presenter.onTapEditAccount(
-          model.accounts.firstWhere(
-            (element) => element.accountDetails.accountAddress == accountInfo.address,
-          ),
+          model.accounts.withId(accountInfo.accountId),
         ),
       ),
     );
