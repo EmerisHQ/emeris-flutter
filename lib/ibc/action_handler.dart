@@ -189,7 +189,7 @@ class ActionHandler {
             } else {
               mustAddFee = true;
               steps.add(
-                  ibcTransferRecipient.toTransferStep(
+                ibcTransferRecipient.toTransferStep(
                   name: 'ibc_backward',
                   status: TransferStatus.Pending,
                   addFee: true,

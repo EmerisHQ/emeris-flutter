@@ -433,16 +433,16 @@ void _configureMvp() {
     ..registerFactoryParam<BalanceSelectorPresenter, BalanceSelectorInitialParams, dynamic>(
       (initialParams, _) {
         return BalanceSelectorPresenter(
-        getIt(param1: initialParams),
-        getIt(),
-      );
+          getIt(param1: initialParams),
+          getIt(),
+        );
       },
     )
     ..registerFactoryParam<BalanceSelectorPage, BalanceSelectorInitialParams, dynamic>(
       (initialParams, _) {
         return BalanceSelectorPage(
-        presenter: getIt(param1: initialParams),
-      );
+          presenter: getIt(param1: initialParams),
+        );
       },
     );
 }

@@ -21,7 +21,7 @@ class AccountsStore with _AccountStoreBase {
         if (index != -1) {
           accounts[index] = account;
         }
-        if(identifier == currentAccount.accountDetails.accountIdentifier) {
+        if (identifier == currentAccount.accountDetails.accountIdentifier) {
           currentAccount = account;
         }
       })();

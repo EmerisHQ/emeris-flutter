@@ -18,9 +18,7 @@ class DeleteAccountUseCase {
     required EmerisAccount account,
     required Passcode passcode,
   }) =>
-      _accountsRepository
-          .deleteAccount(account.id.byUpdatingPasscode(passcode))
-          .mapSuccess(
+      _accountsRepository.deleteAccount(account.id.byUpdatingPasscode(passcode)).mapSuccess(
         (_) {
           _accountsStore.removeAccount(account);
           if (_accountsStore.currentAccount == account) {
