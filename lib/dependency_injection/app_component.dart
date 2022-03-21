@@ -406,13 +406,11 @@ void _configureMvp() {
         _params,
         getIt(),
         getIt(),
-        getIt(),
       ),
     )
     ..registerFactoryParam<SendTokensPresenter, SendTokensInitialParams, dynamic>(
       (initialParams, _) => SendTokensPresenter(
         getIt(param1: initialParams),
-        getIt(),
         getIt(),
         getIt(),
       ),
