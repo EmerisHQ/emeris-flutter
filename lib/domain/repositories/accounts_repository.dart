@@ -17,5 +17,8 @@ abstract class AccountsRepository {
 
   Future<Either<DeleteAccountFailure, Unit>> deleteAccount(AccountIdentifier accountIdentifier);
 
-  Future<Either<RenameAccountFailure, EmerisAccount>> renameAccount(AccountIdentifier accountIdentifier, String updatedName);
+  Future<Either<RenameAccountFailure, EmerisAccount>> renameAccount(
+    AccountIdentifier accountIdentifier,
+    String updatedName,
+  );
 }

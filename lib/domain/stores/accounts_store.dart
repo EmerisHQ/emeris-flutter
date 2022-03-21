@@ -29,15 +29,17 @@ class AccountsStore with _AccountStoreBase {
     required AccountIdentifier identifier,
     required EmerisAccount account,
   }) =>
-      Action(() {
-        final index = accounts.indexWhere((element) => element.accountDetails.accountIdentifier == identifier);
-        if (index != -1) {
-          accounts[index] = account;
-        }
-        if(identifier == currentAccount.accountDetails.accountIdentifier) {
-          currentAccount = account;
-        }
-      })();
+      Action(
+        () {
+          final index = accounts.indexWhere((element) => element.accountDetails.accountIdentifier == identifier);
+          if (index != -1) {
+            accounts[index] = account;
+          }
+          if (identifier == currentAccount.accountDetails.accountIdentifier) {
+            currentAccount = account;
+          }
+        },
+      )();
 }
 
 mixin _AccountStoreBase {
