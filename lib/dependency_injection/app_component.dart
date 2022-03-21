@@ -90,6 +90,11 @@ import 'package:flutter_app/ui/pages/receive/receive_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_navigator.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_page.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_presentation_model.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_presenter.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_page.dart';
@@ -416,5 +421,28 @@ void _configureMvp() {
       (initialParams, _) => SendTokensPage(
         presenter: getIt(param1: initialParams),
       ),
+    )
+    ..registerFactory<BalanceSelectorNavigator>(
+      () {
+        return BalanceSelectorNavigator(getIt());
+      },
+    )
+    ..registerFactoryParam<BalanceSelectorPresentationModel, BalanceSelectorInitialParams, dynamic>(
+      (_params, _) => BalanceSelectorPresentationModel(getIt(), getIt(), _params),
+    )
+    ..registerFactoryParam<BalanceSelectorPresenter, BalanceSelectorInitialParams, dynamic>(
+      (initialParams, _) {
+        return BalanceSelectorPresenter(
+          getIt(param1: initialParams),
+          getIt(),
+        );
+      },
+    )
+    ..registerFactoryParam<BalanceSelectorPage, BalanceSelectorInitialParams, dynamic>(
+      (initialParams, _) {
+        return BalanceSelectorPage(
+          presenter: getIt(param1: initialParams),
+        );
+      },
     );
 }
