@@ -20,7 +20,8 @@ class RenameAccountPresentationModel with RenameAccountPresentationModelBase imp
   ObservableFuture<Either<RenameAccountFailure, Unit>>? get renameAccountFuture => _renameAccountFuture.value;
 
   @override
-  String get accountName => _accountName.isEmpty ? initialParams.name : _accountName;
+  String get accountName =>
+      _accountName.isEmpty ? initialParams.emerisAccount.accountDetails.accountAlias : _accountName;
 
   EmerisAccount get emerisAccount => initialParams.emerisAccount;
 

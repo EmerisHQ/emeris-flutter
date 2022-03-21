@@ -1,8 +1,7 @@
-import 'package:cosmos_utils/cosmos_utils.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter_app/domain/use_cases/rename_account_use_case.dart';
 import 'package:flutter_app/ui/pages/rename_account/rename_account_navigator.dart';
 import 'package:flutter_app/ui/pages/rename_account/rename_account_presentation_model.dart';
+import 'package:flutter_app/utils/utils.dart';
 
 class RenameAccountPresenter {
   RenameAccountPresenter(
@@ -21,15 +20,13 @@ class RenameAccountPresenter {
   Future<void> onTapSave() async {
     await _renameAccountUseCase
         .execute(
-      emerisAccount: _model.emerisAccount,
-      updatedName: _model.accountName,
-    )
-        .flatMap(
-      (_) async {
-        navigator.close();
-        return right(unit);
-      },
-    );
+          emerisAccount: _model.emerisAccount,
+          updatedName: _model.accountName,
+        )
+        .observableDoOn(
+          (fail) => navigator.showError(fail.displayableFailure()),
+          (_) => navigator.close(),
+        );
   }
 
   // ignore: use_setters_to_change_properties

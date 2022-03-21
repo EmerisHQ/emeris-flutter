@@ -59,9 +59,7 @@ class AccountsListPresenter {
     }
     await _deleteAccountUseCase
         .execute(
-      account: _model.accounts.firstWhere(
-        (it) => it.accountDetails.accountAddress == account.accountDetails.accountAddress,
-      ),
+      account: account,
       passcode: passcode,
     )
         .map(
@@ -79,8 +77,6 @@ class AccountsListPresenter {
   void _renameAccount(EmerisAccount account) {
     navigator.openRenameAccount(
       RenameAccountInitialParams(
-        name: account.accountDetails.accountAlias,
-        accountIdentifier: account.accountDetails.accountIdentifier,
         emerisAccount: account,
       ),
     );
