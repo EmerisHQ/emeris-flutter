@@ -4,14 +4,17 @@ enum RenameAccountFailureType {
   Unknown,
   StoreError,
   InvalidMnemonic,
+  AccountNotFound,
 }
 
 class RenameAccountFailure {
-  const RenameAccountFailure.unknown({this.cause}) : _type = RenameAccountFailureType.Unknown;
+  const RenameAccountFailure.unknown(this.cause) : _type = RenameAccountFailureType.Unknown;
 
   const RenameAccountFailure.storeError(this.cause) : _type = RenameAccountFailureType.StoreError;
 
   const RenameAccountFailure.invalidMnemonic(this.cause) : _type = RenameAccountFailureType.InvalidMnemonic;
+
+  const RenameAccountFailure.accountNotFound(this.cause) : _type = RenameAccountFailureType.AccountNotFound;
 
   final RenameAccountFailureType _type;
   final Object? cause;
@@ -21,6 +24,7 @@ class RenameAccountFailure {
       case RenameAccountFailureType.Unknown:
       case RenameAccountFailureType.StoreError:
       case RenameAccountFailureType.InvalidMnemonic:
+      case RenameAccountFailureType.AccountNotFound:
         return DisplayableFailure.commonError();
     }
   }

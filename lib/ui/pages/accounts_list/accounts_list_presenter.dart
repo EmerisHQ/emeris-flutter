@@ -1,4 +1,3 @@
-import 'package:cosmos_ui_components/models/account_info.dart';
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
@@ -47,20 +46,22 @@ class AccountsListPresenter {
 
   void onTapClose() => navigator.close();
 
-  void onTapEditAccount(AccountInfo account) => navigator.openEditAccountSheet(
-        title: account.name,
+  void onTapEditAccount(EmerisAccount account) => navigator.openEditAccountSheet(
+        title: account.accountDetails.accountAlias,
         onTapDelete: () => _deleteAccount(account),
         onTapRename: () => _renameAccount(account),
       );
 
-  Future<void> _deleteAccount(AccountInfo account) async {
+  Future<void> _deleteAccount(EmerisAccount account) async {
     final passcode = await navigator.openPasscode(const PasscodeInitialParams());
     if (passcode == null) {
       return navigator.close();
     }
     await _deleteAccountUseCase
         .execute(
-      account: _model.accounts.firstWhere((it) => it.accountDetails.accountAddress == account.address),
+      account: _model.accounts.firstWhere(
+        (it) => it.accountDetails.accountAddress == account.accountDetails.accountAddress,
+      ),
       passcode: passcode,
     )
         .map(
@@ -75,13 +76,12 @@ class AccountsListPresenter {
     );
   }
 
-  void _renameAccount(AccountInfo accountInfo) {
-    final emerisAccount = _model.accounts.firstWhere((it) => it.accountDetails.accountAddress == accountInfo.address);
+  void _renameAccount(EmerisAccount account) {
     navigator.openRenameAccount(
       RenameAccountInitialParams(
-        name: accountInfo.name,
-        accountInfo: emerisAccount.accountDetails.accountIdentifier,
-        emerisAccount: emerisAccount,
+        name: account.accountDetails.accountAlias,
+        accountIdentifier: account.accountDetails.accountIdentifier,
+        emerisAccount: account,
       ),
     );
   }

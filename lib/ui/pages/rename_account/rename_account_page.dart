@@ -32,7 +32,7 @@ class _RenameAccountPageState extends State<RenameAccountPage> {
   void initState() {
     super.initState();
     presenter.navigator.context = context;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) => presenter.init());
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) => presenter.init());
   }
 
   @override

@@ -89,24 +89,36 @@ class EmerisAccountsRepository implements AccountsRepository {
     AccountIdentifier accountIdentifier,
     String updatedName,
   ) {
-    final accountPublicInfo = AccountPublicInfo(
-      name: updatedName,
-      publicAddress: '',
-      accountId: accountIdentifier.accountId,
-      chainId: accountIdentifier.chainId,
-    );
     return _signingGateway
-        .updateAccountPublicInfo(
-          info: accountPublicInfo,
-        )
-        .mapError(
-          (fail) => RenameAccountFailure.unknown(cause: fail),
-        )
+        .getAccountsList() //
+        .mapError(RenameAccountFailure.unknown)
         .flatMap(
-          (a) async => right(
-            accountPublicInfo.toEmerisAccount(),
-          ),
-        );
+      (accounts) async {
+        final info = _findAccount(accounts, accountIdentifier)?.copyWith(name: updatedName);
+        if (info == null) {
+          return left(
+            RenameAccountFailure.accountNotFound(
+              'no account with id: ${accountIdentifier.accountId} on chain: ${accountIdentifier.chainId}',
+            ),
+          );
+        }
+        return _signingGateway
+            .updateAccountPublicInfo(info: info)
+            .mapError(
+              RenameAccountFailure.unknown,
+            )
+            .mapSuccess((_) => info.toEmerisAccount());
+      },
+    );
+  }
+
+  AccountPublicInfo? _findAccount(
+    List<AccountPublicInfo> accounts,
+    AccountIdentifier accountIdentifier,
+  ) {
+    return accounts.firstOrNull(
+      where: (it) => it.chainId == accountIdentifier.chainId && it.accountId == accountIdentifier.accountId,
+    );
   }
 }
 

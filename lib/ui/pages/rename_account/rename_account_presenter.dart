@@ -1,7 +1,6 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/domain/use_cases/rename_account_use_case.dart';
-import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
 import 'package:flutter_app/ui/pages/rename_account/rename_account_navigator.dart';
 import 'package:flutter_app/ui/pages/rename_account/rename_account_presentation_model.dart';
 
@@ -20,10 +19,6 @@ class RenameAccountPresenter {
   RenameAccountViewModel get viewModel => _model;
 
   Future<void> onTapSave() async {
-    final passcode = await navigator.openPasscode(const PasscodeInitialParams());
-    if (passcode == null) {
-      return navigator.close();
-    }
     await _renameAccountUseCase
         .execute(
       emerisAccount: _model.emerisAccount,
@@ -31,9 +26,7 @@ class RenameAccountPresenter {
     )
         .flatMap(
       (_) async {
-        navigator
-          ..close()
-          ..close();
+        navigator.close();
         return right(unit);
       },
     );
