@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/rename_account/rename_account_presentation_model.dart';
 import 'package:flutter_app/ui/pages/rename_account/rename_account_presenter.dart';
+import 'package:flutter_app/utils/strings.dart';
 
 class RenameAccountPage extends StatefulWidget {
   const RenameAccountPage({
@@ -39,6 +40,10 @@ class _RenameAccountPageState extends State<RenameAccountPage> {
     final theme = CosmosTheme.of(context);
 
     return Scaffold(
+      appBar: CosmosAppBar(
+        leading: const CosmosBackButton(),
+        title: strings.renameAccountHeading,
+      ),
       body: SafeArea(
         child: Column(
           children: [

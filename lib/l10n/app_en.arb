@@ -170,5 +170,6 @@
       "total": {}
     }
   },
-  "feesIncluded": "Fees (included)"
+  "feesIncluded": "Fees (included)",
+  "renameAccountHeading": "Rename your account"
 }
