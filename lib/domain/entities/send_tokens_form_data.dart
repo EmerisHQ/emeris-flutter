@@ -1,32 +1,44 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/model/account_type.dart';
-import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/account_address.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/transaction_message.dart';
+import 'package:flutter_app/domain/entities/verified_denom.dart';
 
 class SendTokensFormData extends Equatable implements TransactionMessage {
   const SendTokensFormData({
-    required this.balance,
-    required this.accountType,
-    required this.fromAddress,
-    required this.toAddress,
+    required this.sendAmount,
+    required this.fee,
+    required this.recipient,
+    required this.recipientChain,
+    required this.sender,
+    required this.senderChain,
+    required this.verifiedDenom,
   });
 
-  SendTokensFormData.empty()
-      : balance = Balance.empty(),
-        accountType = AccountType.Cosmos,
-        fromAddress = '',
-        toAddress = '';
+  final Amount sendAmount;
+  final Amount fee;
+  final AccountAddress recipient;
+  final Chain recipientChain;
+  final AccountAddress sender;
+  final Chain senderChain;
+  final VerifiedDenom verifiedDenom;
 
-  final AccountType accountType;
-  final Balance balance;
-  final String toAddress;
-  final String fromAddress;
+  Amount get receiveAmount => sendAmount - fee;
+
+  AccountType get accountType => AccountType.Cosmos; // for now we'll support only cosmos type transactions
 
   @override
   List<Object> get props => [
-        balance,
-        accountType,
-        fromAddress,
-        toAddress,
+        sendAmount,
+        fee,
+        recipient,
+        recipientChain,
+        sender,
+        senderChain,
+        verifiedDenom,
       ];
+
+  String get feeWithDenomText => verifiedDenom.amountWithDenomText(fee);
 }

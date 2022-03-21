@@ -58,7 +58,7 @@ class AccountsListPresenter {
     }
     await _deleteAccountUseCase
         .execute(
-      account: _model.accounts.firstWhere((it) => it.accountDetails.accountAddress == account.address),
+      account: _model.accounts.firstWhere((it) => it.accountDetails.accountAddress.value == account.address),
       passcode: passcode,
     )
         .map(

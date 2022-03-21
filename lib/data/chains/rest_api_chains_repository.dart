@@ -1,7 +1,6 @@
 import 'package:cosmos_utils/extensions.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/http/http_service.dart';
-import 'package:flutter_app/data/model/chain_details_json.dart';
 import 'package:flutter_app/data/model/chain_json.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/failures/general_failure.dart';
@@ -17,7 +16,7 @@ class RestApiChainsRepository extends ChainsRepository {
   Future<Either<GetChainsFailure, List<Chain>>> getChains() async => _httpService
       .get('/v1/chains')
       .responseSubKey('chains')
-      .executeList((json) => ChainDetailsJson.fromJson(json).toDomain())
+      .executeList((json) => ChainJson.fromJson(json).toDomain())
       .mapError(GetChainsFailure.unknown);
 
   @override

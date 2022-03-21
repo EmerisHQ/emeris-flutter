@@ -19,7 +19,7 @@ class DeleteAccountUseCase {
     required Passcode passcode,
   }) =>
       _accountsRepository
-          .deleteAccount(account.accountDetails.accountIdentifier.byUpdatingPasscode(passcode))
+          .deleteAccount(account.id.byUpdatingPasscode(passcode))
           .mapSuccess(
         (_) {
           _accountsStore.removeAccount(account);

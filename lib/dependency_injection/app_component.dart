@@ -402,11 +402,17 @@ void _configureMvp() {
       () => SendTokensNavigator(getIt()),
     )
     ..registerFactoryParam<SendTokensPresentationModel, SendTokensInitialParams, dynamic>(
-      (_params, _) => SendTokensPresentationModel(_params, getIt(), getIt()),
+      (_params, _) => SendTokensPresentationModel(
+        _params,
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
     )
     ..registerFactoryParam<SendTokensPresenter, SendTokensInitialParams, dynamic>(
       (initialParams, _) => SendTokensPresenter(
         getIt(param1: initialParams),
+        getIt(),
         getIt(),
         getIt(),
       ),
@@ -417,20 +423,26 @@ void _configureMvp() {
       ),
     )
     ..registerFactory<BalanceSelectorNavigator>(
-      () => BalanceSelectorNavigator(getIt()),
+      () {
+        return BalanceSelectorNavigator(getIt());
+      },
     )
     ..registerFactoryParam<BalanceSelectorPresentationModel, BalanceSelectorInitialParams, dynamic>(
       (_params, _) => BalanceSelectorPresentationModel(getIt(), getIt(), _params),
     )
     ..registerFactoryParam<BalanceSelectorPresenter, BalanceSelectorInitialParams, dynamic>(
-      (initialParams, _) => BalanceSelectorPresenter(
+      (initialParams, _) {
+        return BalanceSelectorPresenter(
         getIt(param1: initialParams),
         getIt(),
-      ),
+      );
+      },
     )
     ..registerFactoryParam<BalanceSelectorPage, BalanceSelectorInitialParams, dynamic>(
-      (initialParams, _) => BalanceSelectorPage(
+      (initialParams, _) {
+        return BalanceSelectorPage(
         presenter: getIt(param1: initialParams),
-      ),
+      );
+      },
     );
 }

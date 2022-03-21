@@ -17,12 +17,12 @@ class EthereumTransaction implements UnsignedTransaction {
         final message = transaction.messages.whereType<SendTokensFormData>().toList().first;
         return EthereumTransaction(
           eth.Transaction(
-            to: eth.EthereumAddress.fromHex(message.toAddress),
+            to: eth.EthereumAddress.fromHex(message.recipient.value),
             gasPrice: eth.EtherAmount.inWei(BigInt.one),
             maxGas: 100000,
             value: eth.EtherAmount.fromUnitAndValue(
               eth.EtherUnit.ether,
-              message.balance.amount,
+              message.sendAmount.value,
             ),
           ),
         );

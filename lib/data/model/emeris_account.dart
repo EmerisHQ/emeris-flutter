@@ -2,6 +2,7 @@ import 'package:cosmos_ui_components/models/account_info.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/account_type.dart';
+import 'package:flutter_app/domain/entities/account_identifier.dart';
 
 class EmerisAccount extends Equatable {
   const EmerisAccount({
@@ -21,12 +22,14 @@ class EmerisAccount extends Equatable {
         accountDetails,
         accountType,
       ];
+
+  AccountIdentifier get id => accountDetails.accountIdentifier;
 }
 
 extension EmerisAccountInfo on EmerisAccount {
   AccountInfo get accountInfo => AccountInfo(
         name: accountDetails.accountAlias,
-        address: accountDetails.accountAddress,
-        accountId: accountDetails.accountIdentifier.accountId,
+        address: accountDetails.accountAddress.value,
+        accountId: id.accountId,
       );
 }

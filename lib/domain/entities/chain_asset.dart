@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
@@ -42,6 +43,8 @@ class ChainAsset extends Equatable {
       balance: balance ?? this.balance,
     );
   }
+
+  String amountWithDenomText(Amount amount) => verifiedDenom.amountWithDenomText(amount);
 }
 
 extension ChainAssetIterableExtensions on Iterable<ChainAsset> {

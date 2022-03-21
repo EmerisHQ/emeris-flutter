@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/import_account_form_data.dart';
@@ -45,7 +46,7 @@ Future<Either<AddAccountFailure, EmerisAccount>> importAlanAccount(
             chainId: creds.publicInfo.chainId,
           ),
           accountAlias: accountFormData.name,
-          accountAddress: account.bech32Address,
+          accountAddress: AccountAddress(value: account.bech32Address),
         ),
         accountType: accountFormData.accountType,
       ),
