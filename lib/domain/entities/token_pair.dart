@@ -10,8 +10,8 @@ class TokenPair extends Equatable {
   });
 
   TokenPair.zero([Denom? denom])
-      : ticker = '${(denom ?? const Denom.empty()).text}USDT',
-        unitPrice = Amount.one,
+      : ticker = '${(denom ?? const Denom.empty()).displayName}USDT',
+        unitPrice = Amount.zero,
         supply = Amount.zero;
 
   final String ticker;

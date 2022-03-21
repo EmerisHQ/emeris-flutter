@@ -5,7 +5,9 @@ import 'package:flutter_app/domain/entities/failures/general_failure.dart';
 import 'package:flutter_app/domain/entities/staking_balance.dart';
 
 abstract class BankRepository {
-  Future<Either<GeneralFailure, List<Balance>>> getBalances(EmerisAccount accountData);
+  Future<Either<GeneralFailure, List<Balance>>> getBalances(
+    String accountAddress,
+  );
 
   Future<Either<GeneralFailure, List<StakingBalance>>> getStakingBalances(EmerisAccount accountData);
 }

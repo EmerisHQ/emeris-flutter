@@ -8,7 +8,7 @@ class TransferStepData {
     this.toAddress = '',
     this.chainId = '',
     this.chainFee = const [],
-    this.baseDenom = const Denom(''),
+    this.baseDenom = const Denom.id(''),
     this.fromChain = '',
     this.through = '',
     this.toChain = '',

@@ -1,5 +1,5 @@
+import 'package:flutter_app/data/utils/amount_parser.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/domain/utils/amount_with_precision_calculator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

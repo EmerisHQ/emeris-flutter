@@ -93,9 +93,10 @@ void main() {
       unitPrice: Amount.fromString('30.47'),
       supply: Amount.zero,
     );
-    priceConverter = PriceConverter(
-      tokenPair,
-      const Denom('ATOM'),
-    );
+    priceConverter = PriceConverter()
+      ..setTokenUsingDenom(
+        const Denom.id('ATOM'),
+        tokenPair,
+      );
   });
 }
