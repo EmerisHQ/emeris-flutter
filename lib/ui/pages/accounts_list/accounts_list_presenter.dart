@@ -76,12 +76,12 @@ class AccountsListPresenter {
   }
 
   void _renameAccount(AccountInfo accountInfo) {
+    final emerisAccount = _model.accounts.firstWhere((it) => it.accountDetails.accountAddress == accountInfo.address);
     navigator.openRenameAccount(
       RenameAccountInitialParams(
         name: accountInfo.name,
-        accountInfo: _model.accounts
-            .firstWhere((it) => it.accountDetails.accountAddress == accountInfo.address)
-            .publicAccountInfo,
+        accountInfo: emerisAccount.accountDetails.accountIdentifier,
+        emerisAccount: emerisAccount,
       ),
     );
   }

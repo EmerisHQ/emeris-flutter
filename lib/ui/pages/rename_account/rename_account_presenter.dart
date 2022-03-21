@@ -23,9 +23,8 @@ class RenameAccountPresenter {
       return navigator.close();
     }
     await _renameAccountUseCase.execute(
-      accountPublicInfo: _model.accountInfo.copyWith(
-        name: _model.accountName,
-      ),
+      emerisAccount: _model.emerisAccount,
+      updatedName: _model.accountName,
     );
   }
 

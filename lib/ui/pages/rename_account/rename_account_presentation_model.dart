@@ -1,10 +1,10 @@
 // ignore_for_file: avoid_setters_without_getters
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/failures/rename_account_failure.dart';
 import 'package:flutter_app/ui/pages/rename_account/rename_account_initial_parameters.dart';
 import 'package:flutter_app/utils/utils.dart';
 import 'package:mobx/mobx.dart';
-import 'package:transaction_signing_gateway/model/account_public_info.dart';
 
 abstract class RenameAccountViewModel {
   bool get isLoading;
@@ -22,7 +22,7 @@ class RenameAccountPresentationModel with RenameAccountPresentationModelBase imp
   @override
   String get accountName => _accountName.isEmpty ? initialParams.name : _accountName;
 
-  AccountPublicInfo get accountInfo => initialParams.accountInfo;
+  EmerisAccount get emerisAccount => initialParams.emerisAccount;
 
   @override
   bool get isLoading => isFutureInProgress(renameAccountFuture);

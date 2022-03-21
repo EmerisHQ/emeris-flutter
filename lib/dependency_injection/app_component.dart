@@ -306,7 +306,7 @@ void _configureUseCases() {
       () => GetVerifiedDenomsUseCase(getIt(), getIt()),
     )
     ..registerFactory<RenameAccountUseCase>(
-      () => RenameAccountUseCase(getIt()),
+      () => RenameAccountUseCase(getIt(), getIt()),
     );
 }
 

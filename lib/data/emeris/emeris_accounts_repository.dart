@@ -85,10 +85,29 @@ class EmerisAccountsRepository implements AccountsRepository {
       );
 
   @override
-  Future<Either<RenameAccountFailure, Unit>> renameAccount(AccountPublicInfo accountPublicInfo) =>
-      _signingGateway.updateAccountPublicInfo(info: accountPublicInfo).mapError(
-            (fail) => RenameAccountFailure.unknown(cause: fail),
-          );
+  Future<Either<RenameAccountFailure, EmerisAccount>> renameAccount(
+    AccountIdentifier accountIdentifier,
+    String updatedName,
+  ) {
+    final accountPublicInfo = AccountPublicInfo(
+      name: updatedName,
+      publicAddress: '',
+      accountId: accountIdentifier.accountId,
+      chainId: accountIdentifier.chainId,
+    );
+    return _signingGateway
+        .updateAccountPublicInfo(
+          info: accountPublicInfo,
+        )
+        .mapError(
+          (fail) => RenameAccountFailure.unknown(cause: fail),
+        )
+        .flatMap(
+          (a) async => right(
+            accountPublicInfo.toEmerisAccount(),
+          ),
+        );
+  }
 }
 
 extension AccountPublicInfoTranslator on AccountPublicInfo {

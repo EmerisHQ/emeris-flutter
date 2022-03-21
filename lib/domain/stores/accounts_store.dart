@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:mobx/mobx.dart';
 
 class AccountsStore with _AccountStoreBase {
@@ -23,6 +24,20 @@ class AccountsStore with _AccountStoreBase {
         (_) => currentAccount,
         callback,
       );
+
+  void updateAccount({
+    required AccountIdentifier identifier,
+    required EmerisAccount account,
+  }) =>
+      Action(() {
+        final index = accounts.indexWhere((element) => element.accountDetails.accountIdentifier == identifier);
+        if (index != -1) {
+          accounts[index] = account;
+        }
+        if(identifier == currentAccount.accountDetails.accountIdentifier) {
+          currentAccount = account;
+        }
+      })();
 }
 
 mixin _AccountStoreBase {
