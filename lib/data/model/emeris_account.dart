@@ -33,3 +33,8 @@ extension EmerisAccountInfo on EmerisAccount {
         accountId: id.accountId,
       );
 }
+
+extension EmerisAccountFindById on Iterable<EmerisAccount> {
+  EmerisAccount withId(String accountId) =>
+      firstWhere((element) => element.accountDetails.accountIdentifier.accountId == accountId);
+}

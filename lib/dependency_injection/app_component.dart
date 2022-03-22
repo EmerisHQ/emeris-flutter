@@ -41,6 +41,7 @@ import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/paste_from_clipboard_use_case.dart';
+import 'package:flutter_app/domain/use_cases/rename_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/domain/use_cases/share_data_use_case.dart';
@@ -87,6 +88,11 @@ import 'package:flutter_app/ui/pages/passcode/passcode_presenter.dart';
 import 'package:flutter_app/ui/pages/receive/receive_navigator.dart';
 import 'package:flutter_app/ui/pages/receive/receive_presentation_model.dart';
 import 'package:flutter_app/ui/pages/receive/receive_presenter.dart';
+import 'package:flutter_app/ui/pages/rename_account/rename_account_initial_parameters.dart';
+import 'package:flutter_app/ui/pages/rename_account/rename_account_navigator.dart';
+import 'package:flutter_app/ui/pages/rename_account/rename_account_page.dart';
+import 'package:flutter_app/ui/pages/rename_account/rename_account_presentation_model.dart';
+import 'package:flutter_app/ui/pages/rename_account/rename_account_presenter.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
@@ -298,6 +304,9 @@ void _configureUseCases() {
     )
     ..registerFactory<GetVerifiedDenomsUseCase>(
       () => GetVerifiedDenomsUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<RenameAccountUseCase>(
+      () => RenameAccountUseCase(getIt(), getIt()),
     );
 }
 
@@ -412,6 +421,24 @@ void _configureMvp() {
     )
     ..registerFactoryParam<SendTokensPage, SendTokensInitialParams, dynamic>(
       (initialParams, _) => SendTokensPage(
+        presenter: getIt(param1: initialParams),
+      ),
+    )
+    ..registerFactoryParam<RenameAccountPresentationModel, RenameAccountInitialParams, dynamic>(
+      (_params, _) => RenameAccountPresentationModel(_params),
+    )
+    ..registerFactoryParam<RenameAccountPresenter, RenameAccountInitialParams, dynamic>(
+      (params, _) => RenameAccountPresenter(
+        getIt(param1: params),
+        getIt(),
+        getIt(),
+      ),
+    )
+    ..registerFactory<RenameAccountNavigator>(
+      () => RenameAccountNavigator(getIt()),
+    )
+    ..registerFactoryParam<RenameAccountPage, RenameAccountInitialParams, dynamic>(
+      (initialParams, _) => RenameAccountPage(
         presenter: getIt(param1: initialParams),
       ),
     );
