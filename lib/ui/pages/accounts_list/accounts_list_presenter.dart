@@ -1,4 +1,3 @@
-import 'package:cosmos_ui_components/models/account_info.dart';
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presentation_mo
 import 'package:flutter_app/ui/pages/add_account/add_account_initial_params.dart';
 import 'package:flutter_app/ui/pages/import_account/import_account_initial_params.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_initial_params.dart';
+import 'package:flutter_app/ui/pages/rename_account/rename_account_initial_parameters.dart';
 import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 import 'package:flutter_app/utils/utils.dart';
 
@@ -46,19 +46,20 @@ class AccountsListPresenter {
 
   void onTapClose() => navigator.close();
 
-  void onTapEditAccount(AccountInfo account) => navigator.openEditAccountSheet(
-        title: account.name,
+  void onTapEditAccount(EmerisAccount account) => navigator.openEditAccountSheet(
+        title: account.accountDetails.accountAlias,
         onTapDelete: () => _deleteAccount(account),
+        onTapRename: () => _renameAccount(account),
       );
 
-  Future<void> _deleteAccount(AccountInfo account) async {
+  Future<void> _deleteAccount(EmerisAccount account) async {
     final passcode = await navigator.openPasscode(const PasscodeInitialParams());
     if (passcode == null) {
       return navigator.close();
     }
     await _deleteAccountUseCase
         .execute(
-      account: _model.accounts.firstWhere((it) => it.accountDetails.accountAddress == account.address),
+      account: account,
       passcode: passcode,
     )
         .map(
@@ -70,6 +71,14 @@ class AccountsListPresenter {
         }
         return right(true);
       },
+    );
+  }
+
+  void _renameAccount(EmerisAccount account) {
+    navigator.openRenameAccount(
+      RenameAccountInitialParams(
+        emerisAccount: account,
+      ),
     );
   }
 }

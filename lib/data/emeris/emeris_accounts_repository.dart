@@ -8,6 +8,7 @@ import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_accounts_list_failure.dart';
+import 'package:flutter_app/domain/entities/failures/rename_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/verify_account_password_failure.dart';
 import 'package:flutter_app/domain/entities/import_account_form_data.dart';
 import 'package:flutter_app/domain/repositories/accounts_repository.dart';
@@ -82,6 +83,43 @@ class EmerisAccountsRepository implements AccountsRepository {
       .mapError(
         (fail) => DeleteAccountFailure.unknown(cause: fail),
       );
+
+  @override
+  Future<Either<RenameAccountFailure, EmerisAccount>> renameAccount(
+    AccountIdentifier accountIdentifier,
+    String updatedName,
+  ) {
+    return _signingGateway
+        .getAccountsList() //
+        .mapError(RenameAccountFailure.unknown)
+        .flatMap(
+      (accounts) async {
+        final info = _findAccount(accounts, accountIdentifier)?.copyWith(name: updatedName);
+        if (info == null) {
+          return left(
+            RenameAccountFailure.accountNotFound(
+              'no account with id: ${accountIdentifier.accountId} on chain: ${accountIdentifier.chainId}',
+            ),
+          );
+        }
+        return _signingGateway
+            .updateAccountPublicInfo(info: info)
+            .mapError(
+              RenameAccountFailure.unknown,
+            )
+            .mapSuccess((_) => info.toEmerisAccount());
+      },
+    );
+  }
+
+  AccountPublicInfo? _findAccount(
+    List<AccountPublicInfo> accounts,
+    AccountIdentifier accountIdentifier,
+  ) {
+    return accounts.firstOrNull(
+      where: (it) => it.chainId == accountIdentifier.chainId && it.accountId == accountIdentifier.accountId,
+    );
+  }
 }
 
 extension AccountPublicInfoTranslator on AccountPublicInfo {
