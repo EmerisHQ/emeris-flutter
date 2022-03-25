@@ -261,7 +261,7 @@ void _configureUseCases() {
       () => VerifyAccountPasswordUseCase(getIt()),
     )
     ..registerFactory<ChangeCurrentAccountUseCase>(
-      () => ChangeCurrentAccountUseCase(getIt(), getIt()),
+      () => ChangeCurrentAccountUseCase(getIt(), getIt(), getIt()),
     )
     ..registerFactory<VerifyPasscodeUseCase>(
       () => VerifyPasscodeUseCase(getIt()),
@@ -325,7 +325,7 @@ void _configureMvp() {
       () => AccountDetailsNavigator(getIt()),
     )
     ..registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
-      (_model, _) => RoutingPresenter(_model, getIt(), getIt(), getIt()),
+      (_model, _) => RoutingPresenter(_model, getIt(), getIt()),
     )
     ..registerFactory<RoutingNavigator>(
       () => RoutingNavigator(getIt()),

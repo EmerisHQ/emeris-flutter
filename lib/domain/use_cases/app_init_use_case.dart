@@ -1,4 +1,4 @@
-import 'package:cosmos_utils/extensions.dart';
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/domain/entities/failures/app_init_failure.dart';
 import 'package:flutter_app/domain/repositories/accounts_repository.dart';
@@ -48,7 +48,14 @@ class AppInitUseCase {
         .getAccountsList() //
         .mapError(AppInitFailure.unknown)
         .doOn(success: _accountsStore.addAllAccounts)
-        .mapSuccess((response) => unit);
+        .flatMap(
+          (response) => _accountRepository.getCurrentAccount().mapError(AppInitFailure.unknown).mapSuccess(
+            (currentAccount) {
+              _accountsStore.currentAccount = currentAccount;
+              return unit;
+            },
+          ),
+        );
   }
 
   Future<Either<AppInitFailure, Unit>> _mapError(

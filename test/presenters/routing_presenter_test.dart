@@ -19,7 +19,6 @@ void main() {
   late RoutingNavigator navigator;
   late AppInitUseCase appInitializer;
   late MockAccountsStore accountsStore;
-  late MockChangeCurrentAccountUseCase changeCurrentAccountUseCase;
 
   void _initMvp({
     bool initializeApp = false,
@@ -31,7 +30,6 @@ void main() {
       model,
       navigator,
       appInitializer,
-      changeCurrentAccountUseCase,
     );
     when(() => navigator.openOnboarding(any())).thenAnswer((_) => Future.value());
     when(() => navigator.openAccountDetails()).thenAnswer((_) => Future.value());
@@ -94,7 +92,6 @@ void main() {
     registerFallbackValue(const EmerisAccount.empty());
     appInitializer = MockAppInitializer();
     accountsStore = MockAccountsStore();
-    changeCurrentAccountUseCase = MockChangeCurrentAccountUseCase();
     when(() => appInitializer.execute()).thenAnswer((invocation) => Future.value(right(unit)));
   });
 
