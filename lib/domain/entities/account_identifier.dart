@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/passcode.dart';
+import 'package:transaction_signing_gateway/model/account_public_info.dart';
 
 class AccountIdentifier extends Equatable {
   const AccountIdentifier({
@@ -28,4 +29,6 @@ class AccountIdentifier extends Equatable {
         chainId: chainId,
         password: passcode?.value,
       );
+
+  bool isSameAs(AccountPublicInfo it) => accountId == it.accountId && chainId == it.chainId;
 }
