@@ -16,7 +16,7 @@ class ReceivePresentationModel with ReceivePresentationModelBase implements Rece
   EmerisAccount get account => initialParams.account;
 
   @override
-  String get accountAddress => account.accountDetails.accountAddress;
+  String get accountAddress => account.accountDetails.accountAddress.value;
 
   @override
   String get accountAlias => account.accountDetails.accountAlias;

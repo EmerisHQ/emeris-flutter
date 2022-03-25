@@ -6,10 +6,11 @@ import 'package:flutter_app/domain/entities/fiat.dart';
 import 'package:flutter_app/domain/entities/token_pair.dart';
 
 class Prices extends Equatable {
-  const Prices({
-    required this.tokens,
-    required this.fiats,
-  });
+  Prices({
+    required List<TokenPair> tokens,
+    required List<FiatPair> fiats,
+  })  : tokens = List.unmodifiable(tokens),
+        fiats = List.unmodifiable(fiats);
 
   const Prices.empty()
       : tokens = const [],

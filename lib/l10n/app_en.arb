@@ -171,5 +171,30 @@
     }
   },
   "feesIncluded": "Fees (included)",
-  "renameAccountHeading": "Rename your account"
+  "renameAccountHeading": "Rename your account",
+  "selectAssetMessageFormat": "You have {denom} on {chainsCount} chains.\nSelect the chain you wish to use.",
+  "@selectAssetMessageFormat": {
+    "placeholders": {
+      "denom": {},
+      "chainsCount": {}
+    }
+  },
+  "selectAssetTitle": "Select asset",
+  "selectChainTitle": "Select chain",
+  "transactionFeeMultipliesFormat": "Transaction fee (x{count})",
+  "@transactionFeeMultipliesFormat": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "lowPriceLevel": "Slow",
+  "averagePriceLevel": "Normal",
+  "highPriceLevel": "Fast",
+  "sendAmountTitle": "Send",
+  "sendAddressTitle": "Send address",
+  "feeTitle": "Transaction fee",
+  "receiveAmountTitle": "Receive",
+  "receiveAddressTitle": "Receive address",
+  "sendTransactionWarningWithTerms": "Once executed, transactions cannot be reverted. By continuing, you agree to our Terms of Service",
+  "confirmAndContinueAction": "Confirm & Continue"
 }

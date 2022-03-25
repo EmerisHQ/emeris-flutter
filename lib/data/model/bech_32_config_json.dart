@@ -1,3 +1,5 @@
+import 'package:flutter_app/domain/entities/bech_32_config.dart';
+
 class Bech32ConfigJson {
   Bech32ConfigJson({
     required this.mainPrefix,
@@ -41,4 +43,19 @@ class Bech32ConfigJson {
   final String? valPub;
   final String? consAddr;
   final String? consPub;
+
+  Bech32Config toDomain() => Bech32Config(
+        mainPrefix: mainPrefix ?? '',
+        prefixAccount: prefixAccount ?? '',
+        prefixValidator: prefixValidator ?? '',
+        prefixConsensus: prefixConsensus ?? '',
+        prefixPublic: prefixPublic ?? '',
+        prefixOperator: prefixOperator ?? '',
+        accAddress: accAddr ?? '',
+        accPub: accPub ?? '',
+        valAddress: valAddr ?? '',
+        valPub: valPub ?? '',
+        consAddress: consAddr ?? '',
+        consPub: consPub ?? '',
+      );
 }

@@ -351,8 +351,8 @@ Future<List<FeeWithDenom>> getFeeForChain(String chainId, ChainsRepository chain
   await chainDetails.fold<Future?>(
     (fail) => throw 'Could not get chain details',
     (details) async {
-      if (details.denoms != null) {
-        for (final denom in details.denoms!) {
+      if (details.denoms.isNotEmpty) {
+        for (final denom in details.denoms) {
           fees.add(
             FeeWithDenom(
               gasPriceLevels: denom.gasPriceLevels,

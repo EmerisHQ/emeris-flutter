@@ -1,6 +1,7 @@
-import 'package:flutter_app/data/model/denom_json.dart';
 import 'package:flutter_app/data/model/node_info_json.dart';
+import 'package:flutter_app/data/model/verified_denom_json.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
+import 'package:flutter_app/domain/entities/node_info.dart';
 
 class ChainJson {
   ChainJson({
@@ -24,7 +25,8 @@ class ChainJson {
         logo: json['logo'] as String? ?? '',
         displayName: json['display_name'] as String? ?? '',
         primaryChannel: (json['primary_channel'] as Map<String, dynamic>?)?.cast(),
-        denoms: (json['denoms'] as List?)?.map((v) => DenomJson.fromJson(v as Map<String, dynamic>)).toList() ?? [],
+        denoms:
+            (json['denoms'] as List?)?.map((v) => VerifiedDenomJson.fromJson(v as Map<String, dynamic>)).toList() ?? [],
         demerisAddresses: (json['demeris_addresses'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
         genesisHash: json['genesis_hash'] as String? ?? '',
         nodeInfo: json['node_info'] == null ? null : NodeInfoJson.fromJson(json['node_info'] as Map<String, dynamic>),
@@ -38,7 +40,7 @@ class ChainJson {
   final String? logo;
   final String? displayName;
   final Map<String, String>? primaryChannel;
-  final List<DenomJson>? denoms;
+  final List<VerifiedDenomJson>? denoms;
   final List<String>? demerisAddresses;
   final String? genesisHash;
   final NodeInfoJson? nodeInfo;
@@ -51,7 +53,8 @@ class ChainJson {
         chainName: chainName ?? '',
         displayName: displayName ?? '',
         primaryChannel: primaryChannel ?? {},
-        denoms: denoms?.map((it) => it.toDomain()).toList(),
+        denoms: denoms?.map((it) => it.toDomain()).toList() ?? [],
         logo: logo ?? '',
+        nodeInfo: nodeInfo?.toDomain() ?? const NodeInfo.empty(),
       );
 }

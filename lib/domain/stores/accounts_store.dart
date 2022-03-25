@@ -12,6 +12,20 @@ class AccountsStore with _AccountStoreBase {
         accounts.add(account);
       })();
 
+  void updateAccount({
+    required AccountIdentifier identifier,
+    required EmerisAccount account,
+  }) =>
+      Action(() {
+        final index = accounts.indexWhere((element) => element.accountDetails.accountIdentifier == identifier);
+        if (index != -1) {
+          accounts[index] = account;
+        }
+        if (identifier == currentAccount.accountDetails.accountIdentifier) {
+          currentAccount = account;
+        }
+      })();
+
   void removeAccount(EmerisAccount account) => Action(() {
         accounts.remove(account);
       })();
@@ -24,22 +38,6 @@ class AccountsStore with _AccountStoreBase {
         (_) => currentAccount,
         callback,
       );
-
-  void updateAccount({
-    required AccountIdentifier identifier,
-    required EmerisAccount account,
-  }) =>
-      Action(
-        () {
-          final index = accounts.indexWhere((element) => element.accountDetails.accountIdentifier == identifier);
-          if (index != -1) {
-            accounts[index] = account;
-          }
-          if (identifier == currentAccount.accountDetails.accountIdentifier) {
-            currentAccount = account;
-          }
-        },
-      )();
 }
 
 mixin _AccountStoreBase {

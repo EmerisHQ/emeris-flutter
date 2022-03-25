@@ -4,6 +4,7 @@ import 'package:flutter_app/data/api_calls/account_api.dart';
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_account_failure.dart';
@@ -200,7 +201,7 @@ extension AccountPublicInfoTranslator on AccountPublicInfo {
           accountId: accountId,
           chainId: chainId,
         ),
-        accountAddress: publicAddress,
+        accountAddress: AccountAddress(value: publicAddress),
         accountAlias: name,
       ),
       accountType: AccountTypeString.fromString(chainId) ?? AccountType.Cosmos,

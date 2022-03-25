@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
+import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/gas_price_levels.dart';
+import 'package:flutter_app/domain/entities/gas_price_level.dart';
 
 class VerifiedDenom extends Equatable {
   const VerifiedDenom({
@@ -29,7 +31,7 @@ class VerifiedDenom extends Equatable {
         stakeable = false,
         ticker = '',
         feeToken = false,
-        gasPriceLevels = const GasPriceLevels.empty(),
+        gasPriceLevels = const [],
         fetchPrice = false,
         relayerDenom = false,
         minimumThreshRelayerBalance = 0;
@@ -43,7 +45,7 @@ class VerifiedDenom extends Equatable {
   final bool stakeable;
   final String ticker;
   final bool feeToken;
-  final GasPriceLevels gasPriceLevels;
+  final List<GasPriceLevel> gasPriceLevels;
   final bool fetchPrice;
   final bool relayerDenom;
   final int minimumThreshRelayerBalance;
@@ -75,7 +77,7 @@ class VerifiedDenom extends Equatable {
     bool? stakeable,
     String? ticker,
     bool? feeToken,
-    GasPriceLevels? gasPriceLevels,
+    List<GasPriceLevel>? gasPriceLevels,
     bool? fetchPrice,
     bool? relayerDenom,
     int? minimumThreshRelayerBalance,
@@ -96,4 +98,9 @@ class VerifiedDenom extends Equatable {
       minimumThreshRelayerBalance: minimumThreshRelayerBalance ?? this.minimumThreshRelayerBalance,
     );
   }
+
+  String amountWithDenomText(Amount amount) => Balance(
+        denom: denom,
+        amount: amount,
+      ).amountWithDenomText;
 }
