@@ -23,8 +23,6 @@ import 'package:transaction_signing_gateway/model/account_public_info.dart';
 class EmerisAccountsRepository implements AccountsRepository {
   EmerisAccountsRepository(this._accountApis, this._signingGateway);
 
-  final String additionalDataForSelectedAccount = 'isSelected';
-
   final List<AccountApi> _accountApis;
   final TransactionSigningGateway _signingGateway;
 
