@@ -4,8 +4,8 @@ import 'package:flutter_app/domain/entities/asset.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/ui/pages/account_details/widgets/balance_card.dart';
 
-class BalancesList extends StatelessWidget {
-  const BalancesList({
+class AssetsList extends StatelessWidget {
+  const AssetsList({
     required this.assets,
     required this.prices,
     required this.onTapBalance,
@@ -25,7 +25,7 @@ class BalancesList extends StatelessWidget {
             (asset) => BalanceCard(
               balance: asset.totalBalance,
               prices: prices,
-              onTap: () => onTapBalance?.call(asset),
+              onTap: onTapBalance == null ? null : () => onTapBalance!(asset),
             ),
           )
           .toList(),

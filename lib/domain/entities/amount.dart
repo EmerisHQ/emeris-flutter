@@ -42,6 +42,8 @@ class Amount extends Equatable {
 
   Amount operator +(Amount other) => Amount(value + other.value);
 
+  Amount operator -(Amount other) => Amount(value - other.value);
+
   @override
   List<Object?> get props => [
         value,

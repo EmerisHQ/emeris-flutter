@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
@@ -68,7 +69,7 @@ void main() {
           chainId: 'cosmos',
         ),
         accountAlias: 'Name of the account',
-        accountAddress: fromAddress,
+        accountAddress: AccountAddress(value: fromAddress),
       ),
       accountType: AccountType.Cosmos,
     );

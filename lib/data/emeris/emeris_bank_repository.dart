@@ -47,7 +47,7 @@ class EmerisBankRepository implements BankRepository {
   @override
   Future<Either<GeneralFailure, List<StakingBalance>>> getStakingBalances(EmerisAccount accountData) async =>
       _httpService
-          .get('/v1/account/${bech32ToHex(accountData.accountDetails.accountAddress)}/stakingbalances')
+          .get('/v1/account/${bech32ToHex(accountData.accountDetails.accountAddress.value)}/stakingbalances')
           .responseSubKey('staking_balances')
           .executeList((json) => StakingBalanceJson.fromJson(json).toDomain())
           .mapError((fail) => GeneralFailure.unknown('Http failure', fail));

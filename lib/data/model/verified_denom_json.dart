@@ -1,6 +1,5 @@
 import 'package:flutter_app/data/model/gas_price_levels_json.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
-import 'package:flutter_app/domain/entities/gas_price_levels.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
 class VerifiedDenomJson {
@@ -52,22 +51,25 @@ class VerifiedDenomJson {
   final bool? relayerDenom;
   final int? minimumThreshRelayerBalance;
 
-  VerifiedDenom toDomain() => VerifiedDenom(
-        chainName: chainName ?? '',
-        name: name ?? '',
-        denom: Denom(
-          id: name ?? '',
-          displayName: displayName ?? '',
-        ),
-        logo: logo ?? '',
-        precision: precision ?? 0,
-        verified: verified ?? false,
-        stakeable: stakable ?? false,
-        ticker: ticker ?? '',
-        feeToken: feeToken ?? false,
-        gasPriceLevels: gasPriceLevels?.toDomain() ?? const GasPriceLevels.empty(),
-        fetchPrice: fetchPrice ?? false,
-        relayerDenom: relayerDenom ?? false,
-        minimumThreshRelayerBalance: minimumThreshRelayerBalance ?? 0,
-      );
+  VerifiedDenom toDomain() {
+    final denom = Denom(
+      id: name ?? '',
+      displayName: displayName ?? '',
+    );
+    return VerifiedDenom(
+      chainName: chainName ?? '',
+      name: name ?? '',
+      denom: denom,
+      logo: logo ?? '',
+      precision: precision ?? 0,
+      verified: verified ?? false,
+      stakeable: stakable ?? false,
+      ticker: ticker ?? '',
+      feeToken: feeToken ?? false,
+      gasPriceLevels: gasPriceLevels?.toDomain(denom: denom) ?? [],
+      fetchPrice: fetchPrice ?? false,
+      relayerDenom: relayerDenom ?? false,
+      minimumThreshRelayerBalance: minimumThreshRelayerBalance ?? 0,
+    );
+  }
 }

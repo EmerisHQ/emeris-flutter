@@ -406,7 +406,11 @@ void _configureMvp() {
       () => SendTokensNavigator(getIt()),
     )
     ..registerFactoryParam<SendTokensPresentationModel, SendTokensInitialParams, dynamic>(
-      (_params, _) => SendTokensPresentationModel(_params, getIt(), getIt()),
+      (_params, _) => SendTokensPresentationModel(
+        _params,
+        getIt(),
+        getIt(),
+      ),
     )
     ..registerFactoryParam<SendTokensPresenter, SendTokensInitialParams, dynamic>(
       (initialParams, _) => SendTokensPresenter(

@@ -8,8 +8,8 @@ import 'package:flutter_app/ui/pages/account_details/account_details_navigator.d
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presenter.dart';
 import 'package:flutter_app/ui/pages/account_details/widgets/asset_portfolio_heading.dart';
+import 'package:flutter_app/ui/pages/account_details/widgets/assets_list.dart';
 import 'package:flutter_app/ui/pages/account_details/widgets/balance_heading.dart';
-import 'package:flutter_app/ui/pages/account_details/widgets/balances_list.dart';
 import 'package:flutter_app/ui/pages/account_details/widgets/button_bar.dart';
 import 'package:flutter_app/ui/widgets/emeris_gradient_avatar.dart';
 import 'package:flutter_app/utils/strings.dart';
@@ -108,7 +108,7 @@ class AccountDetailsPageState extends State<AccountDetailsPage> {
                   account: model.account,
                 ),
                 Expanded(
-                  child: BalancesList(
+                  child: AssetsList(
                     assets: model.assets,
                     onTapBalance: model.isSendTokensLoading //
                         ? null

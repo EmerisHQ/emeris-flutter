@@ -7,6 +7,7 @@ import 'package:flutter_app/data/ethereum/ethereum_private_account_credentials.d
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/import_account_form_data.dart';
@@ -56,7 +57,7 @@ Future<Either<AddAccountFailure, EmerisAccount>> importEthereumAccount(
             accountId: creds.publicInfo.accountId,
           ),
           accountAlias: accountFormData.name,
-          accountAddress: account.privateKey.address.hex,
+          accountAddress: AccountAddress(value: account.privateKey.address.hex),
         ),
         accountType: accountFormData.accountType,
       ),

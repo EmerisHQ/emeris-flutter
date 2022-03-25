@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 
 class AccountDetails extends Equatable {
@@ -10,12 +11,12 @@ class AccountDetails extends Equatable {
 
   const AccountDetails.empty()
       : accountIdentifier = const AccountIdentifier.empty(),
-        accountAddress = '',
+        accountAddress = const AccountAddress.empty(),
         accountAlias = '';
 
   final AccountIdentifier accountIdentifier;
   final String accountAlias;
-  final String accountAddress;
+  final AccountAddress accountAddress;
 
   @override
   List<Object?> get props => [

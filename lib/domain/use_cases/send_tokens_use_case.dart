@@ -1,5 +1,4 @@
-import 'package:cosmos_utils/extensions.dart';
-import 'package:cosmos_utils/future_either.dart';
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/broadcast_transaction.dart';
@@ -25,7 +24,7 @@ class SendTokensUseCase {
     required Passcode passcode,
   }) async =>
       _verifyPasswordUseCase
-          .execute(accountIdentifier) //
+          .execute(accountIdentifier.byUpdatingPasscode(passcode)) //
           .mapError(SendTokensFailure.unknown)
           .flatMap(
             (it) async => _transactionsRepository
@@ -38,5 +37,6 @@ class SendTokensUseCase {
                   ),
                 )
                 .mapError(SendTokensFailure.unknown),
-          );
+          )
+          .doOn(fail: logError);
 }

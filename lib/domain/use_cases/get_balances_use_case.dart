@@ -33,7 +33,7 @@ class GetBalancesUseCase {
     ]);
     return _bankRepository
         .getBalances(
-          details.accountAddress,
+          details.accountAddress.value,
         )
         .doOn(success: (it) => _updateAssetsStore(details, it))
         .mapSuccess((response) => unit);

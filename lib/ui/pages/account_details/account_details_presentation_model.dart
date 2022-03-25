@@ -47,13 +47,13 @@ class AccountDetailsPresentationModel with AccountDetailsPresentationModelBase i
   EmerisAccount get account => _accountsStore.currentAccount;
 
   @override
-  String get accountAddress => account.accountDetails.accountAddress;
+  String get accountAddress => account.accountDetails.accountAddress.value;
 
   @override
   String get accountAlias => account.accountDetails.accountAlias;
 
   @override
-  List<Asset> get assets => _assetsStore.getAssets(account.accountDetails.accountIdentifier);
+  List<Asset> get assets => _assetsStore.getAssets(account.id);
 
   @override
   String get totalAmountInUSD => assets.totalAmountInUSDText(prices);
