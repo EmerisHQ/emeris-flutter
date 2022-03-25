@@ -170,6 +170,8 @@
       "total": {}
     }
   },
+  "feesIncluded": "Fees (included)",
+  "renameAccountHeading": "Rename your account",
   "selectAssetMessageFormat": "You have {denom} on {chainsCount} chains.\nSelect the chain you wish to use.",
   "@selectAssetMessageFormat": {
     "placeholders": {
@@ -177,7 +179,6 @@
       "chainsCount": {}
     }
   },
-  "feesIncluded": "Fees (included)",
   "selectAssetTitle": "Select asset",
   "selectChainTitle": "Select chain",
   "transactionFeeMultipliesFormat": "Transaction fee (x{count})",

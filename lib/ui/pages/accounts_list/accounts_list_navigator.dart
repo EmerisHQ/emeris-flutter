@@ -11,6 +11,7 @@ import 'package:flutter_app/ui/pages/add_account/add_account_navigator.dart';
 import 'package:flutter_app/ui/pages/edit_account/edit_account_navigator.dart';
 import 'package:flutter_app/ui/pages/import_account/import_account_navigator.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
+import 'package:flutter_app/ui/pages/rename_account/rename_account_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -24,7 +25,8 @@ class AccountsListNavigator
         CloseRoute,
         EditAccountRoute,
         PasscodeRoute,
-        RoutingRoute {
+        RoutingRoute,
+        RenameAccountRoute {
   AccountsListNavigator(this.appNavigator);
 
   @override
