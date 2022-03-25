@@ -123,18 +123,15 @@ class EmerisAccountsRepository implements AccountsRepository {
         .getAccountsList() //
         .mapError(GetCurrentAccountFailure.unknown)
         .flatMap(
-      (accounts) async {
-        try {
-          return right(
+          (accounts) async => right(
             accounts
-                .firstWhere((element) => element.additionalData == additionalDataForSelectedAccount)
-                .toEmerisAccount(),
-          );
-        } catch (ex) {
-          return right(accounts.first.toEmerisAccount());
-        }
-      },
-    );
+                    .firstOrNull(
+                      where: (element) => element.additionalData?.contains(additionalDataForSelectedAccount) ?? false,
+                    )
+                    ?.toEmerisAccount() ??
+                accounts.first.toEmerisAccount(),
+          ),
+        );
   }
 
   @override
