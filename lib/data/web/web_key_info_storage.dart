@@ -1,6 +1,7 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:transaction_signing_gateway/model/account_lookup_key.dart';
+import 'package:transaction_signing_gateway/model/clear_credentials_failure.dart';
 import 'package:transaction_signing_gateway/model/transaction_signing_failure.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
 
@@ -49,6 +50,12 @@ class WebKeyInfoStorage implements KeyInfoStorage {
     required String password,
   }) async {
     _credentialsMap[accountCredentials.publicInfo.accountId] = accountCredentials;
+    return right(unit);
+  }
+
+  @override
+  Future<Either<ClearCredentialsFailure, Unit>> clearCredentials() async {
+    _credentialsMap.clear();
     return right(unit);
   }
 }

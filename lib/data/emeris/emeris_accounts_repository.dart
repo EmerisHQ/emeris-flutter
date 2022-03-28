@@ -8,6 +8,7 @@ import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_account_failure.dart';
+import 'package:flutter_app/domain/entities/failures/delete_all_accounts_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_accounts_list_failure.dart';
 import 'package:flutter_app/domain/entities/failures/rename_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/verify_account_password_failure.dart';
@@ -121,6 +122,11 @@ class EmerisAccountsRepository implements AccountsRepository {
       where: (it) => it.chainId == accountIdentifier.chainId && it.accountId == accountIdentifier.accountId,
     );
   }
+
+  @override
+  Future<Either<DeleteAllAccountsFailure, Unit>> deleteAllAccounts() => _signingGateway
+        .clearAllCredentials() //
+        .mapError(DeleteAllAccountsFailure.unknown);
 }
 
 extension AccountPublicInfoTranslator on AccountPublicInfo {
