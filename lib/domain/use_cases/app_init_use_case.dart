@@ -1,5 +1,6 @@
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/failures/app_init_failure.dart';
 import 'package:flutter_app/domain/repositories/accounts_repository.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
@@ -44,18 +45,26 @@ class AppInitUseCase {
     if (errors.isNotEmpty) {
       return left(AppInitFailure.unknown(errors));
     }
+    return _getAccounts().flatMap((response) => _setCurrentAccount());
+  }
+
+  Future<Either<AppInitFailure, List<EmerisAccount>>> _getAccounts() {
     return _accountRepository
         .getAccountsList() //
         .mapError(AppInitFailure.unknown)
-        .doOn(success: _accountsStore.addAllAccounts)
-        .flatMap(
-          (response) => _accountRepository.getCurrentAccount().mapError(AppInitFailure.unknown).mapSuccess(
-            (currentAccount) {
-              _accountsStore.currentAccount = currentAccount;
-              return unit;
-            },
-          ),
-        );
+        .doOn(success: _accountsStore.addAllAccounts);
+  }
+
+  Future<Either<AppInitFailure, Unit>> _setCurrentAccount() {
+    return _accountRepository
+        .getCurrentAccount() //
+        .mapError(AppInitFailure.unknown)
+        .mapSuccess(
+      (currentAccount) {
+        _accountsStore.currentAccount = currentAccount;
+        return unit;
+      },
+    );
   }
 
   Future<Either<AppInitFailure, Unit>> _mapError(

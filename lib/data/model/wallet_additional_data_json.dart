@@ -23,7 +23,13 @@ class WalletAdditionalDataJson {
     );
   }
 
-  String toJson() => jsonEncode(this);
+  String toJsonString() => jsonEncode(toJson());
+
+  Map<String, dynamic> toJson() {
+    return {
+      'is_current': isCurrent,
+    };
+  }
 }
 
 extension AdditionalData on AccountPublicInfo {
@@ -32,6 +38,6 @@ extension AdditionalData on AccountPublicInfo {
 
   AccountPublicInfo byUpdatingAdditionalData(WalletAdditionalDataJson Function(WalletAdditionalDataJson) updater) =>
       copyWith(
-        additionalData: updater(additionalDataJson).toJson(),
+        additionalData: updater(additionalDataJson).toJsonString(),
       );
 }
