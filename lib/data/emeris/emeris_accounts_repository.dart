@@ -125,8 +125,8 @@ class EmerisAccountsRepository implements AccountsRepository {
 
   @override
   Future<Either<DeleteAllAccountsFailure, Unit>> deleteAllAccounts() => _signingGateway
-        .clearAllCredentials() //
-        .mapError(DeleteAllAccountsFailure.unknown);
+      .clearAllCredentials() //
+      .mapError(DeleteAllAccountsFailure.unknown);
 }
 
 extension AccountPublicInfoTranslator on AccountPublicInfo {
