@@ -181,7 +181,7 @@ packages:
     description:
       path: "packages/cosmos_auth"
       ref: main
-      resolved-ref: "6420c0567cb61d66f4e8148a3b73839dd63f1600"
+      resolved-ref: a546721497fb10fbd8c878c58c186f61944961a1
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -190,7 +190,7 @@ packages:
     description:
       path: "packages/cosmos_ui_components"
       ref: main
-      resolved-ref: "6420c0567cb61d66f4e8148a3b73839dd63f1600"
+      resolved-ref: a546721497fb10fbd8c878c58c186f61944961a1
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -199,7 +199,7 @@ packages:
     description:
       path: "packages/cosmos_utils"
       ref: main
-      resolved-ref: "6420c0567cb61d66f4e8148a3b73839dd63f1600"
+      resolved-ref: a546721497fb10fbd8c878c58c186f61944961a1
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -936,7 +936,7 @@ packages:
       name: shelf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.3.0"
   shelf_packages_handler:
     dependency: transitive
     description:
@@ -1051,8 +1051,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/transaction_signing_gateway"
-      ref: "feature/clear-storage"
-      resolved-ref: ec7d9af764d3dff70dfaa7492d6c23e71c6e567d
+      ref: main
+      resolved-ref: a546721497fb10fbd8c878c58c186f61944961a1
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"

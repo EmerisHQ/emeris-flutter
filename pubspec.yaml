@@ -38,7 +38,7 @@ dependencies:
     git:
       url: https://github.com/tendermint/flutter.git
       path: packages/transaction_signing_gateway
-      ref: feature/clear-storage
+      ref: main
   cosmos_ui_components:
     git:
       url: https://github.com/tendermint/flutter.git
