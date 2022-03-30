@@ -3,6 +3,7 @@ import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_account_failure.dart';
+import 'package:flutter_app/domain/entities/failures/delete_all_accounts_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_accounts_list_failure.dart';
 import 'package:flutter_app/domain/entities/failures/rename_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/verify_account_password_failure.dart';
@@ -21,4 +22,6 @@ abstract class AccountsRepository {
     AccountIdentifier accountIdentifier,
     String updatedName,
   );
+
+  Future<Either<DeleteAllAccountsFailure, Unit>> deleteAllAccounts();
 }
