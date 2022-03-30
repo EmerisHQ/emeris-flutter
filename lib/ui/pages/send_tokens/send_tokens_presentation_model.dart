@@ -1,16 +1,27 @@
 // ignore_for_file: avoid_setters_without_getters
 import 'package:cosmos_utils/extensions.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
+import 'package:flutter_app/domain/entities/broadcast_transaction.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
 import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
+import 'package:flutter_app/domain/entities/failures/send_tokens_failure.dart';
+import 'package:flutter_app/domain/entities/gas_price_level.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
+import 'package:flutter_app/domain/entities/send_tokens_form_data.dart';
 import 'package:flutter_app/domain/entities/token_pair.dart';
+import 'package:flutter_app/domain/entities/verified_denom.dart';
+import 'package:flutter_app/domain/stores/accounts_store.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_form_step.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
 import 'package:flutter_app/utils/price_converter.dart';
 import 'package:flutter_app/utils/strings.dart';
+import 'package:flutter_app/utils/utils.dart';
 import 'package:mobx/mobx.dart';
 
 abstract class SendTokensViewModel {
@@ -20,7 +31,7 @@ abstract class SendTokensViewModel {
 
   bool get recipientConfirmed;
 
-  String get recipientAddress;
+  AccountAddress get recipientAddress;
 
   String get memo;
 
@@ -37,6 +48,18 @@ abstract class SendTokensViewModel {
   String get primaryAmountSymbol;
 
   Chain get chain;
+
+  ChainAsset get selectedAsset;
+
+  Prices get prices;
+
+  VerifiedDenom get feeVerifiedDenom;
+
+  GasPriceLevel get appliedFee;
+
+  SendTokensFormData get formData;
+
+  bool get isLoading;
 }
 
 class SendTokensPresentationModel with SendTokensPresentationModelBase implements SendTokensViewModel {
@@ -44,14 +67,17 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
     this._initialParams,
     this._blockchainMetadataStore,
     this.priceConverter,
+    this._accountsStore,
   ) {
     selectedAsset = _initialParams.asset.chainAssets.firstOrNull() ?? ChainAsset.empty();
     priceConverter.setTokenUsingChainAsset(
       selectedAsset,
-      _blockchainMetadataStore.prices,
+      prices,
     );
+    appliedFee = feeVerifiedDenom.gasPriceLevels.defaultLevel;
   }
 
+  final AccountsStore _accountsStore;
   final PriceConverter priceConverter;
 
   final BlockchainMetadataStore _blockchainMetadataStore;
@@ -78,7 +104,10 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
   bool get recipientConfirmed => _recipientConfirmed.value;
 
   @override
-  String get recipientAddress => _recipientAddress.value;
+  AccountAddress get recipientAddress => _recipientAddress.value;
+
+  AccountAddressValidationError? get recipientAddressValidationError =>
+      recipientAddress.validate(_blockchainMetadataStore);
 
   @override
   String get memo => _memo.value;
@@ -87,12 +116,11 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
   bool get continueButtonEnabled {
     switch (step) {
       case SendTokensFormStep.recipient:
-        return recipientConfirmed && recipientAddress.isNotEmpty;
+        return recipientConfirmed && recipientAddressValidationError == null;
       case SendTokensFormStep.amount:
         return tokenAmount != Amount.zero;
       case SendTokensFormStep.review:
-        // TODO: Handle this case.
-        return false;
+        return true;
     }
   }
 
@@ -130,6 +158,8 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
     }
   }
 
+  bool get isInterChainTransfer => formData.senderChain != formData.recipientChain;
+
   set amountText(String amount) => priceConverter.primaryText = amount;
 
   void switchCurrency() {
@@ -159,12 +189,41 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
   @override
   Chain get chain => selectedAsset.chain;
 
+  @override
   ChainAsset get selectedAsset => _selectedAsset.value;
 
   set selectedAsset(ChainAsset value) => Action(() {
         priceConverter.setTokenUsingChainAsset(value, _blockchainMetadataStore.prices);
         _selectedAsset.value = value;
       })();
+
+  @override
+  Prices get prices => _blockchainMetadataStore.prices;
+
+  @override
+  GasPriceLevel get appliedFee => _appliedFee.value;
+
+  @override
+  VerifiedDenom get feeVerifiedDenom => selectedAsset.verifiedDenom;
+
+  EmerisAccount get account => _accountsStore.currentAccount;
+
+  @override
+  SendTokensFormData get formData => SendTokensFormData(
+        sendAmount: tokenAmount,
+        fee: appliedFee.balance.amount,
+        recipient: recipientAddress,
+        recipientChain: _blockchainMetadataStore.chainForAddress(recipientAddress) ?? const Chain.empty(),
+        sender: account.accountDetails.accountAddress,
+        verifiedDenom: selectedAsset.verifiedDenom,
+        senderChain:
+            _blockchainMetadataStore.chainForAddress(account.accountDetails.accountAddress) ?? const Chain.empty(),
+      );
+
+  ObservableFuture<Either<SendTokensFailure, BroadcastTransaction>>? get sendTokensFuture => _sendTokensFuture.value;
+
+  @override
+  bool get isLoading => isFutureInProgress(sendTokensFuture);
 }
 
 //////////////////BOILERPLATE
@@ -180,9 +239,9 @@ abstract class SendTokensPresentationModelBase {
   set recipientConfirmed(bool value) => Action(() => _recipientConfirmed.value = value)();
 
   //////////////////////////////////////
-  final Observable<String> _recipientAddress = Observable('');
+  final Observable<AccountAddress> _recipientAddress = Observable(const AccountAddress.empty());
 
-  set recipientAddress(String value) => Action(() => _recipientAddress.value = value)();
+  set recipientAddress(AccountAddress value) => Action(() => _recipientAddress.value = value)();
 
   //////////////////////////////////////
   final Observable<String> _memo = Observable('');
@@ -191,4 +250,16 @@ abstract class SendTokensPresentationModelBase {
 
   //////////////////////////////////////
   final Observable<ChainAsset> _selectedAsset = Observable(ChainAsset.empty());
+
+  //////////////////////////////////////
+  final Observable<GasPriceLevel> _appliedFee = Observable(GasPriceLevel.empty());
+
+  set appliedFee(GasPriceLevel value) => Action(() => _appliedFee.value = value)();
+
+  //////////////////////////////////////
+  final Observable<ObservableFuture<Either<SendTokensFailure, BroadcastTransaction>>?> _sendTokensFuture =
+      Observable(null);
+
+  set sendTokensFuture(ObservableFuture<Either<SendTokensFailure, BroadcastTransaction>>? value) =>
+      Action(() => _sendTokensFuture.value = value)();
 }
