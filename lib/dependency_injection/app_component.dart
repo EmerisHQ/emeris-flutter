@@ -33,6 +33,7 @@ import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
 import 'package:flutter_app/domain/use_cases/change_current_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/delete_account_use_case.dart';
+import 'package:flutter_app/domain/use_cases/delete_app_data_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
@@ -312,6 +313,9 @@ void _configureUseCases() {
     )
     ..registerFactory<RenameAccountUseCase>(
       () => RenameAccountUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<DeleteAppDataUseCase>(
+      () => DeleteAppDataUseCase(getIt()),
     );
 }
 

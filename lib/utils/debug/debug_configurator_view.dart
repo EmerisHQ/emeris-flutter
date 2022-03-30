@@ -1,6 +1,8 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/domain/use_cases/delete_app_data_use_case.dart';
 import 'package:flutter_app/environment_config.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/utils/app_restarter.dart';
@@ -26,6 +28,7 @@ class _DebugConfiguratorViewState extends State<DebugConfiguratorView> {
   late EnvironmentConfig _currentConfig;
   late EmerisApiEnvironment _emerisEnv;
   late BlockchainEnvironment _blockchainEnv;
+  late DeleteAppDataUseCase _deleteAppDataUseCase;
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _DebugConfiguratorViewState extends State<DebugConfiguratorView> {
     _currentConfig = getIt<EnvironmentConfig>();
     _emerisEnv = EmerisApiEnvironment.urlToEmerisApiEnvironment(_currentConfig.emerisBackendApiUrl);
     _blockchainEnv = BlockchainEnvironment.lcdUrlToBlockchainEnvironment(_currentConfig.networkInfo.lcdInfo.host);
+    _deleteAppDataUseCase = getIt();
   }
 
   @override
@@ -67,6 +71,13 @@ class _DebugConfiguratorViewState extends State<DebugConfiguratorView> {
                 onChanged: onBlockchainEnvChanged,
               ),
               const Spacer(),
+              CosmosTextButton(
+                text: 'Reset all app data & restart',
+                onTap: onTapResetAllData,
+              ),
+              SizedBox(
+                height: CosmosTheme.of(context).spacingM,
+              ),
               CosmosElevatedButton(
                 text: 'Apply',
                 onTap: onTapApply,
@@ -121,4 +132,10 @@ class _DebugConfiguratorViewState extends State<DebugConfiguratorView> {
 
   void onBlockchainEnvChanged(BlockchainEnvironment? item) =>
       setState(() => _blockchainEnv = item ?? BlockchainEnvironment.defaultEnv);
+
+  Future<void> onTapResetAllData() async {
+    await _deleteAppDataUseCase
+        .execute() //
+        .doOn(success: (_) => AppRestarter.restartApp());
+  }
 }
