@@ -131,7 +131,7 @@ class EmerisAccountsRepository implements AccountsRepository {
                       where: (element) => element.additionalDataJson.isCurrent,
                     )
                     ?.toEmerisAccount() ??
-                accounts.first.toEmerisAccount(),
+                (accounts.isEmpty ? const EmerisAccount.empty() : accounts.first.toEmerisAccount()),
           ),
         );
   }
