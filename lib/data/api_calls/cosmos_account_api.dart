@@ -42,8 +42,10 @@ class CosmosAccountApi implements AccountApi {
     required AccountIdentifier accountIdentifier,
     required Transaction transaction,
   }) async {
-    final saccoTx = alanFromDomain(transaction);
-    if (saccoTx == null) {
+    final alanTx = alanFromDomain(
+      transaction: transaction,
+    );
+    if (alanTx == null) {
       return left(GeneralFailure.unknown('Could not create Alan transaction from $transaction'));
     }
     final password = accountIdentifier.password;
@@ -57,7 +59,7 @@ class CosmosAccountApi implements AccountApi {
     );
     return _signingGateway
         .signTransaction(
-          transaction: saccoTx,
+          transaction: alanTx,
           accountLookupKey: accountLookupKey,
         )
         .leftMap((signingFailure) => left(GeneralFailure.unknown('$signingFailure')))

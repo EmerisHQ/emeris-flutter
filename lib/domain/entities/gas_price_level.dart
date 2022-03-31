@@ -2,6 +2,7 @@ import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/gas_price_level_type.dart';
+import 'package:flutter_app/domain/entities/transaction_fee.dart';
 
 class GasPriceLevel extends Equatable {
   const GasPriceLevel({
@@ -21,6 +22,11 @@ class GasPriceLevel extends Equatable {
         balance,
         type,
       ];
+
+  TransactionFee toTransactionFee() => TransactionFee(
+        amount: balance.amount,
+        denom: balance.denom,
+      );
 }
 
 extension GasPriceLevelsExtensions on Iterable<GasPriceLevel> {

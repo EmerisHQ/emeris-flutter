@@ -211,7 +211,7 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
   @override
   SendTokensFormData get formData => SendTokensFormData(
         sendAmount: tokenAmount,
-        fee: appliedFee.balance.amount,
+        fee: appliedFee.toTransactionFee(),
         recipient: recipientAddress,
         recipientChain: _blockchainMetadataStore.chainForAddress(recipientAddress) ?? const Chain.empty(),
         sender: account.accountDetails.accountAddress,

@@ -53,7 +53,7 @@ class Balance extends Equatable {
       );
 
   /// TODO use 'precision' for determining the format
-  String get amountWithDenomText => '${formatAmount(amount.value.toDouble(), symbol: '')} ${denom.displayName}';
+  String get amountWithDenomText => denom.amountWithDenomText(amount);
 
   ChainAsset toChainAsset(BlockchainMetadataStore store, {VerifiedDenom? verifiedDenom}) => ChainAsset(
         chain: store.chainForName(onChain) ?? const Chain.empty(),

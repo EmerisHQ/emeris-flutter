@@ -34,6 +34,7 @@ class SendTokensUseCase {
                     accountType: sendMoneyData.accountType,
                     messages: [sendMoneyData],
                     transactionType: TransactionType.sendMoney,
+                    fee: sendMoneyData.fee,
                   ),
                 )
                 .mapError(SendTokensFailure.unknown),

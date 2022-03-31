@@ -3,6 +3,7 @@ import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/chain.dart';
+import 'package:flutter_app/domain/entities/transaction_fee.dart';
 import 'package:flutter_app/domain/entities/transaction_message.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
 
@@ -18,14 +19,14 @@ class SendTokensFormData extends Equatable implements TransactionMessage {
   });
 
   final Amount sendAmount;
-  final Amount fee;
+  final TransactionFee fee;
   final AccountAddress recipient;
   final Chain recipientChain;
   final AccountAddress sender;
   final Chain senderChain;
   final VerifiedDenom verifiedDenom;
 
-  Amount get receiveAmount => sendAmount - fee;
+  Amount get receiveAmount => sendAmount - fee.amount;
 
   AccountType get accountType => AccountType.Cosmos; // for now we'll support only cosmos type transactions
 
@@ -40,5 +41,5 @@ class SendTokensFormData extends Equatable implements TransactionMessage {
         verifiedDenom,
       ];
 
-  String get feeWithDenomText => verifiedDenom.amountWithDenomText(fee);
+  String get feeWithDenomText => verifiedDenom.amountWithDenomText(fee.amount);
 }

@@ -63,14 +63,6 @@ class PriceConverter extends _PriceConverterBase with EquatableMixin {
     }
   }
 
-  @override
-  List<Object?> get props => [
-        tokenPair,
-        denom,
-        primaryText,
-        primaryAmountType,
-      ];
-
   void setTokenUsingChainAsset(ChainAsset asset, Prices prices) => Action(() {
         _denom.value = asset.balance.denom;
         _tokenPair.value = prices.priceForDenom(denom) ?? TokenPair.zero(denom);
@@ -80,6 +72,14 @@ class PriceConverter extends _PriceConverterBase with EquatableMixin {
         _denom.value = denom;
         _tokenPair.value = tokenPair;
       })();
+
+  @override
+  List<Object?> get props => [
+        tokenPair,
+        denom,
+        primaryText,
+        primaryAmountType,
+      ];
 }
 
 abstract class _PriceConverterBase {

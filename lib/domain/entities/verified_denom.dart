@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_app/domain/entities/amount.dart';
-import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/gas_price_level.dart';
 
@@ -99,8 +98,5 @@ class VerifiedDenom extends Equatable {
     );
   }
 
-  String amountWithDenomText(Amount amount) => Balance(
-        denom: denom,
-        amount: amount,
-      ).amountWithDenomText;
+  String amountWithDenomText(Amount amount) => denom.amountWithDenomText(amount);
 }

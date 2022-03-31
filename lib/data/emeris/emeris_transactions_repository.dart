@@ -16,7 +16,10 @@ class EmerisTransactionsRepository implements TransactionsRepository {
     required Transaction transaction,
     required AccountIdentifier accountIdentifier,
   }) =>
-      AccountApi.forType(_accountApis, transaction.accountType)?.signAndBroadcast(
+      AccountApi.forType(
+        _accountApis,
+        transaction.accountType,
+      )?.signAndBroadcast(
         transaction: transaction,
         accountIdentifier: accountIdentifier,
       ) ??

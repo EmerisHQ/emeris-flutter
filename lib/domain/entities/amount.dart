@@ -13,7 +13,7 @@ class Amount extends Equatable {
   bool get isZero => this == Amount.zero;
 
   static Amount? tryParse(String string) {
-    final value = Decimal.tryParse(string);
+    final value = Decimal.tryParse(string.replaceAll(',', '.'));
     return value == null ? null : Amount(value);
   }
 

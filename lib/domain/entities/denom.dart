@@ -1,4 +1,6 @@
+import 'package:cosmos_utils/amount_formatter.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_app/domain/entities/amount.dart';
 
 class Denom extends Equatable {
   const Denom({
@@ -22,4 +24,6 @@ class Denom extends Equatable {
 
   @override
   String toString() => '$displayName($id)';
+
+  String amountWithDenomText(Amount amount) => '${formatAmount(amount.value.toDouble(), symbol: '')} $displayName';
 }
