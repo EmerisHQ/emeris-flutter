@@ -5,7 +5,9 @@ import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_all_accounts_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_accounts_list_failure.dart';
+import 'package:flutter_app/domain/entities/failures/get_current_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/rename_account_failure.dart';
+import 'package:flutter_app/domain/entities/failures/set_current_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/verify_account_password_failure.dart';
 import 'package:flutter_app/domain/entities/import_account_form_data.dart';
 
@@ -24,4 +26,10 @@ abstract class AccountsRepository {
   );
 
   Future<Either<DeleteAllAccountsFailure, Unit>> deleteAllAccounts();
+
+  Future<Either<SetCurrentAccountFailure, EmerisAccount>> setCurrentAccount(
+    AccountIdentifier accountIdentifier,
+  );
+
+  Future<Either<GetCurrentAccountFailure, EmerisAccount>> getCurrentAccount();
 }

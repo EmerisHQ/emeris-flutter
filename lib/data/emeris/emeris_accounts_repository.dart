@@ -4,13 +4,16 @@ import 'package:flutter_app/data/api_calls/account_api.dart';
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
+import 'package:flutter_app/data/model/wallet_additional_data_json.dart';
 import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/entities/failures/add_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/delete_all_accounts_failure.dart';
 import 'package:flutter_app/domain/entities/failures/get_accounts_list_failure.dart';
+import 'package:flutter_app/domain/entities/failures/get_current_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/rename_account_failure.dart';
+import 'package:flutter_app/domain/entities/failures/set_current_account_failure.dart';
 import 'package:flutter_app/domain/entities/failures/verify_account_password_failure.dart';
 import 'package:flutter_app/domain/entities/import_account_form_data.dart';
 import 'package:flutter_app/domain/repositories/accounts_repository.dart';
@@ -96,7 +99,9 @@ class EmerisAccountsRepository implements AccountsRepository {
         .mapError(RenameAccountFailure.unknown)
         .flatMap(
       (accounts) async {
-        final info = _findAccount(accounts, accountIdentifier)?.copyWith(name: updatedName);
+        final info = accounts //
+            .firstOrNull(where: (it) => accountIdentifier.isSameAs(it))
+            ?.copyWith(name: updatedName);
         if (info == null) {
           return left(
             RenameAccountFailure.accountNotFound(
@@ -114,12 +119,56 @@ class EmerisAccountsRepository implements AccountsRepository {
     );
   }
 
-  AccountPublicInfo? _findAccount(
-    List<AccountPublicInfo> accounts,
+  @override
+  Future<Either<GetCurrentAccountFailure, EmerisAccount>> getCurrentAccount() {
+    return _signingGateway
+        .getAccountsList() //
+        .mapError(GetCurrentAccountFailure.unknown)
+        .flatMap(
+          (accounts) async => right(
+            accounts
+                    .firstOrNull(
+                      where: (element) => element.additionalDataJson.isCurrent,
+                    )
+                    ?.toEmerisAccount() ??
+                (accounts.isEmpty ? const EmerisAccount.empty() : accounts.first.toEmerisAccount()),
+          ),
+        );
+  }
+
+  @override
+  Future<Either<SetCurrentAccountFailure, EmerisAccount>> setCurrentAccount(
     AccountIdentifier accountIdentifier,
   ) {
-    return accounts.firstOrNull(
-      where: (it) => it.chainId == accountIdentifier.chainId && it.accountId == accountIdentifier.accountId,
+    return _signingGateway
+        .getAccountsList() //
+        .mapError(SetCurrentAccountFailure.unknown)
+        .flatMap(
+      (accounts) async {
+        final futures = accounts
+            .map(
+              (it) => it.byUpdatingAdditionalData(
+                (data) => data.copyWith(
+                  isCurrent: accountIdentifier.isSameAs(it),
+                ),
+              ),
+            )
+            .map(
+              (info) => _signingGateway.updateAccountPublicInfo(info: info),
+            );
+        final results = await Future.wait(futures);
+        final errors = results.where((it) => it.isLeft());
+        if (errors.isNotEmpty) {
+          return left(SetCurrentAccountFailure.unknown(errors));
+        }
+        return right(
+          accounts
+              .firstWhere(
+                (element) => accountIdentifier.isSameAs(element),
+              )
+              .toEmerisAccount(),
+        );
+      },
     );
   }
 
