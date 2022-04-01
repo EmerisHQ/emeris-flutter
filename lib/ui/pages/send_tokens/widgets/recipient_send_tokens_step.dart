@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/strings.dart';
 
-class RecipientSendTokensStep extends StatelessWidget {
+class RecipientSendTokensStep extends StatefulWidget {
   const RecipientSendTokensStep({
     required this.onChangedRecipientAddress,
     required this.recipientConfirmed,
@@ -28,71 +28,7 @@ class RecipientSendTokensStep extends StatelessWidget {
   final VoidCallback? onTapContinue;
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(strings.recipientToLabel),
-                      IconButton(
-                        icon: const Icon(Icons.qr_code),
-                        onPressed: onTapScanCode,
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CosmosTextField(
-                          controller: recipientTextController,
-                          onChanged: onChangedRecipientAddress,
-                          hint: strings.recipientToHint,
-                        ),
-                      ),
-                      SizedBox(
-                        width: CosmosTheme.of(context).spacingM,
-                      ),
-                      CosmosOutlineButton(
-                        text: strings.pasteAction,
-                        onTap: onTapPaste,
-                        height: 40,
-                      )
-                    ],
-                  ),
-                  SizedBox(height: CosmosTheme.of(context).spacingXXXL),
-                  Text(strings.referenceLabel),
-                  CosmosTextField(
-                    onChanged: onChangedMemo,
-                    controller: memoTextController,
-                    hint: strings.referenceHint,
-                  ),
-                  SizedBox(height: CosmosTheme.of(context).spacingXL),
-                  CosmosCheckboxTile(
-                    text: strings.confirmRecipientCheckbox,
-                    onTap: onTapConfirmRecipientCheckbox,
-                    checked: recipientConfirmed,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: CosmosTheme.of(context).spacingL),
-          CosmosElevatedButton(
-            text: strings.continueAction,
-            onTap: onTapContinue,
-          ),
-        ],
-      ),
-    );
-  }
+  State<RecipientSendTokensStep> createState() => _RecipientSendTokensStepState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -108,4 +44,84 @@ class RecipientSendTokensStep extends StatelessWidget {
       ..add(ObjectFlagProperty<VoidCallback?>.has('onTapContinue', onTapContinue))
       ..add(DiagnosticsProperty<TextEditingController>('memoTextController', memoTextController));
   }
+}
+
+class _RecipientSendTokensStepState extends State<RecipientSendTokensStep> with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    final theme = CosmosTheme.of(context);
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: theme.spacingL),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(strings.recipientToLabel),
+                        IconButton(
+                          icon: const Icon(Icons.qr_code),
+                          onPressed: widget.onTapScanCode,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CosmosTextField(
+                            controller: widget.recipientTextController,
+                            onChanged: widget.onChangedRecipientAddress,
+                            hint: strings.recipientToHint,
+                          ),
+                        ),
+                        SizedBox(
+                          width: theme.spacingM,
+                        ),
+                        CosmosElevatedButton(
+                          text: strings.pasteAction,
+                          onTap: widget.onTapPaste,
+                          height: 40,
+                          elevation: theme.elevationL,
+                          textColor: theme.colors.text,
+                          backgroundColor: theme.colors.background,
+                        )
+                      ],
+                    ),
+                    SizedBox(height: theme.spacingXXXL),
+                    Text(strings.referenceLabel),
+                    CosmosTextField(
+                      onChanged: widget.onChangedMemo,
+                      controller: widget.memoTextController,
+                      hint: strings.referenceHint,
+                    ),
+                    SizedBox(height: theme.spacingXL),
+                    CosmosCheckboxTile(
+                      text: strings.confirmRecipientCheckbox,
+                      onTap: widget.onTapConfirmRecipientCheckbox,
+                      checked: widget.recipientConfirmed,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: theme.spacingL),
+            CosmosElevatedButton(
+              text: strings.continueAction,
+              onTap: widget.onTapContinue,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

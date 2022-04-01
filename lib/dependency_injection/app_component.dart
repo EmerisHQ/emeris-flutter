@@ -33,6 +33,7 @@ import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
 import 'package:flutter_app/domain/use_cases/change_current_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/delete_account_use_case.dart';
+import 'package:flutter_app/domain/use_cases/delete_app_data_use_case.dart';
 import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
@@ -96,6 +97,11 @@ import 'package:flutter_app/ui/pages/rename_account/rename_account_presenter.dar
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_initial_params.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_navigator.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_page.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_presentation_model.dart';
+import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_presenter.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_page.dart';
@@ -261,7 +267,7 @@ void _configureUseCases() {
       () => VerifyAccountPasswordUseCase(getIt()),
     )
     ..registerFactory<ChangeCurrentAccountUseCase>(
-      () => ChangeCurrentAccountUseCase(getIt(), getIt()),
+      () => ChangeCurrentAccountUseCase(getIt(), getIt(), getIt()),
     )
     ..registerFactory<VerifyPasscodeUseCase>(
       () => VerifyPasscodeUseCase(getIt()),
@@ -307,6 +313,9 @@ void _configureUseCases() {
     )
     ..registerFactory<RenameAccountUseCase>(
       () => RenameAccountUseCase(getIt(), getIt()),
+    )
+    ..registerFactory<DeleteAppDataUseCase>(
+      () => DeleteAppDataUseCase(getIt()),
     );
 }
 
@@ -325,7 +334,7 @@ void _configureMvp() {
       () => AccountDetailsNavigator(getIt()),
     )
     ..registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
-      (_model, _) => RoutingPresenter(_model, getIt(), getIt(), getIt()),
+      (_model, _) => RoutingPresenter(_model, getIt(), getIt()),
     )
     ..registerFactory<RoutingNavigator>(
       () => RoutingNavigator(getIt()),
@@ -410,11 +419,13 @@ void _configureMvp() {
         _params,
         getIt(),
         getIt(),
+        getIt(),
       ),
     )
     ..registerFactoryParam<SendTokensPresenter, SendTokensInitialParams, dynamic>(
       (initialParams, _) => SendTokensPresenter(
         getIt(param1: initialParams),
+        getIt(),
         getIt(),
         getIt(),
       ),
@@ -441,5 +452,28 @@ void _configureMvp() {
       (initialParams, _) => RenameAccountPage(
         presenter: getIt(param1: initialParams),
       ),
+    )
+    ..registerFactory<BalanceSelectorNavigator>(
+      () {
+        return BalanceSelectorNavigator(getIt());
+      },
+    )
+    ..registerFactoryParam<BalanceSelectorPresentationModel, BalanceSelectorInitialParams, dynamic>(
+      (_params, _) => BalanceSelectorPresentationModel(getIt(), getIt(), _params),
+    )
+    ..registerFactoryParam<BalanceSelectorPresenter, BalanceSelectorInitialParams, dynamic>(
+      (initialParams, _) {
+        return BalanceSelectorPresenter(
+          getIt(param1: initialParams),
+          getIt(),
+        );
+      },
+    )
+    ..registerFactoryParam<BalanceSelectorPage, BalanceSelectorInitialParams, dynamic>(
+      (initialParams, _) {
+        return BalanceSelectorPage(
+          presenter: getIt(param1: initialParams),
+        );
+      },
     );
 }

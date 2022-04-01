@@ -1,0 +1,3 @@
+class BalanceSelectorInitialParams {
+  const BalanceSelectorInitialParams();
+}
