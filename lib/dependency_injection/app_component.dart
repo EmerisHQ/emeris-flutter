@@ -324,8 +324,11 @@ void _configureUseCases() {
     ..registerFactory<DeleteAppDataUseCase>(
       () => DeleteAppDataUseCase(getIt()),
     )
+    ..registerFactory<List<MigrationStep>>(
+      () => [],
+    )
     ..registerFactory<MigrateAppVersionsUseCase>(
-      () => MigrateAppVersionsUseCase(getIt()),
+      () => MigrateAppVersionsUseCase(getIt(), getIt(), getIt()),
     );
 }
 
