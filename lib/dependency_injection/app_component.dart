@@ -252,7 +252,8 @@ void _configureGeneralDependencies() {
     )
     ..registerFactory<LocalStorage>(
       () => PlainStoreLocalStorage(getIt()),
-    );
+    )
+    ..registerFactory<AppInfoProvider>(AppInfoProvider.new);
 }
 
 void _configureUseCases() {
@@ -324,8 +325,11 @@ void _configureUseCases() {
     ..registerFactory<DeleteAppDataUseCase>(
       () => DeleteAppDataUseCase(getIt()),
     )
+    ..registerFactory<List<MigrationStep>>(
+      () => [],
+    )
     ..registerFactory<MigrateAppVersionsUseCase>(
-      () => MigrateAppVersionsUseCase(getIt()),
+      () => MigrateAppVersionsUseCase(getIt(), getIt(), getIt()),
     );
 }
 

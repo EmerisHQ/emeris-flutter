@@ -40,10 +40,10 @@ class AppInitUseCase {
     _appLocalizationsInitializer.initializeAppLocalizations();
 
     final result = await Future.wait([
+      _mapError(_migrateAppVersionsUseCase.execute()),
       _mapError(_getPricesUseCase.execute()),
       _mapError(_getChainsUseCase.execute()),
       _mapError(_getVerifiedDenomsUseCase.execute()),
-      _mapError(_migrateAppVersionsUseCase.execute()),
     ]);
     final errors = result.where((element) => element.isLeft()).toList();
     if (errors.isNotEmpty) {

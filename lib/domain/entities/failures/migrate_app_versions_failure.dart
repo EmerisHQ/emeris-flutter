@@ -6,9 +6,10 @@ enum MigrateAppVersionsFailureType {
 
 class MigrateAppVersionsFailure {
   // ignore: avoid_field_initializers_in_const_classes
-  const MigrateAppVersionsFailure.unknown() : _type = MigrateAppVersionsFailureType.Unknown;
+  const MigrateAppVersionsFailure.unknown([this.cause]) : _type = MigrateAppVersionsFailureType.Unknown;
 
   final MigrateAppVersionsFailureType _type;
+  final dynamic cause;
 
   DisplayableFailure displayableFailure() {
     switch (_type) {
@@ -16,4 +17,7 @@ class MigrateAppVersionsFailure {
         return DisplayableFailure.commonError();
     }
   }
+
+  @override
+  String toString() => 'MigrateAppVersionsFailureType{$_type: $cause}';
 }
