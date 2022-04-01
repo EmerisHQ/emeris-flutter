@@ -19,10 +19,11 @@ class MigrateAppVersionsUseCase {
       if (appVersionInfo == null) {
         return _plainDataStore.savePlainText(
           key: appVersionKey,
-          value: jsonEncode(currentAppInfo.toJson()),
+          value: currentAppInfo.toJsonString(),
         );
       } else {
-        if (AppInfo.fromJson(appVersionInfo).version < currentAppInfo.version) {
+        if ((double.tryParse(AppInfo.fromJson(jsonDecode(appVersionInfo) as Map<String, dynamic>).version) ?? 0.0) <
+            (double.tryParse(currentAppInfo.version) ?? 0.0)) {
           await _plainDataStore
               .readAllPlainText()
               .mapError((fail) => const MigrateAppVersionsFailure.unknown())
@@ -35,7 +36,7 @@ class MigrateAppVersionsUseCase {
 
           return _plainDataStore.savePlainText(
             key: appVersionKey,
-            value: jsonEncode(currentAppInfo.toJson()),
+            value: currentAppInfo.toJsonString(),
           );
         }
       }

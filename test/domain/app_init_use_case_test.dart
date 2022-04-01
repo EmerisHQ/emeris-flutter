@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
+import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' hide when;
 import 'package:mocktail/mocktail.dart';
@@ -19,6 +20,7 @@ void main() {
   late MockGetChainsUseCase getChainsUseCase;
   late MockGetPricesUseCase getPricesUseCase;
   late MockGetVerifiedDenomsUseCase getVerifiedDenomsUseCase;
+  late MigrateAppVersionsUseCase migrateAppVersionsUseCase;
   //
   test(
     'should initialize settings on start',
@@ -38,6 +40,7 @@ void main() {
     getPricesUseCase = MockGetPricesUseCase();
     getChainsUseCase = MockGetChainsUseCase();
     getVerifiedDenomsUseCase = MockGetVerifiedDenomsUseCase();
+    migrateAppVersionsUseCase = MockMigrateAppVersionsUseCase();
     initializer = AppInitUseCase(
       appLocalizationsInitializer,
       accountsRepository,
@@ -47,6 +50,7 @@ void main() {
       getPricesUseCase,
       getChainsUseCase,
       getVerifiedDenomsUseCase,
+      migrateAppVersionsUseCase,
     );
     when(() => settingsStore.init(authRepository)) //
         .thenAnswer((invocation) => Future.value());
