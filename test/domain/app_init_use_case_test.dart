@@ -68,5 +68,7 @@ void main() {
         .thenAnswer((invocation) => successFuture(unit));
     when(() => getVerifiedDenomsUseCase.execute()) //
         .thenAnswer((invocation) => successFuture(unit));
+    when(() => migrateAppVersionsUseCase.execute()) //
+        .thenAnswer((invocation) => successFuture(unit));
   });
 }
