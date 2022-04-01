@@ -9,6 +9,7 @@ import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
+import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class AppInitUseCase {
@@ -21,6 +22,7 @@ class AppInitUseCase {
     this._getPricesUseCase,
     this._getChainsUseCase,
     this._getVerifiedDenomsUseCase,
+    this._migrateAppVersionsUseCase,
   );
 
   final AppLocalizationsInitializer _appLocalizationsInitializer;
@@ -31,6 +33,7 @@ class AppInitUseCase {
   final GetPricesUseCase _getPricesUseCase;
   final GetChainsUseCase _getChainsUseCase;
   final GetVerifiedDenomsUseCase _getVerifiedDenomsUseCase;
+  final MigrateAppVersionsUseCase _migrateAppVersionsUseCase;
 
   Future<Either<AppInitFailure, Unit>> execute() async {
     await _settingsStore.init(_authRepository);
@@ -40,6 +43,7 @@ class AppInitUseCase {
       _mapError(_getPricesUseCase.execute()),
       _mapError(_getChainsUseCase.execute()),
       _mapError(_getVerifiedDenomsUseCase.execute()),
+      _mapError(_migrateAppVersionsUseCase.execute()),
     ]);
     final errors = result.where((element) => element.isLeft()).toList();
     if (errors.isNotEmpty) {

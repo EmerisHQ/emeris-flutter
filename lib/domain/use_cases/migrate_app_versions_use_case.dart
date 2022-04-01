@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cosmos_utils/app_info_extractor.dart';
 import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:dartz/dartz.dart';
@@ -8,6 +10,7 @@ class MigrateAppVersionsUseCase {
 
   final PlainDataStore _plainDataStore;
 
+  // Kept it here for now, should be somewhere global or abstracted
   final String appVersionKey = 'app_version_key';
 
   Future<Either<MigrateAppVersionsFailure, Unit>> execute() async {
@@ -16,16 +19,23 @@ class MigrateAppVersionsUseCase {
       if (appVersionInfo == null) {
         return _plainDataStore.savePlainText(
           key: appVersionKey,
-          value: currentAppInfo.toMap(),
+          value: jsonEncode(currentAppInfo.toJson()),
         );
       } else {
-        if (AppInfo.fromMap(appVersionInfo).version < currentAppInfo.version) {
-          // TODO: Add migration of keys
-
+        if (AppInfo.fromJson(appVersionInfo).version < currentAppInfo.version) {
+          await _plainDataStore
+              .readAllPlainText()
+              .mapError((fail) => const MigrateAppVersionsFailure.unknown())
+              .flatMap(
+            (map) async {
+              // TODO: Add migration
+              return right(unit);
+            },
+          );
 
           return _plainDataStore.savePlainText(
             key: appVersionKey,
-            value: currentAppInfo.toMap(),
+            value: jsonEncode(currentAppInfo.toJson()),
           );
         }
       }
