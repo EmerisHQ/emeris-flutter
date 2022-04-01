@@ -16,6 +16,7 @@ import 'package:flutter_app/data/ethereum/ethereum_transaction_signer.dart';
 import 'package:flutter_app/data/http/dio_builder.dart';
 import 'package:flutter_app/data/http/http_service.dart';
 import 'package:flutter_app/data/liquidity_pools/rest_api_liquidity_pools_repository.dart';
+import 'package:flutter_app/data/local/plain_store_local_storage.dart';
 import 'package:flutter_app/data/web/web_key_info_storage.dart';
 import 'package:flutter_app/domain/repositories/accounts_repository.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
@@ -27,6 +28,7 @@ import 'package:flutter_app/domain/repositories/transactions_repository.dart';
 import 'package:flutter_app/domain/stores/accounts_store.dart';
 import 'package:flutter_app/domain/stores/assets_store.dart';
 import 'package:flutter_app/domain/stores/blockchain_metadata_store.dart';
+import 'package:flutter_app/domain/stores/local_storage.dart';
 import 'package:flutter_app/domain/stores/platform_info_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
@@ -247,6 +249,9 @@ void _configureGeneralDependencies() {
     )
     ..registerFactory<PriceConverter>(
       PriceConverter.new,
+    )
+    ..registerFactory<LocalStorage>(
+      () => PlainStoreLocalStorage(getIt()),
     );
 }
 
