@@ -36,10 +36,10 @@ class AppInitUseCase {
   final MigrateAppVersionsUseCase _migrateAppVersionsUseCase;
 
   Future<Either<AppInitFailure, Unit>> execute() async {
-    await _settingsStore.init(_authRepository);
-    _appLocalizationsInitializer.initializeAppLocalizations();
-
     return _mapError(_migrateAppVersionsUseCase.execute()).flatMap((_) async {
+      await _settingsStore.init(_authRepository);
+      _appLocalizationsInitializer.initializeAppLocalizations();
+
       final result = await Future.wait([
         _mapError(_getPricesUseCase.execute()),
         _mapError(_getChainsUseCase.execute()),
