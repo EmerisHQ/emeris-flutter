@@ -39,17 +39,18 @@ class AppInitUseCase {
     await _settingsStore.init(_authRepository);
     _appLocalizationsInitializer.initializeAppLocalizations();
 
-    final result = await Future.wait([
-      _mapError(_migrateAppVersionsUseCase.execute()),
-      _mapError(_getPricesUseCase.execute()),
-      _mapError(_getChainsUseCase.execute()),
-      _mapError(_getVerifiedDenomsUseCase.execute()),
-    ]);
-    final errors = result.where((element) => element.isLeft()).toList();
-    if (errors.isNotEmpty) {
-      return left(AppInitFailure.unknown(errors));
-    }
-    return _getAccounts().flatMap((response) => _setCurrentAccount());
+    return _mapError(_migrateAppVersionsUseCase.execute()).flatMap((_) async {
+      final result = await Future.wait([
+        _mapError(_getPricesUseCase.execute()),
+        _mapError(_getChainsUseCase.execute()),
+        _mapError(_getVerifiedDenomsUseCase.execute()),
+      ]);
+      final errors = result.where((element) => element.isLeft()).toList();
+      if (errors.isNotEmpty) {
+        return left(AppInitFailure.unknown(errors));
+      }
+      return _getAccounts().flatMap((response) => _setCurrentAccount());
+    });
   }
 
   Future<Either<AppInitFailure, List<EmerisAccount>>> _getAccounts() {
