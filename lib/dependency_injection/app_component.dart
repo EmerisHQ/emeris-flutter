@@ -43,6 +43,7 @@ import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_staked_amount_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_account_use_case.dart';
+import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
 import 'package:flutter_app/domain/use_cases/paste_from_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/rename_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
@@ -251,7 +252,8 @@ void _configureGeneralDependencies() {
     )
     ..registerFactory<LocalStorage>(
       () => PlainStoreLocalStorage(getIt()),
-    );
+    )
+    ..registerFactory<AppInfoProvider>(AppInfoProvider.new);
 }
 
 void _configureUseCases() {
@@ -308,6 +310,7 @@ void _configureUseCases() {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
       ),
     )
     ..registerFactory<GetChainsUseCase>(
@@ -321,6 +324,12 @@ void _configureUseCases() {
     )
     ..registerFactory<DeleteAppDataUseCase>(
       () => DeleteAppDataUseCase(getIt()),
+    )
+    ..registerFactory<List<MigrationStep>>(
+      () => [],
+    )
+    ..registerFactory<MigrateAppVersionsUseCase>(
+      () => MigrateAppVersionsUseCase(getIt(), getIt(), getIt()),
     );
 }
 

@@ -15,6 +15,7 @@ import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
+import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
@@ -71,6 +72,9 @@ class MockGetPricesUseCase extends Mock implements GetPricesUseCase {}
 class MockGetChainsUseCase extends Mock implements GetChainsUseCase {}
 
 class MockGetVerifiedDenomsUseCase extends Mock implements GetVerifiedDenomsUseCase {}
+
+class MockMigrateAppVersionsUseCase extends Mock implements MigrateAppVersionsUseCase {}
+
 // Navigators
 
 class MockSendTokensNavigator extends Mock implements SendTokensNavigator {}
