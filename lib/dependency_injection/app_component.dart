@@ -110,6 +110,11 @@ import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_page.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presentation_model.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presenter.dart';
+import 'package:flutter_app/ui/pages/settings/settings_initial_params.dart';
+import 'package:flutter_app/ui/pages/settings/settings_navigator.dart';
+import 'package:flutter_app/ui/pages/settings/settings_page.dart';
+import 'package:flutter_app/ui/pages/settings/settings_presentation_model.dart';
+import 'package:flutter_app/ui/pages/settings/settings_presenter.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
 import 'package:flutter_app/utils/clipboard_manager.dart';
 import 'package:flutter_app/utils/price_converter.dart';
@@ -489,5 +494,24 @@ void _configureMvp() {
           presenter: getIt(param1: initialParams),
         );
       },
+    )
+    ////////
+
+    ..registerFactoryParam<SettingsPresentationModel, SettingsInitialParams, dynamic>(
+      (_params, _) => SettingsPresentationModel(_params),
+    )
+    ..registerFactoryParam<SettingsPresenter, SettingsInitialParams, dynamic>(
+      (params, _) => SettingsPresenter(
+        getIt(param1: params),
+        getIt(),
+      ),
+    )
+    ..registerFactory<SettingsNavigator>(
+      () => SettingsNavigator(getIt()),
+    )
+    ..registerFactoryParam<SettingsPage, SettingsInitialParams, dynamic>(
+      (initialParams, _) => SettingsPage(
+        presenter: getIt(param1: initialParams),
+      ),
     );
 }
