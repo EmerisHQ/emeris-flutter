@@ -39,71 +39,73 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
-    final textStyle = CosmosTextTheme.copy0Normal.copyWith(color: theme.colors.link);
     return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            CosmosBottomSheetHeader(
-              title: strings.settingsTitle,
-              titleTextStyle: CosmosTextTheme.title2Bold,
-              leading: const Icon(Icons.ten_k, color: Colors.transparent),
-              actions: [
-                CosmosTextButton(
-                  text: strings.closeAction,
-                  onTap: presenter.onTapClose,
-                ),
-              ],
+      appBar: CosmosAppBar(
+        title: strings.settingsTitle,
+        actions: [
+          CosmosTextButton(
+            text: strings.closeAction,
+            onTap: presenter.onTapClose,
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          SizedBox(height: theme.spacingXXL),
+          SettingsItem(
+            text: strings.backUpYourAccountTitle,
+            infoIcon: Image.asset('assets/images/icon_warning.png', package: packageName),
+            textStyle: CosmosTextTheme.actionSheetItem,
+            onTap: presenter.onTapBackup,
+          ),
+          SizedBox(height: theme.spacingL),
+          SettingsItem(
+            text: strings.securityAction,
+            textStyle: CosmosTextTheme.actionSheetItem,
+            onTap: () => notImplemented(context),
+          ),
+          SizedBox(height: theme.spacingXL),
+          const CosmosDivider(),
+          SizedBox(height: theme.spacingXL),
+          SettingsItem(
+            text: strings.currencyAction,
+            textStyle: CosmosTextTheme.actionSheetItem,
+            infoIcon: const ChipText(title: '#USD'),
+            onTap: presenter.onTapCurrency,
+          ),
+          SizedBox(height: theme.spacingXL),
+          const CosmosDivider(),
+          SizedBox(height: theme.spacingXL),
+          SettingsItem(
+            text: strings.communityAction,
+            textStyle: CosmosTextTheme.copyMinus1Normal,
+            onTap: presenter.onTapCommunity,
+          ),
+          SettingsItem(
+            text: strings.twitterAction,
+            textStyle: CosmosTextTheme.copyMinus1Normal,
+            onTap: presenter.onTapTwitter,
+          ),
+          SettingsItem(
+            text: strings.supportAction,
+            textStyle: CosmosTextTheme.copyMinus1Normal,
+            onTap: presenter.onTapSupport,
+          ),
+          SizedBox(height: theme.spacingXL),
+          const CosmosDivider(),
+          const Spacer(),
+          Padding(
+            padding: EdgeInsets.only(bottom: theme.spacingXL),
+            child: SettingsItem(
+              text: strings.signOutAction,
+              showArrow: false,
+              textStyle: CosmosTextTheme.copyMinus1Normal.copyWith(color: theme.colors.error),
+              onTap: presenter.onTapSignOut,
+              infoIcon: AppVersionText(appInfoProvider: AppInfoProvider()),
             ),
-            SizedBox(height: theme.spacingXXL),
-            SettingsItem(
-              text: strings.backUpYourAccountTitle,
-              infoIcon: Image.asset('assets/images/icon_warning.png', package: packageName),
-              textStyle: CosmosTextTheme.copy0Normal,
-              onTap: presenter.onTapBackup,
-            ),
-            SettingsItem(
-              text: strings.securityAction,
-              textStyle: CosmosTextTheme.copy0Normal,
-              onTap: () => notImplemented(context),
-            ),
-            SettingsItem(
-              text: strings.currencyAction,
-              textStyle: CosmosTextTheme.copy0Normal,
-              infoIcon: const ChipText(title: '#USD'),
-              onTap: presenter.onTapCurrency,
-            ),
-            SizedBox(height: theme.spacingXL),
-            SettingsItem(
-              text: strings.communityAction,
-              textStyle: textStyle,
-              onTap: presenter.onTapCommunity,
-            ),
-            SettingsItem(
-              text: strings.twitterAction,
-              textStyle: textStyle,
-              onTap: presenter.onTapTwitter,
-            ),
-            SettingsItem(
-              text: strings.supportAction,
-              textStyle: textStyle,
-              onTap: presenter.onTapSupport,
-            ),
-            const Spacer(),
-            Padding(
-              padding: EdgeInsets.only(bottom: theme.spacingXL),
-              child: SettingsItem(
-                text: strings.signOutAction,
-                showArrow: false,
-                textStyle: textStyle.copyWith(color: theme.colors.error),
-                onTap: presenter.onTapSignOut,
-                infoIcon: AppVersionText(appInfoProvider: AppInfoProvider()),
-              ),
-            ),
-            MinimalBottomSpacer(padding: theme.spacingXXXL)
-          ],
-        ),
+          ),
+          MinimalBottomSpacer(padding: theme.spacingXXXL)
+        ],
       ),
     );
   }
