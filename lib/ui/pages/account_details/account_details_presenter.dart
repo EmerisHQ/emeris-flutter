@@ -5,6 +5,7 @@ import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.
 import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/receive/receive_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
+import 'package:flutter_app/ui/pages/settings/settings_initial_params.dart';
 
 class AccountDetailsPresenter {
   AccountDetailsPresenter(
@@ -29,6 +30,8 @@ class AccountDetailsPresenter {
       );
 
   void onTapReceive() => navigator.openReceive(ReceiveInitialParams(account: _model.account));
+
+  void onTapAvatar() => navigator.openSettings(const SettingsInitialParams());
 
   void onTapSend() {
     if (_model.assets.isEmpty) {

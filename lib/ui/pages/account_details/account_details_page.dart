@@ -69,7 +69,7 @@ class AccountDetailsPageState extends State<AccountDetailsPage> {
         return Scaffold(
           appBar: CosmosAppBar(
             leading: EmerisGradientAvatar(
-              onTap: showNotImplemented,
+              onTap: presenter.onTapAvatar,
               address: model.accountAddress,
             ),
             preferredHeight: appBarHeight,
