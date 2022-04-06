@@ -42,12 +42,9 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: CosmosAppBar(
         title: strings.settingsTitle,
-        actions: [
-          CosmosTextButton(
-            text: strings.closeAction,
-            onTap: presenter.onTapClose,
-          ),
-        ],
+        leading: const CosmosBackButton(
+          text: '',
+        ),
       ),
       body: Column(
         children: [
