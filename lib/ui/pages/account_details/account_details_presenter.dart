@@ -4,6 +4,7 @@ import 'package:flutter_app/ui/pages/account_details/account_details_presentatio
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/receive/receive_initial_params.dart';
+import 'package:flutter_app/ui/pages/scan_qr/scan_qr_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_initial_params.dart';
 import 'package:flutter_app/ui/pages/settings/settings_initial_params.dart';
 
@@ -39,4 +40,6 @@ class AccountDetailsPresenter {
     }
     navigator.openSendTokens(SendTokensInitialParams(_model.assets.first));
   }
+
+  void onTapQr() => navigator.openScanQr(const ScanQrInitialParams());
 }

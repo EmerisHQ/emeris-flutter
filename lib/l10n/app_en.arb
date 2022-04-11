@@ -203,5 +203,9 @@
   "communityAction": "Join the Telegram Community",
   "twitterAction": "Twitter",
   "supportAction": "Support",
-  "signOutAction": "Sign out"
+  "signOutAction": "Sign out",
+  "scanQrTitle": "Scan QR Code",
+  "scanAddressHelperText": "Scan an address to send assets",
+  "walletConnectHelperText": "Connect to an app via wallet connect",
+  "showQrAction": "Show my QR code"
 }

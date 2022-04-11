@@ -2,7 +2,6 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
@@ -73,11 +72,16 @@ class AccountDetailsPageState extends State<AccountDetailsPage> {
               address: model.accountAddress,
             ),
             preferredHeight: appBarHeight,
-            actions: const [
-              IconButton(
-                /// TODO: Pick this up from the design after Figma is finalised
-                icon: Icon(Icons.qr_code_scanner_sharp),
-                onPressed: showNotImplemented,
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(right: theme.spacingL),
+                child: InkWell(
+                  onTap: presenter.onTapQr,
+                  child: Image.asset(
+                    'assets/images/qr.png',
+                    color: theme.colors.text,
+                  ),
+                ),
               ),
             ],
           ),

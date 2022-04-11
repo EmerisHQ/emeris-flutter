@@ -3,9 +3,8 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/extensions/bar_code_result.dart';
-import 'package:flutter_app/domain/entities/operating_system.dart';
 import 'package:flutter_app/domain/entities/qr_code.dart';
-import 'package:flutter_app/domain/stores/platform_info_store.dart';
+import 'package:flutter_app/utils/strings.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class CosmosQRView extends StatefulWidget {
@@ -38,16 +37,6 @@ class _CosmosQRViewState extends State<CosmosQRView> {
   final GlobalKey qrKey = GlobalKey();
 
   @override
-  void reassemble() {
-    super.reassemble();
-    final platformInfoStore = PlatformInfoStore();
-    if (platformInfoStore.operatingSystem == OperatingSystem.Android) {
-      controller.pauseCamera();
-    }
-    controller.resumeCamera();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
     return Stack(
@@ -58,20 +47,24 @@ class _CosmosQRViewState extends State<CosmosQRView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
+              Column(
                 children: [
-                  CosmosBackButton(text: '', onTap: widget.onTapClose),
-                  const Spacer(),
-                  InkWell(
-                    child: Image.asset('assets/images/flash.png'),
-                    onTap: () => controller.toggleFlash(),
+                  Row(
+                    children: [
+                      CosmosBackButton(text: '', onTap: widget.onTapClose),
+                      const Spacer(),
+                      InkWell(
+                        child: Image.asset('assets/images/flash.png'),
+                        onTap: () => controller.toggleFlash(),
+                      ),
+                      SizedBox(width: theme.spacingXL)
+                    ],
                   ),
-                  SizedBox(width: theme.spacingXL)
+                  Text(
+                    strings.scanQrTitle,
+                    style: CosmosTextTheme.title1Bold.copyWith(color: theme.colors.background),
+                  ),
                 ],
-              ),
-              Text(
-                'Scan QR Code',
-                style: CosmosTextTheme.title1Bold.copyWith(color: theme.colors.background),
               ),
               Column(
                 children: [
@@ -81,7 +74,7 @@ class _CosmosQRViewState extends State<CosmosQRView> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: theme.spacingXXL),
                           child: Container(
-                            padding: EdgeInsets.all(theme.spacingXL),
+                            padding: EdgeInsets.all(theme.spacingL),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               color: theme.colors.inactive.withOpacity(0.5),
@@ -89,12 +82,14 @@ class _CosmosQRViewState extends State<CosmosQRView> {
                             child: Column(
                               children: [
                                 Text(
-                                  'Scan an address to send assets',
+                                  strings.scanAddressHelperText,
+                                  textAlign: TextAlign.center,
                                   style: CosmosTextTheme.copy0Normal.copyWith(color: theme.colors.background),
                                 ),
                                 SizedBox(height: theme.spacingL),
                                 Text(
-                                  'Connect to an app via wallet connect',
+                                  strings.walletConnectHelperText,
+                                  textAlign: TextAlign.center,
                                   style: CosmosTextTheme.copy0Normal.copyWith(color: theme.colors.background),
                                 ),
                               ],
@@ -107,7 +102,7 @@ class _CosmosQRViewState extends State<CosmosQRView> {
                   SizedBox(height: theme.spacingXXL),
                   CosmosElevatedButton(
                     onTap: widget.onTapShowQr,
-                    text: 'Show my QR code',
+                    text: strings.showQrAction,
                     backgroundColor: theme.colors.background,
                     textColor: theme.colors.text,
                   ),
@@ -126,12 +121,8 @@ class _CosmosQRViewState extends State<CosmosQRView> {
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-        borderRadius: 10,
-        borderLength: 30,
-        borderWidth: 10,
-        borderColor: Colors.black,
-        // overlayColor: Colors.white
-        // cutOutSize: scanArea,
+        borderRadius: 30,
+        borderWidth: 0,
       ),
     );
   }
