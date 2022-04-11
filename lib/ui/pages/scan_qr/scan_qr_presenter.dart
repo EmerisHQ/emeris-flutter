@@ -19,7 +19,5 @@ class ScanQrPresenter {
 
   void onTapShowQr() => showNotImplemented();
 
-  void onQrScanned(QrCode qrCode) {
-    // TODO: Next steps after QR scanned
-  }
+  void onQrScanned(QrCode qrCode) => navigator.closeWithResult(qrCode);
 }
