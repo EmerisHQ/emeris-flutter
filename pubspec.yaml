@@ -56,7 +56,7 @@ dependencies:
       url: https://github.com/tendermint/flutter.git
       path: packages/cosmos_auth
       ref: main
-
+  qr_code_scanner: 0.7.0
   cupertino_icons: 1.0.4
 
 
