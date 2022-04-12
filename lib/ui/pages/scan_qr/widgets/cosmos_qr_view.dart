@@ -51,7 +51,11 @@ class _CosmosQRViewState extends State<CosmosQRView> {
                 children: [
                   Row(
                     children: [
-                      CosmosBackButton(text: '', onTap: widget.onTapClose),
+                      CosmosBackButton(
+                        text: '',
+                        onTap: widget.onTapClose,
+                        color: theme.colors.background,
+                      ),
                       const Spacer(),
                       InkWell(
                         child: Image.asset('assets/images/flash.png'),
