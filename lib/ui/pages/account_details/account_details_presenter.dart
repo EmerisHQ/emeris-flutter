@@ -1,4 +1,6 @@
+import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/asset.dart';
+import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
@@ -41,5 +43,19 @@ class AccountDetailsPresenter {
     navigator.openSendTokens(SendTokensInitialParams(_model.assets.first));
   }
 
-  void onTapQr() => navigator.openScanQr(const ScanQrInitialParams());
+  Future<void> onTapQr() async {
+    final qrCode = await navigator.openScanQr(const ScanQrInitialParams());
+
+    if (qrCode != null && qrCode.data.isNotEmpty) {
+      await navigator.openSendTokens(
+        SendTokensInitialParams(
+          const Asset(
+            chainAssets: [],
+            verifiedDenom: VerifiedDenom.empty(),
+          ),
+          recipientAddress: AccountAddress(value: qrCode.data),
+        ),
+      );
+    }
+  }
 }

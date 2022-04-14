@@ -78,7 +78,7 @@ class AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: InkWell(
                   onTap: presenter.onTapQr,
                   child: Image.asset(
-                    'assets/images/qr.png',
+                    'assets/images/icon_scan_qr.png',
                     color: theme.colors.text,
                   ),
                 ),

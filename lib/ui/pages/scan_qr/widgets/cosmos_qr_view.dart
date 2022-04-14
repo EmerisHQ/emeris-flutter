@@ -33,8 +33,8 @@ class CosmosQRView extends StatefulWidget {
 }
 
 class _CosmosQRViewState extends State<CosmosQRView> {
-  late QRViewController controller;
-  final GlobalKey qrKey = GlobalKey();
+  late QRViewController _controller;
+  final GlobalKey _qrKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -47,72 +47,22 @@ class _CosmosQRViewState extends State<CosmosQRView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      CosmosBackButton(
-                        text: '',
-                        onTap: widget.onTapClose,
-                        color: theme.colors.background,
-                      ),
-                      const Spacer(),
-                      InkWell(
-                        child: Image.asset('assets/images/flash.png'),
-                        onTap: () => controller.toggleFlash(),
-                      ),
-                      SizedBox(width: theme.spacingXL)
-                    ],
-                  ),
-                  Text(
-                    strings.scanQrTitle,
-                    style: CosmosTextTheme.title1Bold.copyWith(color: theme.colors.background),
-                  ),
-                ],
+              _headerButtons(theme),
+              SizedBox(height: theme.spacingXXXL),
+              Text(
+                strings.scanQrTitle,
+                style: CosmosTextTheme.title1Bold.copyWith(color: theme.colors.background),
               ),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: theme.spacingXXL),
-                          child: Container(
-                            padding: EdgeInsets.all(theme.spacingL),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: theme.colors.inactive.withOpacity(0.5),
-                            ),
-                            child: Column(
-                              children: [
-                                Text(
-                                  strings.scanAddressHelperText,
-                                  textAlign: TextAlign.center,
-                                  style: CosmosTextTheme.copy0Normal.copyWith(color: theme.colors.background),
-                                ),
-                                SizedBox(height: theme.spacingL),
-                                Text(
-                                  strings.walletConnectHelperText,
-                                  textAlign: TextAlign.center,
-                                  style: CosmosTextTheme.copy0Normal.copyWith(color: theme.colors.background),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: theme.spacingXXL),
-                  CosmosElevatedButton(
-                    onTap: widget.onTapShowQr,
-                    text: strings.showQrAction,
-                    backgroundColor: theme.colors.background,
-                    textColor: theme.colors.text,
-                  ),
-                  MinimalBottomSpacer(padding: theme.spacingXL)
-                ],
+              const Spacer(),
+              _infoBox(theme),
+              SizedBox(height: theme.spacingXXL),
+              CosmosElevatedButton(
+                onTap: widget.onTapShowQr,
+                text: strings.showQrAction,
+                backgroundColor: theme.colors.background,
+                textColor: theme.colors.text,
               ),
+              MinimalBottomSpacer(padding: theme.spacingXL)
             ],
           ),
         )
@@ -120,9 +70,61 @@ class _CosmosQRViewState extends State<CosmosQRView> {
     );
   }
 
+  Row _infoBox(CosmosThemeData theme) {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: theme.spacingXXL),
+            child: Container(
+              padding: EdgeInsets.all(theme.spacingL),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: theme.colors.inactive.withOpacity(0.5),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    strings.scanAddressHelperText,
+                    textAlign: TextAlign.center,
+                    style: CosmosTextTheme.copy0Normal.copyWith(color: theme.colors.background),
+                  ),
+                  SizedBox(height: theme.spacingL),
+                  Text(
+                    strings.walletConnectHelperText,
+                    textAlign: TextAlign.center,
+                    style: CosmosTextTheme.copy0Normal.copyWith(color: theme.colors.background),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _headerButtons(CosmosThemeData theme) {
+    return Row(
+      children: [
+        CosmosBackButton(
+          text: '',
+          onTap: widget.onTapClose,
+          color: theme.colors.background,
+        ),
+        const Spacer(),
+        InkWell(
+          child: Image.asset('assets/images/flash.png'),
+          onTap: () => _controller.toggleFlash(),
+        ),
+        SizedBox(width: theme.spacingXL)
+      ],
+    );
+  }
+
   Widget _qrView(BuildContext context) {
     return QRView(
-      key: qrKey,
+      key: _qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
         borderRadius: 30,
@@ -133,24 +135,17 @@ class _CosmosQRViewState extends State<CosmosQRView> {
 
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
-      this.controller = controller;
+      _controller = controller;
     });
     controller.scannedDataStream.listen((scanData) {
       widget.onQrScanned(scanData.toDomain);
+      controller.dispose();
     });
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty<QRViewController?>('controller', controller))
-      ..add(DiagnosticsProperty<GlobalKey<State<StatefulWidget>>>('qrKey', qrKey));
   }
 }
