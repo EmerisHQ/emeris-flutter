@@ -4,10 +4,11 @@ import 'package:flutter_app/domain/entities/qr_code.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/close_route.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
+import 'package:flutter_app/ui/pages/receive/receive_navigator.dart';
 import 'package:flutter_app/ui/pages/scan_qr/scan_qr_initial_params.dart';
 import 'package:flutter_app/ui/pages/scan_qr/scan_qr_page.dart';
 
-class ScanQrNavigator with CloseRoute<QrCode>, ErrorDialogRoute {
+class ScanQrNavigator with CloseRoute<QrCode>, ErrorDialogRoute, ReceiveRoute {
   ScanQrNavigator(this.appNavigator);
 
   @override

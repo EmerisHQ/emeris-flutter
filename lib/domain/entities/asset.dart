@@ -13,6 +13,10 @@ class Asset extends Equatable {
     required this.chainAssets,
   });
 
+  const Asset.empty()
+      : chainAssets = const [],
+        verifiedDenom = const VerifiedDenom.empty();
+
   final List<ChainAsset> chainAssets;
   final VerifiedDenom verifiedDenom;
 

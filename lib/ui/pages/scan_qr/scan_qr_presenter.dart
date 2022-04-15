@@ -1,5 +1,5 @@
 import 'package:flutter_app/domain/entities/qr_code.dart';
-import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/ui/pages/receive/receive_initial_params.dart';
 import 'package:flutter_app/ui/pages/scan_qr/scan_qr_navigator.dart';
 import 'package:flutter_app/ui/pages/scan_qr/scan_qr_presentation_model.dart';
 
@@ -17,7 +17,7 @@ class ScanQrPresenter {
 
   void onTapClose() => navigator.close();
 
-  void onTapShowQr() => showNotImplemented();
+  void onTapShowQr() => navigator.openReceive(ReceiveInitialParams(account: _model.account));
 
   Future<void> onQrScanned(QrCode qrCode) async => navigator.closeWithResult(qrCode);
 }

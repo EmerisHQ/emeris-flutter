@@ -17,7 +17,7 @@ class CosmosQRView extends StatefulWidget {
 
   final VoidCallback onTapClose;
   final VoidCallback onTapShowQr;
-  final Function(QrCode) onQrScanned;
+  final void Function(QrCode) onQrScanned;
 
   @override
   State<StatefulWidget> createState() => _CosmosQRViewState();

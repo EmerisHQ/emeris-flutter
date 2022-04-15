@@ -518,7 +518,7 @@ void _configureMvp() {
       ),
     )
     ..registerFactoryParam<ScanQrPresentationModel, ScanQrInitialParams, dynamic>(
-      (_params, _) => ScanQrPresentationModel(_params),
+      (_params, _) => ScanQrPresentationModel(_params, getIt()),
     )
     ..registerFactoryParam<ScanQrPresenter, ScanQrInitialParams, dynamic>(
       (params, _) => ScanQrPresenter(

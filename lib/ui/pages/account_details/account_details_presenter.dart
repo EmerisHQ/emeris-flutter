@@ -1,6 +1,6 @@
+import 'package:cosmos_utils/cosmos_utils.dart';
 import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/asset.dart';
-import 'package:flutter_app/domain/entities/verified_denom.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
@@ -49,10 +49,7 @@ class AccountDetailsPresenter {
     if (qrCode != null && qrCode.data.isNotEmpty) {
       await navigator.openSendTokens(
         SendTokensInitialParams(
-          const Asset(
-            chainAssets: [],
-            verifiedDenom: VerifiedDenom.empty(),
-          ),
+          _model.assets.firstOrNull() ?? const Asset.empty(),
           recipientAddress: AccountAddress(value: qrCode.data),
         ),
       );
