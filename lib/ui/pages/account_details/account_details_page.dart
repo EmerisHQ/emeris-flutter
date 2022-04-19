@@ -2,6 +2,7 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/generated_assets/assets.gen.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
@@ -78,7 +79,7 @@ class AccountDetailsPageState extends State<AccountDetailsPage> {
                 child: InkWell(
                   onTap: presenter.onTapQr,
                   child: Image.asset(
-                    'assets/images/icon_scan_qr.png',
+                    Assets.imagesIconScanQr.path,
                     color: theme.colors.text,
                   ),
                 ),

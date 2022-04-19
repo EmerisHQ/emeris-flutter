@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/extensions/bar_code_result.dart';
 import 'package:flutter_app/domain/entities/qr_code.dart';
+import 'package:flutter_app/generated_assets/assets.gen.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -114,7 +115,7 @@ class _CosmosQRViewState extends State<CosmosQRView> {
         ),
         const Spacer(),
         InkWell(
-          child: Image.asset('assets/images/flash.png'),
+          child: Image.asset(Assets.imagesFlash.path),
           onTap: () => _controller.toggleFlash(),
         ),
         SizedBox(width: theme.spacingXL)
