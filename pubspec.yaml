@@ -98,3 +98,5 @@ flutter:
   assets:
     - assets/images/plus_circle.png
     - assets/images/arrow_down_circle.png
+    - assets/images/flash.png
+    - assets/images/icon_scan_qr.png
