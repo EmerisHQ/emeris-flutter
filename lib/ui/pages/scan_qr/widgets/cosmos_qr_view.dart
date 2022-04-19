@@ -115,7 +115,7 @@ class _CosmosQRViewState extends State<CosmosQRView> {
         ),
         const Spacer(),
         InkWell(
-          child: Image.asset(Assets.images.flash.path),
+          child: Image.asset(Assets.imagesFlash.path),
           onTap: () => _controller.toggleFlash(),
         ),
         SizedBox(width: theme.spacingXL)

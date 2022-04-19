@@ -84,12 +84,12 @@ class AccountsListSheetState extends State<AccountsListSheet> {
                 CosmosCircleTextButton(
                   onTap: presenter.onTapCreateAccount,
                   text: strings.createAccountAction,
-                  asset: Assets.images.plusCircle.path,
+                  asset: Assets.imagesPlusCircle.path,
                 ),
                 CosmosCircleTextButton(
                   onTap: presenter.onTapImportAccount,
                   text: strings.importAccountAction,
-                  asset: Assets.images.arrowDownCircle.path,
+                  asset: Assets.imagesArrowDownCircle.path,
                 ),
                 SizedBox(height: theme.spacingL),
               ],

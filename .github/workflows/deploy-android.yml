@@ -35,9 +35,6 @@ jobs:
       - name: pub get
         run: flutter pub get
 
-      - name: generate assets
-        run: flutter packages pub run build_runner build
-
       - name: set up ruby
         uses: ruby/setup-ruby@v1
         with:
