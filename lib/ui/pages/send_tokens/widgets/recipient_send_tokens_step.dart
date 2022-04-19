@@ -77,6 +77,7 @@ class _RecipientSendTokensStepState extends State<RecipientSendTokensStep> with 
                         Expanded(
                           child: CosmosTextField(
                             controller: widget.recipientTextController,
+                            initialText: widget.recipientTextController.text,
                             onChanged: widget.onChangedRecipientAddress,
                             hint: strings.recipientToHint,
                           ),
