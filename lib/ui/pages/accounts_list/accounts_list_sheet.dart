@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
+import 'package:flutter_app/generated_assets/assets.gen.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presentation_model.dart';
@@ -83,12 +84,12 @@ class AccountsListSheetState extends State<AccountsListSheet> {
                 CosmosCircleTextButton(
                   onTap: presenter.onTapCreateAccount,
                   text: strings.createAccountAction,
-                  asset: 'assets/images/plus_circle.png',
+                  asset: Assets.imagesPlusCircle.path,
                 ),
                 CosmosCircleTextButton(
                   onTap: presenter.onTapImportAccount,
                   text: strings.importAccountAction,
-                  asset: 'assets/images/arrow_down_circle.png',
+                  asset: Assets.imagesArrowDownCircle.path,
                 ),
                 SizedBox(height: theme.spacingL),
               ],

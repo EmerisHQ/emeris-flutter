@@ -100,6 +100,11 @@ import 'package:flutter_app/ui/pages/rename_account/rename_account_presenter.dar
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presenter.dart';
+import 'package:flutter_app/ui/pages/scan_qr/scan_qr_initial_params.dart';
+import 'package:flutter_app/ui/pages/scan_qr/scan_qr_navigator.dart';
+import 'package:flutter_app/ui/pages/scan_qr/scan_qr_page.dart';
+import 'package:flutter_app/ui/pages/scan_qr/scan_qr_presentation_model.dart';
+import 'package:flutter_app/ui/pages/scan_qr/scan_qr_presenter.dart';
 import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_initial_params.dart';
 import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/balance_selector/balance_selector_page.dart';
@@ -110,6 +115,11 @@ import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_page.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presentation_model.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_presenter.dart';
+import 'package:flutter_app/ui/pages/settings/settings_initial_params.dart';
+import 'package:flutter_app/ui/pages/settings/settings_navigator.dart';
+import 'package:flutter_app/ui/pages/settings/settings_page.dart';
+import 'package:flutter_app/ui/pages/settings/settings_presentation_model.dart';
+import 'package:flutter_app/ui/pages/settings/settings_presenter.dart';
 import 'package:flutter_app/ui/pages/transaction_summary_ui/mobile_transaction_summary_ui.dart';
 import 'package:flutter_app/utils/clipboard_manager.dart';
 import 'package:flutter_app/utils/price_converter.dart';
@@ -489,5 +499,39 @@ void _configureMvp() {
           presenter: getIt(param1: initialParams),
         );
       },
+    )
+    ..registerFactoryParam<SettingsPresentationModel, SettingsInitialParams, dynamic>(
+      (_params, _) => SettingsPresentationModel(_params),
+    )
+    ..registerFactoryParam<SettingsPresenter, SettingsInitialParams, dynamic>(
+      (params, _) => SettingsPresenter(
+        getIt(param1: params),
+        getIt(),
+      ),
+    )
+    ..registerFactory<SettingsNavigator>(
+      () => SettingsNavigator(getIt()),
+    )
+    ..registerFactoryParam<SettingsPage, SettingsInitialParams, dynamic>(
+      (initialParams, _) => SettingsPage(
+        presenter: getIt(param1: initialParams),
+      ),
+    )
+    ..registerFactoryParam<ScanQrPresentationModel, ScanQrInitialParams, dynamic>(
+      (_params, _) => ScanQrPresentationModel(_params, getIt()),
+    )
+    ..registerFactoryParam<ScanQrPresenter, ScanQrInitialParams, dynamic>(
+      (params, _) => ScanQrPresenter(
+        getIt(param1: params),
+        getIt(),
+      ),
+    )
+    ..registerFactory<ScanQrNavigator>(
+      () => ScanQrNavigator(getIt()),
+    )
+    ..registerFactoryParam<ScanQrPage, ScanQrInitialParams, dynamic>(
+      (initialParams, _) => ScanQrPage(
+        presenter: getIt(param1: initialParams),
+      ),
     );
 }

@@ -8,7 +8,9 @@ import 'package:flutter_app/ui/pages/account_details/account_details_page.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/receive/receive_navigator.dart';
+import 'package:flutter_app/ui/pages/scan_qr/scan_qr_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
+import 'package:flutter_app/ui/pages/settings/settings_navigator.dart';
 
 class AccountDetailsNavigator
     with
@@ -18,7 +20,9 @@ class AccountDetailsNavigator
         AccountDetailsRoute,
         AccountsListRoute,
         AssetDetailsRoute,
-        ReceiveRoute {
+        ReceiveRoute,
+        SettingsRoute,
+        ScanQrRoute {
   AccountDetailsNavigator(this.appNavigator);
 
   @override

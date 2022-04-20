@@ -196,5 +196,16 @@
   "receiveAmountTitle": "Receive",
   "receiveAddressTitle": "Receive address",
   "sendTransactionWarningWithTerms": "Once executed, transactions cannot be reverted. By continuing, you agree to our Terms of Service",
-  "confirmAndContinueAction": "Confirm & Continue"
+  "confirmAndContinueAction": "Confirm & Continue",
+  "settingsTitle": "Settings",
+  "securityAction": "Security",
+  "currencyAction": "Currency",
+  "communityAction": "Join the Telegram Community",
+  "twitterAction": "Twitter",
+  "supportAction": "Support",
+  "signOutAction": "Sign out",
+  "scanQrTitle": "Scan QR Code",
+  "scanAddressHelperText": "Scan an address to send assets",
+  "walletConnectHelperText": "Connect to an app via wallet connect",
+  "showQrAction": "Show my QR code"
 }

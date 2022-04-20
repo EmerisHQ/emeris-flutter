@@ -75,6 +75,7 @@ class SendTokensPresentationModel with SendTokensPresentationModelBase implement
       prices,
     );
     appliedFee = feeVerifiedDenom.gasPriceLevels.defaultLevel;
+    recipientAddress = _initialParams.recipientAddress;
   }
 
   final AccountsStore _accountsStore;
