@@ -13,10 +13,11 @@
       <template name="mobxPage.dart.child.2.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_initial_params" reformat="true" live-template-enabled="false" />
       <template name="mobxPage.dart.child.3.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_navigator" reformat="true" live-template-enabled="false" />
       <template name="useCase.dart" file-name="/lib/domain/use_cases/${NAME}_use_case" reformat="true" live-template-enabled="false">
-        <template name="useCase.dart.child.1.dart" reformat="true" live-template-enabled="false" />
+        <template name="useCase.dart.child.1.dart" file-name="/test/domain/${NAME}_use_case_test" reformat="true" live-template-enabled="false" />
         <template name="useCase.dart.child.0.dart" file-name="/lib/domain/entities/failures/${NAME}_failure" reformat="true" live-template-enabled="false" />
       </template>
       <template name="useCase.dart.child.0.dart" file-name="/lib/domain/entities/failures/${NAME}_failure" reformat="true" live-template-enabled="false" />
+      <template name="useCase.dart.child.1.dart" file-name="/test/domain/${NAME}_use_case_test" reformat="true" live-template-enabled="false" />
     </default_templates>
   </component>
 </project>

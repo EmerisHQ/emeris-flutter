@@ -321,6 +321,7 @@ void _configureUseCases() {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
       ),
     )
     ..registerFactory<GetChainsUseCase>(

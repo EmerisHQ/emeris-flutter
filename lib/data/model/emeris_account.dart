@@ -17,13 +17,23 @@ class EmerisAccount extends Equatable {
   final AccountDetails accountDetails;
   final AccountType accountType;
 
+  AccountIdentifier get id => accountDetails.accountIdentifier;
+
   @override
   List<Object?> get props => [
         accountDetails,
         accountType,
       ];
 
-  AccountIdentifier get id => accountDetails.accountIdentifier;
+  EmerisAccount copyWith({
+    AccountDetails? accountDetails,
+    AccountType? accountType,
+  }) {
+    return EmerisAccount(
+      accountDetails: accountDetails ?? this.accountDetails,
+      accountType: accountType ?? this.accountType,
+    );
+  }
 }
 
 extension EmerisAccountInfo on EmerisAccount {

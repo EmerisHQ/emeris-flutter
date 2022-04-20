@@ -24,4 +24,16 @@ class AccountDetails extends Equatable {
         accountAlias,
         accountAddress,
       ];
+
+  AccountDetails copyWith({
+    AccountIdentifier? accountIdentifier,
+    String? accountAlias,
+    AccountAddress? accountAddress,
+  }) {
+    return AccountDetails(
+      accountIdentifier: accountIdentifier ?? this.accountIdentifier,
+      accountAlias: accountAlias ?? this.accountAlias,
+      accountAddress: accountAddress ?? this.accountAddress,
+    );
+  }
 }
