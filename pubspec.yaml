@@ -30,6 +30,7 @@ dependencies:
   modal_bottom_sheet: 2.0.0
   flutter_phoenix: 1.0.0
   share_plus: ^3.0.4
+  qr_code_scanner: 0.7.0
   wallet_core:
     git:
       url: https://github.com/wal33d006/wallet_core.git
@@ -56,7 +57,6 @@ dependencies:
       url: https://github.com/tendermint/flutter.git
       path: packages/cosmos_auth
       ref: main
-
   cupertino_icons: 1.0.4
 
 
@@ -72,13 +72,22 @@ dependency_overrides:
 #    path: ../flutter-public/packages/cosmos_ui_components
 #  cosmos_auth:
 #    path: ../flutter-public/packages/cosmos_auth
-  analyzer: 3.3.1
+  analyzer: 3.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   lint: 1.8.2
   mocktail: ^0.3.0
+  flutter_gen_runner:
+
+flutter_gen:
+  output: lib/generated_assets/
+  line_length: 120
+
+  assets:
+    enabled: true
+    style: camel-case
 
 flutter:
 
