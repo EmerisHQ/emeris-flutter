@@ -6,6 +6,7 @@ import 'package:flutter_app/domain/repositories/accounts_repository.dart';
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
 import 'package:flutter_app/domain/stores/accounts_store.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
+import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
@@ -13,7 +14,7 @@ import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart'
 import 'package:flutter_app/utils/strings.dart';
 
 class AppInitUseCase {
-  AppInitUseCase(
+  const AppInitUseCase(
     this._appLocalizationsInitializer,
     this._accountRepository,
     this._accountsStore,
@@ -23,6 +24,7 @@ class AppInitUseCase {
     this._getChainsUseCase,
     this._getVerifiedDenomsUseCase,
     this._migrateAppVersionsUseCase,
+    this._getBalancesUseCase,
   );
 
   final AppLocalizationsInitializer _appLocalizationsInitializer;
@@ -34,6 +36,7 @@ class AppInitUseCase {
   final GetChainsUseCase _getChainsUseCase;
   final GetVerifiedDenomsUseCase _getVerifiedDenomsUseCase;
   final MigrateAppVersionsUseCase _migrateAppVersionsUseCase;
+  final GetBalancesUseCase _getBalancesUseCase;
 
   Future<Either<AppInitFailure, Unit>> execute() async {
     return _mapError(_migrateAppVersionsUseCase.execute()).flatMap((_) async {
@@ -49,8 +52,22 @@ class AppInitUseCase {
       if (errors.isNotEmpty) {
         return left(AppInitFailure.unknown(errors));
       }
-      return _getAccounts().flatMap((response) => _setCurrentAccount());
+      return _getAccounts() //
+          .flatMap((_) => _setCurrentAccount())
+          .flatMap((_) => _getBalances());
     });
+  }
+
+  Future<Either<AppInitFailure, Unit>> _getBalances() async {
+    if (_accountsStore.currentAccount == const EmerisAccount.empty()) {
+      return right(unit);
+    } else {
+      return _getBalancesUseCase
+          .execute(
+            details: _accountsStore.currentAccount.accountDetails,
+          )
+          .mapError(AppInitFailure.unknown);
+    }
   }
 
   Future<Either<AppInitFailure, List<EmerisAccount>>> _getAccounts() {
