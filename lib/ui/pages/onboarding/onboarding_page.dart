@@ -1,10 +1,10 @@
+import 'package:cosmos_ui_components/cosmos_text_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/generated_assets/assets.gen.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
-import 'package:flutter_app/ui/pages/onboarding/widgets/welcome_splash.dart';
-import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
 import 'package:flutter_app/utils/strings.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -40,32 +40,47 @@ class OnboardingPageState extends State<OnboardingPage> {
   Widget build(BuildContext context) {
     final theme = CosmosTheme.of(context);
     return Scaffold(
-      appBar: const EmerisLogoAppBar(),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: theme.spacingL,
-            vertical: theme.spacingM,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Assets.imagesOnboardingBackground.path),
+              fit: BoxFit.cover,
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Expanded(child: WelcomeSplash()),
-              SizedBox(
-                height: CosmosTheme.of(context).spacingL,
-              ),
-              CosmosElevatedButton(
-                text: strings.createAccountAction,
-                onTap: presenter.onTapCreateAccount,
-              ),
-              SizedBox(
-                height: CosmosTheme.of(context).spacingM,
-              ),
-              CosmosOutlineButton(
-                text: strings.importAccountAction,
-                onTap: presenter.onTapImportAccount,
-              ),
-            ],
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: theme.spacingL,
+              vertical: theme.spacingM,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text('Emeris'),
+                SizedBox(height: theme.spacingXXXL),
+                SizedBox(height: theme.spacingL),
+                Text(
+                  'Welcome to Emeris wallet',
+                  style: CosmosTextTheme.copy0Normal,
+                ),
+                Text(
+                  'Experience the power of cross-chain DeFi',
+                  style: CosmosTextTheme.title2Bold,
+                ),
+                const Spacer(),
+                CosmosElevatedButton(
+                  text: strings.createAccountAction,
+                  onTap: presenter.onTapCreateAccount,
+                ),
+                SizedBox(
+                  height: CosmosTheme.of(context).spacingM,
+                ),
+                CosmosTextButton(
+                  text: strings.alreadyHaveAccountAction,
+                  onTap: presenter.onTapImportAccount,
+                ),
+              ],
+            ),
           ),
         ),
       ),

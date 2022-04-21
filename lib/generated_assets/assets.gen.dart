@@ -19,6 +19,9 @@ class Assets {
   /// File path: assets/images/icon_scan_qr.png
   static const AssetGenImage imagesIconScanQr = AssetGenImage('assets/images/icon_scan_qr.png');
 
+  /// File path: assets/images/onboarding_background.png
+  static const AssetGenImage imagesOnboardingBackground = AssetGenImage('assets/images/onboarding_background.png');
+
   /// File path: assets/images/plus_circle.png
   static const AssetGenImage imagesPlusCircle = AssetGenImage('assets/images/plus_circle.png');
 }
