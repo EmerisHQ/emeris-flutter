@@ -13,11 +13,17 @@ class Assets {
   /// File path: assets/images/arrow_down_circle.png
   static const AssetGenImage imagesArrowDownCircle = AssetGenImage('assets/images/arrow_down_circle.png');
 
+  /// File path: assets/images/emeris_wordmark.png
+  static const AssetGenImage imagesEmerisWordmark = AssetGenImage('assets/images/emeris_wordmark.png');
+
   /// File path: assets/images/flash.png
   static const AssetGenImage imagesFlash = AssetGenImage('assets/images/flash.png');
 
   /// File path: assets/images/icon_scan_qr.png
   static const AssetGenImage imagesIconScanQr = AssetGenImage('assets/images/icon_scan_qr.png');
+
+  /// File path: assets/images/onboarding_background.png
+  static const AssetGenImage imagesOnboardingBackground = AssetGenImage('assets/images/onboarding_background.png');
 
   /// File path: assets/images/plus_circle.png
   static const AssetGenImage imagesPlusCircle = AssetGenImage('assets/images/plus_circle.png');
