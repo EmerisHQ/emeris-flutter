@@ -3,6 +3,7 @@ import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/generated_assets/assets.gen.dart';
+import 'package:flutter_app/generated_assets/fonts.gen.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
 import 'package:flutter_app/utils/strings.dart';
@@ -56,7 +57,10 @@ class OnboardingPageState extends State<OnboardingPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text('Emeris'),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Image.asset(Assets.imagesEmerisWordmark.path),
+                ),
                 SizedBox(height: theme.spacingXXXL),
                 SizedBox(height: theme.spacingL),
                 Text(
@@ -65,7 +69,9 @@ class OnboardingPageState extends State<OnboardingPage> {
                 ),
                 Text(
                   'Experience the power of cross-chain DeFi',
-                  style: CosmosTextTheme.title2Bold,
+                  style: CosmosTextTheme.title2Bold.copyWith(
+                    fontFamily: FontFamily.casta,
+                  ),
                 ),
                 const Spacer(),
                 CosmosElevatedButton(
