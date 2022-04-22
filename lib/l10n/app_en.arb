@@ -208,5 +208,7 @@
   "scanAddressHelperText": "Scan an address to send assets",
   "walletConnectHelperText": "Connect to an app via wallet connect",
   "showQrAction": "Show my QR code",
-  "alreadyHaveAccountAction": "I already have an account"
+  "alreadyHaveAccountAction": "I already have an account",
+  "onboardingWelcomeTitle": "Welcome to Emeris Wallet",
+  "onboardingTaglineTitle": "Experience the power of cross-chain DeFi"
 }

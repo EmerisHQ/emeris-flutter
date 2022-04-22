@@ -64,11 +64,11 @@ class OnboardingPageState extends State<OnboardingPage> {
                 SizedBox(height: theme.spacingXXXL),
                 SizedBox(height: theme.spacingL),
                 Text(
-                  'Welcome to Emeris wallet',
+                  strings.onboardingWelcomeTitle,
                   style: CosmosTextTheme.copy0Normal,
                 ),
                 Text(
-                  'Experience the power of cross-chain DeFi',
+                  strings.onboardingTaglineTitle,
                   style: CosmosTextTheme.title2Bold.copyWith(
                     fontFamily: FontFamily.casta,
                   ),
