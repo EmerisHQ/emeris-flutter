@@ -83,7 +83,9 @@ import 'package:flutter_app/ui/pages/import_account/import_account_presenter.dar
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_navigator.dart';
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_presentation_model.dart';
 import 'package:flutter_app/ui/pages/mnemonic_import/mnemonic_import_presenter.dart';
+import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_navigator.dart';
+import 'package:flutter_app/ui/pages/onboarding/onboarding_page.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
 import 'package:flutter_app/ui/pages/passcode/passcode_navigator.dart';
@@ -321,6 +323,7 @@ void _configureUseCases() {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
       ),
     )
     ..registerFactory<GetChainsUseCase>(
@@ -362,12 +365,6 @@ void _configureMvp() {
     )
     ..registerFactory<RoutingNavigator>(
       () => RoutingNavigator(getIt()),
-    )
-    ..registerFactoryParam<OnboardingPresenter, OnboardingPresentationModel, dynamic>(
-      (_model, _) => OnboardingPresenter(_model, getIt()),
-    )
-    ..registerFactory<OnboardingNavigator>(
-      () => OnboardingNavigator(getIt()),
     )
     ..registerFactoryParam<AccountNamePresenter, AccountNamePresentationModel, dynamic>(
       (_model, _) => AccountNamePresenter(_model, getIt()),
@@ -434,7 +431,6 @@ void _configureMvp() {
     ..registerFactory<ReceiveNavigator>(
       () => ReceiveNavigator(getIt()),
     )
-    //////////////////////////////////////////
     ..registerFactory<SendTokensNavigator>(
       () => SendTokensNavigator(getIt()),
     )
@@ -531,6 +527,23 @@ void _configureMvp() {
     )
     ..registerFactoryParam<ScanQrPage, ScanQrInitialParams, dynamic>(
       (initialParams, _) => ScanQrPage(
+        presenter: getIt(param1: initialParams),
+      ),
+    )
+    ..registerFactoryParam<OnboardingPresentationModel, OnboardingInitialParams, dynamic>(
+      (_params, _) => OnboardingPresentationModel(_params),
+    )
+    ..registerFactoryParam<OnboardingPresenter, OnboardingInitialParams, dynamic>(
+      (params, _) => OnboardingPresenter(
+        getIt(param1: params),
+        getIt(),
+      ),
+    )
+    ..registerFactory<OnboardingNavigator>(
+      () => OnboardingNavigator(getIt()),
+    )
+    ..registerFactoryParam<OnboardingPage, OnboardingInitialParams, dynamic>(
+      (initialParams, _) => OnboardingPage(
         presenter: getIt(param1: initialParams),
       ),
     );

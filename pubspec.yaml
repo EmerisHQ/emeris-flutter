@@ -64,14 +64,14 @@ dependencies:
 dependency_overrides:
   ## convenient overrides for development to reference packages on local disk, just uncomment following lines and make sure
   ## it points to the location of the checked out tendermint/flutter repository
-#  cosmos_utils:
-#    path: ../flutter-public/packages/cosmos_utils
-#  transaction_signing_gateway:
-#    path: ../flutter-public/packages/transaction_signing_gateway
-#  cosmos_ui_components:
-#    path: ../flutter-public/packages/cosmos_ui_components
-#  cosmos_auth:
-#    path: ../flutter-public/packages/cosmos_auth
+  #  cosmos_utils:
+  #    path: ../flutter-public/packages/cosmos_utils
+  #  transaction_signing_gateway:
+  #    path: ../flutter-public/packages/transaction_signing_gateway
+  #  cosmos_ui_components:
+  #    path: ../flutter-public/packages/cosmos_ui_components
+  #  cosmos_auth:
+  #    path: ../flutter-public/packages/cosmos_auth
   analyzer: 3.4.0
 
 dev_dependencies:
@@ -96,3 +96,24 @@ flutter:
 
   assets:
     - assets/images/
+  fonts:
+    - family: Casta
+      fonts:
+        - asset: assets/fonts/Casta-ThinExpanded.otf
+          weight: 100
+        - asset: assets/fonts/Casta-ExtraLightExpanded.otf
+          weight: 200
+        - asset: assets/fonts/Casta-LightExpanded.otf
+          weight: 300
+        - asset: assets/fonts/Casta-Expanded.otf
+          weight: 400
+        - asset: assets/fonts/Casta-MediumExpanded.otf
+          weight: 500
+        - asset: assets/fonts/Casta-SemiBoldExpanded.otf
+          weight: 600
+        - asset: assets/fonts/Casta-BoldExpanded.otf
+          weight: 700
+        - asset: assets/fonts/Casta-ExtraBoldExpanded.otf
+          weight: 800
+        - asset: assets/fonts/Casta-BlackExpanded.otf
+          weight: 900

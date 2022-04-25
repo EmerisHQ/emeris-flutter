@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/close_route.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
@@ -24,7 +25,7 @@ class OnboardingNavigator
 mixin OnboardingRoute {
   Future<void> openOnboarding(OnboardingInitialParams initialParams) async => appNavigator.pushReplacement(
         context,
-        fadeInRoute(OnboardingPage(initialParams: initialParams)),
+        fadeInRoute(getIt<OnboardingPage>(param1: initialParams)),
       );
 
   AppNavigator get appNavigator;
