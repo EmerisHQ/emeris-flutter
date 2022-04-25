@@ -1,5 +1,6 @@
 import 'package:alan/alan.dart';
 import 'package:cosmos_utils/cosmos_utils.dart';
+import 'package:grpc/grpc.dart';
 
 //TODO refactor this to an interface
 class EnvironmentConfig {
@@ -23,9 +24,13 @@ class EnvironmentConfig {
     const envEthUrl = String.fromEnvironment('ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
     // ignore: do_not_use_environment
     const envEmerisUrl = String.fromEnvironment('EMERIS_URL', defaultValue: 'https://dev.demeris.io');
+    final grpcPortInt = int.parse(grpcPort ?? envGrpcPort);
     final grpcInfo = GRPCInfo(
       host: grpcUrl ?? envGrpcUrl,
-      port: int.parse(grpcPort ?? envGrpcPort),
+      port: grpcPortInt,
+      credentials: grpcPortInt == 443 //
+          ? const ChannelCredentials.secure()
+          : const ChannelCredentials.insecure(),
     );
     final lcdInfo = LCDInfo(
       host: lcdUrl ?? envLcdUrl,
