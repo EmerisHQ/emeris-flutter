@@ -7,6 +7,7 @@ import 'package:flutter_app/generated_assets/fonts.gen.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presentation_model.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_presenter.dart';
 import 'package:flutter_app/utils/strings.dart';
+import 'package:pinput/pin_put/pin_put.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({
@@ -30,11 +31,22 @@ class OnboardingPageState extends State<OnboardingPage> {
   OnboardingPresenter get presenter => widget.presenter;
 
   OnboardingViewModel get model => presenter.viewModel;
+  late TextEditingController _pinPutController;
+  static const filledOpacity = 0.44;
+  static const unfilledOpacity = 0.11;
 
   @override
   void initState() {
     super.initState();
     presenter.navigator.context = context;
+    _pinPutController = TextEditingController();
+  }
+
+  BoxDecoration get _pinPutDecoration {
+    return BoxDecoration(
+      shape: BoxShape.circle,
+      color: CosmosTheme.of(context).colors.text.withOpacity(unfilledOpacity),
+    );
   }
 
   @override
@@ -60,6 +72,28 @@ class OnboardingPageState extends State<OnboardingPage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Image.asset(Assets.imagesEmerisWordmark.path),
+                ),
+                Theme(
+                  data: Theme.of(context).copyWith(inputDecorationTheme: const InputDecorationTheme()),
+                  child: PinPut(
+                    controller: _pinPutController,
+                    fieldsCount: 6,
+                    fieldsAlignment: MainAxisAlignment.center,
+                    eachFieldMargin: const EdgeInsets.symmetric(horizontal: 12),
+                    eachFieldConstraints: const BoxConstraints(
+                      maxHeight: 10,
+                      maxWidth: 10,
+                    ),
+                    textStyle: const TextStyle(fontSize: 0, color: Colors.transparent),
+                    eachFieldHeight: 10,
+                    useNativeKeyboard: false,
+                    enableInteractiveSelection: false,
+                    submittedFieldDecoration: _pinPutDecoration.copyWith(
+                      color: CosmosTheme.of(context).colors.text.withOpacity(filledOpacity),
+                    ),
+                    selectedFieldDecoration: _pinPutDecoration,
+                    followingFieldDecoration: _pinPutDecoration,
+                  ),
                 ),
                 SizedBox(height: theme.spacingXXXL),
                 SizedBox(height: theme.spacingL),
