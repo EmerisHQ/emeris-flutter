@@ -19,7 +19,7 @@ class BulletPointMessage extends StatelessWidget {
         horizontal: theme.spacingL,
         vertical: theme.spacingXL,
       ),
-      decoration: BoxDecoration(color: theme.colors.cardBackground, borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(color: theme.colors.cardBackground, borderRadius: theme.borderRadiusM),
       child: Row(
         children: [
           Container(
