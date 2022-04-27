@@ -13,6 +13,9 @@ class Assets {
   /// File path: assets/images/arrow_down_circle.png
   static const AssetGenImage imagesArrowDownCircle = AssetGenImage('assets/images/arrow_down_circle.png');
 
+  /// File path: assets/images/backup_background.png
+  static const AssetGenImage imagesBackupBackground = AssetGenImage('assets/images/backup_background.png');
+
   /// File path: assets/images/emeris_wordmark.png
   static const AssetGenImage imagesEmerisWordmark = AssetGenImage('assets/images/emeris_wordmark.png');
 

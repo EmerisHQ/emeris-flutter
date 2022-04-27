@@ -53,7 +53,9 @@ import 'package:flutter_app/domain/use_cases/verify_account_password_use_case.da
 import 'package:flutter_app/domain/use_cases/verify_passcode_use_case.dart';
 import 'package:flutter_app/environment_config.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account_backup_intro_initial_params.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account_backup_intro_navigator.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account_backup_intro_page.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account_backup_intro_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account_backup_intro_presenter.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_cloud_backup/account_cloud_backup_navigator.dart';
@@ -378,12 +380,6 @@ void _configureMvp() {
     ..registerFactory<PasscodeNavigator>(
       () => PasscodeNavigator(getIt()),
     )
-    ..registerFactoryParam<AccountBackupIntroPresenter, AccountBackupIntroPresentationModel, dynamic>(
-      (_model, _) => AccountBackupIntroPresenter(_model, getIt()),
-    )
-    ..registerFactory<AccountBackupIntroNavigator>(
-      () => AccountBackupIntroNavigator(getIt()),
-    )
     ..registerFactoryParam<AccountCloudBackupPresenter, AccountCloudBackupPresentationModel, dynamic>(
       (_model, _) => AccountCloudBackupPresenter(_model, getIt()),
     )
@@ -544,6 +540,23 @@ void _configureMvp() {
     )
     ..registerFactoryParam<OnboardingPage, OnboardingInitialParams, dynamic>(
       (initialParams, _) => OnboardingPage(
+        presenter: getIt(param1: initialParams),
+      ),
+    )
+    ..registerFactoryParam<AccountBackupIntroPresentationModel, AccountBackupIntroInitialParams, dynamic>(
+      (_params, _) => AccountBackupIntroPresentationModel(_params, getIt()),
+    )
+    ..registerFactoryParam<AccountBackupIntroPresenter, AccountBackupIntroInitialParams, dynamic>(
+      (params, _) => AccountBackupIntroPresenter(
+        getIt(param1: params),
+        getIt(),
+      ),
+    )
+    ..registerFactory<AccountBackupIntroNavigator>(
+      () => AccountBackupIntroNavigator(getIt()),
+    )
+    ..registerFactoryParam<AccountBackupIntroPage, AccountBackupIntroInitialParams, dynamic>(
+      (initialParams, _) => AccountBackupIntroPage(
         presenter: getIt(param1: initialParams),
       ),
     );
