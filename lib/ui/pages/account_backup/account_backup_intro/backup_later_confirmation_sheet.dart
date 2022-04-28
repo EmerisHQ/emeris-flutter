@@ -1,3 +1,4 @@
+import 'package:cosmos_ui_components/cosmos_text_theme.dart';
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _BackupLaterConfirmationSheetState extends State<BackupLaterConfirmationSh
           Text(
             strings.accountSkipBackupConfirmationTitle,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline4,
+            style: CosmosTextTheme.title1Bold,
           ),
           SizedBox(
             height: CosmosTheme.of(context).spacingXXL,
@@ -81,6 +82,7 @@ abstract class BackupLaterConfirmationRoute {
   Future<BackupLaterConfirmationResult> openBackupLaterConfirmation() async {
     final result = await showMaterialModalBottomSheet(
       context: context,
+      backgroundColor: Colors.transparent,
       builder: (context) => const CosmosBottomSheetContainer(
         child: BackupLaterConfirmationSheet(),
       ),

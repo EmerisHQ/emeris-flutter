@@ -20,7 +20,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CosmosTheme(
-      themeData: darkThemeData,
+      // themeData: darkThemeData,
       child: Builder(builder: (context) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -128,4 +128,5 @@ const darkThemeColors = CosmosColorsData(
   background: CosmosColorsData.darkBg,
   inputBorder: CosmosColorsData.darkDivider,
   chipBackground: CosmosColorsData.darkSurface,
+  cardBackground: CosmosColorsData.darkSurface,
 );
