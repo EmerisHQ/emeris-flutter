@@ -1,5 +1,6 @@
 import 'package:alan/alan.dart';
 import 'package:cosmos_utils/cosmos_utils.dart';
+import 'package:flutter_app/utils/debug/emeris_api_environment.dart';
 import 'package:grpc/grpc.dart';
 
 //TODO refactor this to an interface
@@ -23,7 +24,7 @@ class EnvironmentConfig {
     // ignore: do_not_use_environment
     const envEthUrl = String.fromEnvironment('ETH_URL', defaultValue: 'HTTP://127.0.0.1:7545');
     // ignore: do_not_use_environment
-    const envEmerisUrl = String.fromEnvironment('EMERIS_URL', defaultValue: 'https://dev.demeris.io');
+    final envEmerisUrl = String.fromEnvironment('EMERIS_URL', defaultValue: const DevEmerisApiEnvironment().url);
     final grpcPortInt = int.parse(grpcPort ?? envGrpcPort);
     final grpcInfo = GRPCInfo(
       host: grpcUrl ?? envGrpcUrl,

@@ -26,7 +26,7 @@ class DevEmerisApiEnvironment extends EmerisApiEnvironment {
   const DevEmerisApiEnvironment()
       : super(
           'Dev',
-          'https://dev.demeris.io',
+          'https://api.dev.emeris.com',
         );
 }
 
@@ -34,7 +34,7 @@ class StagingEmerisApiEnvironment extends EmerisApiEnvironment {
   const StagingEmerisApiEnvironment()
       : super(
           'Staging',
-          'https://staging.demeris.io',
+          'https://api.staging.emeris.com',
         );
 }
 
