@@ -3,6 +3,9 @@
   <component name="ExportableFileTemplateSettings">
     <default_templates>
       <template name="mobxPage.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_page" reformat="true" live-template-enabled="true">
+        <template name="mobxPage.dart.child.6.dart" file-name="test/presentation_models/${NAME}_presentation_model_test.dart" reformat="true" live-template-enabled="false" />
+        <template name="mobxPage.dart.child.5.dart" file-name="test/presenters/${PARENT}/${NAME}_presenter_test.dart" reformat="true" live-template-enabled="false" />
+        <template name="mobxPage.dart.child.4.dart" file-name="test/pages/${PARENT}/${NAME}_page_test.dart" reformat="true" live-template-enabled="false" />
         <template name="mobxPage.dart.child.2.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_initial_params" reformat="true" live-template-enabled="false" />
         <template name="mobxPage.dart.child.3.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_navigator" reformat="true" live-template-enabled="false" />
         <template name="mobxPage.dart.child.0.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_presentation_model" reformat="true" live-template-enabled="false" />
@@ -12,6 +15,9 @@
       <template name="mobxPage.dart.child.1.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_presenter" reformat="true" live-template-enabled="false" />
       <template name="mobxPage.dart.child.2.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_initial_params" reformat="true" live-template-enabled="false" />
       <template name="mobxPage.dart.child.3.dart" file-name="/lib/ui/pages/${PARENT}/${NAME}/${NAME}_navigator" reformat="true" live-template-enabled="false" />
+      <template name="mobxPage.dart.child.4.dart" file-name="test/pages/${PARENT}/${NAME}_page_test.dart" reformat="true" live-template-enabled="false" />
+      <template name="mobxPage.dart.child.5.dart" file-name="test/presenters/${PARENT}/${NAME}_presenter_test.dart" reformat="true" live-template-enabled="false" />
+      <template name="mobxPage.dart.child.6.dart" file-name="test/presentation_models/${NAME}_presentation_model_test.dart" reformat="true" live-template-enabled="false" />
       <template name="useCase.dart" file-name="/lib/domain/use_cases/${NAME}_use_case" reformat="true" live-template-enabled="false">
         <template name="useCase.dart.child.1.dart" file-name="/test/domain/${NAME}_use_case_test" reformat="true" live-template-enabled="false" />
         <template name="useCase.dart.child.0.dart" file-name="/lib/domain/entities/failures/${NAME}_failure" reformat="true" live-template-enabled="false" />
