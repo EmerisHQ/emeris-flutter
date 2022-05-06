@@ -19,21 +19,18 @@ void main() {
   late AccountsListPresentationModel model;
   late AccountsListPresenter presenter;
   late AccountsListNavigator navigator;
-  late MockAccountsStore accountsStore;
-  late MockChangeCurrentAccountUseCase changeCurrentAccountUseCase;
-  late MockDeleteAccountUseCase deleteAccountUseCase;
   late EmerisAccount myAccount;
   const fromAddress = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
 
   void _initMvp() {
     initParams = const AccountsListInitialParams();
-    model = AccountsListPresentationModel(accountsStore, initParams);
-    navigator = MockAccountsListNavigator();
+    model = AccountsListPresentationModel(Mocks.accountsStore, initParams);
+    navigator = Mocks.accountsListNavigator;
     presenter = AccountsListPresenter(
       model,
       navigator,
-      changeCurrentAccountUseCase,
-      deleteAccountUseCase,
+      Mocks.changeCurrentAccountUseCase,
+      Mocks.deleteAccountUseCase,
     );
   }
 
@@ -47,7 +44,7 @@ void main() {
       //
       //THEN
       verify(
-        () => changeCurrentAccountUseCase.execute(
+        () => Mocks.changeCurrentAccountUseCase.execute(
           account: myAccount,
         ),
       );
@@ -59,9 +56,6 @@ void main() {
   );
 
   setUp(() {
-    accountsStore = MockAccountsStore();
-    changeCurrentAccountUseCase = MockChangeCurrentAccountUseCase();
-    deleteAccountUseCase = MockDeleteAccountUseCase();
     myAccount = const EmerisAccount(
       accountDetails: AccountDetails(
         accountIdentifier: AccountIdentifier(
@@ -73,11 +67,8 @@ void main() {
       ),
       accountType: AccountType.Cosmos,
     );
-    when(() => accountsStore.currentAccount).thenReturn(myAccount);
-    when(
-      () => changeCurrentAccountUseCase.execute(account: myAccount),
-    ).thenAnswer(
-      (_) => successFuture(unit),
-    );
+    when(() => Mocks.accountsStore.currentAccount).thenReturn(myAccount);
+    when(() => Mocks.changeCurrentAccountUseCase.execute(account: myAccount)) //
+        .thenAnswer((_) => successFuture(unit));
   });
 }

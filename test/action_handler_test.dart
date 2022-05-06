@@ -12,7 +12,7 @@ import 'package:flutter_app/ibc/action_handler.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'mocks/mocks.dart';
+import 'mocks/mocks_definitions.dart';
 
 void main() {
   late ActionHandler actionHandler;

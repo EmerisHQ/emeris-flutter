@@ -4,7 +4,6 @@ import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/account_address.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
 import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
-import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart' hide when;
 import 'package:mocktail/mocktail.dart';
@@ -14,23 +13,13 @@ import '../test_utils.dart';
 
 void main() {
   late AppInitUseCase useCase;
-  late MockAccountsRepository accountsRepository;
-  late MockAccountsStore accountsStore;
-  late MockSettingsStore settingsStore;
-  late MockAuthRepository authRepository;
-  late MockAppLocalizationsInitializer appLocalizationsInitializer;
-  late MockGetChainsUseCase getChainsUseCase;
-  late MockGetPricesUseCase getPricesUseCase;
-  late MockGetVerifiedDenomsUseCase getVerifiedDenomsUseCase;
-  late MigrateAppVersionsUseCase migrateAppVersionsUseCase;
-  late MockGetBalancesUseCase getBalancesUseCase;
   late EmerisAccount realAccount;
   //
   test(
     'should initialize settings on start',
     () async {
       await useCase.execute();
-      verify(() => settingsStore.init(authRepository));
+      verify(() => Mocks.settingsStore.init(Mocks.authRepository));
     },
   );
   //
@@ -38,66 +27,55 @@ void main() {
     'should NOT fetch balances if no accounts',
     () async {
       await useCase.execute();
-      verifyNever(() => getBalancesUseCase.execute(details: any(named: 'details')));
+      verifyNever(() => Mocks.getBalancesUseCase.execute(details: any(named: 'details')));
     },
   );
   //
   test(
     'should fetch balances if has account',
     () async {
-      when(() => accountsStore.currentAccount).thenReturn(realAccount);
-      when(() => accountsStore.accounts).thenReturn(ObservableList.of([realAccount]));
+      when(() => Mocks.accountsStore.currentAccount).thenReturn(realAccount);
+      when(() => Mocks.accountsStore.accounts).thenReturn(ObservableList.of([realAccount]));
       await useCase.execute();
-      verify(() => getBalancesUseCase.execute(details: realAccount.accountDetails));
+      verify(() => Mocks.getBalancesUseCase.execute(details: realAccount.accountDetails));
     },
   );
   //
 
   setUp(() {
-    registerFallbackValue(const AccountDetails.empty());
-    appLocalizationsInitializer = MockAppLocalizationsInitializer();
-    accountsRepository = MockAccountsRepository();
-    accountsStore = MockAccountsStore();
-    settingsStore = MockSettingsStore();
-    authRepository = MockAuthRepository();
-    getPricesUseCase = MockGetPricesUseCase();
-    getChainsUseCase = MockGetChainsUseCase();
-    getVerifiedDenomsUseCase = MockGetVerifiedDenomsUseCase();
-    migrateAppVersionsUseCase = MockMigrateAppVersionsUseCase();
-    getBalancesUseCase = MockGetBalancesUseCase();
     useCase = AppInitUseCase(
-      appLocalizationsInitializer,
-      accountsRepository,
-      accountsStore,
-      settingsStore,
-      authRepository,
-      getPricesUseCase,
-      getChainsUseCase,
-      getVerifiedDenomsUseCase,
-      migrateAppVersionsUseCase,
-      getBalancesUseCase,
+      Mocks.appLocalizationsInitializer,
+      Mocks.accountsRepository,
+      Mocks.accountsStore,
+      Mocks.settingsStore,
+      Mocks.authRepository,
+      Mocks.getPricesUseCase,
+      Mocks.getChainsUseCase,
+      Mocks.getVerifiedDenomsUseCase,
+      Mocks.migrateAppVersionsUseCase,
+      Mocks.getBalancesUseCase,
     );
-    when(() => settingsStore.init(authRepository)) //
+    when(() => Mocks.settingsStore.init(Mocks.authRepository)) //
         .thenAnswer((invocation) => Future.value());
-    when(() => accountsRepository.getAccountsList()) //
+    when(() => Mocks.accountsRepository.getAccountsList()) //
         .thenAnswer((invocation) => Future.value(right([])));
-    when(() => accountsRepository.getCurrentAccount()) //
+    when(() => Mocks.accountsRepository.getCurrentAccount()) //
         .thenAnswer((invocation) => Future.value(right(const EmerisAccount.empty())));
-    when(() => accountsRepository.setCurrentAccount(const AccountIdentifier.empty())) //
+    when(() => Mocks.accountsRepository.setCurrentAccount(const AccountIdentifier.empty())) //
         .thenAnswer((invocation) => Future.value(right(const EmerisAccount.empty())));
-    when(() => accountsStore.accounts) //
+    when(() => Mocks.accountsStore.accounts) //
         .thenAnswer((invocation) => ObservableList());
-    when(() => accountsStore.currentAccount) //
+    when(() => Mocks.accountsStore.currentAccount) //
         .thenAnswer((invocation) => const EmerisAccount.empty());
-    when(() => getPricesUseCase.execute()) //
+    when(() => Mocks.getPricesUseCase.execute()) //
         .thenAnswer((invocation) => successFuture(unit));
-    when(() => getChainsUseCase.execute()) //
+    when(() => Mocks.getChainsUseCase.execute()) //
         .thenAnswer((invocation) => successFuture(unit));
-    when(() => getVerifiedDenomsUseCase.execute()) //
+    when(() => Mocks.getVerifiedDenomsUseCase.execute()) //
         .thenAnswer((invocation) => successFuture(unit));
-    when(() => migrateAppVersionsUseCase.execute()) //
+    when(() => Mocks.migrateAppVersionsUseCase.execute()) //
         .thenAnswer((invocation) => successFuture(unit));
-    when(() => getBalancesUseCase.execute(details: any(named: 'details'))) //
+    when(() => Mocks.getBalancesUseCase.execute(details: any(named: 'details'))) //
         .thenAnswer((invocation) => successFuture(unit));
     realAccount = const EmerisAccount.empty().copyWith(
       accountDetails: const AccountDetails(
