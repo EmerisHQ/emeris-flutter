@@ -1,7 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_app/data/model/emeris_account.dart';
-import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
-import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_initial_params.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_presentation_model.dart';
@@ -17,19 +14,17 @@ void main() {
   late RoutingPresentationModel model;
   late RoutingPresenter presenter;
   late RoutingNavigator navigator;
-  late AppInitUseCase appInitializer;
-  late MockAccountsStore accountsStore;
 
   void _initMvp({
     bool initializeApp = false,
   }) {
     initParams = RoutingInitialParams(initializeApp: initializeApp);
-    model = RoutingPresentationModel(initParams, accountsStore);
-    navigator = MockRoutingNavigator();
+    model = RoutingPresentationModel(initParams, Mocks.accountsStore);
+    navigator = Mocks.routingNavigator;
     presenter = RoutingPresenter(
       model,
       navigator,
-      appInitializer,
+      Mocks.appInitializer,
     );
     when(() => navigator.openOnboarding(any())).thenAnswer((_) => Future.value());
     when(() => navigator.openAccountDetails()).thenAnswer((_) => Future.value());
@@ -40,11 +35,11 @@ void main() {
     () async {
       // GIVEN
       _initMvp(initializeApp: true);
-      when(() => accountsStore.accounts).thenReturn(ObservableList());
+      when(() => Mocks.accountsStore.accounts).thenReturn(ObservableList());
       // WHEN
       await presenter.init();
       //THEN
-      verify(() => appInitializer.execute());
+      verify(() => Mocks.appInitializer.execute());
     },
   );
 
@@ -53,11 +48,11 @@ void main() {
     () async {
       // GIVEN
       _initMvp();
-      when(() => accountsStore.accounts).thenReturn(ObservableList());
+      when(() => Mocks.accountsStore.accounts).thenReturn(ObservableList());
       // WHEN
       await presenter.init();
       //THEN
-      verifyNever(() => appInitializer.execute());
+      verifyNever(() => Mocks.appInitializer.execute());
     },
   );
 
@@ -66,11 +61,11 @@ void main() {
     () async {
       // GIVEN
       _initMvp(initializeApp: true);
-      when(() => accountsStore.accounts).thenReturn(ObservableList());
+      when(() => Mocks.accountsStore.accounts).thenReturn(ObservableList());
       // WHEN
       await presenter.init();
       //THEN
-      verify(() => appInitializer.execute());
+      verify(() => Mocks.appInitializer.execute());
     },
   );
 
@@ -79,7 +74,7 @@ void main() {
     () async {
       // GIVEN
       _initMvp();
-      when(() => accountsStore.accounts).thenReturn(ObservableList());
+      when(() => Mocks.accountsStore.accounts).thenReturn(ObservableList());
       // WHEN
       await presenter.init();
       //THEN
@@ -88,14 +83,6 @@ void main() {
   );
 
   setUp(() {
-    registerFallbackValue(const OnboardingInitialParams());
-    registerFallbackValue(const EmerisAccount.empty());
-    appInitializer = MockAppInitializer();
-    accountsStore = MockAccountsStore();
-    when(() => appInitializer.execute()).thenAnswer((invocation) => Future.value(right(unit)));
+    when(() => Mocks.appInitializer.execute()).thenAnswer((invocation) => Future.value(right(unit)));
   });
-
-  tearDown(() {});
 }
-
-class MockRoutingNavigator extends Mock implements RoutingNavigator {}

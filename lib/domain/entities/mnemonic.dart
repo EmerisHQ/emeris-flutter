@@ -6,6 +6,8 @@ class Mnemonic extends Equatable {
     required this.words,
   });
 
+  const Mnemonic.empty() : words = const [];
+
   Mnemonic.fromString(String mnemonic)
       : words = mnemonic
             .split(RegExp(r'\s+')) //

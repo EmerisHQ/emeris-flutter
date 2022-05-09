@@ -62,17 +62,18 @@ dependencies:
 
 
 dependency_overrides:
+  analyzer: ^4.0.0
   ## convenient overrides for development to reference packages on local disk, just uncomment following lines and make sure
   ## it points to the location of the checked out tendermint/flutter repository
-  #  cosmos_utils:
-  #    path: ../flutter-public/packages/cosmos_utils
-  #  transaction_signing_gateway:
-  #    path: ../flutter-public/packages/transaction_signing_gateway
-  #  cosmos_ui_components:
-  #    path: ../flutter-public/packages/cosmos_ui_components
-  #  cosmos_auth:
-  #    path: ../flutter-public/packages/cosmos_auth
-  analyzer: 3.4.0
+#  cosmos_utils:
+#    path: ../flutter-public/packages/cosmos_utils
+#  transaction_signing_gateway:
+#    path: ../flutter-public/packages/transaction_signing_gateway
+#  cosmos_ui_components:
+#    path: ../flutter-public/packages/cosmos_ui_components
+#  cosmos_auth:
+#    path: ../flutter-public/packages/cosmos_auth
+
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +81,9 @@ dev_dependencies:
   lint: 1.8.2
   mocktail: ^0.3.0
   flutter_gen_runner:
+  alchemist: ^0.3.3
+  golden_toolkit: ^0.13.0
+  mocktail_image_network: ^0.3.1
 
 flutter_gen:
   output: lib/generated_assets/
@@ -97,6 +101,26 @@ flutter:
   assets:
     - assets/images/
   fonts:
+    - family: Inter
+      fonts:
+        - asset: packages/cosmos_ui_components/fonts/Inter-Thin.ttf
+          weight: 100
+        - asset: packages/cosmos_ui_components/fonts/Inter-ExtraLight.ttf
+          weight: 200
+        - asset: packages/cosmos_ui_components/fonts/Inter-Light.ttf
+          weight: 300
+        - asset: packages/cosmos_ui_components/fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: packages/cosmos_ui_components/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: packages/cosmos_ui_components/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: packages/cosmos_ui_components/fonts/Inter-Bold.ttf
+          weight: 700
+        - asset: packages/cosmos_ui_components/fonts/Inter-ExtraBold.ttf
+          weight: 800
+        - asset: packages/cosmos_ui_components/fonts/Inter-Black.ttf
+          weight: 900
     - family: Casta
       fonts:
         - asset: assets/fonts/Casta-ThinExpanded.otf
