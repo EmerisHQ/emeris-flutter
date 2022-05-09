@@ -3,7 +3,6 @@ name: Pull Request Worfklow
 on: [pull_request]
 
 env:
-  FLUTTER_VERSION: '2.10.3'
   JAVA_VERSION: '12'
   RUBY_VERSION: '2.7'
   LC_ALL: en_US.UTF-8
@@ -20,11 +19,16 @@ jobs:
     - uses: amannn/action-semantic-pull-request@v3.4.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
     - uses: actions/checkout@v2
+
+    - uses: kuhnroyal/flutter-fvm-config-action@v1
 
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: ${{ env.FLUTTER_CHANNEL }}
+
     - name: pub get
       run: flutter pub get
 
