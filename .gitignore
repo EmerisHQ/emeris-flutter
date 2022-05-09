@@ -84,3 +84,7 @@ report.xml
 *.ipr
 misc.xml
 android/.idea
+
+# TEST COVERAGE
+coverage/
+test/coverage_helper_test.dart
