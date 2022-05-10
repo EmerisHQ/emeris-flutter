@@ -55,7 +55,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: ./coverage/lcov.info
-          lcov-base: ./coverage/main_lcov.info
+          lcov-base: ./coverage/main.lcov.info
 
       - uses: actions/upload-artifact@v2
         name: upload screenshot test failures
