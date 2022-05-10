@@ -47,12 +47,13 @@ jobs:
 
       - name: read coverage percentage
         run: |
-          echo "export coverage_threshold=$(lcov --summary coverage/main.lcov.info | sed -n '3p' | sed -r 's/(.+): (.+)(\%.+)/\2/' | cat)" >> $GITHUB_ENV
+          echo "COVERAGE_THRESHOLD=$(lcov --summary coverage/main.lcov.info | sed -n '3p' | sed -r 's/(.+): (.+)(\%.+)/\2/' | cat)" >> $GITHUB_ENV
+          echo $COVERAGE_THRESHOLD
 
       - uses: VeryGoodOpenSource/very_good_coverage@v1
         with:
           path: './coverage/lcov.info'
-          min_coverage: ${{ env.coverage_threshold }}
+          min_coverage: ${{ env.COVERAGE_THRESHOLD }}
           exclude: 'lib/*/*.g.dart lib/generated_assets/*.dart lib/*/*.gen.dart lib/generated_plugin_registrant.dart'
 
       - uses: vebr/jest-lcov-reporter@v0.2.0
