@@ -8,6 +8,10 @@ class AddAccountResult extends Equatable {
     required this.mnemonic,
   });
 
+  const AddAccountResult.empty()
+      : account = const EmerisAccount.empty(),
+        mnemonic = const Mnemonic.empty();
+
   final EmerisAccount account;
   final Mnemonic mnemonic;
 
