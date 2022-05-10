@@ -1,4 +1,4 @@
-name: Deploy Firebase - iOS
+name: Main Branch
 'on':
   push:
     branches:

@@ -45,10 +45,14 @@ jobs:
         timeout-minutes: 4
         run: flutter test --dart-define=IS_CI=true --coverage --coverage-path=coverage/lcov.info
 
+      - name: read coverage percentage
+        run: |
+          echo "export coverage_threshold=$(lcov --summary coverage/main.lcov.info | sed -n '3p' | sed -r 's/(.+): (.+)(\%.+)/\2/' | cat)" >> $GITHUB_ENV
+
       - uses: VeryGoodOpenSource/very_good_coverage@v1
         with:
           path: './coverage/lcov.info'
-          min_coverage: 10
+          min_coverage: ${{ env.coverage_threshold }}
           exclude: 'lib/*/*.g.dart lib/generated_assets/*.dart lib/*/*.gen.dart lib/generated_plugin_registrant.dart'
 
       - uses: vebr/jest-lcov-reporter@v0.2.0
