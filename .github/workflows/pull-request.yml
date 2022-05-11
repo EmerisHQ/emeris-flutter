@@ -22,12 +22,11 @@ jobs:
     steps:
       - name: Report Status
         id: slack
-        if: failure()
         uses: slackapi/slack-github-action@v1.18.0
         with:
           payload: |
             {
-              "text": "Emeris iOS - DEPLOY FAILED\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "text": "TEST MESSAGE, PLEASE IGNORE\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
               "blocks": [
                 {
                   "type": "section",
