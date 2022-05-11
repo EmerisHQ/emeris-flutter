@@ -1,6 +1,6 @@
 name: Pull Request Worfklow
 
-on: [pull_request]
+on: [ pull_request ]
 
 env:
   JAVA_VERSION: '12'
@@ -11,60 +11,86 @@ env:
   ANDROID_FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
   LANG: en_US.UTF-8
 
+concurrency:
+  group: ${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     timeout-minutes: 20
     runs-on: self-hosted
     steps:
-    - uses: amannn/action-semantic-pull-request@v3.4.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-    - uses: actions/checkout@v2
+      - uses: amannn/action-semantic-pull-request@v3.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: kuhnroyal/flutter-fvm-config-action@v1
+      - uses: actions/checkout@v2
 
-    - uses: subosito/flutter-action@v2
-      with:
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-        channel: ${{ env.FLUTTER_CHANNEL }}
+      - uses: kuhnroyal/flutter-fvm-config-action@v1
 
-    - name: pub get
-      run: flutter pub get
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
 
-    - name: check codestyle
-      run: find lib test -name "*.dart" -not -name "*.g.dart" -not -name "*.freezed.dart" -not -name "*.gen.dart" -exec flutter format -l 120 --dry-run --set-exit-if-changed {} +;
+      - name: pub get
+        run: flutter pub get
 
-    - name: dart analysis
-      run: flutter analyze
+      - name: check codestyle
+        run: find lib test -name "*.dart" -not -name "*.g.dart" -not -name "*.freezed.dart" -not -name "*.gen.dart" -exec flutter format -l 120 --dry-run --set-exit-if-changed {} +;
 
-    - name: unit tests
-      timeout-minutes: 4
-      run: flutter test -x golden
+      - name: dart analysis
+        run: flutter analyze
 
-    - name: screenshot tests
-      timeout-minutes: 4
-      run: flutter test -t golden --dart-define=IS_CI=true
+      - name: generate code coverage files index
+        run: make generate_coverage_index_file
 
-    - uses: actions/upload-artifact@v2
-      name: upload screenshot test failures
-      if: failure()
-      with:
-        name: screenshot-test-failures
-        path: test/**/failures/*.png
-        if-no-files-found: ignore
-        retention-days: 5
+      - name: unit tests
+        timeout-minutes: 4
+        run: flutter test --dart-define=IS_CI=true --coverage --coverage-path=coverage/lcov.info
 
+      - name: read coverage percentage
+        run: |
+          echo "BASE_COVERAGE=$(lcov --summary coverage/main.lcov.info | sed -n '3p' | sed -r 's/(.+): (.+)(\%.+)/\2/' | cat)" >> $GITHUB_ENV
+          echo "THIS_COVERAGE=$(lcov --summary coverage/lcov.info | sed -n '3p' | sed -r 's/(.+): (.+)(\%.+)/\2/' | cat)" >> $GITHUB_ENV
+          echo $BASE_COVERAGE
 
-    - name: Set up JDK 8
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'zulu'
-        java-version: 8
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: |
+            ## Code Coverage
+            <table><tbody>
+            <tr><th>${{ github.head_ref }}</th><th>${{ github.base_ref }}</th></tr>
+            <tr><td>${{ env.THIS_COVERAGE }}%</td><td>${{ env.BASE_COVERAGE}}%</td></tr>
+            </tbody></table>
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v2
+      - name: Check coverage percentage
+        uses: VeryGoodOpenSource/very_good_coverage@v1
+        with:
+          path: './coverage/lcov.info'
+          min_coverage: ${{ env.BASE_COVERAGE }}
+          exclude: 'lib/*/*.g.dart lib/generated_assets/*.dart lib/*/*.gen.dart lib/generated_plugin_registrant.dart'
 
-    - name: build Android app
-      timeout-minutes: 10
-      run: flutter build appbundle
+      - uses: actions/upload-artifact@v2
+        name: upload screenshot test failures
+        if: failure()
+        with:
+          name: screenshot-test-failures
+          path: test/**/failures/*.png
+          if-no-files-found: ignore
+          retention-days: 5
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 8
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: build Android app
+        timeout-minutes: 10
+        run: flutter build appbundle
