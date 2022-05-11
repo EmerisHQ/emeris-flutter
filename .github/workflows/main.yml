@@ -2,7 +2,7 @@ name: Main Branch
 'on':
   push:
     branches:
-      - feature/test-coverage # TODO CHANGE IT TO `main`
+      - main
   workflow_dispatch: null
 
 concurrency:
