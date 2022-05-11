@@ -161,16 +161,25 @@ jobs:
         run: |
           bundle exec fastlane deploy_firebase
 
+
       - name: Report Status
+        id: slack
         if: failure()
-        uses: rtCamp/action-slack-notify@v2
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+              "text": "Emeris iOS - DEPLOY FAILED\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  }
+                }
+              ]
+            }
         env:
-          SLACK_CHANNEL: ${{ secrets.SLACK_NOTIFICATIONS_CHANNEL }}
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: 'https://github.com/tendermint.png?size=48'
-          SLACK_TITLE: Emeris iOS - DEPLOY FAILED
-          SLACK_LINK_NAMES: true
-          SLACK_USERNAME: Github iOS Deployment
-          MSG_MINIMAL: 'actions url, ref'
-          SLACK_FOOTER: Mobile Slackbot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
