@@ -15,7 +15,10 @@ class AppWidget extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
+        /// TODO: Remove these when implementing dark/light theme support through settings
+        // ignore: deprecated_member_use
         darkTheme: CosmosTheme.buildDarkAppTheme(),
+        // ignore: deprecated_member_use
         theme: CosmosTheme.buildAppTheme(),
         home: const RoutingPage(
           initialParams: RoutingInitialParams(
