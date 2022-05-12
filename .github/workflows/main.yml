@@ -107,18 +107,41 @@ jobs:
           bundle exec fastlane deploy_firebase
 
       - name: Report Status
+        id: slack
         if: failure()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: ${{ secrets.SLACK_NOTIFICATIONS_CHANNEL }}
-          SLACK_COLOR: '${{ job.status }}'
-          SLACK_ICON: 'https://github.com/tendermint.png?size=48'
-          SLACK_TITLE: Emeris Android - DEPLOY FAILED
-          SLACK_LINK_NAMES: true
-          SLACK_USERNAME: Github Android Deployment
-          MSG_MINIMAL: 'actions url, ref'
-          SLACK_FOOTER: Mobile Slackbot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+              {
+                "blocks": [
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "Emeris Android deployment failed: :red_circle:"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":arrow_right: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "plain_text",
+                        "text": "branch: ${{ github.ref_name}}",
+                        "emoji": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
 
   deploy-ios:
     needs: generate-coverage
@@ -161,16 +184,43 @@ jobs:
         run: |
           bundle exec fastlane deploy_firebase
 
+
       - name: Report Status
+        id: slack
         if: failure()
-        uses: rtCamp/action-slack-notify@v2
+        uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+              {
+                "blocks": [
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "Emeris iOS deployment failed: :red_circle:"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":arrow_right: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "plain_text",
+                        "text": "branch: ${{ github.ref_name}}",
+                        "emoji": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
         env:
-          SLACK_CHANNEL: ${{ secrets.SLACK_NOTIFICATIONS_CHANNEL }}
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_ICON: 'https://github.com/tendermint.png?size=48'
-          SLACK_TITLE: Emeris iOS - DEPLOY FAILED
-          SLACK_LINK_NAMES: true
-          SLACK_USERNAME: Github iOS Deployment
-          MSG_MINIMAL: 'actions url, ref'
-          SLACK_FOOTER: Mobile Slackbot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
