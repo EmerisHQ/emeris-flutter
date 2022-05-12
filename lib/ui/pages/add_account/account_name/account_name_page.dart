@@ -67,12 +67,9 @@ class AccountNamePageState extends State<AccountNamePage> {
               SizedBox(height: theme.spacingL),
               Text(strings.nameYourAccountMessage),
               SizedBox(height: theme.spacingXL),
-              TextFormField(
-                autofocus: true,
+              CosmosTextField(
                 onChanged: presenter.onChanged,
-                decoration: InputDecoration(
-                  hintText: strings.accountNameHint,
-                ),
+                hint: strings.accountNameHint,
               ),
               const Spacer(),
               CosmosElevatedButton(
