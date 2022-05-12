@@ -45,7 +45,9 @@ jobs:
 
       - name: generate code coverage
         timeout-minutes: 4
-        run: flutter test --dart-define=IS_CI=true --coverage --coverage-path=coverage/main.lcov.info
+        run: |
+          flutter test --dart-define=IS_CI=true --coverage --coverage-path=coverage/main.lcov.info
+          lcov --remove coverage/main.lcov.info 'lib/*/*.g.dart' 'lib/generated_assets/*.dart' 'lib/*/*.gen.dart' 'lib/generated_plugin_registrant.dart'
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
