@@ -23,6 +23,7 @@ class Mocks {
   static late MockSettingsStore settingsStore;
   static late MockBlockchainMetadataStore blockchainMetadataStore;
   static late MockAssetsStore assetsStore;
+  static late MockPlatformInfoStore platformInfoStore;
   static late MockChangeCurrentAccountUseCase changeCurrentAccountUseCase;
   static late MockSendTokensUseCase sendTokensUseCase;
   static late MockGetBalancesUseCase getBalancesUseCase;
@@ -31,11 +32,13 @@ class Mocks {
   static late MockGetChainsUseCase getChainsUseCase;
   static late MockGetVerifiedDenomsUseCase getVerifiedDenomsUseCase;
   static late MockMigrateAppVersionsUseCase migrateAppVersionsUseCase;
+  static late MockCopyToClipboardUseCase copyToClipboardUseCase;
   static late MockSendTokensNavigator sendTokensNavigator;
   static late MockAccountDetailsNavigator accountDetailsNavigator;
   static late MockAccountsListNavigator accountsListNavigator;
   static late MockAppNavigator appNavigator;
   static late MockRoutingNavigator routingNavigator;
+  static late MockTaskScheduler taskScheduler;
 
   static void init() {
     _initMocks();
@@ -64,11 +67,14 @@ class Mocks {
     getChainsUseCase = MockGetChainsUseCase();
     getVerifiedDenomsUseCase = MockGetVerifiedDenomsUseCase();
     migrateAppVersionsUseCase = MockMigrateAppVersionsUseCase();
+    copyToClipboardUseCase = MockCopyToClipboardUseCase();
     sendTokensNavigator = MockSendTokensNavigator();
     accountDetailsNavigator = MockAccountDetailsNavigator();
     accountsListNavigator = MockAccountsListNavigator();
     appNavigator = MockAppNavigator();
     routingNavigator = MockRoutingNavigator();
+    platformInfoStore = MockPlatformInfoStore();
+    taskScheduler = MockTaskScheduler();
   }
 
   static void _initFallbacks() {
@@ -78,5 +84,6 @@ class Mocks {
     registerFallbackValue(const AddAccountInitialParams());
     registerFallbackValue(const ImportAccountInitialParams());
     registerFallbackValue(const RoutingInitialParams());
+    registerFallbackValue(Duration.zero);
   }
 }
