@@ -72,12 +72,13 @@ void main() {
   );
 
   test('getIt page resolves successfully', () async {
-    expect(getIt<AccountManualBackupPage>(param1: _MockAccountManualBackupInitialParams()), isNotNull);
+    expect(
+      getIt<AccountManualBackupPage>(param1: const AccountManualBackupInitialParams(mnemonic: Mnemonic.empty())),
+      isNotNull,
+    );
   });
 
   setUp(() {
     when(() => Mocks.taskScheduler.schedule(any(), any())).thenAnswer((_) => Future.value(null));
   });
 }
-
-class _MockAccountManualBackupInitialParams extends Mock implements AccountManualBackupInitialParams {}
