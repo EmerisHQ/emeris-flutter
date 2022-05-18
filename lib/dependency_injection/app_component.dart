@@ -61,7 +61,9 @@ import 'package:flutter_app/ui/pages/account_backup/account_backup_intro/account
 import 'package:flutter_app/ui/pages/account_backup/account_cloud_backup/account_cloud_backup_navigator.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_cloud_backup/account_cloud_backup_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_cloud_backup/account_cloud_backup_presenter.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_initial_params.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_navigator.dart';
+import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_page.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_presenter.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
@@ -74,8 +76,6 @@ import 'package:flutter_app/ui/pages/add_account/account_name/account_name_navig
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presenter.dart';
 import 'package:flutter_app/ui/pages/add_account/add_account_navigator.dart';
-import 'package:flutter_app/ui/pages/add_account/add_account_presentation_model.dart';
-import 'package:flutter_app/ui/pages/add_account/add_account_presenter.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presenter.dart';
@@ -129,6 +129,7 @@ import 'package:flutter_app/utils/clipboard_manager.dart';
 import 'package:flutter_app/utils/price_converter.dart';
 import 'package:flutter_app/utils/share_manager.dart';
 import 'package:flutter_app/utils/strings.dart';
+import 'package:flutter_app/utils/task_scheduler.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:transaction_signing_gateway/transaction_signing_gateway.dart';
@@ -267,7 +268,8 @@ void _configureGeneralDependencies() {
     ..registerFactory<LocalStorage>(
       () => PlainStoreLocalStorage(getIt()),
     )
-    ..registerFactory<AppInfoProvider>(AppInfoProvider.new);
+    ..registerFactory<AppInfoProvider>(AppInfoProvider.new)
+    ..registerFactory<TaskScheduler>(TaskScheduler.new);
 }
 
 void _configureUseCases() {
@@ -386,18 +388,23 @@ void _configureMvp() {
     ..registerFactory<AccountCloudBackupNavigator>(
       () => AccountCloudBackupNavigator(getIt()),
     )
-    ..registerFactoryParam<AccountManualBackupPresenter, AccountManualBackupPresentationModel, dynamic>(
-      (_model, _) => AccountManualBackupPresenter(_model, getIt(), getIt()),
-    )
     ..registerFactory<AccountManualBackupNavigator>(
       () => AccountManualBackupNavigator(getIt()),
     )
-    ..registerFactoryParam<AddAccountPresenter, AddAccountPresentationModel, dynamic>(
-      (_model, _) => AddAccountPresenter(
-        _model,
+    ..registerFactoryParam<AccountManualBackupPresentationModel, AccountManualBackupInitialParams, dynamic>(
+      (_params, _) => AccountManualBackupPresentationModel(_params),
+    )
+    ..registerFactoryParam<AccountManualBackupPresenter, AccountManualBackupInitialParams, dynamic>(
+      (initialParams, _) => AccountManualBackupPresenter(
+        getIt(param1: initialParams),
         getIt(),
         getIt(),
-        getIt(),
+      ),
+    )
+    ..registerFactoryParam<AccountManualBackupPage, AccountManualBackupInitialParams, dynamic>(
+      (initialParams, _) => AccountManualBackupPage(
+        presenter: getIt(param1: initialParams),
+        taskScheduler: getIt(),
       ),
     )
     ..registerFactory<AddAccountNavigator>(

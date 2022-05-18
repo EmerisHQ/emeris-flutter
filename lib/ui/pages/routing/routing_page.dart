@@ -1,3 +1,4 @@
+import 'package:cosmos_ui_components/components/content_loading_indicator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
@@ -49,7 +50,7 @@ class RoutingPageState extends State<RoutingPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: ContentLoadingIndicator(),
       ),
     );
   }

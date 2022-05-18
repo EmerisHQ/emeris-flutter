@@ -84,3 +84,9 @@ report.xml
 *.ipr
 misc.xml
 android/.idea
+
+# TEST COVERAGE
+coverage/**/*
+!coverage/**/*.dart
+test/coverage_helper_test.dart
+!coverage/main.lcov.info

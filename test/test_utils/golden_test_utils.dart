@@ -19,14 +19,13 @@ final testDevices = [
 
 final testThemes = {
   'light': const CosmosThemeData(),
-  'dark': const CosmosThemeData(), // TODO add dark theme
+  'dark': cosmosDarkThemeData,
 };
 
 @isTest
 Future<void> screenshotTest(
   String description, {
   required Widget Function(CosmosThemeData themeData) pageBuilder,
-  String variantName = '',
   bool skip = false,
   void Function()? setUp,
   List<String> tags = const ['golden'],
@@ -37,7 +36,7 @@ Future<void> screenshotTest(
   setUp?.call();
   return goldenTest(
     description,
-    fileName: "$description${variantName.trim().isEmpty ? '' : '_$variantName'}",
+    fileName: description,
     builder: () => GoldenTestGroup(
       children: (devices ?? testDevices) //
           .expand(
