@@ -77,7 +77,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Observer(
             builder: (context) {
               return SettingsItem(
-                text: 'Dark theme',
+                text: strings.darkThemeAction,
                 showArrow: false,
                 infoIcon: CosmosSwitch(
                   onChanged: presenter.onThemeUpdated,
