@@ -35,7 +35,7 @@ class _BackupLaterConfirmationSheetState extends State<BackupLaterConfirmationSh
           Text(
             strings.accountSkipBackupConfirmationTitle,
             textAlign: TextAlign.center,
-            style: CosmosTextTheme.title1Bold,
+            style: CosmosTextTheme.title1Bold.copyWith(color: theme.colors.text),
           ),
           SizedBox(
             height: CosmosTheme.of(context).spacingXXL,
