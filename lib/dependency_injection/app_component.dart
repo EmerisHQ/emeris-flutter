@@ -77,6 +77,8 @@ import 'package:flutter_app/ui/pages/add_account/account_name/account_name_navig
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presenter.dart';
 import 'package:flutter_app/ui/pages/add_account/add_account_navigator.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_presentation_model.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_presenter.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presenter.dart';
@@ -361,6 +363,9 @@ void _configureMvp() {
     )
     ..registerFactory<AccountsListNavigator>(
       () => AccountsListNavigator(getIt()),
+    )
+    ..registerFactoryParam<AddAccountPresenter, AddAccountPresentationModel, dynamic>(
+      (_model, _) => AddAccountPresenter(_model, getIt(), getIt(), getIt()),
     )
     ..registerFactoryParam<AccountDetailsPresenter, AccountDetailsPresentationModel, dynamic>(
       (_model, _) => AccountDetailsPresenter(_model, getIt()),
