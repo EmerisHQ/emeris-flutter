@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/settings/settings_presentation_model.dart';
 import 'package:flutter_app/ui/pages/settings/settings_presenter.dart';
 import 'package:flutter_app/utils/strings.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
@@ -69,6 +70,22 @@ class _SettingsPageState extends State<SettingsPage> {
             textStyle: CosmosTextTheme.actionSheetItem,
             infoIcon: const ChipText(title: '#USD'),
             onTap: presenter.onTapCurrency,
+          ),
+          SizedBox(height: theme.spacingXL),
+          const CosmosDivider(),
+          SizedBox(height: theme.spacingXL),
+          Observer(
+            builder: (context) {
+              return SettingsItem(
+                text: 'Dark theme',
+                showArrow: false,
+                infoIcon: CosmosSwitch(
+                  onChanged: presenter.onThemeUpdated,
+                  checked: model.isDarkTheme,
+                ),
+                textStyle: CosmosTextTheme.actionSheetItem,
+              );
+            },
           ),
           SizedBox(height: theme.spacingXL),
           const CosmosDivider(),
