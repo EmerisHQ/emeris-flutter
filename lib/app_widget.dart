@@ -9,15 +9,29 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class AppWidget extends StatelessWidget {
+class AppWidget extends StatefulWidget {
   const AppWidget({Key? key}) : super(key: key);
+
+  @override
+  State<AppWidget> createState() => _AppWidgetState();
+}
+
+class _AppWidgetState extends State<AppWidget> {
+  late SettingsStore _settingsStore;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _settingsStore = getIt();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
         return CosmosTheme(
-          brightness: getIt<SettingsStore>().isDarkTheme ? Brightness.dark : Brightness.light,
+          brightness: _settingsStore.isDarkTheme ? Brightness.dark : Brightness.light,
           child: Builder(
             builder: (context) {
               return MaterialApp(
