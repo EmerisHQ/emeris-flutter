@@ -40,11 +40,10 @@ class _BackupLaterConfirmationSheetState extends State<BackupLaterConfirmationSh
           SizedBox(
             height: CosmosTheme.of(context).spacingXXL,
           ),
-          CheckboxListTile(
-            onChanged: (value) => setState(() => checked = !checked),
-            value: checked,
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text(strings.accountSkipBackupConfirmationMessage),
+          CosmosCheckboxTile(
+            text: strings.accountSkipBackupConfirmationMessage,
+            onTap: () => setState(() => checked = !checked),
+            checked: checked,
           ),
           SizedBox(
             height: CosmosTheme.of(context).spacingM,
