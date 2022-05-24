@@ -49,7 +49,7 @@ jobs:
         timeout-minutes: 4
         run: |
           flutter test --dart-define=IS_CI=true --coverage --coverage-path=coverage/lcov.info
-          lcov --remove coverage/lcov.info 'lib/*/*.g.dart' 'lib/generated_assets/*.dart' 'lib/*/*.gen.dart' 'lib/generated_plugin_registrant.dart'
+          lcov --remove coverage/lcov.info 'lib/*/*.g.dart' 'lib/generated_assets/*.dart' 'lib/*/*.gen.dart' 'lib/generated_plugin_registrant.dart' -o coverage/lcov.info 
 
       - name: read coverage percentage
         run: |
