@@ -126,7 +126,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.3.0"
+    version: "8.3.2"
   characters:
     dependency: transitive
     description:
@@ -189,13 +189,13 @@ packages:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   cosmos_auth:
     dependency: "direct main"
     description:
       path: "packages/cosmos_auth"
       ref: main
-      resolved-ref: d21c434b9d4bf574375e8674120338899524aa6c
+      resolved-ref: a8bf5ac1d97683fd039f65addfeac9c830cb62e3
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -204,7 +204,7 @@ packages:
     description:
       path: "packages/cosmos_ui_components"
       ref: main
-      resolved-ref: d21c434b9d4bf574375e8674120338899524aa6c
+      resolved-ref: a8bf5ac1d97683fd039f65addfeac9c830cb62e3
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -213,7 +213,7 @@ packages:
     description:
       path: "packages/cosmos_utils"
       ref: main
-      resolved-ref: d21c434b9d4bf574375e8674120338899524aa6c
+      resolved-ref: a8bf5ac1d97683fd039f65addfeac9c830cb62e3
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -349,7 +349,7 @@ packages:
       name: firebase_crashlytics_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.6"
+    version: "3.2.7"
   fixnum:
     dependency: transitive
     description:
@@ -768,7 +768,7 @@ packages:
       name: path_provider_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.6"
+    version: "2.1.7"
   path_provider_platform_interface:
     dependency: transitive
     description:
@@ -782,7 +782,7 @@ packages:
       name: path_provider_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.7"
   petitparser:
     dependency: transitive
     description:
@@ -894,7 +894,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.27.3"
+    version: "0.27.4"
   share_plus:
     dependency: "direct main"
     description:
@@ -1122,7 +1122,7 @@ packages:
     description:
       path: "packages/transaction_signing_gateway"
       ref: main
-      resolved-ref: d21c434b9d4bf574375e8674120338899524aa6c
+      resolved-ref: a8bf5ac1d97683fd039f65addfeac9c830cb62e3
       url: "https://github.com/tendermint/flutter.git"
     source: git
     version: "0.0.1"
@@ -1153,7 +1153,7 @@ packages:
       name: url_launcher_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.16"
+    version: "6.0.17"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1246,7 +1246,7 @@ packages:
       name: webkit_inspection_protocol
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.1.0"
   win32:
     dependency: transitive
     description:
