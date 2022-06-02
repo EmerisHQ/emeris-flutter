@@ -20,8 +20,7 @@ class AddAccountPage extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty<AddAccountPresenter?>('presenter', presenter));
+    properties..add(DiagnosticsProperty<AddAccountPresenter?>('presenter', presenter));
   }
 }
 
