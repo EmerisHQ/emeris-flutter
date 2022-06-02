@@ -75,7 +75,11 @@ import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presenter.dart'
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_navigator.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presenter.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_initial_params.dart';
 import 'package:flutter_app/ui/pages/add_account/add_account_navigator.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_page.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_presentation_model.dart';
+import 'package:flutter_app/ui/pages/add_account/add_account_presenter.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presenter.dart';
@@ -407,9 +411,6 @@ void _configureMvp() {
         taskScheduler: getIt(),
       ),
     )
-    ..registerFactory<AddAccountNavigator>(
-      () => AddAccountNavigator(getIt()),
-    )
     ..registerFactoryParam<ImportAccountPresenter, ImportAccountPresentationModel, dynamic>(
       (_model, _) => ImportAccountPresenter(_model, getIt(), getIt()),
     )
@@ -564,6 +565,25 @@ void _configureMvp() {
     )
     ..registerFactoryParam<AccountBackupIntroPage, AccountBackupIntroInitialParams, dynamic>(
       (initialParams, _) => AccountBackupIntroPage(
+        presenter: getIt(param1: initialParams),
+      ),
+    )
+    ..registerFactory<AddAccountNavigator>(
+      () => AddAccountNavigator(getIt()),
+    )
+    ..registerFactoryParam<AddAccountPresentationModel, AddAccountInitialParams, dynamic>(
+      (_params, _) => AddAccountPresentationModel(_params),
+    )
+    ..registerFactoryParam<AddAccountPresenter, AddAccountInitialParams, dynamic>(
+      (initialParams, _) => AddAccountPresenter(
+        getIt(param1: initialParams),
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
+    )
+    ..registerFactoryParam<AddAccountPage, AddAccountInitialParams, dynamic>(
+      (initialParams, _) => AddAccountPage(
         presenter: getIt(param1: initialParams),
       ),
     );

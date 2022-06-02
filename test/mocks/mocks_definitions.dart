@@ -13,10 +13,12 @@ import 'package:flutter_app/domain/use_cases/app_init_use_case.dart';
 import 'package:flutter_app/domain/use_cases/change_current_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/copy_to_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/delete_account_use_case.dart';
+import 'package:flutter_app/domain/use_cases/generate_mnemonic_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_balances_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_chains_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
+import 'package:flutter_app/domain/use_cases/import_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -83,6 +85,10 @@ class MockGetVerifiedDenomsUseCase extends Mock implements GetVerifiedDenomsUseC
 class MockMigrateAppVersionsUseCase extends Mock implements MigrateAppVersionsUseCase {}
 
 class MockCopyToClipboardUseCase extends Mock implements CopyToClipboardUseCase {}
+
+class MockImportAccountUseCase extends Mock implements ImportAccountUseCase {}
+
+class MockGenerateMnemonicUseCase extends Mock implements GenerateMnemonicUseCase {}
 
 // Navigators
 
