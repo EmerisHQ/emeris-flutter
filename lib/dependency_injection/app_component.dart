@@ -81,8 +81,6 @@ import 'package:flutter_app/ui/pages/add_account/add_account_navigator.dart';
 import 'package:flutter_app/ui/pages/add_account/add_account_page.dart';
 import 'package:flutter_app/ui/pages/add_account/add_account_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_account/add_account_presenter.dart';
-import 'package:flutter_app/ui/pages/add_account/add_account_presentation_model.dart';
-import 'package:flutter_app/ui/pages/add_account/add_account_presenter.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_navigator.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/asset_details/asset_details_presenter.dart';
