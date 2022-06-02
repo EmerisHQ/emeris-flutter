@@ -34,12 +34,14 @@ class Mocks {
   static late MockMigrateAppVersionsUseCase migrateAppVersionsUseCase;
   static late MockCopyToClipboardUseCase copyToClipboardUseCase;
   static late MockUpdateThemeUseCase updateThemeUseCase;
+  static late MockImportAccountUseCase importAccountUseCase;
   static late MockSendTokensNavigator sendTokensNavigator;
   static late MockAccountDetailsNavigator accountDetailsNavigator;
   static late MockAccountsListNavigator accountsListNavigator;
   static late MockAppNavigator appNavigator;
   static late MockRoutingNavigator routingNavigator;
   static late MockTaskScheduler taskScheduler;
+  static late MockGenerateMnemonicUseCase generateMnemonicUseCase;
 
   static void init() {
     _initMocks();
@@ -69,6 +71,8 @@ class Mocks {
     getVerifiedDenomsUseCase = MockGetVerifiedDenomsUseCase();
     migrateAppVersionsUseCase = MockMigrateAppVersionsUseCase();
     copyToClipboardUseCase = MockCopyToClipboardUseCase();
+    importAccountUseCase = MockImportAccountUseCase();
+    generateMnemonicUseCase = MockGenerateMnemonicUseCase();
     updateThemeUseCase = MockUpdateThemeUseCase();
     sendTokensNavigator = MockSendTokensNavigator();
     accountDetailsNavigator = MockAccountDetailsNavigator();

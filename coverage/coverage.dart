@@ -37,9 +37,9 @@ Future<double> _calculateCoveragePercentage(String lcovFile) async {
   final coverage = lines.fold<List<int>>([0, 0], (data, line) {
     var testedLines = data[0];
     var totalLines = data[1];
-    if (line.startsWith('DA')) {
+    if (line.startsWith('DA:')) {
       totalLines++;
-      if (!line.endsWith('0')) {
+      if (!line.endsWith(',0')) {
         testedLines++;
       }
     }
