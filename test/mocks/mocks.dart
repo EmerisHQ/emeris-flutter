@@ -33,6 +33,7 @@ class Mocks {
   static late MockGetVerifiedDenomsUseCase getVerifiedDenomsUseCase;
   static late MockMigrateAppVersionsUseCase migrateAppVersionsUseCase;
   static late MockCopyToClipboardUseCase copyToClipboardUseCase;
+  static late MockUpdateThemeUseCase updateThemeUseCase;
   static late MockSendTokensNavigator sendTokensNavigator;
   static late MockAccountDetailsNavigator accountDetailsNavigator;
   static late MockAccountsListNavigator accountsListNavigator;
@@ -68,6 +69,7 @@ class Mocks {
     getVerifiedDenomsUseCase = MockGetVerifiedDenomsUseCase();
     migrateAppVersionsUseCase = MockMigrateAppVersionsUseCase();
     copyToClipboardUseCase = MockCopyToClipboardUseCase();
+    updateThemeUseCase = MockUpdateThemeUseCase();
     sendTokensNavigator = MockSendTokensNavigator();
     accountDetailsNavigator = MockAccountDetailsNavigator();
     accountsListNavigator = MockAccountsListNavigator();
