@@ -366,9 +366,6 @@ void _configureMvp() {
     ..registerFactory<AccountsListNavigator>(
       () => AccountsListNavigator(getIt()),
     )
-    ..registerFactoryParam<AddAccountPresenter, AddAccountPresentationModel, dynamic>(
-      (_model, _) => AddAccountPresenter(_model, getIt(), getIt(), getIt()),
-    )
     ..registerFactoryParam<AccountDetailsPresenter, AccountDetailsPresentationModel, dynamic>(
       (_model, _) => AccountDetailsPresenter(_model, getIt()),
     )
