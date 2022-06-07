@@ -49,6 +49,7 @@ import 'package:flutter_app/domain/use_cases/rename_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/save_passcode_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/domain/use_cases/share_data_use_case.dart';
+import 'package:flutter_app/domain/use_cases/update_theme_use_case.dart';
 import 'package:flutter_app/domain/use_cases/verify_account_password_use_case.dart';
 import 'package:flutter_app/domain/use_cases/verify_passcode_use_case.dart';
 import 'package:flutter_app/environment_config.dart';
@@ -351,6 +352,9 @@ void _configureUseCases() {
     )
     ..registerFactory<MigrateAppVersionsUseCase>(
       () => MigrateAppVersionsUseCase(getIt(), getIt(), getIt()),
+    )
+    ..registerFactory<UpdateThemeUseCase>(
+      () => UpdateThemeUseCase(getIt()),
     );
 }
 
@@ -501,11 +505,12 @@ void _configureMvp() {
       },
     )
     ..registerFactoryParam<SettingsPresentationModel, SettingsInitialParams, dynamic>(
-      (_params, _) => SettingsPresentationModel(_params),
+      (_params, _) => SettingsPresentationModel(_params, getIt()),
     )
     ..registerFactoryParam<SettingsPresenter, SettingsInitialParams, dynamic>(
       (params, _) => SettingsPresenter(
         getIt(param1: params),
+        getIt(),
         getIt(),
       ),
     )
