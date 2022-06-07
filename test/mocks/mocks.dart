@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/ui/pages/add_account/add_account_initial_params.dart';
@@ -84,6 +85,7 @@ class Mocks {
   }
 
   static void _initFallbacks() {
+    registerFallbackValue(Brightness.dark);
     registerFallbackValue(const AccountDetails.empty());
     registerFallbackValue(const OnboardingInitialParams());
     registerFallbackValue(const EmerisAccount.empty());

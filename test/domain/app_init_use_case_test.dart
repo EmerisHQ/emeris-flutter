@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/account_address.dart';
@@ -44,7 +43,6 @@ void main() {
   //
 
   setUp(() {
-    registerFallbackValue(Brightness.dark);
     useCase = AppInitUseCase(
       Mocks.appLocalizationsInitializer,
       Mocks.accountsRepository,
