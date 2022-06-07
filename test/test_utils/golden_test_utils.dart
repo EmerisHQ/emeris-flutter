@@ -18,8 +18,8 @@ final testDevices = [
 ];
 
 final testThemes = {
-  'light': const CosmosThemeData(),
-  'dark': cosmosDarkThemeData,
+  'light': const CosmosThemeData.light(),
+  'dark': const CosmosThemeData.dark(),
 };
 
 @isTest

@@ -48,47 +48,53 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: Column(
         children: [
-          SizedBox(height: theme.spacingXXL),
-          SettingsItem(
-            text: strings.backUpYourAccountTitle,
-            infoIcon: Image.asset('assets/images/icon_warning.png', package: packageName),
-            textStyle: CosmosTextTheme.actionSheetItem,
-            onTap: presenter.onTapBackup,
+          Expanded(
+            child: ListView(
+              children: [
+                SizedBox(height: theme.spacingXXL),
+                SettingsItem(
+                  text: strings.backUpYourAccountTitle,
+                  infoIcon: Image.asset('assets/images/icon_warning.png', package: packageName),
+                  textStyle: CosmosTextTheme.actionSheetItem,
+                  onTap: presenter.onTapBackup,
+                ),
+                SizedBox(height: theme.spacingL),
+                SettingsItem(
+                  text: strings.securityAction,
+                  textStyle: CosmosTextTheme.actionSheetItem,
+                  onTap: () => notImplemented(context),
+                ),
+                SizedBox(height: theme.spacingXL),
+                const CosmosDivider(),
+                SizedBox(height: theme.spacingXL),
+                SettingsItem(
+                  text: strings.currencyAction,
+                  textStyle: CosmosTextTheme.actionSheetItem,
+                  infoIcon: const ChipText(title: '#USD'),
+                  onTap: presenter.onTapCurrency,
+                ),
+                SizedBox(height: theme.spacingXL),
+                const CosmosDivider(),
+                SizedBox(height: theme.spacingXL),
+                SettingsItem(
+                  text: strings.communityAction,
+                  textStyle: CosmosTextTheme.copyMinus1Normal,
+                  onTap: presenter.onTapCommunity,
+                ),
+                SettingsItem(
+                  text: strings.twitterAction,
+                  textStyle: CosmosTextTheme.copyMinus1Normal,
+                  onTap: presenter.onTapTwitter,
+                ),
+                SettingsItem(
+                  text: strings.supportAction,
+                  textStyle: CosmosTextTheme.copyMinus1Normal,
+                  onTap: presenter.onTapSupport,
+                ),
+                SizedBox(height: theme.spacingXL),
+              ],
+            ),
           ),
-          SizedBox(height: theme.spacingL),
-          SettingsItem(
-            text: strings.securityAction,
-            textStyle: CosmosTextTheme.actionSheetItem,
-            onTap: () => notImplemented(context),
-          ),
-          SizedBox(height: theme.spacingXL),
-          const CosmosDivider(),
-          SizedBox(height: theme.spacingXL),
-          SettingsItem(
-            text: strings.currencyAction,
-            textStyle: CosmosTextTheme.actionSheetItem,
-            infoIcon: const ChipText(title: '#USD'),
-            onTap: presenter.onTapCurrency,
-          ),
-          SizedBox(height: theme.spacingXL),
-          const CosmosDivider(),
-          SizedBox(height: theme.spacingXL),
-          SettingsItem(
-            text: strings.communityAction,
-            textStyle: CosmosTextTheme.copyMinus1Normal,
-            onTap: presenter.onTapCommunity,
-          ),
-          SettingsItem(
-            text: strings.twitterAction,
-            textStyle: CosmosTextTheme.copyMinus1Normal,
-            onTap: presenter.onTapTwitter,
-          ),
-          SettingsItem(
-            text: strings.supportAction,
-            textStyle: CosmosTextTheme.copyMinus1Normal,
-            onTap: presenter.onTapSupport,
-          ),
-          SizedBox(height: theme.spacingXL),
           const CosmosDivider(),
           const Spacer(),
           Padding(
