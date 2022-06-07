@@ -31,7 +31,7 @@ class _AppWidgetState extends State<AppWidget> {
     return Observer(
       builder: (context) {
         return CosmosTheme(
-          brightness: _settingsStore.isDarkTheme ? Brightness.dark : Brightness.light,
+          brightness: _settingsStore.brightness,
           child: Builder(
             builder: (context) {
               return MaterialApp(

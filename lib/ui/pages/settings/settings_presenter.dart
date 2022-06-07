@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_app/domain/use_cases/update_theme_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/settings/settings_navigator.dart';
@@ -35,5 +36,7 @@ class SettingsPresenter {
   void onTapSignOut() => showNotImplemented();
 
   // ignore: avoid_positional_boolean_parameters
-  void onThemeUpdated(bool value) => _updateThemeUseCase.execute(isDarkTheme: value);
+  void onThemeUpdated(bool value) => _updateThemeUseCase.execute(
+        brightness: value ? Brightness.dark : Brightness.light,
+      );
 }

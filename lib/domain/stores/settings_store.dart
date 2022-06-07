@@ -1,11 +1,12 @@
 import 'package:cosmos_utils/extensions.dart';
+import 'package:flutter/material.dart' as ui;
 import 'package:flutter_app/domain/repositories/auth_repository.dart';
 import 'package:mobx/mobx.dart';
 
 class SettingsStore with _SettingsStoreBase {
   bool get hasPasscode => _hasPasscode.value;
 
-  bool get isDarkTheme => _isDarkTheme.value;
+  ui.Brightness get brightness => _brightness.value;
 
   Future<void> init(AuthRepository _authRepository) async {
     hasPasscode = await _authRepository.hasPasscode().asyncFold(
@@ -22,7 +23,7 @@ mixin _SettingsStoreBase {
   set hasPasscode(bool value) => Action(() => _hasPasscode.value = value)();
 
   //////////////////////////////////////
-  final Observable<bool> _isDarkTheme = Observable(true);
+  final Observable<ui.Brightness> _brightness = Observable(ui.Brightness.dark);
 
-  set isDarkTheme(bool value) => Action(() => _isDarkTheme.value = value)();
+  set brightness(ui.Brightness value) => Action(() => _brightness.value = value)();
 }

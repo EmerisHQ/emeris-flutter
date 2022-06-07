@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/domain/stores/settings_store.dart';
 import 'package:flutter_app/ui/pages/settings/settings_initial_params.dart';
 
@@ -12,7 +13,7 @@ class SettingsPresentationModel with SettingsPresentationModelBase implements Se
   final SettingsStore _settingsStore;
 
   @override
-  bool get isDarkTheme => _settingsStore.isDarkTheme;
+  bool get isDarkTheme => _settingsStore.brightness == Brightness.dark;
 }
 
 abstract class SettingsPresentationModelBase {}

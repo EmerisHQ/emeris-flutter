@@ -77,7 +77,7 @@ void main() {
         .thenAnswer((invocation) => successFuture(unit));
     when(() => Mocks.getBalancesUseCase.execute(details: any(named: 'details'))) //
         .thenAnswer((invocation) => successFuture(unit));
-    when(() => Mocks.updateThemeUseCase.execute(isDarkTheme: any(named: 'isDarkTheme'))) //
+    when(() => Mocks.updateThemeUseCase.execute(brightness: any(named: 'brightness'))) //
         .thenAnswer((invocation) => successFuture(unit));
     realAccount = const EmerisAccount.empty().copyWith(
       accountDetails: const AccountDetails(
