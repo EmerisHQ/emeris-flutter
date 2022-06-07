@@ -47,17 +47,19 @@ jobs:
 
       - name: unit tests
         timeout-minutes: 4
-        run: flutter test --dart-define=IS_CI=true --coverage --coverage-path=coverage/lcov.info
+        run: |
+          flutter test --dart-define=IS_CI=true --coverage --coverage-path=coverage/lcov.info
+          lcov --remove coverage/lcov.info 'lib/*/*.g.dart' 'lib/generated_assets/*.dart' 'lib/*/*.gen.dart' 'lib/generated_plugin_registrant.dart' -o coverage/lcov.info 
 
       - name: read coverage percentage
         run: |
-          echo "BASE_COVERAGE=$(lcov --summary coverage/main.lcov.info | sed -n '3p' | sed -r 's/(.+): (.+)(\%.+)/\2/' | cat)" >> $GITHUB_ENV
-          echo "THIS_COVERAGE=$(lcov --summary coverage/lcov.info | sed -n '3p' | sed -r 's/(.+): (.+)(\%.+)/\2/' | cat)" >> $GITHUB_ENV
-          echo $BASE_COVERAGE
+          echo "BASE_COVERAGE=$(dart coverage/coverage.dart main_branch_percentage)" >> $GITHUB_ENV
+          echo "THIS_COVERAGE=$(dart coverage/coverage.dart pr_branch_percentage)" >> $GITHUB_ENV
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v1
         with:
+          comment_includes: '## Code Coverage'
           message: |
             ## Code Coverage
             <table><tbody>
@@ -67,11 +69,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check coverage percentage
-        uses: VeryGoodOpenSource/very_good_coverage@v1
-        with:
-          path: './coverage/lcov.info'
-          min_coverage: ${{ env.BASE_COVERAGE }}
-          exclude: 'lib/*/*.g.dart lib/generated_assets/*.dart lib/*/*.gen.dart lib/generated_plugin_registrant.dart'
+        run: |
+          dart coverage/coverage.dart check_percentage
 
       - uses: actions/upload-artifact@v2
         name: upload screenshot test failures

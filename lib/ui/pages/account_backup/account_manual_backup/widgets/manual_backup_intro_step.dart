@@ -35,17 +35,23 @@ class ManualBackupIntroStep extends StatelessWidget {
               strings.backUpYourAccountMessage,
               textAlign: TextAlign.center,
             ),
-            const Spacer(),
-            CosmosMnemonicWordsGrid(
-              physics: const NeverScrollableScrollPhysics(),
-              mnemonicWords: model.mnemonicStringWords,
+            SizedBox(height: theme.spacingM),
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: CosmosMnemonicWordsGrid(
+                    mnemonicWords: model.mnemonicStringWords,
+                  ),
+                ),
+              ),
             ),
             CosmosTextButton(
               suffixIcon: const Icon(Icons.copy),
               text: strings.copyToClipboardAction,
               onTap: presenter.onTapCopyToClipboard,
             ),
-            const Spacer(),
+            SizedBox(height: theme.spacingM),
             CheckboxListTile(
               onChanged: (checked) => presenter.onCheckConfirmationCheckbox(checked ?? false),
               value: model.confirmationChecked,

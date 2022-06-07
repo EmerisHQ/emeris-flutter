@@ -1,27 +1,25 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_initial_params.dart';
-import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_navigator.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_presenter.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/widgets/manual_backup_confirm_step.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/widgets/manual_backup_intro_step.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/widgets/manual_backup_success_step.dart';
 import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
+import 'package:flutter_app/utils/task_scheduler.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 
 class AccountManualBackupPage extends StatefulWidget {
   const AccountManualBackupPage({
-    required this.initialParams,
+    required this.presenter,
+    required this.taskScheduler,
     Key? key,
-    this.presenter, // useful for tests
   }) : super(key: key);
 
-  final AccountManualBackupInitialParams initialParams;
-  final AccountManualBackupPresenter? presenter;
+  final AccountManualBackupPresenter presenter;
+  final TaskScheduler taskScheduler;
 
   @override
   AccountManualBackupPageState createState() => AccountManualBackupPageState();
@@ -30,13 +28,13 @@ class AccountManualBackupPage extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty<AccountManualBackupInitialParams>('initialParams', initialParams))
-      ..add(DiagnosticsProperty<AccountManualBackupPresenter?>('presenter', presenter));
+      ..add(DiagnosticsProperty<AccountManualBackupPresenter?>('presenter', presenter))
+      ..add(DiagnosticsProperty<TaskScheduler>('taskScheduler', taskScheduler));
   }
 }
 
 class AccountManualBackupPageState extends State<AccountManualBackupPage> {
-  late AccountManualBackupPresenter presenter;
+  AccountManualBackupPresenter get presenter => widget.presenter;
 
   AccountManualBackupViewModel get model => presenter.viewModel;
   ReactionDisposer? _reactionDisposer;
@@ -44,18 +42,17 @@ class AccountManualBackupPageState extends State<AccountManualBackupPage> {
   @override
   void initState() {
     super.initState();
-    presenter = widget.presenter ??
-        getIt(
-          param1: AccountManualBackupPresentationModel(widget.initialParams),
-          param2: getIt<AccountManualBackupNavigator>(),
-        );
     presenter.navigator.context = context;
-    _reactionDisposer = when((_) => model.step == ManualBackupStep.success, () async {
-      await Future.delayed(const Duration(seconds: 3));
-      if (mounted) {
-        presenter.onTapSuccessContinue();
-      }
-    });
+    _reactionDisposer = when(
+      (_) => model.step == ManualBackupStep.success,
+      () async {
+        return widget.taskScheduler.schedule(const Duration(seconds: 3), () {
+          if (mounted) {
+            presenter.onTapSuccessContinue();
+          }
+        });
+      },
+    );
   }
 
   @override
