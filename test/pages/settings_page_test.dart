@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/settings/settings_initial_params.dart';
 import 'package:flutter_app/ui/pages/settings/settings_navigator.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../mocks/mocks.dart';
+import '../test_utils.dart';
 import '../test_utils/golden_test_utils.dart';
 import '../test_utils/test_app_widget.dart';
 
@@ -20,15 +23,20 @@ void main() {
 
   void _initMvp() {
     initParams = const SettingsInitialParams();
-    model = SettingsPresentationModel(initParams);
+    model = SettingsPresentationModel(initParams, Mocks.settingsStore);
     navigator = SettingsNavigator(Mocks.appNavigator);
-    presenter = SettingsPresenter(model, navigator);
+    presenter = SettingsPresenter(model, navigator, Mocks.updateThemeUseCase);
     page = SettingsPage(presenter: presenter);
   }
 
   screenshotTest(
     'settings_page',
-    setUp: _initMvp,
+    setUp: () {
+      _initMvp();
+      when(() => Mocks.settingsStore.brightness).thenAnswer((invocation) => Brightness.dark);
+      when(() => Mocks.updateThemeUseCase.execute(brightness: any(named: 'brightness'))) //
+          .thenAnswer((invocation) => successFuture(unit));
+    },
     pageBuilder: (theme) {
       return TestAppWidget(
         themeData: theme,

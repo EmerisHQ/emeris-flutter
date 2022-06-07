@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/settings/settings_presentation_model.dart';
 import 'package:flutter_app/ui/pages/settings/settings_presenter.dart';
 import 'package:flutter_app/utils/strings.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
