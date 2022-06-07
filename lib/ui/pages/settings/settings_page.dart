@@ -96,7 +96,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           const CosmosDivider(),
-          const Spacer(),
           Padding(
             padding: EdgeInsets.only(bottom: theme.spacingXL),
             child: SettingsItem(
