@@ -20,7 +20,7 @@ class ChainCard extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(chainAsset.chain.displayName),
       leading: CircleAvatar(
-        backgroundColor: theme.colors.background,
+        backgroundColor: theme.colors.inactive,
         foregroundColor: theme.colors.text,
         child: Text(chainAsset.chain.displayName[0]),
       ),
