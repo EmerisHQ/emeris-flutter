@@ -8,7 +8,7 @@ import 'package:flutter_app/utils/strings.dart';
 
 class AccountNamePage extends StatefulWidget {
   const AccountNamePage({
-    required this.presenter, // useful for tests
+    required this.presenter,
     Key? key,
   }) : super(key: key);
   final AccountNamePresenter presenter;
