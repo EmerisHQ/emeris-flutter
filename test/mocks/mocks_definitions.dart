@@ -20,6 +20,7 @@ import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
+import 'package:flutter_app/domain/use_cases/rename_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/domain/use_cases/update_theme_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
@@ -92,6 +93,8 @@ class MockImportAccountUseCase extends Mock implements ImportAccountUseCase {}
 class MockGenerateMnemonicUseCase extends Mock implements GenerateMnemonicUseCase {}
 
 class MockUpdateThemeUseCase extends Mock implements UpdateThemeUseCase {}
+
+class MockRenameAccountUseCase extends Mock implements RenameAccountUseCase {}
 
 // Navigators
 

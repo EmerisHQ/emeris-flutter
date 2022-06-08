@@ -35,6 +35,7 @@ class Mocks {
   static late MockMigrateAppVersionsUseCase migrateAppVersionsUseCase;
   static late MockCopyToClipboardUseCase copyToClipboardUseCase;
   static late MockUpdateThemeUseCase updateThemeUseCase;
+  static late MockRenameAccountUseCase renameAccountUseCase;
   static late MockImportAccountUseCase importAccountUseCase;
   static late MockSendTokensNavigator sendTokensNavigator;
   static late MockAccountDetailsNavigator accountDetailsNavigator;
@@ -75,6 +76,7 @@ class Mocks {
     importAccountUseCase = MockImportAccountUseCase();
     generateMnemonicUseCase = MockGenerateMnemonicUseCase();
     updateThemeUseCase = MockUpdateThemeUseCase();
+    renameAccountUseCase = MockRenameAccountUseCase();
     sendTokensNavigator = MockSendTokensNavigator();
     accountDetailsNavigator = MockAccountDetailsNavigator();
     accountsListNavigator = MockAccountsListNavigator();
@@ -86,6 +88,7 @@ class Mocks {
 
   static void _initFallbacks() {
     registerFallbackValue(Brightness.dark);
+    registerFallbackValue(const EmerisAccount.empty());
     registerFallbackValue(const AccountDetails.empty());
     registerFallbackValue(const OnboardingInitialParams());
     registerFallbackValue(const EmerisAccount.empty());
