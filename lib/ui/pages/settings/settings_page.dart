@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/settings/settings_presentation_model.dart';
 import 'package:flutter_app/ui/pages/settings/settings_presenter.dart';
 import 'package:flutter_app/utils/strings.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
@@ -49,65 +48,54 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: Column(
         children: [
-          SizedBox(height: theme.spacingXXL),
-          SettingsItem(
-            text: strings.backUpYourAccountTitle,
-            infoIcon: Image.asset('assets/images/icon_warning.png', package: packageName),
-            textStyle: CosmosTextTheme.actionSheetItem,
-            onTap: presenter.onTapBackup,
-          ),
-          SizedBox(height: theme.spacingL),
-          SettingsItem(
-            text: strings.securityAction,
-            textStyle: CosmosTextTheme.actionSheetItem,
-            onTap: () => notImplemented(context),
-          ),
-          SizedBox(height: theme.spacingXL),
-          const CosmosDivider(),
-          SizedBox(height: theme.spacingXL),
-          SettingsItem(
-            text: strings.currencyAction,
-            textStyle: CosmosTextTheme.actionSheetItem,
-            infoIcon: const ChipText(title: '#USD'),
-            onTap: presenter.onTapCurrency,
-          ),
-          SizedBox(height: theme.spacingXL),
-          const CosmosDivider(),
-          SizedBox(height: theme.spacingXL),
-          Observer(
-            builder: (context) {
-              return SettingsItem(
-                text: strings.darkThemeAction,
-                showArrow: false,
-                infoIcon: CosmosSwitch(
-                  onChanged: presenter.onThemeUpdated,
-                  checked: model.isDarkTheme,
+          Expanded(
+            child: ListView(
+              children: [
+                SizedBox(height: theme.spacingXXL),
+                SettingsItem(
+                  text: strings.backUpYourAccountTitle,
+                  infoIcon: Image.asset('assets/images/icon_warning.png', package: packageName),
+                  textStyle: CosmosTextTheme.actionSheetItem,
+                  onTap: presenter.onTapBackup,
                 ),
-                textStyle: CosmosTextTheme.actionSheetItem,
-              );
-            },
+                SizedBox(height: theme.spacingL),
+                SettingsItem(
+                  text: strings.securityAction,
+                  textStyle: CosmosTextTheme.actionSheetItem,
+                  onTap: () => notImplemented(context),
+                ),
+                SizedBox(height: theme.spacingXL),
+                const CosmosDivider(),
+                SizedBox(height: theme.spacingXL),
+                SettingsItem(
+                  text: strings.currencyAction,
+                  textStyle: CosmosTextTheme.actionSheetItem,
+                  infoIcon: const ChipText(title: '#USD'),
+                  onTap: presenter.onTapCurrency,
+                ),
+                SizedBox(height: theme.spacingXL),
+                const CosmosDivider(),
+                SizedBox(height: theme.spacingXL),
+                SettingsItem(
+                  text: strings.communityAction,
+                  textStyle: CosmosTextTheme.copyMinus1Normal,
+                  onTap: presenter.onTapCommunity,
+                ),
+                SettingsItem(
+                  text: strings.twitterAction,
+                  textStyle: CosmosTextTheme.copyMinus1Normal,
+                  onTap: presenter.onTapTwitter,
+                ),
+                SettingsItem(
+                  text: strings.supportAction,
+                  textStyle: CosmosTextTheme.copyMinus1Normal,
+                  onTap: presenter.onTapSupport,
+                ),
+                SizedBox(height: theme.spacingXL),
+              ],
+            ),
           ),
-          SizedBox(height: theme.spacingXL),
           const CosmosDivider(),
-          SizedBox(height: theme.spacingXL),
-          SettingsItem(
-            text: strings.communityAction,
-            textStyle: CosmosTextTheme.copyMinus1Normal,
-            onTap: presenter.onTapCommunity,
-          ),
-          SettingsItem(
-            text: strings.twitterAction,
-            textStyle: CosmosTextTheme.copyMinus1Normal,
-            onTap: presenter.onTapTwitter,
-          ),
-          SettingsItem(
-            text: strings.supportAction,
-            textStyle: CosmosTextTheme.copyMinus1Normal,
-            onTap: presenter.onTapSupport,
-          ),
-          SizedBox(height: theme.spacingXL),
-          const CosmosDivider(),
-          const Spacer(),
           Padding(
             padding: EdgeInsets.only(bottom: theme.spacingXL),
             child: SettingsItem(
