@@ -63,6 +63,7 @@ class AccountNamePageState extends State<AccountNamePage> {
                 text: strings.continueAction,
                 onTap: presenter.onTapSubmit,
               ),
+              const MinimalBottomSpacer(),
             ],
           ),
         ),
