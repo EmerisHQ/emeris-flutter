@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/close_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
@@ -19,7 +20,7 @@ mixin AccountNameRoute {
   Future<String?> openAccountName(AccountNameInitialParams initialParams) {
     return appNavigator.push(
       context,
-      materialRoute(AccountNamePage(initialParams: initialParams)),
+      materialRoute(getIt<AccountNamePage>(param1: initialParams)),
     );
   }
 
