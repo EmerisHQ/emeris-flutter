@@ -52,7 +52,7 @@ class _CosmosQRViewState extends State<CosmosQRView> {
               SizedBox(height: theme.spacingXXXL),
               Text(
                 strings.scanQrTitle,
-                style: CosmosTextTheme.title1Bold.copyWith(color: theme.colors.background),
+                style: CosmosTextTheme.title1Bold.copyWith(color: theme.colors.text),
               ),
               const Spacer(),
               _infoBox(theme),
@@ -111,7 +111,7 @@ class _CosmosQRViewState extends State<CosmosQRView> {
         CosmosBackButton(
           text: '',
           onTap: widget.onTapClose,
-          color: theme.colors.background,
+          color: theme.colors.text,
         ),
         const Spacer(),
         InkWell(

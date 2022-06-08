@@ -17,12 +17,13 @@ class TestAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CosmosTheme(
       themeData: themeData,
-      child: Theme(
-        // TODO remove this as soon the buildAppTheme is removed from cosmos_ui_components package
-        // Make sure the screenshots stay untouched after the removal
-        // ignore: deprecated_member_use
-        data: CosmosTheme.buildAppTheme(),
-        child: child,
+      child: Builder(
+        builder: (context) {
+          return Theme(
+            data: CosmosTheme.of(context).buildFlutterTheme(),
+            child: child,
+          );
+        },
       ),
     );
   }

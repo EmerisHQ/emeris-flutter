@@ -75,7 +75,7 @@ class _ReceivePageState extends State<ReceivePage> {
               ),
               Text(
                 model.accountAlias,
-                style: CosmosTextTheme.title1Medium,
+                style: CosmosTextTheme.title1Medium.copyWith(color: theme.colors.text),
               )
             ],
           ),

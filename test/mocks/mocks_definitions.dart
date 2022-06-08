@@ -21,6 +21,7 @@ import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
+import 'package:flutter_app/domain/use_cases/update_theme_use_case.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
@@ -89,6 +90,8 @@ class MockCopyToClipboardUseCase extends Mock implements CopyToClipboardUseCase 
 class MockImportAccountUseCase extends Mock implements ImportAccountUseCase {}
 
 class MockGenerateMnemonicUseCase extends Mock implements GenerateMnemonicUseCase {}
+
+class MockUpdateThemeUseCase extends Mock implements UpdateThemeUseCase {}
 
 // Navigators
 
