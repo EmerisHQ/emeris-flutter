@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/ui/pages/rename_account/rename_account_initial_parameters.dart';
@@ -10,7 +9,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../mocks/mocks.dart';
-import '../test_utils.dart';
 import '../test_utils/golden_test_utils.dart';
 import '../test_utils/test_app_widget.dart';
 
@@ -20,7 +18,6 @@ void main() {
   late RenameAccountPresentationModel model;
   late RenameAccountPresenter presenter;
   late RenameAccountNavigator navigator;
-  const updatedName = 'Hello';
 
   void _initMvp() {
     initParams = const RenameAccountInitialParams(emerisAccount: EmerisAccount.empty());
@@ -32,16 +29,7 @@ void main() {
 
   screenshotTest(
     'rename_account_page',
-    setUp: () {
-      _initMvp();
-      when(
-        () => Mocks.renameAccountUseCase.execute(
-          emerisAccount: any(named: 'emerisAccount'),
-          updatedName: updatedName,
-        ),
-      ) //
-          .thenAnswer((invocation) => successFuture(unit));
-    },
+    setUp: _initMvp,
     pageBuilder: (theme) => TestAppWidget(
       themeData: theme,
       child: page,
