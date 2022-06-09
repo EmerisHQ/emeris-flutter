@@ -33,33 +33,35 @@ Future<void> screenshotTest(
   Map<String, CosmosThemeData>? themes,
   Duration timeout = const Duration(seconds: 5),
 }) async {
-  setUp?.call();
   return goldenTest(
     description,
     fileName: description,
-    builder: () => GoldenTestGroup(
-      children: (devices ?? testDevices) //
-          .expand(
-            (device) => (themes ?? testThemes).entries.map(
-                  (entry) => ScreenshotTestVariant(
-                    device: device,
-                    theme: entry.value,
-                    themeName: entry.key,
+    builder: () {
+      setUp?.call();
+      return GoldenTestGroup(
+        children: (devices ?? testDevices) //
+            .expand(
+              (device) => (themes ?? testThemes).entries.map(
+                    (entry) => ScreenshotTestVariant(
+                      device: device,
+                      theme: entry.value,
+                      themeName: entry.key,
+                    ),
                   ),
+            )
+            .map(
+              (variant) => DefaultAssetBundle(
+                bundle: TestAssetBundle(),
+                child: GoldenTestDeviceScenario(
+                  device: variant.device,
+                  builder: () => pageBuilder(variant.theme),
+                  suffix: variant.themeName,
                 ),
-          )
-          .map(
-            (variant) => DefaultAssetBundle(
-              bundle: TestAssetBundle(),
-              child: GoldenTestDeviceScenario(
-                device: variant.device,
-                builder: () => pageBuilder(variant.theme),
-                suffix: variant.themeName,
               ),
-            ),
-          )
-          .toList(),
-    ),
+            )
+            .toList(),
+      );
+    },
     tags: tags,
     skip: skip,
     pumpBeforeTest: (tester) => mockNetworkImages(() => precacheImages(tester)).timeout(timeout),
