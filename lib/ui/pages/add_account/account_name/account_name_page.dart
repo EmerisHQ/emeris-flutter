@@ -1,9 +1,6 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/ui/pages/add_account/account_name/account_name_initial_params.dart';
-import 'package:flutter_app/ui/pages/add_account/account_name/account_name_navigator.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presentation_model.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_presenter.dart';
 import 'package:flutter_app/ui/widgets/emeris_logo_app_bar.dart';
@@ -11,13 +8,10 @@ import 'package:flutter_app/utils/strings.dart';
 
 class AccountNamePage extends StatefulWidget {
   const AccountNamePage({
-    required this.initialParams,
+    required this.presenter,
     Key? key,
-    this.presenter, // useful for tests
   }) : super(key: key);
-
-  final AccountNameInitialParams initialParams;
-  final AccountNamePresenter? presenter;
+  final AccountNamePresenter presenter;
 
   @override
   AccountNamePageState createState() => AccountNamePageState();
@@ -25,25 +19,18 @@ class AccountNamePage extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty<AccountNameInitialParams>('initialParams', initialParams))
-      ..add(DiagnosticsProperty<AccountNamePresenter?>('presenter', presenter));
+    properties.add(DiagnosticsProperty<AccountNamePresenter?>('presenter', presenter));
   }
 }
 
 class AccountNamePageState extends State<AccountNamePage> {
-  late AccountNamePresenter presenter;
+  AccountNamePresenter get presenter => widget.presenter;
 
   AccountNameViewModel get model => presenter.viewModel;
 
   @override
   void initState() {
     super.initState();
-    presenter = widget.presenter ??
-        getIt(
-          param1: AccountNamePresentationModel(widget.initialParams),
-          param2: getIt<AccountNameNavigator>(),
-        );
     presenter.navigator.context = context;
   }
 
@@ -76,6 +63,7 @@ class AccountNamePageState extends State<AccountNamePage> {
                 text: strings.continueAction,
                 onTap: presenter.onTapSubmit,
               ),
+              const MinimalBottomSpacer(),
             ],
           ),
         ),
