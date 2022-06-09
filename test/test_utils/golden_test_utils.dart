@@ -33,11 +33,12 @@ Future<void> screenshotTest(
   Map<String, CosmosThemeData>? themes,
   Duration timeout = const Duration(seconds: 5),
 }) async {
-  setUp?.call();
   return goldenTest(
     description,
     fileName: description,
-    builder: () => GoldenTestGroup(
+    builder: () {
+      setUp?.call();
+      return GoldenTestGroup(
       children: (devices ?? testDevices) //
           .expand(
             (device) => (themes ?? testThemes).entries.map(
@@ -59,7 +60,8 @@ Future<void> screenshotTest(
             ),
           )
           .toList(),
-    ),
+    );
+    },
     tags: tags,
     skip: skip,
     pumpBeforeTest: (tester) => mockNetworkImages(() => precacheImages(tester)).timeout(timeout),
