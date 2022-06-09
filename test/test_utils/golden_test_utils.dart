@@ -39,28 +39,28 @@ Future<void> screenshotTest(
     builder: () {
       setUp?.call();
       return GoldenTestGroup(
-      children: (devices ?? testDevices) //
-          .expand(
-            (device) => (themes ?? testThemes).entries.map(
-                  (entry) => ScreenshotTestVariant(
-                    device: device,
-                    theme: entry.value,
-                    themeName: entry.key,
+        children: (devices ?? testDevices) //
+            .expand(
+              (device) => (themes ?? testThemes).entries.map(
+                    (entry) => ScreenshotTestVariant(
+                      device: device,
+                      theme: entry.value,
+                      themeName: entry.key,
+                    ),
                   ),
+            )
+            .map(
+              (variant) => DefaultAssetBundle(
+                bundle: TestAssetBundle(),
+                child: GoldenTestDeviceScenario(
+                  device: variant.device,
+                  builder: () => pageBuilder(variant.theme),
+                  suffix: variant.themeName,
                 ),
-          )
-          .map(
-            (variant) => DefaultAssetBundle(
-              bundle: TestAssetBundle(),
-              child: GoldenTestDeviceScenario(
-                device: variant.device,
-                builder: () => pageBuilder(variant.theme),
-                suffix: variant.themeName,
               ),
-            ),
-          )
-          .toList(),
-    );
+            )
+            .toList(),
+      );
     },
     tags: tags,
     skip: skip,
