@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
 import 'package:flutter_app/navigation/no_routes.dart';
@@ -37,7 +38,7 @@ mixin AccountDetailsRoute {
   AppNavigator get appNavigator;
 
   Future<void> openAccountDetails({bool replaceCurrent = false}) {
-    const page = AccountDetailsPage(initialParams: AccountDetailsInitialParams());
+    final page = getIt<AccountDetailsPage>(param1: const AccountDetailsInitialParams());
     if (replaceCurrent) {
       return appNavigator.pushReplacement(context, fadeInRoute(page));
     } else {

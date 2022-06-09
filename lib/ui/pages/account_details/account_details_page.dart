@@ -1,10 +1,7 @@
 import 'package:cosmos_ui_components/cosmos_ui_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/generated_assets/assets.gen.dart';
-import 'package:flutter_app/ui/pages/account_details/account_details_initial_params.dart';
-import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presenter.dart';
 import 'package:flutter_app/ui/pages/account_details/widgets/asset_portfolio_heading.dart';
@@ -17,13 +14,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AccountDetailsPage extends StatefulWidget {
   const AccountDetailsPage({
-    required this.initialParams,
+    required this.presenter,
     Key? key,
-    this.presenter,
   }) : super(key: key);
-
-  final AccountDetailsInitialParams initialParams;
-  final AccountDetailsPresenter? presenter;
+  final AccountDetailsPresenter presenter;
 
   @override
   AccountDetailsPageState createState() => AccountDetailsPageState();
@@ -31,14 +25,12 @@ class AccountDetailsPage extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty<AccountDetailsInitialParams>('initialParams', initialParams))
-      ..add(DiagnosticsProperty<AccountDetailsPresenter?>('presenter', presenter));
+    properties.add(DiagnosticsProperty<AccountDetailsPresenter?>('presenter', presenter));
   }
 }
 
 class AccountDetailsPageState extends State<AccountDetailsPage> {
-  late AccountDetailsPresenter presenter;
+  AccountDetailsPresenter get presenter => widget.presenter;
 
   AccountDetailsViewModel get model => presenter.viewModel;
 
@@ -48,16 +40,6 @@ class AccountDetailsPageState extends State<AccountDetailsPage> {
   @override
   void initState() {
     super.initState();
-    presenter = widget.presenter ??
-        getIt(
-          param1: AccountDetailsPresentationModel(
-            getIt(),
-            getIt(),
-            getIt(),
-            widget.initialParams,
-          ),
-          param2: getIt<AccountDetailsNavigator>(),
-        );
     presenter.navigator.context = context;
   }
 
