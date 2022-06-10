@@ -67,7 +67,9 @@ import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/accoun
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_page.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_backup/account_manual_backup/account_manual_backup_presenter.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_initial_params.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_navigator.dart';
+import 'package:flutter_app/ui/pages/account_details/account_details_page.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presenter.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
@@ -368,12 +370,6 @@ void _configureMvp() {
     ..registerFactory<AccountsListNavigator>(
       () => AccountsListNavigator(getIt()),
     )
-    ..registerFactoryParam<AccountDetailsPresenter, AccountDetailsPresentationModel, dynamic>(
-      (_model, _) => AccountDetailsPresenter(_model, getIt()),
-    )
-    ..registerFactory<AccountDetailsNavigator>(
-      () => AccountDetailsNavigator(getIt()),
-    )
     ..registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
       (_model, _) => RoutingPresenter(_model, getIt(), getIt()),
     )
@@ -602,6 +598,28 @@ void _configureMvp() {
     )
     ..registerFactoryParam<AccountNamePage, AccountNameInitialParams, dynamic>(
       (initialParams, _) => AccountNamePage(
+        presenter: getIt(param1: initialParams),
+      ),
+    )
+    ..registerFactory<AccountDetailsNavigator>(
+      () => AccountDetailsNavigator(getIt()),
+    )
+    ..registerFactoryParam<AccountDetailsPresentationModel, AccountDetailsInitialParams, dynamic>(
+      (_params, _) => AccountDetailsPresentationModel(
+        _params,
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
+    )
+    ..registerFactoryParam<AccountDetailsPresenter, AccountDetailsInitialParams, dynamic>(
+      (initialParams, _) => AccountDetailsPresenter(
+        getIt(param1: initialParams),
+        getIt(),
+      ),
+    )
+    ..registerFactoryParam<AccountDetailsPage, AccountDetailsInitialParams, dynamic>(
+      (initialParams, _) => AccountDetailsPage(
         presenter: getIt(param1: initialParams),
       ),
     );

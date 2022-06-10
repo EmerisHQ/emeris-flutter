@@ -27,10 +27,10 @@ abstract class AccountDetailsViewModel {
 
 class AccountDetailsPresentationModel with AccountDetailsPresentationModelBase implements AccountDetailsViewModel {
   AccountDetailsPresentationModel(
+    this.initialParams,
     this._accountsStore,
     this._blockchainMetadataStore,
     this._assetsStore,
-    this.initialParams,
   );
 
   final AccountDetailsInitialParams initialParams;
