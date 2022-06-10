@@ -2,16 +2,10 @@ import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/account_type.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/dependency_injection/app_component.dart';
-import 'package:flutter_app/domain/entities/account_address.dart';
-import 'package:flutter_app/domain/entities/account_identifier.dart';
-import 'package:flutter_app/domain/entities/amount.dart';
 import 'package:flutter_app/domain/entities/asset.dart';
-import 'package:flutter_app/domain/entities/balance.dart';
 import 'package:flutter_app/domain/entities/chain_asset.dart';
 import 'package:flutter_app/domain/entities/denom.dart';
 import 'package:flutter_app/domain/entities/fiat.dart';
-import 'package:flutter_app/domain/entities/gas_price_level.dart';
-import 'package:flutter_app/domain/entities/gas_price_level_type.dart';
 import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/domain/entities/token_pair.dart';
 import 'package:flutter_app/domain/entities/verified_denom.dart';
@@ -34,56 +28,15 @@ void main() {
   late AccountDetailsPresenter presenter;
   late AccountDetailsNavigator navigator;
   late EmerisAccount myAccount;
-  const fromAddress = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
   const denom = Denom(id: 'uakt', displayName: 'AKT');
-  final verifiedDenom = VerifiedDenom(
-    chainName: 'akash',
-    name: 'uakt',
+  final verifiedDenom = const VerifiedDenom.empty().copyWith(
     denom: denom,
-    logo: '',
     precision: 6,
-    verified: true,
-    stakeable: true,
-    ticker: 'AKT',
-    feeToken: true,
-    gasPriceLevels: [
-      GasPriceLevel(
-        balance: Balance(
-          amount: Amount.fromNum(0.06),
-          denom: const Denom(id: 'uakt', displayName: 'AKT'),
-        ),
-        type: GasPriceLevelType.low,
-      ),
-      GasPriceLevel(
-        balance: Balance(
-          amount: Amount.fromNum(0.09),
-          denom: const Denom(id: 'uakt', displayName: 'AKT'),
-        ),
-        type: GasPriceLevelType.average,
-      ),
-      GasPriceLevel(
-        balance: Balance(
-          amount: Amount.fromNum(0.108),
-          denom: const Denom(id: 'uakt', displayName: 'AKT'),
-        ),
-        type: GasPriceLevelType.high,
-      ),
-    ],
-    fetchPrice: true,
-    relayerDenom: true,
-    minimumThreshRelayerBalance: 40000000,
   );
 
   void _initMvp() {
     myAccount = const EmerisAccount(
-      accountDetails: AccountDetails(
-        accountIdentifier: AccountIdentifier(
-          accountId: 'accountId',
-          chainId: 'cosmos',
-        ),
-        accountAlias: 'Hello',
-        accountAddress: AccountAddress(value: fromAddress),
-      ),
+      accountDetails: AccountDetails.empty(),
       accountType: AccountType.Cosmos,
     );
     initParams = const AccountDetailsInitialParams();
