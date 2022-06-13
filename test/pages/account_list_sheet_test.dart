@@ -29,7 +29,7 @@ void main() {
       const EmerisAccount.empty().copyWith(
         accountDetails: const AccountDetails(
           accountIdentifier: AccountIdentifier.empty(),
-          accountAlias: 'Hello',
+          accountAlias: 'Sample',
           accountAddress: AccountAddress(value: 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav'),
         ),
       )
