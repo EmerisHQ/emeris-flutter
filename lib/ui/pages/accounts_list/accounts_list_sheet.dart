@@ -4,10 +4,7 @@ import 'package:cosmos_ui_components/models/account_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
-import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/generated_assets/assets.gen.dart';
-import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
-import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presentation_model.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presenter.dart';
 import 'package:flutter_app/utils/strings.dart';
@@ -15,13 +12,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AccountsListSheet extends StatefulWidget {
   const AccountsListSheet({
-    required this.initialParams,
+    required this.presenter,
     Key? key,
-    this.presenter, // useful for tests
   }) : super(key: key);
 
-  final AccountsListInitialParams initialParams;
-  final AccountsListPresenter? presenter;
+  final AccountsListPresenter presenter;
 
   @override
   AccountsListSheetState createState() => AccountsListSheetState();
@@ -29,14 +24,12 @@ class AccountsListSheet extends StatefulWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty<AccountsListPresenter?>('presenter', presenter))
-      ..add(DiagnosticsProperty<AccountsListInitialParams>('initialParams', initialParams));
+    properties.add(DiagnosticsProperty<AccountsListPresenter?>('presenter', presenter));
   }
 }
 
 class AccountsListSheetState extends State<AccountsListSheet> {
-  late AccountsListPresenter presenter;
+  AccountsListPresenter get presenter => widget.presenter;
 
   AccountsListViewModel get model => presenter.viewModel;
 
@@ -45,11 +38,6 @@ class AccountsListSheetState extends State<AccountsListSheet> {
   @override
   void initState() {
     super.initState();
-    presenter = widget.presenter ??
-        getIt(
-          param1: AccountsListPresentationModel(getIt(), widget.initialParams),
-          param2: getIt<AccountsListNavigator>(),
-        );
     presenter.navigator.context = context;
   }
 
@@ -69,13 +57,13 @@ class AccountsListSheetState extends State<AccountsListSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CosmosBottomSheetHeader(
-                  title: 'Accounts',
+                  title: strings.accountsTitle,
                   titleTextStyle: CosmosTextTheme.title2Bold,
                   leading: CosmosTextButton(
-                    text: model.isEditingAccountList ? 'Done' : 'Edit',
+                    text: model.isEditingAccountList ? strings.doneAction : strings.editAction,
                     onTap: presenter.editClicked,
                   ),
-                  actions: [CosmosTextButton(text: 'Close', onTap: presenter.onTapClose)],
+                  actions: [CosmosTextButton(text: strings.closeAction, onTap: presenter.onTapClose)],
                 ),
                 SizedBox(height: theme.spacingXL),
                 mainList(),
