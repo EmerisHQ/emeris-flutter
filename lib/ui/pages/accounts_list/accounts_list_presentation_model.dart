@@ -14,10 +14,7 @@ abstract class AccountsListViewModel {
 }
 
 class AccountsListPresentationModel with AccountsListPresentationModelBase implements AccountsListViewModel {
-  AccountsListPresentationModel(
-    this.initialParams,
-    this._accountsStore,
-  );
+  AccountsListPresentationModel(this._accountsStore, this.initialParams);
 
   final AccountsListInitialParams initialParams;
   final AccountsStore _accountsStore;

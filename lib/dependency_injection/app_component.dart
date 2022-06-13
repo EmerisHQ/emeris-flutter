@@ -72,11 +72,9 @@ import 'package:flutter_app/ui/pages/account_details/account_details_navigator.d
 import 'package:flutter_app/ui/pages/account_details/account_details_page.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presentation_model.dart';
 import 'package:flutter_app/ui/pages/account_details/account_details_presenter.dart';
-import 'package:flutter_app/ui/pages/accounts_list/accounts_list_initial_params.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presentation_model.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presenter.dart';
-import 'package:flutter_app/ui/pages/accounts_list/accounts_list_sheet.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_initial_params.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_navigator.dart';
 import 'package:flutter_app/ui/pages/add_account/account_name/account_name_page.dart';
@@ -366,27 +364,11 @@ void _configureUseCases() {
 
 void _configureMvp() {
   getIt
+    ..registerFactoryParam<AccountsListPresenter, AccountsListPresentationModel, dynamic>(
+      (_model, _) => AccountsListPresenter(_model, getIt(), getIt(), getIt()),
+    )
     ..registerFactory<AccountsListNavigator>(
       () => AccountsListNavigator(getIt()),
-    )
-    ..registerFactoryParam<AccountsListPresentationModel, AccountsListInitialParams, dynamic>(
-      (_params, _) => AccountsListPresentationModel(
-        _params,
-        getIt(),
-      ),
-    )
-    ..registerFactoryParam<AccountsListPresenter, AccountsListInitialParams, dynamic>(
-      (initialParams, _) => AccountsListPresenter(
-        getIt(param1: initialParams),
-        getIt(),
-        getIt(),
-        getIt(),
-      ),
-    )
-    ..registerFactoryParam<AccountsListSheet, AccountsListInitialParams, dynamic>(
-      (initialParams, _) => AccountsListSheet(
-        presenter: getIt(param1: initialParams),
-      ),
     )
     ..registerFactoryParam<RoutingPresenter, RoutingPresentationModel, dynamic>(
       (_model, _) => RoutingPresenter(_model, getIt(), getIt()),
