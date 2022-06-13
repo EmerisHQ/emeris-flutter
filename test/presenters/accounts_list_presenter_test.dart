@@ -24,7 +24,7 @@ void main() {
 
   void _initMvp() {
     initParams = const AccountsListInitialParams();
-    model = AccountsListPresentationModel(Mocks.accountsStore, initParams);
+    model = AccountsListPresentationModel(initParams, Mocks.accountsStore);
     navigator = Mocks.accountsListNavigator;
     presenter = AccountsListPresenter(
       model,
