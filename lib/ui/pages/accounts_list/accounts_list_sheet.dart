@@ -57,13 +57,13 @@ class AccountsListSheetState extends State<AccountsListSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CosmosBottomSheetHeader(
-                  title: strings.accountsTitle,
+                  title: 'Accounts',
                   titleTextStyle: CosmosTextTheme.title2Bold,
                   leading: CosmosTextButton(
-                    text: model.isEditingAccountList ? strings.doneAction : strings.editAction,
+                    text: model.isEditingAccountList ? 'Done' : 'Edit',
                     onTap: presenter.editClicked,
                   ),
-                  actions: [CosmosTextButton(text: strings.closeAction, onTap: presenter.onTapClose)],
+                  actions: [CosmosTextButton(text: 'Close', onTap: presenter.onTapClose)],
                 ),
                 SizedBox(height: theme.spacingXL),
                 mainList(),

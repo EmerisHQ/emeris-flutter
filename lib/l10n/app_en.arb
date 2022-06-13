@@ -211,8 +211,5 @@
   "alreadyHaveAccountAction": "I already have an account",
   "onboardingWelcomeTitle": "Welcome to Emeris Wallet",
   "onboardingTaglineTitle": "Experience the power of cross-chain DeFi",
-  "darkThemeAction": "Dark theme",
-  "accountsTitle": "Accounts",
-  "doneAction": "Done",
-  "editAction": "Edit"
+  "darkThemeAction": "Dark theme"
 }
