@@ -22,18 +22,18 @@ void main() {
   late AccountsListPresentationModel model;
   late AccountsListPresenter presenter;
   late AccountsListNavigator navigator;
-  final list = mobx.ObservableList<EmerisAccount>();
+  late List<EmerisAccount> accountList;
 
-  void _initMvp() {
-    list.addAll([
-      const EmerisAccount.empty().copyWith(
-        accountDetails: const AccountDetails(
-          accountIdentifier: AccountIdentifier.empty(),
-          accountAlias: 'Sample',
-          accountAddress: AccountAddress(value: 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav'),
-        ),
-      )
-    ]);
+  final account = const EmerisAccount.empty().copyWith(
+    accountDetails: const AccountDetails(
+      accountIdentifier: AccountIdentifier.empty(),
+      accountAlias: 'Sample',
+      accountAddress: AccountAddress(value: 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav'),
+    ),
+  );
+
+  void _initMvp({required List<EmerisAccount> accounts}) {
+    accountList = accounts;
     initParams = const AccountsListInitialParams();
     model = AccountsListPresentationModel(initParams, Mocks.accountsStore);
     navigator = AccountsListNavigator(Mocks.appNavigator);
@@ -49,8 +49,10 @@ void main() {
   screenshotTest(
     'account_list_sheet',
     setUp: () {
-      _initMvp();
-      when(() => Mocks.accountsStore.accounts).thenAnswer((invocation) => list);
+      _initMvp(accounts: [account]);
+      when(() => Mocks.accountsStore.accounts).thenAnswer(
+        (invocation) => mobx.ObservableList<EmerisAccount>()..addAll(accountList),
+      );
       when(() => Mocks.accountsStore.currentAccount).thenAnswer((invocation) => const EmerisAccount.empty());
     },
     pageBuilder: (theme) => TestAppWidget(
@@ -62,7 +64,7 @@ void main() {
   screenshotTest(
     'account_list_sheet_empty',
     setUp: () {
-      _initMvp();
+      _initMvp(accounts: []);
       when(() => Mocks.accountsStore.accounts).thenAnswer((invocation) => mobx.ObservableList());
       when(() => Mocks.accountsStore.currentAccount).thenAnswer((invocation) => const EmerisAccount.empty());
     },
