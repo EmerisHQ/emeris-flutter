@@ -53,7 +53,7 @@ void main() {
       when(() => Mocks.accountsStore.accounts).thenAnswer(
         (invocation) => mobx.ObservableList<EmerisAccount>()..addAll(accountList),
       );
-      when(() => Mocks.accountsStore.currentAccount).thenAnswer((invocation) => const EmerisAccount.empty());
+      when(() => Mocks.accountsStore.currentAccount).thenReturn(const EmerisAccount.empty());
     },
     pageBuilder: (theme) => TestAppWidget(
       themeData: theme,
@@ -65,8 +65,8 @@ void main() {
     'account_list_sheet_empty',
     setUp: () {
       _initMvp(accounts: []);
-      when(() => Mocks.accountsStore.accounts).thenAnswer((invocation) => mobx.ObservableList());
-      when(() => Mocks.accountsStore.currentAccount).thenAnswer((invocation) => const EmerisAccount.empty());
+      when(() => Mocks.accountsStore.accounts).thenReturn(mobx.ObservableList());
+      when(() => Mocks.accountsStore.currentAccount).thenReturn(const EmerisAccount.empty());
     },
     pageBuilder: (theme) => TestAppWidget(
       themeData: theme,
