@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/data/model/account_details.dart';
 import 'package:flutter_app/data/model/emeris_account.dart';
 import 'package:flutter_app/domain/entities/account_identifier.dart';
+import 'package:flutter_app/domain/entities/chain_asset.dart';
+import 'package:flutter_app/domain/entities/prices.dart';
 import 'package:flutter_app/ui/pages/add_account/add_account_initial_params.dart';
 import 'package:flutter_app/ui/pages/import_account/import_account_initial_params.dart';
 import 'package:flutter_app/ui/pages/onboarding/onboarding_initial_params.dart';
@@ -38,12 +40,14 @@ class Mocks {
   static late MockUpdateThemeUseCase updateThemeUseCase;
   static late MockRenameAccountUseCase renameAccountUseCase;
   static late MockImportAccountUseCase importAccountUseCase;
+  static late MockPasteFromClipboardUseCase pasteFromClipboardUseCase;
   static late MockSendTokensNavigator sendTokensNavigator;
   static late MockAccountDetailsNavigator accountDetailsNavigator;
   static late MockAccountsListNavigator accountsListNavigator;
   static late MockAppNavigator appNavigator;
   static late MockRoutingNavigator routingNavigator;
   static late MockTaskScheduler taskScheduler;
+  static late MockPriceConverter priceConverter;
   static late MockGenerateMnemonicUseCase generateMnemonicUseCase;
 
   static void init() {
@@ -78,6 +82,7 @@ class Mocks {
     generateMnemonicUseCase = MockGenerateMnemonicUseCase();
     updateThemeUseCase = MockUpdateThemeUseCase();
     renameAccountUseCase = MockRenameAccountUseCase();
+    pasteFromClipboardUseCase = MockPasteFromClipboardUseCase();
     sendTokensNavigator = MockSendTokensNavigator();
     accountDetailsNavigator = MockAccountDetailsNavigator();
     accountsListNavigator = MockAccountsListNavigator();
@@ -85,10 +90,13 @@ class Mocks {
     routingNavigator = MockRoutingNavigator();
     platformInfoStore = MockPlatformInfoStore();
     taskScheduler = MockTaskScheduler();
+    priceConverter = MockPriceConverter();
   }
 
   static void _initFallbacks() {
     registerFallbackValue(Brightness.dark);
+    registerFallbackValue(ChainAsset.empty());
+    registerFallbackValue(const Prices.empty());
     registerFallbackValue(const EmerisAccount.empty());
     registerFallbackValue(const AccountIdentifier.empty());
     registerFallbackValue(const AccountDetails.empty());
