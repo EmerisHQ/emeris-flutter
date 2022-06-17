@@ -9,7 +9,7 @@ import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presentation_mo
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_presenter.dart';
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_sheet.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobx/mobx.dart' as mobx;
+import 'package:mobx/mobx.dart' hide when;
 import 'package:mocktail/mocktail.dart';
 
 import '../mocks/mocks.dart';
@@ -51,7 +51,7 @@ void main() {
     setUp: () {
       _initMvp(accounts: [account]);
       when(() => Mocks.accountsStore.accounts).thenAnswer(
-        (invocation) => mobx.ObservableList<EmerisAccount>()..addAll(accountList),
+        (invocation) => ObservableList<EmerisAccount>()..addAll(accountList),
       );
       when(() => Mocks.accountsStore.currentAccount).thenReturn(const EmerisAccount.empty());
     },
@@ -65,7 +65,7 @@ void main() {
     'account_list_sheet_empty',
     setUp: () {
       _initMvp(accounts: []);
-      when(() => Mocks.accountsStore.accounts).thenReturn(mobx.ObservableList());
+      when(() => Mocks.accountsStore.accounts).thenReturn(ObservableList());
       when(() => Mocks.accountsStore.currentAccount).thenReturn(const EmerisAccount.empty());
     },
     pageBuilder: (theme) => TestAppWidget(
