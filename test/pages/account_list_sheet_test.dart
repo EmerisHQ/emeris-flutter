@@ -50,9 +50,7 @@ void main() {
     'account_list_sheet',
     setUp: () {
       _initMvp(accounts: [account]);
-      when(() => Mocks.accountsStore.accounts).thenAnswer(
-        (invocation) => ObservableList<EmerisAccount>()..addAll(accountList),
-      );
+      when(() => Mocks.accountsStore.accounts).thenReturn(accountList.asObservable());
       when(() => Mocks.accountsStore.currentAccount).thenReturn(const EmerisAccount.empty());
     },
     pageBuilder: (theme) => TestAppWidget(
