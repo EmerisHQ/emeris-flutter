@@ -31,6 +31,8 @@ void main() {
   const address = 'cosmos1ec4v57s7weuwatd36dgpjh8hj4gnj2cuut9sav';
   late EmerisAccount account;
 
+  setUp(_initMockConditions);
+
   void _initMvp() {
     account = const EmerisAccount.empty().copyWith(
       accountDetails: const AccountDetails.empty().copyWith(
@@ -57,7 +59,7 @@ void main() {
   screenshotTest(
     'send_tokens_page_recipient',
     setUp: () {
-      _initMockConditions(const EmerisAccount.empty());
+      when(() => Mocks.accountsStore.currentAccount).thenAnswer((invocation) => const EmerisAccount.empty());
       _initMvp();
     },
     pageBuilder: (theme) {
@@ -72,7 +74,7 @@ void main() {
   screenshotTest(
     'send_tokens_page_amount',
     setUp: () {
-      _initMockConditions(account);
+      when(() => Mocks.accountsStore.currentAccount).thenAnswer((invocation) => account);
       _initMvp();
     },
     pageBuilder: (theme) {
@@ -87,7 +89,7 @@ void main() {
   screenshotTest(
     'send_tokens_page_review',
     setUp: () {
-      _initMockConditions(account);
+      when(() => Mocks.accountsStore.currentAccount).thenAnswer((invocation) => account);
       _initMvp();
     },
     pageBuilder: (theme) {
@@ -107,7 +109,7 @@ void main() {
   });
 }
 
-void _initMockConditions(EmerisAccount account) {
+void _initMockConditions() {
   when(() => Mocks.priceConverter.setTokenUsingChainAsset(any(), any())).thenAnswer((invocation) => Unit);
   when(() => Mocks.priceConverter.primaryText).thenAnswer((invocation) => '');
   when(() => Mocks.priceConverter.primaryAmountType).thenAnswer((invocation) => PriceType.token);
@@ -119,7 +121,6 @@ void _initMockConditions(EmerisAccount account) {
   when(() => Mocks.priceConverter.secondaryAmount).thenAnswer((invocation) => Amount.one);
   when(() => Mocks.priceConverter.secondaryAmountType).thenAnswer((invocation) => PriceType.token);
   when(() => Mocks.blockchainMetadataStore.prices).thenAnswer((invocation) => const Prices.empty());
-  when(() => Mocks.accountsStore.currentAccount).thenAnswer((invocation) => account);
 }
 
 class _MockSendTokensInitialParams extends Mock implements SendTokensInitialParams {}

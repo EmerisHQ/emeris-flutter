@@ -29,7 +29,7 @@ class BalanceSelectorButton extends StatelessWidget {
     final theme = CosmosTheme.of(context);
     return Material(
       clipBehavior: Clip.antiAlias,
-      elevation: theme.elevationM,
+      elevation: theme.elevationS,
       shadowColor: theme.colors.shadowColor,
       borderRadius: theme.borderRadiusL,
       color: theme.colors.background,
