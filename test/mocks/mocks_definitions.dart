@@ -20,6 +20,7 @@ import 'package:flutter_app/domain/use_cases/get_prices_use_case.dart';
 import 'package:flutter_app/domain/use_cases/get_verified_denoms_use_case.dart';
 import 'package:flutter_app/domain/use_cases/import_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/migrate_app_versions_use_case.dart';
+import 'package:flutter_app/domain/use_cases/paste_from_clipboard_use_case.dart';
 import 'package:flutter_app/domain/use_cases/rename_account_use_case.dart';
 import 'package:flutter_app/domain/use_cases/send_tokens_use_case.dart';
 import 'package:flutter_app/domain/use_cases/update_theme_use_case.dart';
@@ -28,6 +29,7 @@ import 'package:flutter_app/ui/pages/account_details/account_details_navigator.d
 import 'package:flutter_app/ui/pages/accounts_list/accounts_list_navigator.dart';
 import 'package:flutter_app/ui/pages/routing/routing_navigator.dart';
 import 'package:flutter_app/ui/pages/send_tokens/send_tokens_navigator.dart';
+import 'package:flutter_app/utils/price_converter.dart';
 import 'package:flutter_app/utils/strings.dart';
 import 'package:flutter_app/utils/task_scheduler.dart';
 import 'package:mocktail/mocktail.dart';
@@ -96,6 +98,8 @@ class MockUpdateThemeUseCase extends Mock implements UpdateThemeUseCase {}
 
 class MockRenameAccountUseCase extends Mock implements RenameAccountUseCase {}
 
+class MockPasteFromClipboardUseCase extends Mock implements PasteFromClipboardUseCase {}
+
 // Navigators
 
 class MockSendTokensNavigator extends Mock implements SendTokensNavigator {}
@@ -111,3 +115,6 @@ class MockRoutingNavigator extends Mock implements RoutingNavigator {}
 // Others
 
 class MockTaskScheduler extends Mock implements TaskScheduler {}
+
+// ignore: avoid_implementing_value_types
+class MockPriceConverter extends Mock implements PriceConverter {}
