@@ -89,7 +89,7 @@ class _RecipientSendTokensStepState extends State<RecipientSendTokensStep> with 
                           text: strings.pasteAction,
                           onTap: widget.onTapPaste,
                           height: 40,
-                          elevation: theme.elevationL,
+                          elevation: theme.elevationM,
                           textColor: theme.colors.text,
                           backgroundColor: theme.colors.background,
                         )
