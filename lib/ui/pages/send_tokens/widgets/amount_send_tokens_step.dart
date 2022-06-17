@@ -124,7 +124,7 @@ class _AmountSendTokensStepState extends State<AmountSendTokensStep> with Automa
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         CosmosElevatedButton(
-                          elevation: theme.elevationL,
+                          elevation: theme.elevationS,
                           contentPadding: 0,
                           backgroundColor: theme.colors.background,
                           onTap: widget.onTapCurrencySwitch,
@@ -133,7 +133,7 @@ class _AmountSendTokensStepState extends State<AmountSendTokensStep> with Automa
                         ),
                         CosmosElevatedButton(
                           text: strings.maxAction,
-                          elevation: theme.elevationL,
+                          elevation: theme.elevationS,
                           backgroundColor: theme.colors.background,
                           textColor: theme.colors.text,
                           onTap: widget.onTapMax,
