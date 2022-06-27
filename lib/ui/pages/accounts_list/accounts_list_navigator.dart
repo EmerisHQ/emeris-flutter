@@ -1,5 +1,6 @@
 import 'package:cosmos_ui_components/components/cosmos_bottom_sheet_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/dependency_injection/app_component.dart';
 import 'package:flutter_app/navigation/app_navigator.dart';
 import 'package:flutter_app/navigation/close_route.dart';
 import 'package:flutter_app/navigation/error_dialog_route.dart';
@@ -39,10 +40,8 @@ mixin AccountsListRoute {
   Future<void> openAccountsList(AccountsListInitialParams initialParams) async => showMaterialModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
-        builder: (context) => const CosmosBottomSheetContainer(
-          child: AccountsListSheet(
-            initialParams: AccountsListInitialParams(),
-          ),
+        builder: (context) => CosmosBottomSheetContainer(
+          child: getIt<AccountsListSheet>(param1: initialParams),
         ),
       );
 
